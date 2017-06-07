@@ -1,0 +1,48 @@
+//
+//  PrefixHeader.pch
+//  TrendBetting
+//
+//  Created by jiazhen-mac-01 on 16/12/28.
+//  Copyright © 2016年 yxy. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+#ifdef __OBJC__
+
+#import "Utils+color.h"
+#import "Utils+size.h"
+#import "Utils+fileReadAndWrite.h"
+#import "Utils+groupRule.h"
+#import "UIView+border.h"
+#import <UIView+Toast.h>
+#import "JSONKit.h"
+#import "MJExtension.h"
+#import "TBFileRoomResult_roomArr.h"
+#import "TBFileRoomResult_timeArr.h"
+#import "TBFileRoomResult_dataArr.h"
+#import <UIView+Toast.h>
+#define SAVE_DATA_FILENAME @"myData"
+#define SAVE_RULE_FILENAME @"myRuleData"
+
+#define SAVE_MONEY_TXT @"myMoney"
+#define SAVE_RULE_TXT @"myRule"
+#define SAVE_Group_TXT @"myGroupRule"//组
+
+#define SAVE_PASSWORD @"myKeyPassword"//秘钥
+#define SAVE_AREASELECT @"areaSelected"//区域选择
+#define SAVE_RBSELECT @"rbSelected"//庄闲选择
+#define SAVE_REVERSESELECT @"reverseSelected"//正反选择
+#define SAVE_BackMoney @"backMoney"//返利基数
+
+#define Reduce_Money 0.05  //抽水
+//#define back_Money 0.005  //返利
+
+
+
+#endif

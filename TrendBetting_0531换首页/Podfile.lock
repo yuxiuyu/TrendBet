@@ -1,0 +1,22 @@
+PODS:
+  - IQKeyboardManager (4.0.1)
+  - JSONKit-NoWarning (1.2)
+  - MJExtension (3.0.10)
+  - SVProgressHUD (2.0.3)
+  - Toast (3.0)
+
+DEPENDENCIES:
+  - IQKeyboardManager (~> 4.0.1)
+  - JSONKit-NoWarning (~> 1.2)
+  - MJExtension (~> 3.0.10)
+  - SVProgressHUD (~> 2.0.3)
+  - Toast (~> 3.0)
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: 0c11a0cb402a621f7aa1aff506f60ab6d2388969
+  JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  Toast: 32c59229abfcf41850162b83bb9259dc84372473
+
+COCOAPODS: 0.39.0
