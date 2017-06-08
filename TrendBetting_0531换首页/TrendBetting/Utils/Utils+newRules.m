@@ -181,8 +181,8 @@
         NSInteger lastCount=[[partArray lastObject] count];
         for (int i=0; i<tempResultArr.count-1; i++)
         {
-            NSString*str=tempResultArr[i];
-            str=[str substringFromIndex:str.length-1];
+            NSArray*sparray=[tempResultArr[i] componentsSeparatedByString:@"|"];
+            NSString* str=[sparray lastObject];
             NSArray*array=partArray[[str intValue]];
             NSString*tempStr=array.count>lastCount?[array lastObject]:[partArray[[str intValue]+1] lastObject];
             
@@ -198,17 +198,15 @@
                     break ;
                 }
             }
-            
         }
-
     }
     if (myTag>0&&guessStr.length>0)
     {
         guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
     }
-
+    
        return guessStr;
-
+    
 }
 #pragma mark------将得到的（一 三 四 五）区域 一个个长的数组  塞到对应的坐标上
 -(NSMutableArray*)newPartData:(NSMutableArray*)dataArray specArray:(NSArray*)specArray
