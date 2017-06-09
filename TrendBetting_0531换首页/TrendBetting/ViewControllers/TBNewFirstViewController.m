@@ -58,7 +58,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -145,7 +145,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -288,11 +288,11 @@
     if (![resultStr isEqualToString:@"reduce"])
     {
             [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
-            [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil myTag:1] ];
-            [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil myTag:2]];
-            [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil myTag:3]];
+            [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
+            [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
+            [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
         
-        [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
+           [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
         
         
 //        [guessThirdPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessThirdPartArray lastObject] partArray:thirdPartArray fristPartArray:secondPartArray myTag:1]];
@@ -325,9 +325,9 @@
     NSArray*array3=[guessForthPartArray lastObject];
     NSArray*array4=[guessFivePartArray lastObject];
     
-    NSString*guessStr2=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1];
-    NSString*guessStr3=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2];
-    NSString*guessStr4=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3];
+    NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+    NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+    NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
     
    
     
@@ -335,8 +335,12 @@
     NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
     NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];
     NSString*str4=[[Utils sharedInstance] changeChina:guessStr4 isWu:YES];
-    _nextTrendLab.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,[array3 firstObject],str3];
-   _countTrendLab.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",[array2 firstObject],str2,[array4 firstObject],str4];
+    
+    NSString*nameStr2=[str2 isEqualToString:@"无"]?@"":[array2 firstObject];
+    NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
+    NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
+    _nextTrendLab.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
+   _countTrendLab.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
 }
 
 

@@ -10,32 +10,69 @@
 
 @implementation Utils (xiasanluRule)
 #pragma mark------搜索（一 三 四 五）区域  个数 区域的趋势
--(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray myTag:(NSInteger)myTag
-{
-    NSInteger thdCount=0;
+-(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray{
+//    NSInteger thdCount=0;
     NSString*guessStr=@"";
     NSString*nameStr=@"";
     NSInteger allcount = fristPartArray.count;
     NSArray*lastArray=[fristPartArray lastObject];
-    if (resultArray&&[resultArray[1] intValue]>0)
+    if (resultArray&&[resultArray[0] length]>0)
     {
-        if ([[resultArray lastObject] isEqualToString:[fristPartArray lastObject]])
+        
+        if ([[resultArray lastObject] isEqualToString:[lastArray lastObject]]||[[resultArray lastObject] isEqualToString:@""])
         {
-            
+            nameStr=[resultArray firstObject];
+            if ([nameStr containsString:@"连"])
+            {
+                guessStr=[resultArray lastObject];
+                nameStr=[NSString stringWithFormat:@"连_%d",[[nameStr substringFromIndex:1] intValue]+1];
+                return @[nameStr,guessStr];
+                
+            }
+            else if([nameStr containsString:@"小"])
+            {
+                NSArray*lastSecArray=fristPartArray[allcount-2];
+                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                 guessStr=[resultArray lastObject];
+                if (lastArray.count==lastSecArray.count)
+                {
+                    guessStr=[lastSecArray lastObject];
+                }
+                 return @[nameStr,guessStr];
+            }
+            else
+            {
+                if (lastArray.count==1)
+                {
+                    NSArray*lastSecArray=fristPartArray[allcount-2];
+                     guessStr=[resultArray lastObject];
+                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                    if (lastSecArray.count>1)
+                    {
+                       
+                        guessStr=[lastSecArray lastObject];
+                        
+                    }
+                    return @[nameStr,guessStr];
+                    
+                }
+                else if(lastArray.count>2)
+                {
+                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                    guessStr=@"";
+                    return @[nameStr,guessStr];
+                }
+            }
         }
     }
-    else
-    {
-//        NSInteger thdCount=0;
-//        NSString*guessStr=@"";
-//        NSString*nameStr=@"";
-//        NSInteger allcount = fristPartArray.count;
-//        NSArray*lastArray=[fristPartArray lastObject];
+
+    /////
+        NSInteger thdCount=0;
         if (lastArray.count==1&&fristPartArray.count>=4)//最后一个等于1
         {
             NSInteger yxyTag=0;//0 长跳 1多带
             bool isLast=YES;
-            for (NSInteger i=allcount-2; i<allcount-4; i--)
+            for (NSInteger i=allcount-2; i>=allcount-4; i--)
             {
                 NSArray*array=fristPartArray[i];
                 if (i==allcount-2)
@@ -64,13 +101,13 @@
             if (isLast)
             {
                 guessStr=[fristPartArray[allcount-2] lastObject];
-                nameStr=yxyTag==0?@"跳":@"多带";
-                thdCount=4;
+                nameStr=yxyTag==0?@"跳_":@"多带_";
+                thdCount=allcount-4;
                 guessStr=[fristPartArray[allcount-2] lastObject];
                 if (yxyTag==1&&fristPartArray.count>4&&[fristPartArray[allcount-5] count]==1)
                 {
-                    nameStr=@"一带";
-                    thdCount=5;
+                    nameStr=@"一带_";
+                    thdCount=allcount-5;
                 }
                 
             }
@@ -81,8 +118,8 @@
             if (lastSecArray.count==2)
             {
                 guessStr=[lastSecArray lastObject];
-                nameStr=@"小";
-                thdCount=2;
+                nameStr=[NSString stringWithFormat:@"小%ld_",lastSecArray.count];
+                thdCount=allcount-2;
 
             }
             
@@ -92,8 +129,8 @@
             if (lastArray.count>3)
             {
                  guessStr=[lastArray lastObject];
-                 nameStr=@"连";
-                 thdCount=1;
+                 nameStr=@"连_";
+                 thdCount=allcount-1;
             }
             
             
@@ -103,13 +140,13 @@
                 if (lastSecArray.count==lastArray.count)
                 {
                     guessStr=[lastSecArray lastObject];
-                    nameStr=@"小";
-                    thdCount=2;
+                    nameStr=[NSString stringWithFormat:@"小%ld_",lastSecArray.count];
+                    thdCount=allcount-2;
                 }
 
             }
         }
-    }
+//    }
 
     
     
@@ -120,8 +157,7 @@
         NSInteger a=0;
         if (guessStr.length>0)
         {
-           
-            for (NSInteger i=allcount-thdCount; i<allcount; i++)
+            for (NSInteger i=thdCount; i<allcount; i++)
             {
                 a=a+[fristPartArray[i] count];
             }
@@ -129,7 +165,7 @@
         }
     
 
-    return @[nameStr,[NSString stringWithFormat:@"%ld",a],guessStr];
+    return @[nameStr,guessStr];
 }
 
 @end
