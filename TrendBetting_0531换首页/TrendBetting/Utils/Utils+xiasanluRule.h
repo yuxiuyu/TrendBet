@@ -9,5 +9,5 @@
 #import "Utils.h"
 
 @interface Utils (xiasanluRule)
--(NSArray*)getGroupFristArray:(NSArray*)listArray ;
+-(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray myTag:(NSInteger)myTag;
 @end

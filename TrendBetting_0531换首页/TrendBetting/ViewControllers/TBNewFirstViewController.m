@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "TBFileRoomResult_entry.h"
 #import "Utils+reencryption.h"
+#import "Utils+xiasanluRule.h"
 @interface TBNewFirstViewController ()
 {
     chartImageView *view1;
@@ -36,9 +37,9 @@
     NSMutableArray*guessFivePartArray;
     
     NSMutableArray*arrGuessSecondPartArray;
-    NSMutableArray*arrGuessThirdPartArray;
-    NSMutableArray*arrGuessForthPartArray;
-    NSMutableArray*arrGuessFivePartArray;
+//    NSMutableArray*arrGuessThirdPartArray;
+//    NSMutableArray*arrGuessForthPartArray;
+//    NSMutableArray*arrGuessFivePartArray;
 
     
     
@@ -112,9 +113,9 @@
     guessFivePartArray=[[NSMutableArray alloc]init];
     
     arrGuessSecondPartArray=[[NSMutableArray alloc]init];
-    arrGuessThirdPartArray=[[NSMutableArray alloc]init];
-    arrGuessForthPartArray=[[NSMutableArray alloc]init];
-    arrGuessFivePartArray=[[NSMutableArray alloc]init];
+//    arrGuessThirdPartArray=[[NSMutableArray alloc]init];
+//    arrGuessForthPartArray=[[NSMutableArray alloc]init];
+//    arrGuessFivePartArray=[[NSMutableArray alloc]init];
     
 
 }
@@ -247,9 +248,9 @@
         [guessFivePartArray removeLastObject];
         
         [arrGuessSecondPartArray removeLastObject];
-        [arrGuessThirdPartArray removeLastObject];
-        [arrGuessForthPartArray removeLastObject];
-        [arrGuessFivePartArray removeLastObject];
+//        [arrGuessThirdPartArray removeLastObject];
+//        [arrGuessForthPartArray removeLastObject];
+//        [arrGuessFivePartArray removeLastObject];
 
     }
     else
@@ -287,25 +288,27 @@
     if (![resultStr isEqualToString:@"reduce"])
     {
             [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
-            [arrGuessThirdPartArray addObject:[[Utils sharedInstance] seacherNewsRule:thirdPartArray arrGuessPartArray:arrGuessThirdPartArray.count>0?[arrGuessThirdPartArray lastObject]:nil]];
-            [arrGuessForthPartArray addObject:[[Utils sharedInstance] seacherNewsRule:forthPartArray arrGuessPartArray:arrGuessForthPartArray.count>0?[arrGuessForthPartArray lastObject]:nil]];
-            [arrGuessFivePartArray addObject:[[Utils sharedInstance] seacherNewsRule:fivePartArray arrGuessPartArray:arrGuessFivePartArray.count>0?[arrGuessFivePartArray lastObject]:nil]];
+            [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil myTag:1] ];
+            [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil myTag:2]];
+            [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil myTag:3]];
         
         [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-        [guessThirdPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessThirdPartArray lastObject] partArray:thirdPartArray fristPartArray:secondPartArray myTag:1]];
-        [guessForthPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessForthPartArray lastObject] partArray:forthPartArray fristPartArray:secondPartArray myTag:2]];
-        [guessFivePartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessFivePartArray lastObject] partArray:fivePartArray fristPartArray:secondPartArray myTag:3]];
+        
+        
+//        [guessThirdPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessThirdPartArray lastObject] partArray:thirdPartArray fristPartArray:secondPartArray myTag:1]];
+//        [guessForthPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessForthPartArray lastObject] partArray:forthPartArray fristPartArray:secondPartArray myTag:2]];
+//        [guessFivePartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessFivePartArray lastObject] partArray:fivePartArray fristPartArray:secondPartArray myTag:3]];
     }
   
     
     //第一部分数据
     view1.itemArray=[[Utils sharedInstance] newPartData:secondPartArray specArray:[arrGuessSecondPartArray lastObject]];
     //第三部分数据
-    view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:[arrGuessThirdPartArray lastObject]];
+    view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
     //第四部分数据
-    view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:[arrGuessForthPartArray lastObject]];
+    view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:nil];
     //第五部分数据
-    view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:[arrGuessFivePartArray lastObject]];
+    view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
     
     
     
@@ -318,12 +321,22 @@
 
 -(void)setMoneyValue
 {
+    NSArray*array2=[guessThirdPartArray lastObject];
+    NSArray*array3=[guessForthPartArray lastObject];
+    NSArray*array4=[guessFivePartArray lastObject];
+    
+    NSString*guessStr2=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1];
+    NSString*guessStr3=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2];
+    NSString*guessStr4=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3];
+    
+   
+    
     NSString*str1=[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:YES];
-    NSString*str2=[[Utils sharedInstance] changeChina:[guessThirdPartArray lastObject] isWu:YES];
-    NSString*str3=[[Utils sharedInstance] changeChina:[guessForthPartArray lastObject] isWu:YES];
-    NSString*str4=[[Utils sharedInstance] changeChina:[guessFivePartArray lastObject] isWu:YES];
-    _nextTrendLab.text=[NSString stringWithFormat:@"        大路:%@           小路:%@",str1,str3];
-   _countTrendLab.text=[NSString stringWithFormat:@"大眼仔路:%@       小强路:%@",str2,str4];
+    NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
+    NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];
+    NSString*str4=[[Utils sharedInstance] changeChina:guessStr4 isWu:YES];
+    _nextTrendLab.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,[array3 firstObject],str3];
+   _countTrendLab.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",[array2 firstObject],str2,[array4 firstObject],str4];
 }
 
 
@@ -430,9 +443,9 @@
     [guessFivePartArray removeAllObjects];
     
     [arrGuessSecondPartArray removeAllObjects];
-    [arrGuessThirdPartArray removeAllObjects];
-    [arrGuessForthPartArray removeAllObjects];
-    [arrGuessFivePartArray removeAllObjects];
+//    [arrGuessThirdPartArray removeAllObjects];
+//    [arrGuessForthPartArray removeAllObjects];
+//    [arrGuessFivePartArray removeAllObjects];
 
     
 
