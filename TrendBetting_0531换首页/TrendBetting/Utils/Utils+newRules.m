@@ -176,13 +176,15 @@
 {
     ////
      NSString*guessStr=@"";
+    
     if (tempResultArr&&tempResultArr.count>0)
     {
         NSInteger lastCount=[[partArray lastObject] count];
+        NSInteger thd=[[[tempResultArr lastObject] componentsSeparatedByString:@"|"] count];
         for (int i=0; i<tempResultArr.count-1; i++)
         {
             NSArray*sparray=[tempResultArr[i] componentsSeparatedByString:@"|"];
-            NSString* str=[sparray lastObject];
+            NSString* str=sparray[thd-1];
             NSArray*array=partArray[[str intValue]];
             NSString*tempStr=array.count>lastCount?[array lastObject]:[partArray[[str intValue]+1] lastObject];
             

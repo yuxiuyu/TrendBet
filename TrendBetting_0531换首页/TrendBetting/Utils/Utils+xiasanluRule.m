@@ -22,17 +22,18 @@
         if ([[resultArray lastObject] isEqualToString:[lastArray lastObject]]||[[resultArray lastObject] isEqualToString:@""])
         {
             nameStr=[resultArray firstObject];
-            if ([nameStr containsString:@"连"])
+            if ([nameStr containsString:@"长连"])
             {
                 guessStr=[resultArray lastObject];
-                nameStr=[NSString stringWithFormat:@"连_%d",[[nameStr substringFromIndex:1] intValue]+1];
+                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:2],[[nameStr substringFromIndex:2] intValue]+1];
                 return @[nameStr,guessStr];
                 
             }
             else if([nameStr containsString:@"小"])
             {
                 NSArray*lastSecArray=fristPartArray[allcount-2];
-                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                NSLog(@"%ld  %@",[nameStr rangeOfString:@"路"].location,[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1]);
+                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1],[[nameStr substringFromIndex:[nameStr rangeOfString:@"路"].location+1] intValue]+1];
                  guessStr=[resultArray lastObject];
                 if (lastArray.count==lastSecArray.count)
                 {
@@ -40,13 +41,24 @@
                 }
                  return @[nameStr,guessStr];
             }
+            else if([nameStr containsString:@"长跳"])
+            {
+                NSArray*lastSecArray=fristPartArray[allcount-2];
+                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:2],[[nameStr substringFromIndex:2] intValue]+1];
+                guessStr=[resultArray lastObject];
+                if (lastArray.count==lastSecArray.count)
+                {
+                    guessStr=[lastSecArray lastObject];
+                }
+                return @[nameStr,guessStr];
+            }
             else
             {
                 if (lastArray.count==1)
                 {
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                      guessStr=[resultArray lastObject];
-                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
                     if (lastSecArray.count>1)
                     {
                        
@@ -58,7 +70,7 @@
                 }
                 else if(lastArray.count>2)
                 {
-                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:3],[[nameStr substringFromIndex:3] intValue]+1];
+                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
                     guessStr=@"";
                     return @[nameStr,guessStr];
                 }
@@ -101,12 +113,12 @@
             if (isLast)
             {
                 guessStr=[fristPartArray[allcount-2] lastObject];
-                nameStr=yxyTag==0?@"跳_":@"多带_";
+                nameStr=yxyTag==0?@"长跳":@"不规则带一";
                 thdCount=allcount-4;
                 guessStr=[fristPartArray[allcount-2] lastObject];
                 if (yxyTag==1&&fristPartArray.count>4&&[fristPartArray[allcount-5] count]==1)
                 {
-                    nameStr=@"一带_";
+                    nameStr=@"一带不规则";
                     thdCount=allcount-5;
                 }
                 
@@ -118,7 +130,7 @@
             if (lastSecArray.count==2)
             {
                 guessStr=[lastSecArray lastObject];
-                nameStr=[NSString stringWithFormat:@"小%ld_",lastSecArray.count];
+                nameStr=[NSString stringWithFormat:@"小%ld路",lastSecArray.count];
                 thdCount=allcount-2;
 
             }
@@ -129,7 +141,7 @@
             if (lastArray.count>3)
             {
                  guessStr=[lastArray lastObject];
-                 nameStr=@"连_";
+                 nameStr=@"长连";
                  thdCount=allcount-1;
             }
             
@@ -140,7 +152,7 @@
                 if (lastSecArray.count==lastArray.count)
                 {
                     guessStr=[lastSecArray lastObject];
-                    nameStr=[NSString stringWithFormat:@"小%ld_",lastSecArray.count];
+                    nameStr=[NSString stringWithFormat:@"小%ld路",lastSecArray.count];
                     thdCount=allcount-2;
                 }
 
