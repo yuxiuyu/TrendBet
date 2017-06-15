@@ -820,7 +820,7 @@
                                                 <rect key="frame" x="0.0" y="91" width="308" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="庄 -" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gT7-f1-hSL">
-                                                        <rect key="frame" x="24.5" y="4.5" width="29.5" height="20.5"/>
+                                                        <rect key="frame" x="24" y="4" width="30" height="21"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" red="0.8980392157" green="0.12941176469999999" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -847,7 +847,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="閑 -" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yl-8f-wNV">
-                                                        <rect key="frame" x="174.5" y="4.5" width="29.5" height="20.5"/>
+                                                        <rect key="frame" x="174" y="4" width="30" height="21"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" red="0.16375570619999999" green="0.1637334127" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1037,13 +1037,19 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="        大路:无                 小路:无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ln-In-CMx">
-                                        <rect key="frame" x="15" y="40" width="200.5" height="18"/>
+                                        <rect key="frame" x="15" y="52" width="201" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大眼仔路:无             小强路:无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjF-Wi-gYG">
-                                        <rect key="frame" x="15" y="63" width="198.5" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="大眼仔路:无             小强路:无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjF-Wi-gYG">
+                                        <rect key="frame" x="15" y="71" width="198.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="        文字:无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBZ-Bo-lh3">
+                                        <rect key="frame" x="15" y="32" width="82.5" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1053,19 +1059,21 @@
                                 <constraints>
                                     <constraint firstItem="a5G-mC-CL3" firstAttribute="top" secondItem="JzF-uZ-Na3" secondAttribute="top" id="6Tb-15-Rcv"/>
                                     <constraint firstItem="unq-wU-t9J" firstAttribute="leading" secondItem="JzF-uZ-Na3" secondAttribute="leading" id="AXv-lY-8FN"/>
-                                    <constraint firstItem="bjF-Wi-gYG" firstAttribute="top" secondItem="3Ln-In-CMx" secondAttribute="bottom" constant="5" id="BZG-Bp-nAb"/>
+                                    <constraint firstItem="bjF-Wi-gYG" firstAttribute="top" secondItem="3Ln-In-CMx" secondAttribute="bottom" constant="2" id="BZG-Bp-nAb"/>
                                     <constraint firstAttribute="bottom" secondItem="2Xm-1r-gDV" secondAttribute="bottom" constant="5" id="BgD-rP-rgN"/>
                                     <constraint firstItem="wrw-HT-msQ" firstAttribute="leading" secondItem="V5B-Tm-1tK" secondAttribute="trailing" constant="20" id="JfZ-p6-JMj"/>
+                                    <constraint firstItem="3Ln-In-CMx" firstAttribute="top" secondItem="CBZ-Bo-lh3" secondAttribute="bottom" constant="2" id="OJo-9e-Hp2"/>
                                     <constraint firstAttribute="trailing" secondItem="2Xm-1r-gDV" secondAttribute="trailing" constant="40" id="WH7-17-a4R"/>
                                     <constraint firstAttribute="trailing" secondItem="a5G-mC-CL3" secondAttribute="trailing" id="Xep-Ms-BM3"/>
                                     <constraint firstItem="jtQ-dg-UVJ" firstAttribute="leading" secondItem="wrw-HT-msQ" secondAttribute="trailing" constant="20" id="YID-Yx-Wyn"/>
-                                    <constraint firstItem="3Ln-In-CMx" firstAttribute="top" secondItem="a5G-mC-CL3" secondAttribute="bottom" constant="10" id="ZT3-gm-LuG"/>
                                     <constraint firstAttribute="height" constant="90" id="aNx-1I-CNY"/>
                                     <constraint firstItem="2Xm-1r-gDV" firstAttribute="leading" secondItem="jtQ-dg-UVJ" secondAttribute="trailing" constant="20" id="bhr-Uq-k9c"/>
                                     <constraint firstAttribute="bottom" secondItem="V5B-Tm-1tK" secondAttribute="bottom" constant="5" id="dMA-hI-0jr"/>
                                     <constraint firstAttribute="bottom" secondItem="jtQ-dg-UVJ" secondAttribute="bottom" constant="5" id="g6C-3y-bwg"/>
                                     <constraint firstAttribute="bottom" secondItem="wrw-HT-msQ" secondAttribute="bottom" constant="5" id="gvl-8j-znd"/>
+                                    <constraint firstItem="CBZ-Bo-lh3" firstAttribute="top" secondItem="a5G-mC-CL3" secondAttribute="bottom" constant="2" id="kyN-Ew-HmY"/>
                                     <constraint firstItem="unq-wU-t9J" firstAttribute="top" secondItem="JzF-uZ-Na3" secondAttribute="top" id="mYc-C1-TIl"/>
+                                    <constraint firstItem="CBZ-Bo-lh3" firstAttribute="leading" secondItem="JzF-uZ-Na3" secondAttribute="leading" constant="15" id="oGc-cF-A4E"/>
                                     <constraint firstItem="a5G-mC-CL3" firstAttribute="leading" secondItem="JzF-uZ-Na3" secondAttribute="leading" id="r8S-wL-aTj"/>
                                     <constraint firstAttribute="trailing" secondItem="unq-wU-t9J" secondAttribute="trailing" id="toH-0h-IJ9"/>
                                     <constraint firstItem="3Ln-In-CMx" firstAttribute="leading" secondItem="JzF-uZ-Na3" secondAttribute="leading" constant="15" id="xJw-S0-Ceq"/>
@@ -1087,14 +1095,15 @@
                     <navigationItem key="navigationItem" id="SxB-fa-lwa"/>
                     <connections>
                         <outlet property="answerKeyTextView" destination="VKz-5l-R1S" id="Z4N-kU-auB"/>
+                        <outlet property="areaTrendLab1" destination="CBZ-Bo-lh3" id="s5x-GA-VKK"/>
+                        <outlet property="areaTrendLab2" destination="3Ln-In-CMx" id="2Ir-gR-8Ht"/>
+                        <outlet property="areaTrendLab3" destination="bjF-Wi-gYG" id="h5q-9E-tW8"/>
                         <outlet property="bgMemoView" destination="y26-zm-InC" id="tYL-uy-QYl"/>
-                        <outlet property="countTrendLab" destination="bjF-Wi-gYG" id="jvx-oo-13M"/>
                         <outlet property="fiveView" destination="Vf5-hw-HJi" id="SvA-tO-Cqt"/>
                         <outlet property="fourthView" destination="zeb-qy-6iY" id="Icz-Ur-kM1"/>
                         <outlet property="fristCollection" destination="Z9l-p1-nNu" id="OPh-xX-a3b"/>
                         <outlet property="memoLab" destination="5Rw-Zy-zLE" id="H3T-yf-cxh"/>
                         <outlet property="myKeyTextView" destination="vy7-af-Z7R" id="EjP-ue-zrS"/>
-                        <outlet property="nextTrendLab" destination="3Ln-In-CMx" id="gsh-t2-Lqy"/>
                         <outlet property="secondView" destination="yEq-KH-8hz" id="a1F-Rf-7oO"/>
                         <outlet property="thirdView" destination="Sa5-0Z-OEg" id="g3F-Ok-4xk"/>
                         <outlet property="totalWinLab" destination="58n-vd-Pwr" id="j20-Va-mak"/>
@@ -1193,7 +1202,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="620" y="2150"/>
+            <point key="canvasLocation" x="1075" y="2478"/>
         </scene>
         <!--resultData-->
         <scene sceneID="UEW-nz-Ube">

@@ -16,12 +16,13 @@
 @property (weak, nonatomic) IBOutlet UIView *fiveView;
 
 @property (weak, nonatomic) IBOutlet UILabel *memoLab;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *winOrLoseLab;
-@property (weak, nonatomic) IBOutlet UILabel *nextTrendLab;
 @property (weak, nonatomic) IBOutlet UILabel *totalWinLab;
-@property (weak, nonatomic) IBOutlet UILabel *countTrendLab;
+//@property (weak, nonatomic) IBOutlet UILabel *nextTrendLab;
+
+@property (weak, nonatomic) IBOutlet UILabel *areaTrendLab1;
+@property (weak, nonatomic) IBOutlet UILabel *areaTrendLab2;
+@property (weak, nonatomic) IBOutlet UILabel *areaTrendLab3;
 
 - (IBAction)BPTBtnAction:(id)sender;
 - (IBAction)reduceBtnAction:(id)sender;

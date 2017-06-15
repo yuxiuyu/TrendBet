@@ -179,5 +179,60 @@
 
     return @[nameStr,guessStr];
 }
-
+//搜索第一区域的规则
+-(NSArray*)searchFirstRule:(NSArray*)listArray
+{
+    NSString*guessStr=@"";
+    NSString*nameStr=@"";
+    NSInteger allCount=listArray.count;
+    if (allCount>17)
+    {
+       
+        NSInteger goCount=2;
+        NSInteger thd=allCount%6;
+        NSUInteger columThd=allCount/6;
+        NSString*lastStr=listArray[6*(columThd-1)+thd];
+        NSString*secLastStr=listArray[6*(columThd-2)+thd];
+        BOOL isGO=NO;//长跳
+        guessStr=secLastStr;
+        if ([lastStr isEqualToString:secLastStr])
+        {
+            isGO=YES;//长联
+        }
+        for (NSInteger i=columThd-3; i>-1; i--)
+        {
+            NSString*tepStr=listArray[6*i+thd];
+            if (isGO)
+            {
+                if([guessStr isEqualToString:tepStr])
+                {
+                    goCount++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                if (![guessStr isEqualToString:tepStr])
+                {
+                    goCount++;
+                    guessStr=tepStr;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        if (goCount>=3&&![guessStr isEqualToString:@"T"])
+        {
+            guessStr=secLastStr;
+            nameStr=[NSString stringWithFormat:@"%@%ld",isGO?@"长连":@"长跳",goCount];
+        }
+    }
+    
+    return @[nameStr,guessStr];
+}
 @end

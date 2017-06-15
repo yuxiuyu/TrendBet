@@ -10,4 +10,6 @@
 
 @interface Utils (xiasanluRule)
 -(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray;
+//搜索第一区域的规则
+-(NSArray*)searchFirstRule:(NSArray*)listArray;
 @end

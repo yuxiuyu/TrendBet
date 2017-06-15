@@ -31,15 +31,14 @@
     NSMutableArray*forthPartArray;//4
     NSMutableArray*fivePartArray;//6
     
+    NSMutableArray*guessFirstPartArray;
     NSMutableArray*guessSecondPartArray;
     NSMutableArray*guessThirdPartArray;
     NSMutableArray*guessForthPartArray;
     NSMutableArray*guessFivePartArray;
     
     NSMutableArray*arrGuessSecondPartArray;
-//    NSMutableArray*arrGuessThirdPartArray;
-//    NSMutableArray*arrGuessForthPartArray;
-//    NSMutableArray*arrGuessFivePartArray;
+
 
     
     
@@ -58,7 +57,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -107,16 +106,13 @@
     forthPartArray=[[NSMutableArray alloc]init];
     fivePartArray=[[NSMutableArray alloc]init];
     
+    guessFirstPartArray=[[NSMutableArray alloc]init];
     guessSecondPartArray=[[NSMutableArray alloc]init];
     guessThirdPartArray=[[NSMutableArray alloc]init];
     guessForthPartArray=[[NSMutableArray alloc]init];
     guessFivePartArray=[[NSMutableArray alloc]init];
     
     arrGuessSecondPartArray=[[NSMutableArray alloc]init];
-//    arrGuessThirdPartArray=[[NSMutableArray alloc]init];
-//    arrGuessForthPartArray=[[NSMutableArray alloc]init];
-//    arrGuessFivePartArray=[[NSMutableArray alloc]init];
-    
 
 }
 -(void)initFiveView
@@ -145,7 +141,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -165,34 +161,33 @@
 - (IBAction)BPTBtnAction:(id)sender
 {
     UIButton*btn=(UIButton*)sender;
-    if (btn.tag==102)//和
+    NSString*str=@"";
+    if (btn.tag==100)
     {
-        [listArray addObject:@"T"];
-        view2.itemArray=listArray;
+        str=@"R";//庄
     }
-    else
+    else if (btn.tag==101)
     {
-        NSString*str=@"";
-        if (btn.tag==100)
-        {
-            str=@"R";//庄
-        }
-        else if (btn.tag==101)
-        {
-            str=@"B";//闲
-        }
-        [listArray addObject:str];
-        view2.itemArray=listArray;
+        str=@"B";//闲
+    }
+    else if(btn.tag==102)
+    {
+         str=@"T";//和
+    }
+    [listArray addObject:str];
+    view2.itemArray=listArray;
+    [guessFirstPartArray addObject:[[Utils sharedInstance] searchFirstRule:listArray]];
+
+    if (btn.tag!=102)
+    {
         [self setData:str];
-        
         //下一把是庄 闲的结果
         sanRoadGuessArray=[[NSMutableArray alloc]init];
         [self guessSanRoad:@"R"];
         [self guessSanRoad:@"B"];
         [self setSanRoadImageView];
-        //         NSLog(@"yyyyyyyyyyyyyyyy++++++++%@",sanRoadGuessArray);
-        
     }
+    [self setMoneyValue];
 }
 
 
@@ -204,6 +199,7 @@
         NSString *str=[listArray lastObject];
         [listArray removeLastObject];
         view2.itemArray=listArray;
+        [guessFirstPartArray removeLastObject];
         if (![str isEqualToString:@"T"])
         {
             [self setData:@"reduce"];
@@ -213,6 +209,7 @@
             [self guessSanRoad:@"B"];
             [self setSanRoadImageView];
         }
+         [self setMoneyValue];
         
     }
 }
@@ -248,9 +245,6 @@
         [guessFivePartArray removeLastObject];
         
         [arrGuessSecondPartArray removeLastObject];
-//        [arrGuessThirdPartArray removeLastObject];
-//        [arrGuessForthPartArray removeLastObject];
-//        [arrGuessFivePartArray removeLastObject];
 
     }
     else
@@ -293,11 +287,6 @@
             [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
         
            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-        
-        
-//        [guessThirdPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessThirdPartArray lastObject] partArray:thirdPartArray fristPartArray:secondPartArray myTag:1]];
-//        [guessForthPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessForthPartArray lastObject] partArray:forthPartArray fristPartArray:secondPartArray myTag:2]];
-//        [guessFivePartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessFivePartArray lastObject] partArray:fivePartArray fristPartArray:secondPartArray myTag:3]];
     }
   
     
@@ -310,10 +299,7 @@
     //第五部分数据
     view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
     
-    
-    
-    
-    [self setMoneyValue];
+   
     
     
     
@@ -321,6 +307,7 @@
 
 -(void)setMoneyValue
 {
+    NSArray*array0=[guessFirstPartArray lastObject];
     NSArray*array2=[guessThirdPartArray lastObject];
     NSArray*array3=[guessForthPartArray lastObject];
     NSArray*array4=[guessFivePartArray lastObject];
@@ -330,7 +317,7 @@
     NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
     
    
-    
+    NSString*str0=[[Utils sharedInstance] changeChina:[array0 lastObject] isWu:YES];
     NSString*str1=[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:YES];
     NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
     NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];
@@ -339,8 +326,9 @@
     NSString*nameStr2=[str2 isEqualToString:@"无"]?@"":[array2 firstObject];
     NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
     NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
-    _nextTrendLab.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
-   _countTrendLab.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
+    _areaTrendLab1.text=[NSString stringWithFormat:@"        文字:%@%@",array0[0],str0];
+    _areaTrendLab2.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
+    _areaTrendLab3.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
 }
 
 
@@ -472,9 +460,9 @@
     }
     
     ///
-  
-    _nextTrendLab.text=@"大路:无             小路:无";
-    _countTrendLab.text=@"大眼仔路:无          小强路:无";
+    _areaTrendLab1.text=@"文字:无";
+    _areaTrendLab2.text=@"大路:无             小路:无";
+    _areaTrendLab3.text=@"大眼仔路:无          小强路:无";
 //    _memoLab.text=[[Utils sharedInstance] changeChina:@"" isWu:NO];
 //    _totalWinLab.text=@"总收益:0.00";
 //    _winOrLoseLab.text=@"输:0    赢:0";
