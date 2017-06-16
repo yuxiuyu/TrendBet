@@ -809,8 +809,8 @@
                 removeCount++;
             }
         }
-        [allGuessArray addObject:[[Utils sharedInstance] setGuessValue:guessArr]];
-        [countAllGuessArray addObject:[[Utils sharedInstance] setGuessValue:countArr]];
+        [allGuessArray addObject:[[Utils sharedInstance] setGuessValue:guessArr isLength:YES]];
+        [countAllGuessArray addObject:[[Utils sharedInstance] setGuessValue:countArr isLength:YES]];
         [lengthAllGuessArray addObject:[[Utils sharedInstance] seacherLengthRule:countArr]];
     }
     

@@ -21,7 +21,7 @@
 #pragma mark--------------根据有规律 猜出来的值 反推猜出来的值
 -(NSString*)backRuleSeacher:(NSArray*)fristPartArray ruleStr:(NSString*)ruleStr myTag:(NSInteger)myTag;
 #pragma mark------四个区域得出的趋势 相同趋势长度相加 得出最终猜出的结果
--(NSString*)setGuessValue:(NSArray*)resultArray;
+-(NSString*)setGuessValue:(NSArray*)resultArray isLength:(BOOL)isLength;
 -(NSString*)seacherLengthRule:(NSArray*)array;
 #pragma mark------将得到的（一 三 四 五）区域 一个个长的数组  塞到对应的坐标上
 -(NSMutableArray*)ThirdPartData:(NSMutableArray*)dataArray;

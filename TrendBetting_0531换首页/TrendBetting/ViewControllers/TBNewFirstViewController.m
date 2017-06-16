@@ -37,8 +37,10 @@
     NSMutableArray*guessForthPartArray;
     NSMutableArray*guessFivePartArray;
     
+    
     NSMutableArray*arrGuessSecondPartArray;
 
+    NSMutableArray*allGuessArray;
 
     
     
@@ -113,6 +115,7 @@
     guessFivePartArray=[[NSMutableArray alloc]init];
     
     arrGuessSecondPartArray=[[NSMutableArray alloc]init];
+     allGuessArray=[[NSMutableArray alloc]init];
 
 }
 -(void)initFiveView
@@ -245,7 +248,7 @@
         [guessFivePartArray removeLastObject];
         
         [arrGuessSecondPartArray removeLastObject];
-
+        [allGuessArray removeLastObject];
     }
     else
     {
@@ -275,19 +278,18 @@
         forthPartArray=[[Utils sharedInstance] setNewData:secondPartArray startCount:2 dataArray:forthPartArray];
         fivePartArray=[[Utils sharedInstance]  setNewData:secondPartArray startCount:3 dataArray:fivePartArray];
         
+        [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
+        [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
+        [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
+        [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
+        
+        [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
+         [self changeArea:guessFirstPartArray.count-1];
+        
     }
 
 
     
-    if (![resultStr isEqualToString:@"reduce"])
-    {
-            [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
-            [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
-            [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
-            [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
-        
-           [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-    }
   
     
     //第一部分数据
@@ -304,7 +306,31 @@
     
     
 }
+-(void)changeArea:(NSInteger)indexp
+{
+   
+    NSString*lastGuessStr=[allGuessArray lastObject];
+    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+    if (lastGuessStr.length>0||secGuessLastStr.length>0)
+    {
+        for (NSInteger i=indexp; i<guessFirstPartArray.count; i++)
+        {
+            if (i==0)
+            {
+                [allGuessArray removeAllObjects];
+            }
+            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[guessFirstPartArray[i],guessSecondPartArray[i],guessThirdPartArray[i],guessForthPartArray[i],guessFivePartArray[i]]];
+            NSString*str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            [allGuessArray addObject:str];
+            
+        }
 
+    }
+    
+    
+    [self setMoneyValue];
+    
+}
 -(void)setMoneyValue
 {
     NSArray*array0=[guessFirstPartArray lastObject];
@@ -435,6 +461,7 @@
     [guessFivePartArray removeAllObjects];
     
     [arrGuessSecondPartArray removeAllObjects];
+     [allGuessArray removeAllObjects];
 //    [arrGuessThirdPartArray removeAllObjects];
 //    [arrGuessForthPartArray removeAllObjects];
 //    [arrGuessFivePartArray removeAllObjects];
