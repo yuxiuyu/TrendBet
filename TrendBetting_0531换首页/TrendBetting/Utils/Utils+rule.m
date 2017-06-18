@@ -100,7 +100,7 @@
             }
             else
             {
-                [allGuessArray addObject:[self setGuessValue:[self changeArea:guessArr]]];
+                [allGuessArray addObject:[self setGuessValue:[self changeArea:guessArr] isLength:YES]];
             }
 
 
@@ -168,7 +168,7 @@
                     [sameArray addObject:array[i]];
                 }
             }
-            maxStr=[[Utils sharedInstance] setGuessValue:sameArray];
+            maxStr=[[Utils sharedInstance] setGuessValue:sameArray isLength:YES];
         }
         
 //    }
@@ -494,7 +494,7 @@
     return str;
 }
 #pragma mark------四个区域得出的趋势 相同趋势长度相加 得出最终猜出的结果
--(NSString*)setGuessValue:(NSArray*)resultArray
+-(NSString*)setGuessValue:(NSArray*)resultArray isLength:(BOOL)isLength
 {
     NSString*guessStr=@"";
     NSInteger countR=0;
@@ -515,17 +515,32 @@
             countB=countB+str.length;
         }
     }
-    if (countB<countR)///R
+    if (isLength)
     {
-        guessStr = @"R";
+        if (countB<countR)///R
+        {
+            guessStr = @"R";
+        }
+        else if(countB>countR)////B
+        {
+            guessStr = @"B";
+        }
+        
+        guessStr=[self getReverseStr:guessStr];//反向
+        guessStr=[self getRBSelected:guessStr];//庄闲选择
     }
-    else if(countB>countR)////B
+    else
     {
-        guessStr = @"B";
+        if (countB>0&&countR==0)
+        {
+             guessStr = @"B";
+        }
+        else if (countR>0&&countB==0)
+        {
+            guessStr = @"R";
+        }
     }
-    
-    guessStr=[self getReverseStr:guessStr];//反向
-    guessStr=[self getRBSelected:guessStr];//庄闲选择
+  
     return guessStr;
 }
 

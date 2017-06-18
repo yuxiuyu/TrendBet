@@ -12,4 +12,5 @@
 -(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray;
 //搜索第一区域的规则
 -(NSArray*)searchFirstRule:(NSArray*)listArray;
+-(NSArray*)xiasanluJudgeGuessRightandWrong:(NSArray*)listArray allGuessArray:(NSArray*)allGuessArray;
 @end

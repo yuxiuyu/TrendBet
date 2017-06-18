@@ -311,24 +311,25 @@
    
     NSString*lastGuessStr=[allGuessArray lastObject];
     NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+    NSString*str=@"";
     if (lastGuessStr.length>0||secGuessLastStr.length>0)
     {
-        for (NSInteger i=indexp; i<guessFirstPartArray.count; i++)
-        {
-            if (i==0)
-            {
-                [allGuessArray removeAllObjects];
-            }
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[guessFirstPartArray[i],guessSecondPartArray[i],guessThirdPartArray[i],guessForthPartArray[i],guessFivePartArray[i]]];
-            NSString*str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
-            [allGuessArray addObject:str];
-            
-        }
+        NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+        NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+        NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+        
+        NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+        NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+        NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
 
+            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[guessFirstPartArray[indexp] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
+            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
     }
+      [allGuessArray addObject:str];
     
     
-    [self setMoneyValue];
+    
+//    [self setMoneyValue];
     
 }
 -(void)setMoneyValue
@@ -352,9 +353,18 @@
     NSString*nameStr2=[str2 isEqualToString:@"无"]?@"":[array2 firstObject];
     NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
     NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
+    
+    NSArray* resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
+    
     _areaTrendLab1.text=[NSString stringWithFormat:@"        文字:%@%@",array0[0],str0];
     _areaTrendLab2.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
     _areaTrendLab3.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
+     _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
+    if (_memoLab.text.length>0)
+    {
+       _memoLab.text=[NSString stringWithFormat:@"%@  %@",resultArray[5],_memoLab.text];
+    }
+
 }
 
 
