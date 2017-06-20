@@ -20,4 +20,6 @@
 
 -(NSDictionary*)getDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr ;
 -(NSDictionary*)getGroupDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isContinue:(BOOL)isContinue;
+/////////对读取到的新的规则数据进行处理
+-(NSDictionary*)getNewRuleDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr;
 @end

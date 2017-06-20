@@ -30,8 +30,7 @@
     self.title=@"房间";
     self.edgesForExtendedLayout=UIRectEdgeNone;
     
-//    UIBarButtonItem*leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
-//    self.navigationItem.leftBarButtonItem=leftItem;
+
     
     self.navigationController.navigationBarHidden=NO;
     houseMoneyDic=[[NSMutableDictionary alloc]init];
@@ -40,8 +39,7 @@
     thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
     [thread start];
     
-   
-//    [self getDataRead];
+
     
     // Do any additional setup after loading the view.
 }

@@ -8,7 +8,7 @@
 
 #import "Utils+fileReadAndWrite.h"
 #import "TBFileRoomResult_entry.h"
-
+#import "Utils+xiasanluRule.h"
 @implementation Utils (fileReadAndWrite)
 /////保存我的数据
 -(BOOL)saveData:(NSDictionary*)dic  saveArray:(NSArray*)saveArray filePathStr:(NSString*)filePathStr
@@ -187,6 +187,7 @@
     return timeDic;
     
 }
+/////////对读取到的组数据进行处理
 -(NSDictionary*)getGroupDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isContinue:(BOOL)isContinue
 {
     TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:[NSString stringWithFormat:@"%@/%@",monthStr,dayNameStr]]];
@@ -217,6 +218,49 @@
         }
     }
   
+    
+    return timeDic;
+    
+}
+/////////对读取到的新的规则数据进行处理
+
+-(NSDictionary*)getNewRuleDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr
+{
+    TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:[NSString stringWithFormat:@"%@/%@",monthStr,dayNameStr]]];
+    NSMutableArray*daySumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableDictionary*timeDic=[[NSMutableDictionary alloc]init];
+    if (roomEntry.roomArr.count>0)
+    {
+        
+        TBFileRoomResult_roomArr*room=roomEntry.roomArr[0];
+        TBFileRoomResult_timeArr*time=room.timeArr[0];
+        
+        for (int i=0; i<time.dataArr.count; i++)
+        {
+            TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
+            NSArray*array=[[Utils sharedInstance] getNewFristArray:tempDataArr.result];
+            [timeDic setObject:array forKey:[NSString stringWithFormat:@"%d",i+1]];
+            for (int j=0; j<daySumWinCountArray.count; j++)
+            {
+                NSString*str=[NSString stringWithFormat:@"%d",[daySumWinCountArray[j] intValue]+[array[j] intValue]];
+                if (j==5||j==7)
+                {
+                    str=[NSString stringWithFormat:@"%0.2f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                }
+                if (j==8)
+                {
+                    str=[NSString stringWithFormat:@"%0.3f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                }
+                
+                [daySumWinCountArray replaceObjectAtIndex:j withObject:str];
+                
+            }
+            
+        }
+        
+        
+    }
+    [timeDic setObject:daySumWinCountArray forKey:@"daycount"];
     
     return timeDic;
     

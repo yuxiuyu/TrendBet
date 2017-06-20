@@ -39,6 +39,7 @@
 #define SAVE_RBSELECT @"rbSelected"//庄闲选择
 #define SAVE_REVERSESELECT @"reverseSelected"//正反选择
 #define SAVE_BackMoney @"backMoney"//返利基数
+#define SAVE_isGroupRule @"isGroupData"//是否是新的规则
 
 #define Reduce_Money 0.05  //抽水
 //#define back_Money 0.005  //返利

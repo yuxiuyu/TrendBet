@@ -25,7 +25,6 @@
     NSMutableArray*listArray;//2
 
     
-    
     NSMutableArray*secondPartArray;//1
     NSMutableArray*thirdPartArray;//3
     NSMutableArray*forthPartArray;//4
@@ -59,7 +58,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -144,7 +143,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -284,10 +283,10 @@
         [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
         
         [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-         [self changeArea:guessSecondPartArray.count-1];
+        
         
     }
-
+    [self changeArea:guessSecondPartArray.count-1];
 
     
   
@@ -322,8 +321,8 @@
         NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
         NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
 
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[guessFirstPartArray[indexp] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
-            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+        NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
+        str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
     }
       [allGuessArray addObject:str];
     
@@ -356,9 +355,15 @@
     
     NSArray* resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
     
-    _areaTrendLab1.text=[NSString stringWithFormat:@"        文字:%@%@",array0[0],str0];
-    _areaTrendLab2.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
-    _areaTrendLab3.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
+    
+//    _areaTrendLab2.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
+//    _areaTrendLab3.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
+//    _areaTrendLab1.text=[NSString stringWithFormat:@"        文字:%@%@",array0[0],str0];
+    
+    _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
+    _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
+    _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];
+
      _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
     _totalWinLab.text=[NSString stringWithFormat:@"总收益:%@",resultArray[2]];
 //    NSLog(@"++++++%@",[resultArray lastObject]);
@@ -500,9 +505,11 @@
     }
     
     ///
-    _areaTrendLab1.text=@"文字:无";
-    _areaTrendLab2.text=@"大路:无             小路:无";
-    _areaTrendLab3.text=@"大眼仔路:无          小强路:无";
+  
+
+    _areaTrendLab2.text=[NSString stringWithFormat:@"大路:无          大眼仔路:无"];
+    _areaTrendLab3.text=[NSString stringWithFormat:@"文字:无          小路:无"];
+    _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:无"];
     _memoLab.text=[[Utils sharedInstance] changeChina:@"" isWu:NO];
     _totalWinLab.text=@"总收益:0.00";
     _winOrLoseLab.text=@"输:0    赢:0";
@@ -628,22 +635,19 @@
     
 }
 
-- (IBAction)resultLookBtnAction:(id)sender
-{
-    [self performSegueWithIdentifier:@"showResultVC" sender:nil];
-}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"showResultVC"])
-    {
-        UIViewController*vc=[segue destinationViewController];
-        [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    // Get the new view controller using [segue destinationViewController].
+//    // Pass the selected object to the new view controller.
+//    if ([segue.identifier isEqualToString:@"showResultVC"])
+//    {
+//        UIViewController*vc=[segue destinationViewController];
+//        [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
+//    }
+//}
 
 - (IBAction)checkBtnAction:(id)sender
 {

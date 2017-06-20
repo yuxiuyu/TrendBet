@@ -9,7 +9,6 @@
 #import "TBBaseViewController.h"
 #import "Utils+rule.h"
 @interface TBAllRoomViewController : TBBaseViewController
-//@property(assign,nonatomic)TBTrendCode selectedTrendCode;
 @end
 @interface roomCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *roomLab;
