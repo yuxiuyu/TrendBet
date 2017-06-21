@@ -86,15 +86,13 @@
             
             ////////////猜的数据
            
-            [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
+            [arrGuessSecondPartArray addObject:[self seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
             [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
             [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
             [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
             
             [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
          
-            
-            
         }
         
         [newListArray addObject:resultStr];
@@ -409,7 +407,7 @@
         {
             if (i-Tcount>2)
             {
-                NSString*guessStr=allGuessArray[i-Tcount-1];
+                NSString*guessStr=allGuessArray[i-1];
                 if (guessStr.length>0)
                 {
 //                    nextMoney = [moneyArr[goGuessYes%moneyArr.count] floatValue];

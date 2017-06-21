@@ -202,6 +202,7 @@
         [listArray removeLastObject];
         view2.itemArray=listArray;
         [guessFirstPartArray removeLastObject];
+        [allGuessArray removeLastObject];
         if (![str isEqualToString:@"T"])
         {
             [self setData:@"reduce"];
@@ -247,7 +248,7 @@
         [guessFivePartArray removeLastObject];
         
         [arrGuessSecondPartArray removeLastObject];
-        [allGuessArray removeLastObject];
+      
     }
     else
     {
@@ -286,7 +287,7 @@
         
         
     }
-    [self changeArea:guessSecondPartArray.count-1];
+//    [self changeArea:guessSecondPartArray.count-1];
 
     
   
@@ -333,6 +334,8 @@
 }
 -(void)setMoneyValue
 {
+    [self changeArea:guessSecondPartArray.count-1];
+    
     NSArray*array0=[guessFirstPartArray lastObject];
     NSArray*array2=[guessThirdPartArray lastObject];
     NSArray*array3=[guessForthPartArray lastObject];
@@ -356,9 +359,7 @@
     NSArray* resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
     
     
-//    _areaTrendLab2.text=[NSString stringWithFormat:@"        大路:%@           小路:%@%@",str1,nameStr3,str3];
-//    _areaTrendLab3.text=[NSString stringWithFormat:@"大眼仔路:%@%@       小强路:%@%@",nameStr2,str2,nameStr4,str4];
-//    _areaTrendLab1.text=[NSString stringWithFormat:@"        文字:%@%@",array0[0],str0];
+
     
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
