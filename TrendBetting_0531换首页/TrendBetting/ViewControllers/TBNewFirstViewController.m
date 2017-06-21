@@ -58,7 +58,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -143,7 +143,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -311,7 +311,7 @@
     NSString*lastGuessStr=[allGuessArray lastObject];
     NSString*secGuessLastStr=[guessSecondPartArray lastObject];
     NSString*str=@"";
-    if (lastGuessStr.length>0||secGuessLastStr.length>0)
+    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
     {
         NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
         NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];

@@ -106,7 +106,7 @@
         NSString*lastGuessStr=[allGuessArray lastObject];
         NSString*secGuessLastStr=[guessSecondPartArray lastObject];
         NSString*str=@"";
-        if (lastGuessStr.length>0||secGuessLastStr.length>0)
+       if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
         {
             NSInteger indexp=guessSecondPartArray.count-1;
 
