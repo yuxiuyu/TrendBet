@@ -37,5 +37,6 @@
 @property (weak, nonatomic) IBOutlet UIView *bgMemoView;
 @property (weak, nonatomic) IBOutlet UITextView *myKeyTextView;
 @property (weak, nonatomic) IBOutlet UITextView *answerKeyTextView;
+@property (weak, nonatomic) IBOutlet UILabel *versionLab;
 - (IBAction)checkBtnAction:(id)sender;
 @end

@@ -74,6 +74,8 @@
 -(void)showKeyView
 {
     _bgMemoView.frame=self.view.frame;
+    NSDictionary*appInfoDic=[[NSBundle mainBundle] infoDictionary];
+    _versionLab.text=[NSString stringWithFormat:@"当前版本:ver.%@",appInfoDic[@"CFBundleVersion"]];
     [_answerKeyTextView borderColor:[UIColor lightGrayColor]];
     [_answerKeyTextView circle:5.0f];
     isfristCreate=YES;

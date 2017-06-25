@@ -22,7 +22,7 @@
         NSArray*lastStrArr=[lastStr componentsSeparatedByString:@"|"];
         NSArray*nextStrArr=[nextStr componentsSeparatedByString:@"|"];
         
-        if ([[lastStrArr firstObject] intValue]==[[nextStrArr lastObject] intValue]+1)
+        if ([[lastStrArr firstObject] intValue]==[[nextStrArr lastObject] intValue]+1)//形成闭环了
         {
             if ([lastStrArr containsObject:[NSString stringWithFormat:@"%ld",partArray.count-1]])
             {
@@ -101,21 +101,23 @@
         for (NSString*str in tempResultArr)
         {
            
-            position=[str intValue]-1;
-            if (position>=0&&![str containsString:[NSString stringWithFormat:@"%ld",begin]])
+            NSArray*tepArr=[str componentsSeparatedByString:@"|"];
+            position=[[tepArr firstObject] intValue]-1;
+//            if (position>=0&&![str containsString:[NSString stringWithFormat:@"%ld",begin]])
+            if (position>=0)
             {
                 NSArray*array1=partArray[position];
                 NSArray*array2=partArray[begin];
                 if (array1.count==array2.count)
                 {
-                    if (resultArr.count>0)
-                    {
-                        NSString*lastStr=[resultArr lastObject];
-                        if ([lastStr containsString:[NSString stringWithFormat:@"%d",position]])
-                        {
-                            continue;
-                        }
-                    }
+//                    if (resultArr.count>0)
+//                    {
+//                        NSString*lastStr=[resultArr lastObject];
+//                        if ([lastStr containsString:[NSString stringWithFormat:@"%d",position]])
+//                        {
+//                            continue;
+//                        }
+//                    }
                    
                    [resultArr addObject:[NSString stringWithFormat:@"%d|%@",position,str]];
                     
@@ -128,6 +130,7 @@
         }
         
     }
+    /////////清
     if (tempResultArr.count>0)
     {
         NSInteger a=partArray.count-1;
@@ -151,18 +154,35 @@
 -(NSArray*)removeNotSameArr:(NSArray*)guessArr partArray:(NSArray*)PartArray
 {
     NSMutableArray*resArr=[[NSMutableArray alloc]init];
-    NSArray*array1=[[guessArr lastObject] componentsSeparatedByString:@"|"];
+    NSArray*lastArr=[[guessArr lastObject] componentsSeparatedByString:@"|"];
+    NSArray*lastSecArr=[guessArr[guessArr.count-2] componentsSeparatedByString:@"|"];
     for (int i=0; i<guessArr.count-1; i++)
     {
         NSArray*array2=[guessArr[i] componentsSeparatedByString:@"|"];
         BOOL isAdd=YES;
-        for (int j=0; j<array1.count-1; j++)
+        for (int j=0; j<lastSecArr.count; j++)
         {
-            if ([PartArray[[array1[j] intValue]] count]>[PartArray[[array2[j] intValue]] count])
+            
+            if (j<lastArr.count&&[PartArray[[lastArr[j] intValue]] count]>[PartArray[[array2[j] intValue]] count])
             {
                 isAdd=NO;
                 break;
             }
+            if(guessArr.count>3)
+            {
+                if ([PartArray[[lastSecArr[j] intValue]] count]!=[PartArray[[array2[j] intValue]] count]&&lastArr.count==1)
+                {
+                    isAdd=NO;
+                    break;
+                }
+            }
+//            else if([PartArray[[array1[j] intValue]] count]<[PartArray[[array2[j] intValue]] count])
+//            {
+//                if(guessArr.count>3)
+//                {
+//                    
+//                }
+//            }
         }
         if (isAdd)
         {
@@ -232,8 +252,7 @@
     int compareSum=-1;
     NSArray*speArr;
     NSInteger yxyLastCount=-1;
-    NSArray*lastspecArray1;//=specArray[specArray.count-1];
-//    NSArray*lastspecArray2=specArray[specArray.count-2];
+    NSArray*lastspecArray1;
    
     if (specArray.count>0)
     {
@@ -262,14 +281,26 @@
     for (int i=0; i<dataArray.count; i++)
     {
         BOOL isChange=NO;
-       
+        NSInteger repeatCount=0;
         NSArray*array=dataArray[i];
         NSInteger lastCount=array.count;
         /////
         if (i==compareSum)
         {
             isChange=YES;
-            if (compare==lastspecArray1.count-1)
+            if (beginSpe<specArray.count-1)
+            {
+                NSArray*repeatArr=[specArray[beginSpe+1] componentsSeparatedByString:@"|"];
+                NSInteger repeat=[repeatArr[repeatCount] intValue];
+                if (i==repeat)
+                {
+                    if (lastCount<[dataArray[repeat] count]) {
+                        lastCount=[dataArray[repeat] count];
+                    }
+                    repeatCount++;
+                }
+            }
+            if (compare==lastspecArray1.count-1&&repeatCount==0)
             {
                 lastCount=yxyLastCount>0?yxyLastCount:[[dataArray lastObject] count];
             }
@@ -287,7 +318,14 @@
                     beginSpe++;
                     speArr=[specArray[beginSpe] componentsSeparatedByString:@"|"];
                     compare=0;
+                    repeatCount=0;
                     compareSum=[speArr[compare] intValue];
+                    while (compareSum<=i) {
+                        compare++;
+                        compareSum=[speArr[compare] intValue];
+
+                    }
+                   
                 }
             }
         }
