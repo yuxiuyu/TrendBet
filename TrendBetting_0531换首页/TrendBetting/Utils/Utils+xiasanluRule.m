@@ -410,9 +410,8 @@
                 NSString*guessStr=allGuessArray[i-1];
                 if (guessStr.length>0)
                 {
-//                    nextMoney = [moneyArr[goGuessYes%moneyArr.count] floatValue];
-                     NSInteger thd=goGuessYes>moneyArr.count-1?moneyArr.count-1:goGuessYes%moneyArr.count;
-                     nextMoney = [moneyArr[thd] floatValue];
+                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     backMoney=backMoney+nextMoney*([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney] intValue]/1000.0);
                     if ([str isEqualToString:guessStr])
                     {
@@ -422,7 +421,7 @@
                         
                         reduceMoney+=[guessStr isEqualToString:@"R"]?Reduce_Money*nextMoney:0;
                         [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
-//                        nextMoney=[[Utils sharedInstance].moneySelectedArray[goGuessYes%moneyArr.count] floatValue];
+
                     }
                     else
                     {
@@ -431,18 +430,18 @@
                         guessNo++;
                         
                         [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
-//                        nextMoney=[[Utils sharedInstance].moneySelectedArray[goGuessYes%moneyArr.count] floatValue];
+
                     }
-                    thd=goGuessYes>moneyArr.count-1?moneyArr.count-1:goGuessYes%moneyArr.count;
-                    nextMoney = [moneyArr[thd] floatValue];
+                    thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     
                     [changeTotalDic setObject:[NSString stringWithFormat:@"%0.2f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                 }
                 else
                 {
                     goGuessYes=0;//连续猜对的次数
-                    NSInteger thd=goGuessYes>moneyArr.count-1?moneyArr.count-1:goGuessYes%moneyArr.count;
-                    nextMoney = [moneyArr[thd] floatValue];
+                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                 }
 
             }

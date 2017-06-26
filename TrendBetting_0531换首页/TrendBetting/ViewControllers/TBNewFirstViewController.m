@@ -30,7 +30,7 @@
     NSMutableArray*forthPartArray;//4
     NSMutableArray*fivePartArray;//6
     
-    NSMutableArray*guessFirstPartArray;
+    NSMutableArray*guessFirstPartArray;//文字
     NSMutableArray*guessSecondPartArray;
     NSMutableArray*guessThirdPartArray;
     NSMutableArray*guessForthPartArray;
@@ -58,7 +58,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -145,7 +145,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -191,7 +191,7 @@
         [self guessSanRoad:@"B"];
         [self setSanRoadImageView];
     }
-    [self setMoneyValue];
+    [self setMoneyValue:YES];
 }
 
 
@@ -214,7 +214,7 @@
             [self guessSanRoad:@"B"];
             [self setSanRoadImageView];
         }
-         [self setMoneyValue];
+        [self setMoneyValue:NO];
         
     }
 }
@@ -289,7 +289,7 @@
         
         
     }
-//    [self changeArea:guessSecondPartArray.count-1];
+
 
     
   
@@ -308,7 +308,7 @@
     
     
 }
--(void)changeArea:(NSInteger)indexp
+-(void)changeArea:(NSInteger)indexp 
 {
    
     NSString*lastGuessStr=[allGuessArray lastObject];
@@ -327,16 +327,17 @@
         NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
         str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
     }
-      [allGuessArray addObject:str];
+    [allGuessArray addObject:str];
     
-    
-    
-//    [self setMoneyValue];
     
 }
--(void)setMoneyValue
+-(void)setMoneyValue:(BOOL)isadd
 {
-    [self changeArea:guessSecondPartArray.count-1];
+    if (isadd)
+    {
+         [self changeArea:guessSecondPartArray.count-1];
+    }
+   
     
     NSArray*array0=[guessFirstPartArray lastObject];
     NSArray*array2=[guessThirdPartArray lastObject];
