@@ -39,19 +39,19 @@
     for (int i=0; i<listArray.count; i++)
     {
         NSString*resultStr=listArray[i];
-        if ([resultStr intValue]==12)//和
+        if ([resultStr intValue]==12||[resultStr isEqualToString:@"T"])//和
         {
             resultStr=@"T";
             TSumCount++;
         }
         else
         {
-            if ([resultStr intValue]==10)
+            if ([resultStr intValue]==10||[resultStr isEqualToString:@"R"])
             {//庄
                 resultStr=@"R";
                 RSumCount++;
             }
-            else if ([resultStr intValue]==11)
+            else if ([resultStr intValue]==11||[resultStr isEqualToString:@"B"])
             {//闲
                 resultStr=@"B";
                 BSumCount++;

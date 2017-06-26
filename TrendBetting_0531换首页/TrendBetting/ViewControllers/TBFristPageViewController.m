@@ -551,32 +551,32 @@
     {
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSMutableArray*newListArray=[[NSMutableArray alloc]init];
-            for (int i=0;i<listArray.count;i++)
-            {
-                NSString*str=listArray[i];
-                if ([str isEqualToString:@"T"])//和
-                {
-                    str=@"12";
-                }
-                else
-                {
-                    if ([str isEqualToString:@"R"])
-                    {//庄
-                        str=@"10";
-                    }
-                    else if ([str isEqualToString:@"B"])
-                    {//闲
-                        str=@"11";
-                    }
-                }
-                [newListArray addObject:str];
-                
-            }
+//            NSMutableArray*newListArray=[[NSMutableArray alloc]init];
+//            for (int i=0;i<listArray.count;i++)
+//            {
+//                NSString*str=listArray[i];
+//                if ([str isEqualToString:@"T"])//和
+//                {
+//                    str=@"12";
+//                }
+//                else
+//                {
+//                    if ([str isEqualToString:@"R"])
+//                    {//庄
+//                        str=@"10";
+//                    }
+//                    else if ([str isEqualToString:@"B"])
+//                    {//闲
+//                        str=@"11";
+//                    }
+//                }
+//                [newListArray addObject:str];
+//                
+//            }
             NSMutableDictionary*dic=[[NSMutableDictionary alloc]init];
             [dic setObject:@"" forKey:@"starttime"];
             [dic setObject:@"1" forKey:@"number"];
-            [dic setObject:newListArray forKey:@"result"];
+            [dic setObject:listArray forKey:@"result"];
             [dic setObject:@[] forKey:@"banker"];
             [dic setObject:@[] forKey:@"play"];
             [dic setObject:@"" forKey:@"endtime"];

@@ -14,6 +14,7 @@
 #import "TBFileRoomResult_entry.h"
 #import "Utils+reencryption.h"
 #import "Utils+xiasanluRule.h"
+#import "TBNewRule_TimeViewController.h"
 @interface TBNewFirstViewController ()
 {
     chartImageView *view1;
@@ -58,7 +59,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -145,7 +146,7 @@
 }
 -(void)addTimer
 {
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+    checkTimer=[NSTimer scheduledTimerWithTimeInterval:180 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
 }
 -(void)checkPassword
 {
@@ -539,32 +540,11 @@
     {
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSMutableArray*newListArray=[[NSMutableArray alloc]init];
-            for (int i=0;i<listArray.count;i++)
-            {
-                NSString*str=listArray[i];
-                if ([str isEqualToString:@"T"])//和
-                {
-                    str=@"12";
-                }
-                else
-                {
-                    if ([str isEqualToString:@"R"])
-                    {//庄
-                        str=@"10";
-                    }
-                    else if ([str isEqualToString:@"B"])
-                    {//闲
-                        str=@"11";
-                    }
-                }
-                [newListArray addObject:str];
-                
-            }
+
             NSMutableDictionary*dic=[[NSMutableDictionary alloc]init];
             [dic setObject:@"" forKey:@"starttime"];
             [dic setObject:@"1" forKey:@"number"];
-            [dic setObject:newListArray forKey:@"result"];
+            [dic setObject:listArray forKey:@"result"];
             [dic setObject:@[] forKey:@"banker"];
             [dic setObject:@[] forKey:@"play"];
             [dic setObject:@"" forKey:@"endtime"];
@@ -669,5 +649,20 @@
         [self.view makeToast:@"秘钥错误" duration:0.5f position:CSToastPositionCenter];
     }
 }
+//数据显示
+- (IBAction)dataShowBtnAction:(id)sender {
+    if (listArray.count>0)
+    {
+        NSArray*array=[[Utils sharedInstance] getNewFristArray:listArray];
+        TBNewRule_TimeViewController*vc=[[UIStoryboard storyboardWithName:@"newResultData" bundle:nil] instantiateViewControllerWithIdentifier:@"TBNewRule_TimeViewController"];
+        vc.selectedTitle=@"结果显示";
+        vc.dataArray=array;
+        [self.navigationController pushViewController:vc animated:YES];
 
+    }
+    else
+    {
+        [self.view makeToast:@"请先录入数据" duration:3 position:CSToastPositionCenter];
+    }
+}
 @end
