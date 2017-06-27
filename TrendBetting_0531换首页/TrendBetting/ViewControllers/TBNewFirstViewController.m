@@ -365,6 +365,7 @@
     
 
     
+
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];
