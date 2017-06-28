@@ -36,7 +36,7 @@
     
     for (int i=0; i<listArray.count; i++)
     {
-        NSString*resultStr=listArray[i];
+        NSString*resultStr=[NSString stringWithFormat:@"%@",listArray[i]];
         if ([resultStr intValue]==12||[resultStr isEqualToString:@"T"])//和
         {
             resultStr=@"T";

@@ -35,7 +35,7 @@
     
     for (int i=0; i<listArray.count; i++)
     {
-        NSString*resultStr=listArray[i];
+        NSString*resultStr=[NSString stringWithFormat:@"%@",listArray[i]];
         if ([resultStr intValue]==12||[resultStr isEqualToString:@"T"])//和
         {
             resultStr=@"T";
@@ -186,11 +186,11 @@
             }
             else
             {
-                if (lastArray.count==1)
-                {
+//                if (lastArray.count==1)
+//                {
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                      guessStr=[resultArray lastObject];
-                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
+                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:5],[[nameStr substringFromIndex:5] intValue]+1];
                     if (lastSecArray.count>1)
                     {
                        
@@ -199,13 +199,13 @@
                     }
                     return @[nameStr,guessStr];
                     
-                }
-                else if(lastArray.count>2)
-                {
-                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
-                    guessStr=@"";
-                    return @[nameStr,guessStr];
-                }
+//                }
+//                else if(lastArray.count>2)
+//                {
+//                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
+//                    guessStr=@"";
+//                    return @[nameStr,guessStr];
+//                }
             }
         }
     }
@@ -310,6 +310,59 @@
     
 
     return @[nameStr,guessStr];
+}
+-(void)duodai{
+    NSArray*array;
+    NSArray*lastArray;;
+    NSArray* lastSecArray;
+    NSInteger allCount=array.count-1;
+    NSString*nameStr=@"";
+    NSString*guessStr=@"";
+    if (lastArray.count>2)
+    {
+        nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
+        guessStr=[lastArray lastObject];
+    }
+    NSInteger same=1;
+    NSInteger sumcount=lastArray.count;
+    for (NSInteger i=allCount-1; i>=0; i--)
+    {
+        if([array[i] count]==lastArray.count)//相等
+        {
+            same++;
+            sumcount=sumcount+[array[i] count];
+        }
+        else////相等中断
+        {
+            if (same>=2)//小
+            {
+                if (lastArray.count==1&&same>=4)
+                {
+                    guessStr=[lastSecArray lastObject];
+                    nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
+                    return;
+                }
+                if(lastArray.count>1)
+                {
+                    guessStr=[lastSecArray lastObject];
+                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+                    return;
+                }
+            }
+            else
+            {
+                //不规则
+                
+                return;
+            }
+        }
+    }
+    //不规则
+    for (NSInteger i=allCount-1; i>=0; i--)
+    {
+        
+    }
+
 }
 //搜索第一区域的规则
 -(NSArray*)searchFirstRule:(NSArray*)listArray
