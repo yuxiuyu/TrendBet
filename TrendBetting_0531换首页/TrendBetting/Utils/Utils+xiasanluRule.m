@@ -151,7 +151,7 @@
     if (resultArray&&[resultArray[0] length]>0)
     {
         
-        if ([[resultArray lastObject] isEqualToString:[lastArray lastObject]]||[[resultArray lastObject] isEqualToString:@""])
+        if ([[resultArray lastObject] isEqualToString:[lastArray lastObject]]||[[resultArray lastObject] isEqualToString:@""]||([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"]&&![[resultArray lastObject] isEqualToString:@""]&&![[resultArray lastObject] isEqualToString:[lastArray lastObject]]))
         {
             nameStr=[resultArray firstObject];
             if ([nameStr containsString:@"长连"])
@@ -186,8 +186,7 @@
             }
             else
             {
-//                if (lastArray.count==1)
-//                {
+
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                      guessStr=[resultArray lastObject];
                      nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:5],[[nameStr substringFromIndex:5] intValue]+1];
@@ -199,13 +198,7 @@
                     }
                     return @[nameStr,guessStr];
                     
-//                }
-//                else if(lastArray.count>2)
-//                {
-//                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
-//                    guessStr=@"";
-//                    return @[nameStr,guessStr];
-//                }
+
             }
         }
     }
@@ -311,59 +304,138 @@
 
     return @[nameStr,guessStr];
 }
--(void)duodai{
-    NSArray*array;
-    NSArray*lastArray;;
-    NSArray* lastSecArray;
-    NSInteger allCount=array.count-1;
-    NSString*nameStr=@"";
-    NSString*guessStr=@"";
-    if (lastArray.count>2)
-    {
-        nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
-        guessStr=[lastArray lastObject];
-    }
-    NSInteger same=1;
-    NSInteger sumcount=lastArray.count;
-    for (NSInteger i=allCount-1; i>=0; i--)
-    {
-        if([array[i] count]==lastArray.count)//相等
-        {
-            same++;
-            sumcount=sumcount+[array[i] count];
-        }
-        else////相等中断
-        {
-            if (same>=2)//小
-            {
-                if (lastArray.count==1&&same>=4)
-                {
-                    guessStr=[lastSecArray lastObject];
-                    nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
-                    return;
-                }
-                if(lastArray.count>1)
-                {
-                    guessStr=[lastSecArray lastObject];
-                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
-                    return;
-                }
-            }
-            else
-            {
-                //不规则
-                
-                return;
-            }
-        }
-    }
-    //不规则
-    for (NSInteger i=allCount-1; i>=0; i--)
-    {
-        
-    }
-
-}
+//-(void)duodai:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray{
+//    NSString*guessStr=@"";
+//    NSString*nameStr=@"";
+//    NSInteger allCount = fristPartArray.count-1;
+//    NSArray*lastArray=[fristPartArray lastObject];
+//
+//    if (lastArray.count>2)
+//    {
+//        nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
+//        guessStr=[lastArray lastObject];
+//    }
+//    NSInteger same=1;
+//    NSInteger sumcount=lastArray.count;
+//    for (NSInteger i=allCount-1; i>=0; i--)
+//    {
+//        if([fristPartArray[i] count]==lastArray.count)//相等
+//        {
+//            same++;
+//            sumcount=sumcount+[fristPartArray[i] count];
+//        }
+//        else////相等中断
+//        {
+//            if (same>=2)//小
+//            {
+//                 NSArray*lastSecArray=fristPartArray[allCount-1];
+//                if (lastArray.count==1&&same>=4)
+//                {
+//                    guessStr=[lastSecArray lastObject];
+//                    nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
+//                    return;
+//                }
+//                if(lastArray.count>1)
+//                {
+//                    guessStr=[lastSecArray lastObject];
+//                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+//                    return;
+//                }
+//                if(lastArray.count==1&&same==2&&allCount>=4)//可能不规则带一
+//                {
+//
+//                }
+//                 return;
+//            }
+//            else
+//            {
+//                //不规则
+//
+//                return;
+//            }
+//        }
+//    }
+//
+//
+//}
+//-(NSArray*)noRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray isyxy:(BOOL)isyxy
+//{
+//    //不规则
+//    NSString*guessStr=@"";
+//    NSString*nameStr=@"";
+//    NSInteger allCount = fristPartArray.count-1;
+//    NSArray*lastArray=[fristPartArray lastObject];
+//
+//    int compare=4;
+//    if(allCount<3)
+//    {
+//        return @[guessStr,nameStr];
+//    }
+//    NSInteger tepC=allCount;
+//    int same=1;
+//    NSInteger sumcount=lastArray.count;
+//    NSArray*lastSecArray=fristPartArray[allCount-1];
+//    //
+//    if(lastArray.count==1)
+//    {
+//        same++;
+//        sumcount++;
+//        tepC--;
+//        compare--;
+//        if(lastSecArray.count==1)
+//        {
+//            tepC--;
+//            same++;
+//            sumcount++;
+//            tepC--;
+//            compare=5;
+//        }
+//    }
+//
+//    for (NSInteger i=tepC; i>=0; i--)
+//    {
+//
+//            if(i%2==tepC%2)
+//            {
+//                if([fristPartArray[i] count]>1)
+//                {
+//                     same++;
+//                     sumcount=sumcount+[fristPartArray[i] count];
+//                }
+//                else
+//                {
+//                    if (same>=compare)
+//                    {
+//                        guessStr=[lastSecArray lastObject];
+//                        nameStr=[NSString stringWithFormat:@"一带不规则%ld",sumcount];
+//                    }
+//                   break;
+//
+//                }
+//            }
+//            else
+//            {
+//                if([fristPartArray[i] count]==1)
+//                {
+//                     same++;
+//                     sumcount=sumcount+[fristPartArray[i] count];
+//                }
+//                else
+//                {
+//                    if (same>=compare)
+//                    {
+//                        guessStr=[lastSecArray lastObject];
+//                        nameStr=[NSString stringWithFormat:@"一带不规则%ld",sumcount];
+//                    }
+//                    break;
+//
+//                }
+//
+//            }
+//        }
+//    return @[guessStr,nameStr];
+//
+//}
 //搜索第一区域的规则
 -(NSArray*)searchFirstRule:(NSArray*)listArray
 {

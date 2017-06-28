@@ -134,14 +134,18 @@
     if (tempResultArr.count>0)
     {
         NSInteger a=partArray.count-1;
-        if (![tempResultArr[0] containsString:@"|"]&&[partArray[a] count]==1)
+        if (![tempResultArr[0] containsString:@"|"])
         {
-            return @[];
+            if([partArray[a] count]==1)
+            {
+              return @[];
+            }
+            if([partArray[a] count]==2)
+            {
+                return tempResultArr;
+            }
         }
-        if (![tempResultArr[0] containsString:@"|"]&&[partArray[a] count]==2)
-        {
-            return tempResultArr;
-        }
+      
     }
     if (allcount<3)
     {
@@ -194,17 +198,22 @@
 }
 -(NSString*)getGuessValue:(NSArray*)tempResultArr partArray:(NSArray*)partArray fristPartArray:(NSArray*)fristPartArray myTag:(int)myTag
 {
-    ////
+    /*
+     原理：
+     如1|2|3   5|6|7
+     只比较最后一列，如果partArray最后一列7<下最后一列3    提示下最后一列 7 的最后一个
+                  如果partArray最后一列7>=下最后一列3   提示下最后一列 4 的最后一个
+    */
      NSString*guessStr=@"";
     
     if (tempResultArr&&tempResultArr.count>0)
     {
         NSInteger lastCount=[[partArray lastObject] count];
-        NSInteger thd=[[[tempResultArr lastObject] componentsSeparatedByString:@"|"] count];
+        NSInteger thd=[[[tempResultArr lastObject] componentsSeparatedByString:@"|"] count]-1;
         for (int i=0; i<tempResultArr.count-1; i++)
         {
             NSArray*sparray=[tempResultArr[i] componentsSeparatedByString:@"|"];
-            NSString* str=sparray[thd-1];
+            NSString* str=sparray[thd];
             NSArray*array=partArray[[str intValue]];
             NSString*tempStr=array.count>lastCount?[array lastObject]:[partArray[[str intValue]+1] lastObject];
             
@@ -215,6 +224,16 @@
             else
             {
                 if (![guessStr containsString:tempStr])
+                {
+                    guessStr=@"";
+                    break ;
+                }
+            }
+            //排除当只有一列，有向下的提示，不提示,但向右的图形是提示的
+
+            if([tempResultArr[0] componentsSeparatedByString:@"|"].count==1)
+            {
+                if(array.count!=lastCount)
                 {
                     guessStr=@"";
                     break ;
