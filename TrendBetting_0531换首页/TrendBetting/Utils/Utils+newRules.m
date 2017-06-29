@@ -225,7 +225,7 @@
             {
                 if (![guessStr containsString:tempStr])
                 {
-                    guessStr=@"";
+                    guessStr=@"confix";
                     break ;
                 }
             }
@@ -241,7 +241,7 @@
             }
         }
     }
-    if (myTag>0&&guessStr.length>0)
+    if (myTag>0&&guessStr.length>0&&[guessStr isEqualToString:@"confix"])
     {
         guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
     }

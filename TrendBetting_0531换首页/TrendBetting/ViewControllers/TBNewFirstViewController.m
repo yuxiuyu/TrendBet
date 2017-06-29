@@ -287,8 +287,6 @@
         [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
         
         [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-        
-        
     }
 
 
@@ -311,12 +309,21 @@
 }
 -(void)changeArea:(NSInteger)indexp 
 {
-   
-    NSString*lastGuessStr=[allGuessArray lastObject];
+    /*
+      原理：当大路有提示
+           大路提示对了一次后，大路有冲突后 根据另外四路判断
+           新增：当大路有趋势，但大路本身冲突，这时看下三路和文字的趋势 2017/6/29
+     */
+//    NSString*lastGuessStr=[allGuessArray lastObject];
     NSString*secGuessLastStr=[guessSecondPartArray lastObject];
     NSString*str=@"";
-    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
+//    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
+     if (secGuessLastStr.length>0)
     {
+        if ([secGuessLastStr isEqualToString:@"confix"])
+        {
+            secGuessLastStr=@"";
+        }
         NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
         NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
         NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
@@ -325,7 +332,7 @@
         NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
         NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
 
-        NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
+        NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
         str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
     }
     [allGuessArray addObject:str];

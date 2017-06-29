@@ -101,12 +101,16 @@
         
         
         //
-        NSString*lastGuessStr=[allGuessArray lastObject];
+//        NSString*lastGuessStr=[allGuessArray lastObject];
         NSString*secGuessLastStr=[guessSecondPartArray lastObject];
         NSString*str=@"";
-       if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
+       if (secGuessLastStr.length>0)
         {
-            NSInteger indexp=guessSecondPartArray.count-1;
+//            NSInteger indexp=guessSecondPartArray.count-1;
+            if ([secGuessLastStr isEqualToString:@"confix"])
+            {
+                secGuessLastStr=@"";
+            }
 
             NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
             NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
@@ -116,7 +120,7 @@
             NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
             NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
             
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],guessSecondPartArray[indexp],guessStr2,guessStr3,guessStr4]];
+            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
             str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
         }
         [allGuessArray addObject:str];
