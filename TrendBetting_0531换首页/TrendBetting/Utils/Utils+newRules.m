@@ -225,7 +225,8 @@
             {
                 if (![guessStr containsString:tempStr])
                 {
-                    guessStr=@"confix";
+//                    guessStr=@"confix";
+                    guessStr=[partArray[[str intValue]+1] lastObject];
                     break ;
                 }
             }
@@ -236,7 +237,7 @@
                 if(array.count!=lastCount)
                 {
                     guessStr=@"";
-                    break ;
+                    continue ;
                 }
             }
         }

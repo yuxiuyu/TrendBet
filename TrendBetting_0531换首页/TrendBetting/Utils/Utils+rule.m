@@ -531,9 +531,6 @@
         {
             guessStr = @"B";
         }
-        
-        guessStr=[self getReverseStr:guessStr];//反向
-        guessStr=[self getRBSelected:guessStr];//庄闲选择
     }
     else
     {
@@ -546,7 +543,8 @@
             guessStr = @"R";
         }
     }
-  
+    guessStr=[self getReverseStr:guessStr];//反向
+    guessStr=[self getRBSelected:guessStr];//庄闲选择
     return guessStr;
 }
 

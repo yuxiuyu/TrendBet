@@ -151,7 +151,7 @@
 -(void)checkPassword
 {
     NSString*string=[[Utils sharedInstance] rebase64String:@"TB"];
-    if (![[[Utils sharedInstance] resha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] resha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         [self showKeyView];
     }
@@ -320,10 +320,10 @@
 //    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
      if (secGuessLastStr.length>0)
     {
-        if ([secGuessLastStr isEqualToString:@"confix"])
-        {
-            secGuessLastStr=@"";
-        }
+//        if ([secGuessLastStr isEqualToString:@"confix"])
+//        {
+//            secGuessLastStr=@"";
+//        }
         NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
         NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
         NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
@@ -358,6 +358,7 @@
     
    
     NSString*str0=[[Utils sharedInstance] changeChina:[array0 lastObject] isWu:YES];
+//    NSString*str1=[[Utils sharedInstance] changeChina:[[guessSecondPartArray lastObject] isEqualToString:@"confix"]?@"":[guessSecondPartArray lastObject] isWu:YES];
     NSString*str1=[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:YES];
     NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
     NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];

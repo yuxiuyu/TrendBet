@@ -154,8 +154,21 @@
     NSArray*lastArray=[fristPartArray lastObject];
     if (resultArray&&[resultArray[0] length]>0)
     {
-        
-        if ([[resultArray lastObject] isEqualToString:[lastArray lastObject]]||[[resultArray lastObject] isEqualToString:@""]||([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"]&&![[resultArray lastObject] isEqualToString:@""]&&![[resultArray lastObject] isEqualToString:[lastArray lastObject]]))
+        NSString*lastGuessStr=[resultArray lastObject];
+        if ([lastGuessStr isEqualToString:[lastArray lastObject]]
+            
+            ||[lastGuessStr isEqualToString:@""]
+            
+            ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
+            ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
+            &&![lastGuessStr isEqualToString:[lastArray lastObject]])
+            
+            ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
+            ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
+            &&![lastGuessStr isEqualToString:@""]
+            &&![lastGuessStr isEqualToString:[lastArray lastObject]]
+            &&lastArray.count==1
+            &&[fristPartArray[allcount-2] count]>1))
         {
             nameStr=[resultArray firstObject];
             if ([nameStr containsString:@"长连"])
@@ -185,6 +198,23 @@
                 if (lastArray.count==lastSecArray.count)
                 {
                     guessStr=[lastSecArray lastObject];
+                }
+                return @[nameStr,guessStr];
+            }
+            else if([[nameStr substringToIndex:3] isEqualToString:@"规则带"]||[[nameStr substringToIndex:3] isEqualToString:@"一带规"])
+            {
+                NSArray*lastSecArray=fristPartArray[allcount-2];
+                NSArray*lastThirdArray=fristPartArray[allcount-3];
+                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
+                guessStr=[resultArray lastObject];
+                if (lastArray.count==lastThirdArray.count)
+                {
+                    guessStr=[lastSecArray lastObject];
+                }
+                else if (lastArray.count>[fristPartArray[allcount-3] count])
+                {
+                    nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
+                    guessStr=[lastArray lastObject];
                 }
                 return @[nameStr,guessStr];
             }
@@ -241,15 +271,28 @@
         
             if (isLast)
             {
+                
                 guessStr=[fristPartArray[allcount-2] lastObject];
-                nameStr=yxyTag==0?@"长跳":@"不规则带一";
                 thdCount=allcount-4;
-                guessStr=[fristPartArray[allcount-2] lastObject];
-                if (yxyTag==1&&fristPartArray.count>4&&[fristPartArray[allcount-5] count]==1)
+                nameStr=yxyTag==0?@"长跳":@"不规则带一";
+                if(yxyTag==1)
                 {
-                    nameStr=@"一带不规则";
-                    thdCount=allcount-5;
+                    if([fristPartArray[allcount-2] count]==[fristPartArray[allcount-4] count])
+                    {
+                        nameStr=@"规则带一";
+                    }
                 }
+               
+//                guessStr=[fristPartArray[allcount-2] lastObject];
+//                if (yxyTag==1&&fristPartArray.count>4&&[fristPartArray[allcount-5] count]==1)
+//                {
+//                    nameStr=@"一带不规则";
+//                    if([[nameStr substringToIndex:1] isEqualToString:@"规"])
+//                    {
+//                         nameStr=@"一带规则";
+//                    }
+//                    thdCount=allcount-5;
+//                }
                 
             }
         }
@@ -261,6 +304,22 @@
                 guessStr=[lastSecArray lastObject];
                 nameStr=[NSString stringWithFormat:@"小%ld路",lastSecArray.count];
                 thdCount=allcount-2;
+
+            }
+            else if (lastSecArray.count==1&&fristPartArray.count>=4)
+            {
+                if ([fristPartArray[allcount-3] count]==2&&[fristPartArray[allcount-4] count]==1)
+                {
+                    nameStr=@"一带规则";
+                    thdCount=allcount-4;
+                    guessStr=[lastSecArray lastObject];
+                }
+                else if ([fristPartArray[allcount-3] count]>2&&[fristPartArray[allcount-4] count]==1)
+                {
+                    nameStr=@"一带不规则";
+                    thdCount=allcount-4;
+                    guessStr=[lastArray lastObject];
+                }
 
             }
             
@@ -284,6 +343,24 @@
                     nameStr=[NSString stringWithFormat:@"小%ld路",lastSecArray.count];
                     thdCount=allcount-2;
                 }
+                else if (lastSecArray.count==1&&fristPartArray.count>=4)
+                {
+                    if ([fristPartArray[allcount-3] count]==lastArray.count&&[fristPartArray[allcount-4] count]==1)
+                    {
+                        nameStr=@"一带规则";
+                        thdCount=allcount-4;
+                        guessStr=[lastSecArray lastObject];
+                    }
+                    else if ([fristPartArray[allcount-3] count]>lastArray.count&&[fristPartArray[allcount-4] count]==1)
+                    {
+                        nameStr=@"一带不规则";
+                        thdCount=allcount-4;
+                        guessStr=[lastArray lastObject];
+                    }
+
+                    
+                }
+
 
             }
         }
