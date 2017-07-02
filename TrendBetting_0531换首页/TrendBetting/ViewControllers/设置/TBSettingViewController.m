@@ -20,7 +20,7 @@
     [super viewDidLoad];
     self.title=@"设置";
     self.navigationController.navigationBarHidden=NO;
-    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组"];
+    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置"];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
@@ -49,6 +49,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString*str=@"show_setting_areaVC";
+    NSDictionary*dic=nil;
     switch (indexPath.row)
     {
         case 1:
@@ -61,18 +62,30 @@
             str=@"show_setting_reverseVC";
             break;
         case 4:
+            dic=@{@"tagStr":@"0"};
             str=@"show_setting_backMoneyVC";
             break;
         case 5:
             str=@"show_setting_groupVC";
             break;
-            
+        case 6:
+            dic=@{@"tagStr":@"1"};
+            str=@"show_setting_backMoneyVC";
+            break;
+        case 7:
+            dic=@{@"tagStr":@"2"};
+            str=@"show_setting_backMoneyVC";
+            break;
+        case 8:
+            dic=@{@"tagStr":@"3"};
+            str=@"show_setting_backMoneyVC";
+            break;
             
             
         default:
             break;
     }
-    [self performSegueWithIdentifier:str sender:nil];
+    [self performSegueWithIdentifier:str sender:dic];
     
 }
 - (void)didReceiveMemoryWarning {

@@ -37,7 +37,47 @@
 
 - (IBAction)saveBtnAction:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_BackMoney];
+
+    
+    switch ([_tagStr intValue]) {
+        case 0:
+            [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_BackMoney];
+            break;
+        case 1:
+            if([_sumTextField.text intValue]<4)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GotwoCount];
+            }
+            else
+            {
+                [self.view makeToast:@"最小个数必须大于等于4" duration:0.5f position:CSToastPositionCenter];
+            }
+            break;
+        case 2:
+            if([_sumTextField.text intValue]<4)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoCount];
+            }
+            else
+            {
+                [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
+            }
+            break;
+        case 3:
+            if([_sumTextField.text intValue]>=2)
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoXiaoCount];
+            }
+            else
+            {
+                 [self.view makeToast:@"最小个数必须大于等于2" duration:0.5f position:CSToastPositionCenter];
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.navigationController popViewControllerAnimated:YES];
 }

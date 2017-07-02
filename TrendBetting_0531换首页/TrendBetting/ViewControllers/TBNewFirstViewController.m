@@ -48,6 +48,7 @@
     NSMutableArray*sanRoadGuessArray;
     BOOL isfristCreate;
     NSTimer*checkTimer;
+    BOOL isHighWay;
 
 }
 
@@ -59,7 +60,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -367,8 +368,19 @@
     NSString*nameStr2=[str2 isEqualToString:@"无"]?@"":[array2 firstObject];
     NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
     NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
-    
-    NSArray* resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
+    NSArray* resultArray;
+     if (isHighWay)
+     {
+         resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
+         _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
+         
+     }
+    else
+    {
+        resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
+        _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
+    }
+   
     
     
 
@@ -378,7 +390,7 @@
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];
 
-     _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
+    
     _totalWinLab.text=[NSString stringWithFormat:@"总收益:%@",resultArray[2]];
 //    NSLog(@"++++++%@",[resultArray lastObject]);
     _winOrLoseLab.text=[NSString stringWithFormat:@"输:%@    赢:%@",resultArray[0],resultArray[1]];
@@ -673,5 +685,20 @@
     {
         [self.view makeToast:@"请先录入数据" duration:3 position:CSToastPositionCenter];
     }
+}
+
+- (IBAction)highwayBtnAction:(UIButton*)btn {
+    if (isHighWay)
+    {
+        
+         [btn setTitle:@"看所有" forState:UIControlStateNormal];
+    }
+    else
+    {
+       [btn setTitle:@"只看大路" forState:UIControlStateNormal];
+    }
+    isHighWay=!isHighWay;
+    [self setMoneyValue:NO];
+   
 }
 @end

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *areaTrendLab2;
 @property (weak, nonatomic) IBOutlet UILabel *areaTrendLab3;
 
+
 - (IBAction)BPTBtnAction:(id)sender;
 - (IBAction)reduceBtnAction:(id)sender;
 
@@ -32,6 +33,7 @@
 - (IBAction)saveBtnAction:(id)sender;
 - (IBAction)resultLookBtnAction:(id)sender;
 - (IBAction)dataShowBtnAction:(id)sender;
+- (IBAction)highwayBtnAction:(id)sender;
 
 
 

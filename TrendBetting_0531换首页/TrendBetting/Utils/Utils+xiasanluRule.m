@@ -595,7 +595,7 @@
  */
 -(NSArray*)xiasanluJudgeGuessRightandWrong:(NSArray*)listArray allGuessArray:(NSArray*)allGuessArray
 {
-    NSArray*moneyArr=@[@"1",@"5",@"2"];
+//    NSArray*moneyArr=@[@"1",@"5",@"2"];
     NSInteger guessNo=0;//猜错的总数
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
@@ -603,7 +603,7 @@
     NSInteger Tcount=0;
     float reduceMoney=0.0;//抽水的钱
     float backMoney=0.0;//返利的钱
-    float nextMoney=[moneyArr[0] floatValue];//下一次下注的钱
+    float nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];//下一次下注的钱
     NSMutableDictionary*changeDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary*changeTotalDic=[[NSMutableDictionary alloc]init];
     for (int i=0; i<listArray.count; i++)

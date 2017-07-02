@@ -10,6 +10,7 @@
 
 @interface TBBackMoneyEditViewController : TBBaseViewController
 @property (weak, nonatomic) IBOutlet UITextField *sumTextField;
+@property(strong,nonatomic)NSString*tagStr;
 - (IBAction)saveBtnAction:(id)sender;
 
 @end
