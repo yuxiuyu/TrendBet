@@ -44,7 +44,22 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"5" forKey:SAVE_BackMoney];
     }
-    /////
+    /////长跳
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GotwoCount])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"4" forKey:SAVE_GotwoCount];
+    }
+    /////长连
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoCount])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"3" forKey:SAVE_GoCount];
+    }
+     /////小二路
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"2" forKey:SAVE_GoXiaoCount];
+    }
+    ////
     [self initKeyBoard];
 
 

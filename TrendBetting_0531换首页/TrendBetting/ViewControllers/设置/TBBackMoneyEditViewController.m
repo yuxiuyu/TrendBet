@@ -54,7 +54,7 @@
             }
             break;
         case 2:
-            if([_sumTextField.text intValue]<4)
+            if([_sumTextField.text intValue]<3)
             {
                 [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoCount];
             }
@@ -64,7 +64,7 @@
             }
             break;
         case 3:
-            if([_sumTextField.text intValue]>=2)
+            if([_sumTextField.text intValue]<2)
             {
                 [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoXiaoCount];
             }
