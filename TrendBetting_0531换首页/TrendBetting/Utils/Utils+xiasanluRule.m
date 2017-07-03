@@ -161,7 +161,8 @@
             
             ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
-            &&![lastGuessStr isEqualToString:[lastArray lastObject]])
+            &&![lastGuessStr isEqualToString:[lastArray lastObject]]
+            &&[fristPartArray[allcount-2] count]==1)
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
@@ -307,7 +308,7 @@
                 nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
                 return @[nameStr,guessStr];
             }
-          else if ([fristPartArray[allCount] count]>=1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
+          else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
           {
               nameStr=@"不规则带一";
               guessStr=[fristPartArray[allCount-1] lastObject];

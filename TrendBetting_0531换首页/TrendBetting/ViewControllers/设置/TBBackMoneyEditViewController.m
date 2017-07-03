@@ -16,7 +16,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney];
+    switch ([_tagStr intValue]) {
+        case 0:
+             _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney];
+            _nameLab.text=@"请输入洗码基数:千分之";
+            _sumTextField.placeholder=@"1";
+            break;
+        case 1:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GotwoCount];
+            _sumTextField.placeholder=@"不可小于4";
+            _nameLab.text=@"长跳个数";
+            break;
+        case 2:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoCount];
+            _nameLab.text=@"长连个数";
+            _sumTextField.placeholder=@"不可小于3";
+            break;
+        case 3:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount];
+            _nameLab.text=@"小二路个数";
+            _sumTextField.placeholder=@"不可小于2";
+            break;
+            
+        default:
+            break;
+    }
+
     // Do any additional setup after loading the view.
 }
 
@@ -38,39 +63,45 @@
 - (IBAction)saveBtnAction:(id)sender
 {
 
-    
+    NSUserDefaults *udefault=[NSUserDefaults standardUserDefaults];
     switch ([_tagStr intValue]) {
         case 0:
-            [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_BackMoney];
+            [udefault setObject:_sumTextField.text forKey:SAVE_BackMoney];
+            [udefault synchronize];
             break;
         case 1:
             if([_sumTextField.text intValue]<4)
             {
-                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GotwoCount];
+                 [self.view makeToast:@"最小个数必须大于等于4" duration:0.5f position:CSToastPositionCenter];
+               
             }
             else
             {
-                [self.view makeToast:@"最小个数必须大于等于4" duration:0.5f position:CSToastPositionCenter];
+                [udefault setObject:_sumTextField.text forKey:SAVE_GotwoCount];
+                [udefault synchronize];
             }
             break;
         case 2:
             if([_sumTextField.text intValue]<3)
             {
-                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoCount];
+                [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
             }
             else
             {
-                [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
+                [udefault setObject:_sumTextField.text forKey:SAVE_GoCount];
+                [udefault synchronize];
             }
             break;
         case 3:
             if([_sumTextField.text intValue]<2)
             {
-                [[NSUserDefaults standardUserDefaults] setObject:_sumTextField.text forKey:SAVE_GoXiaoCount];
+                [self.view makeToast:@"最小个数必须大于等于2" duration:0.5f position:CSToastPositionCenter];
+                
             }
             else
             {
-                 [self.view makeToast:@"最小个数必须大于等于2" duration:0.5f position:CSToastPositionCenter];
+                [udefault setObject:_sumTextField.text forKey:SAVE_GoXiaoCount];
+                [udefault synchronize];
             }
             break;
             

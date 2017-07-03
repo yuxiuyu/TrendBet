@@ -59,6 +59,11 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"2" forKey:SAVE_GoXiaoCount];
     }
+    ////只看大路
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:SAVE_isbigRoad];
+    }
     ////
     [self initKeyBoard];
 

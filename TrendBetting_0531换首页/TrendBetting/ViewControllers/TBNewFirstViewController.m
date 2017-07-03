@@ -48,7 +48,7 @@
     NSMutableArray*sanRoadGuessArray;
     BOOL isfristCreate;
     NSTimer*checkTimer;
-    BOOL isHighWay;
+ 
 
 }
 
@@ -64,6 +64,7 @@
     {
         isfristCreate=NO;
         [self initView];
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:@"changeArea" object:nil];
         [self addTimer];
         
     }
@@ -369,7 +370,7 @@
     NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
     NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
     NSArray* resultArray;
-     if (isHighWay)
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
      {
          resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
          _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
@@ -640,7 +641,37 @@
     
 }
 
-
+#pragma mark--一三四五区域的选择
+-(void)getNotification:(NSNotification*)userInfo
+{
+    NSDictionary*dic=userInfo.userInfo;
+    if ([dic[@"title"] isEqualToString:SAVE_isbigRoad])
+    {
+        [self setMoneyValue:NO];
+    }
+    
+    //    if ([dic[@"title"] isEqualToString:SAVE_MONEY_TXT])
+    //    {
+    //        [self changeArea:0];
+    //    }
+    //    else if ([dic[@"title"] isEqualToString:SAVE_AREASELECT])
+    //    {
+    //        [self changeArea:0];
+    //    }
+    //    else if ([dic[@"title"] isEqualToString:SAVE_RBSELECT])
+    //    {
+    //        [self changeArea:0];
+    //    }
+    //    else if([dic[@"title"] isEqualToString:SAVE_RULE_TXT])
+    //    {
+    //        [self guessArrayinitAdd];
+    //    }
+    //    else if([dic[@"title"] isEqualToString:SAVE_REVERSESELECT])
+    //    {
+    //        [self changeArea:0];
+    //    }
+    
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -687,18 +718,5 @@
     }
 }
 
-- (IBAction)highwayBtnAction:(UIButton*)btn {
-    if (isHighWay)
-    {
-        
-         [btn setTitle:@"看所有" forState:UIControlStateNormal];
-    }
-    else
-    {
-       [btn setTitle:@"只看大路" forState:UIControlStateNormal];
-    }
-    isHighWay=!isHighWay;
-    [self setMoneyValue:NO];
-   
-}
+
 @end

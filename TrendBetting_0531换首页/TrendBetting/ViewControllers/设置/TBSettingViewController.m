@@ -20,7 +20,7 @@
     [super viewDidLoad];
     self.title=@"设置";
     self.navigationController.navigationBarHidden=NO;
-    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置"];
+    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路"];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
@@ -80,7 +80,10 @@
             dic=@{@"tagStr":@"3"};
             str=@"show_setting_backMoneyVC";
             break;
-            
+        case 9:
+            str=@"show_setting_bigRoadVC";
+            break;
+
             
         default:
             break;
@@ -98,12 +101,10 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showRuleEditVC"])
-    {
+   
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
         
-    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
