@@ -60,7 +60,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -372,13 +372,13 @@
     NSArray* resultArray;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
      {
-         resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
+         resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
          _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
          
      }
     else
     {
-        resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
+        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
         _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
     }
    

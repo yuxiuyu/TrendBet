@@ -127,7 +127,18 @@
        
     }
     ///////判断猜对猜错的个数  和收益
-    NSArray*resultArray=[self xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+    NSArray* resultArray;
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
+    {
+        resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:guessSecondPartArray];
+        
+    }
+    else
+    {
+        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+    }
+
+//    NSArray*resultArray=[self xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
     NSArray*array= @[[NSString stringWithFormat:@"%d",RSumCount],//R总数
                      [NSString stringWithFormat:@"%d",BSumCount],//B总数
                      [NSString stringWithFormat:@"%d",TSumCount],//T总数
