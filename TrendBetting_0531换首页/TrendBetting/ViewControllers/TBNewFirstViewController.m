@@ -25,7 +25,7 @@
     
     NSMutableArray*listArray;//2
 
-    
+    NSMutableArray*showSecondPartArray;//1
     NSMutableArray*secondPartArray;//1
     NSMutableArray*thirdPartArray;//3
     NSMutableArray*forthPartArray;//4
@@ -107,6 +107,7 @@
     listArray=[[NSMutableArray alloc]init];
 
     //
+    showSecondPartArray=[[NSMutableArray alloc]init];
     secondPartArray=[[NSMutableArray alloc]init];
     thirdPartArray=[[NSMutableArray alloc]init];
     forthPartArray=[[NSMutableArray alloc]init];
@@ -180,6 +181,27 @@
     else if(btn.tag==102)
     {
          str=@"T";//和
+        /////
+         if(showSecondPartArray.count>0)
+         {
+             NSMutableArray*tepA=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
+             NSString*str=[tepA lastObject];
+             if (str.length==1)
+             {
+                 str=[NSString stringWithFormat:@"%@_1_",str];
+             }
+             else
+             {
+                 NSArray*arr=[str componentsSeparatedByString:@"_"];
+                 str=[NSString stringWithFormat:@"%@_%d_",arr[0],[arr[1] intValue]+1];
+             }
+             [tepA replaceObjectAtIndex:tepA.count-1 withObject:str];
+             [showSecondPartArray replaceObjectAtIndex:showSecondPartArray.count-1 withObject:tepA];
+             //第一部分数据
+             view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+             
+         }
+        /////
     }
     [listArray addObject:str];
     view2.itemArray=listArray;
@@ -217,6 +239,28 @@
             [self guessSanRoad:@"B"];
             [self setSanRoadImageView];
         }
+        else
+        {
+            if(showSecondPartArray.count>0)
+            {
+                NSMutableArray*tepA=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
+                NSString*str=[tepA lastObject];
+                if (str.length>1)
+                {
+                    NSArray*arr=[str componentsSeparatedByString:@"_"];
+                    str=[NSString stringWithFormat:@"%@_%d_",arr[0],[arr[1] intValue]-1];
+                    if([arr[1] intValue]-1==0)
+                    {
+                        str=arr[0];
+                    }
+                    [tepA replaceObjectAtIndex:tepA.count-1 withObject:str];
+                    [showSecondPartArray replaceObjectAtIndex:showSecondPartArray.count-1 withObject:tepA];
+                    //第一部分数据
+                    view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+                }
+            }
+
+        }
         [self setMoneyValue:NO];
         
     }
@@ -243,6 +287,7 @@
     if ([resultStr isEqualToString:@"reduce"])
     {
         secondPartArray=[self deleteArray:secondPartArray];
+        showSecondPartArray=[self deleteArray:showSecondPartArray];
         thirdPartArray=[self deleteArray:thirdPartArray];
         forthPartArray=[self deleteArray:forthPartArray];
         fivePartArray=[self deleteArray:fivePartArray];
@@ -261,16 +306,20 @@
         {
             
             NSMutableArray*tempArray=[[NSMutableArray alloc]initWithArray:[secondPartArray lastObject]];
-            if ([[tempArray lastObject] isEqualToString:resultStr])
+            NSMutableArray*tempArray1=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
+            if ([[tempArray lastObject] containsString:resultStr])
             {
                 [tempArray addObject:resultStr];
+                [tempArray1 addObject:resultStr];
                 [secondPartArray replaceObjectAtIndex:secondPartArray.count-1 withObject:tempArray];/////接着追加
+                [showSecondPartArray replaceObjectAtIndex:showSecondPartArray.count-1 withObject:tempArray1];/////接着追加
             }
             else
             {
                 tempArray=[[NSMutableArray alloc]init];
                 [tempArray addObject:resultStr];
                 [secondPartArray addObject:tempArray];
+                [showSecondPartArray addObject:tempArray];
             }
         }
         else
@@ -278,6 +327,7 @@
             NSMutableArray*tempArray=[[NSMutableArray alloc]init];
             [tempArray addObject:resultStr];
             [secondPartArray addObject:tempArray];
+            [showSecondPartArray addObject:tempArray];
         }
         thirdPartArray=[[Utils sharedInstance] setNewData:secondPartArray startCount:1 dataArray:thirdPartArray];
         forthPartArray=[[Utils sharedInstance] setNewData:secondPartArray startCount:2 dataArray:forthPartArray];
@@ -296,7 +346,7 @@
   
     
     //第一部分数据
-    view1.itemArray=[[Utils sharedInstance] newPartData:secondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+    view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
     //第三部分数据
     view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
     //第四部分数据
@@ -496,6 +546,7 @@
     
     [listArray removeAllObjects];
     [secondPartArray removeAllObjects];
+    [showSecondPartArray removeAllObjects];
     [thirdPartArray removeAllObjects];
     [forthPartArray removeAllObjects];
     [fivePartArray removeAllObjects];

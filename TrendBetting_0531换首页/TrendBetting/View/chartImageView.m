@@ -110,7 +110,16 @@
                     switch (_myType)
                     {
                         case 1:
+                            
                              str=[NSString stringWithFormat:@"blueRound0%@",[str substringFromIndex:1]];
+                            if ([str containsString:@"_"])
+                            {
+                                NSArray*arrT=[str componentsSeparatedByString:@"_"];
+                                if ([arrT[1] intValue]>5)
+                                {
+                                    str=[NSString stringWithFormat:@"%@_5_%@",arrT[0],arrT[2]];
+                                }
+                            }
                             break;
                         case 3:
                         case 4:
@@ -129,6 +138,15 @@
                     {
                         case 1:
                              str=[NSString stringWithFormat:@"redRound0%@",[str substringFromIndex:1]];
+                            if ([str containsString:@"_"])
+                            {
+                                NSArray*arrT=[str componentsSeparatedByString:@"_"];
+                                if ([arrT[1] intValue]>5)
+                                {
+                                    str=[NSString stringWithFormat:@"%@_5_%@",arrT[0],arrT[2]];
+                                }
+                            }
+
                             break;
                         case 3:
                         case 4:

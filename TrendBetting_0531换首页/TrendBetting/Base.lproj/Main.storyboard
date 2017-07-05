@@ -632,7 +632,7 @@
                                                     <action selector="clearBtnAction:" destination="tRu-Mz-p0c" eventType="touchUpInside" id="4hz-Vi-pXI"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNO-Ml-uzl">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNO-Ml-uzl">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="zrP-VI-DXh"/>
                                                 </constraints>
