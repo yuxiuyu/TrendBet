@@ -69,10 +69,10 @@
 		5BF499341E52A2D1008AA7AA /* Utils+encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF499331E52A2D1008AA7AA /* Utils+encryption.m */; };
 		5BF664231EAEF255000A179F /* TBGroup_TimeResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF664221EAEF255000A179F /* TBGroup_TimeResultViewController.m */; };
 		925C4822E73CC45E98EC762F /* libPods-TrendBetting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F78CDA40625A2D80D9C72A13 /* libPods-TrendBetting.a */; };
-		B628899D1F0A971200F377CC /* TBBigRoadSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B628899C1F0A971200F377CC /* TBBigRoadSelectViewController.m */; };
 		B643C6B51EE822A50019E6B0 /* Utils+xiasanluRule.m in Sources */ = {isa = PBXBuildFile; fileRef = B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */; };
 		B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */; };
 		B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF421ED073F300E248C8 /* Utils+newRules.m */; };
+		B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,14 +211,14 @@
 		5BF499331E52A2D1008AA7AA /* Utils+encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+encryption.m"; sourceTree = "<group>"; };
 		5BF664211EAEF255000A179F /* TBGroup_TimeResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBGroup_TimeResultViewController.h; sourceTree = "<group>"; };
 		5BF664221EAEF255000A179F /* TBGroup_TimeResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBGroup_TimeResultViewController.m; sourceTree = "<group>"; };
-		B628899B1F0A971200F377CC /* TBBigRoadSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBigRoadSelectViewController.h; sourceTree = "<group>"; };
-		B628899C1F0A971200F377CC /* TBBigRoadSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBigRoadSelectViewController.m; sourceTree = "<group>"; };
 		B643C6B31EE822A50019E6B0 /* Utils+xiasanluRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Utils+xiasanluRule.h"; sourceTree = "<group>"; };
 		B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+xiasanluRule.m"; sourceTree = "<group>"; };
 		B649DF3B1ED06DCF00E248C8 /* TBNewFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewFirstViewController.h; sourceTree = "<group>"; };
 		B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBNewFirstViewController.m; sourceTree = "<group>"; };
 		B649DF411ED073F300E248C8 /* Utils+newRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Utils+newRules.h"; sourceTree = "<group>"; };
 		B649DF421ED073F300E248C8 /* Utils+newRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+newRules.m"; sourceTree = "<group>"; };
+		B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBigRoadSelectViewController.m; sourceTree = "<group>"; };
+		B654DD9A1F16691D006D8C65 /* TBBigRoadSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBigRoadSelectViewController.h; sourceTree = "<group>"; };
 		B881D9EA69C1B759B04079FD /* Pods-TrendBetting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.release.xcconfig"; sourceTree = "<group>"; };
 		E5A7C1BDBEE915D2A233C8D8 /* Pods-TrendBetting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.debug.xcconfig"; sourceTree = "<group>"; };
 		F78CDA40625A2D80D9C72A13 /* libPods-TrendBetting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrendBetting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -376,8 +376,8 @@
 				5BD8B7731EA700010088E8C4 /* TBRBSelectViewController.m */,
 				5BD8B7741EA700010088E8C4 /* TBReverseSelectViewController.h */,
 				5BD8B7751EA700010088E8C4 /* TBReverseSelectViewController.m */,
-				B628899B1F0A971200F377CC /* TBBigRoadSelectViewController.h */,
-				B628899C1F0A971200F377CC /* TBBigRoadSelectViewController.m */,
+				B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */,
+				B654DD9A1F16691D006D8C65 /* TBBigRoadSelectViewController.h */,
 				5BD8B77D1EA700460088E8C4 /* TBGroupListViewController.h */,
 				5BD8B77E1EA700460088E8C4 /* TBGroupListViewController.m */,
 				5BD8B7801EA72A2F0088E8C4 /* TBGroupAddViewController.h */,
@@ -767,7 +767,6 @@
 				5B609A111EF91B9800D9305B /* TBNewRule_RMDetailViewController.m in Sources */,
 				5BEEEDE11E55919C0086A929 /* Utils+fileReadAndWrite.m in Sources */,
 				5BE72CD61E51B2D90001AFFC /* TBFileRoomResult_timeArr.m in Sources */,
-				B628899D1F0A971200F377CC /* TBBigRoadSelectViewController.m in Sources */,
 				5B2E6BE51EA8490D005CCA08 /* TBGroup_RoomViewController.m in Sources */,
 				5BDE17AF1E66C39900155037 /* TBRuleSelectViewController.m in Sources */,
 				5BC10EBD1E681D220008CADE /* TBResultViewController.m in Sources */,
@@ -780,6 +779,7 @@
 				5B2E6BEB1EA8523E005CCA08 /* TBGroup_MonthViewController.m in Sources */,
 				B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */,
 				5BE72CD01E51B2130001AFFC /* TBFileRoomResult_entry.m in Sources */,
+				B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */,
 				5BC6567D1EF8FCAC00F040CE /* TBAllRoomViewController.m in Sources */,
 				5BDA05D51E136AEA0060CCE5 /* main.m in Sources */,
 				5B2E6BE21EA84471005CCA08 /* TBGroup_TimeViewController.m in Sources */,
