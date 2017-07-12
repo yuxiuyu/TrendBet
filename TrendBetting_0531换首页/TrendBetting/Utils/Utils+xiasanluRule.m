@@ -168,16 +168,17 @@
         NSString*lastGuessStr=[resultArray lastObject];
         if ([lastGuessStr isEqualToString:[lastArray lastObject]]
             
-            ||[lastGuessStr isEqualToString:@""]
+//            ||[lastGuessStr isEqualToString:@""]
             
             ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
             &&![lastGuessStr isEqualToString:[lastArray lastObject]]
-            &&[fristPartArray[allcount-2] count]>1)
+            &&lastArray.count>1
+            &&[fristPartArray[allcount-2] count]==1)
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
-            &&![lastGuessStr isEqualToString:@""]
+//            &&![lastGuessStr isEqualToString:@""]
             &&![lastGuessStr isEqualToString:[lastArray lastObject]]
             &&lastArray.count==1
             &&[fristPartArray[allcount-2] count]>1))
