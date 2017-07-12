@@ -242,7 +242,7 @@
             }
         }
     }
-    if (myTag>0&&guessStr.length>0&&[guessStr isEqualToString:@"confix"])
+    if (myTag>0&&guessStr.length>0)
     {
         guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
     }

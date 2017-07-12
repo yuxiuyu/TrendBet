@@ -107,10 +107,10 @@
        if (secGuessLastStr.length>0)
         {
 //            NSInteger indexp=guessSecondPartArray.count-1;
-            if ([secGuessLastStr isEqualToString:@"confix"])
-            {
-                secGuessLastStr=@"";
-            }
+//            if ([secGuessLastStr isEqualToString:@"confix"])
+//            {
+//                secGuessLastStr=@"";
+//            }
 
             NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
             NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
@@ -173,7 +173,7 @@
             ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
             &&![lastGuessStr isEqualToString:[lastArray lastObject]]
-            &&[fristPartArray[allcount-2] count]==1)
+            &&[fristPartArray[allcount-2] count]>1)
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
             ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
