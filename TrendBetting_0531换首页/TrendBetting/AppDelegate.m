@@ -64,6 +64,11 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:SAVE_isbigRoad];
     }
+    ////把把庄闲选择
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:SAVE_isOnlyRBSelect];
+    }
     ////
     [self initKeyBoard];
 

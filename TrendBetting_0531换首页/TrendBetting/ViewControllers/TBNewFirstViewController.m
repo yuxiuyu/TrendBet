@@ -372,10 +372,6 @@
 //    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
      if (secGuessLastStr.length>0)
     {
-//        if ([secGuessLastStr isEqualToString:@"confix"])
-//        {
-//            secGuessLastStr=@"";
-//        }
         NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
         NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
         NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
@@ -697,6 +693,10 @@
 {
     NSDictionary*dic=userInfo.userInfo;
     if ([dic[@"title"] isEqualToString:SAVE_isbigRoad])
+    {
+        [self setMoneyValue:NO];
+    }
+    if ([dic[@"title"] isEqualToString:SAVE_isOnlyRBSelect])
     {
         [self setMoneyValue:NO];
     }

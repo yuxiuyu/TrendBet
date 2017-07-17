@@ -46,6 +46,7 @@
 #define SAVE_GoCount @"goCount"  //长连
 #define SAVE_GoXiaoCount @"goXiaoCount"  //小二路
 #define SAVE_isbigRoad @"0"//是否是看所有0 只看大路1
+#define SAVE_isOnlyRBSelect @"0"//0关闭 1把把庄  2把把闲
 //#define back_Money 0.005  //返利
 
 
