@@ -101,27 +101,31 @@
         
         
         //
-//        NSString*lastGuessStr=[allGuessArray lastObject];
-        NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-        NSString*str=@"";
-       if (secGuessLastStr.length>0)
+         NSString*str=@"";
+        //yxy add 2017/07/17 新加把把下庄闲
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
+           str=@"R";
+        }
+        else if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
+           str=@"B";
+        }
+        //yxy add 2017/07/17
+        else
         {
-//            NSInteger indexp=guessSecondPartArray.count-1;
-//            if ([secGuessLastStr isEqualToString:@"confix"])
-//            {
-//                secGuessLastStr=@"";
-//            }
-
-            NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
-            NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
-            NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
-            
-            NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
-            NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
-            NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
-            
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+           if (secGuessLastStr.length>0)
+            {
+                NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+                NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+                NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+                
+                NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+                NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+                NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
+                
+                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            }
         }
         [allGuessArray addObject:str];
        
@@ -508,7 +512,8 @@
         NSString*str=listArray[i];
         if (![str isEqualToString:@"T"])
         {
-            if (i-Tcount>2)
+//            if (i-Tcount>2) //yxy add 2017/07/17 新加把把下庄闲
+            if (i-Tcount>0)
             {
                 NSString*guessStr=allGuessArray[i-1];
                 if (guessStr.length>0)

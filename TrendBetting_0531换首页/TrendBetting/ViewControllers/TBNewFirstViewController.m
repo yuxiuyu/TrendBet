@@ -60,7 +60,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -361,29 +361,30 @@
 }
 -(void)changeArea:(NSInteger)indexp 
 {
-    /*
-      原理：当大路有提示
-           大路提示对了一次后，大路有冲突后 根据另外四路判断
-           新增：当大路有趋势，但大路本身冲突，这时看下三路和文字的趋势 2017/6/29
-     */
-//    NSString*lastGuessStr=[allGuessArray lastObject];
-    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-    NSString*str=@"";
-//    if ([lastGuessStr isEqualToString:[[secondPartArray lastObject] lastObject]]||secGuessLastStr.length>0)
-     if (secGuessLastStr.length>0)
-    {
-        NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
-        NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
-        NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
-        
-        NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
-        NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
-        NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
+     NSString*str=@"";
+ 
+        /*
+          原理：当大路有提示
+               大路提示对了一次后，大路有冲突后 根据另外四路判断
+               新增：当大路有趋势，但大路本身冲突，这时看下三路和文字的趋势 2017/6/29
+         */
+        NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+       
+         if (secGuessLastStr.length>0)
+        {
+            NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+            NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+            NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+            
+            NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+            NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+            NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
 
-        NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-        str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
-    }
-    [allGuessArray addObject:str];
+            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+        }
+        [allGuessArray addObject:str];
+    
     
     
 }
@@ -416,16 +417,39 @@
     NSString*nameStr3=[str3 isEqualToString:@"无"]?@"":[array3 firstObject];
     NSString*nameStr4=[str4 isEqualToString:@"无"]?@"":[array4 firstObject];
     NSArray* resultArray;
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
-     {
-         resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
-         _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
-         
-     }
+    //yxy add 2017/07/17 新加把把下庄闲
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
+        NSMutableArray*yarr=[[NSMutableArray alloc]init];
+        for (int i=0; i<allGuessArray.count; i++) {
+            [yarr addObject:@"R"];
+        }
+        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:yarr];
+        _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
+        
+    }
+    else if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
+        NSMutableArray*yarr=[[NSMutableArray alloc]init];
+        for (int i=0; i<allGuessArray.count; i++) {
+            [yarr addObject:@"B"];
+        }
+        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:yarr];
+        _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
+        
+    }
+    //yxy add 2017/07/17 
     else
     {
-        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
-        _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
+         {
+             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
+             _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
+             
+         }
+        else
+        {
+            resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
+            _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
+        }
     }
    
     
