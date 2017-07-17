@@ -20,14 +20,12 @@
     [super viewDidLoad];
     self.title=@"设置";
     self.navigationController.navigationBarHidden=NO;
-    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路"];
+    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把下庄",@"把把下闲"];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
     // Do any additional setup after loading the view.
 }
-
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
