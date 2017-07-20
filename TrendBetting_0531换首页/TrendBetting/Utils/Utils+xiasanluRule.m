@@ -134,8 +134,15 @@
     NSArray* resultArray;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
     {
-        resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:guessSecondPartArray];
-        
+         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
+         {
+             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:guessSecondPartArray];
+         }
+        else
+         {
+             resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+         }
+    
     }
     else
     {
