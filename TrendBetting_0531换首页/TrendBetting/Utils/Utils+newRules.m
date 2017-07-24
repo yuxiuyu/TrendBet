@@ -173,7 +173,7 @@
                 isAdd=NO;
                 break;
             }
-            else if (j==array.count&&[PartArray[[lastArr[j] intValue]] count]>[PartArray[[array[j] intValue]] count])
+            else if (j==array.count-1&&[PartArray[[lastArr[j] intValue]] count]>[PartArray[[array[j] intValue]] count])
             {
                 isAdd=NO;
                 break;
@@ -261,28 +261,14 @@
     ////
     int beginSpe=0;
     int compare=0;
-    int compareSum=-1;
+    int compareI=-1;
+    NSInteger repeatCount=0;
     NSArray*speArr;
-    NSInteger yxyLastCount=-1;
-    NSArray*lastspecArray1;
-   
+
     if (specArray.count>0)
     {
-        lastspecArray1=[specArray[specArray.count-2] componentsSeparatedByString:@"|"];
-        if (specArray.count>=3)
-        {
-            
-            int lastspe1=[[[specArray[specArray.count-2] componentsSeparatedByString:@"|"] lastObject] intValue];
-            int lastspe2=[[[specArray[specArray.count-3] componentsSeparatedByString:@"|"] lastObject] intValue];
-            if ([dataArray[lastspe1] count]==[dataArray[lastspe2] count])
-            {
-                yxyLastCount=[dataArray[lastspe1] count];
-            }
-            
-        }
-        
          speArr=[specArray[beginSpe] componentsSeparatedByString:@"|"];
-         compareSum=[speArr[compare] intValue];
+         compareI=[speArr[compare] intValue];
     }
     
     //////
@@ -293,11 +279,11 @@
     for (int i=0; i<dataArray.count; i++)
     {
         BOOL isChange=NO;
-        NSInteger repeatCount=0;
+       
         NSArray*array=dataArray[i];
         NSInteger lastCount=array.count;
         /////
-        if (i==compareSum)
+        if (i==compareI)
         {
             isChange=YES;
             if (beginSpe<specArray.count-1)
@@ -312,15 +298,14 @@
                     repeatCount++;
                 }
             }
-            if (compare==lastspecArray1.count-1&&repeatCount==0)
+            if (compare==speArr.count-1&&repeatCount==0)//到最后一个，没有重复的的，
             {
-                lastCount=yxyLastCount>0?yxyLastCount:[[dataArray lastObject] count];
+                lastCount=[[dataArray lastObject] count];
             }
             if (compare<speArr.count-1)
             {
                 compare++;
-                
-                compareSum=[speArr[compare] intValue];
+                compareI=[speArr[compare] intValue];
                 
             }
             else
@@ -331,10 +316,10 @@
                     speArr=[specArray[beginSpe] componentsSeparatedByString:@"|"];
                     compare=0;
                     repeatCount=0;
-                    compareSum=[speArr[compare] intValue];
-                    while (compareSum<=i) {
+                    compareI=[speArr[compare] intValue];
+                    while (compareI<=i) {
                         compare++;
-                        compareSum=[speArr[compare] intValue];
+                        compareI=[speArr[compare] intValue];
 
                     }
                    
