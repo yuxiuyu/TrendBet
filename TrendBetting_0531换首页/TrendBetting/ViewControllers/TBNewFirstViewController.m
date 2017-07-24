@@ -346,13 +346,13 @@
   
     
     //第一部分数据
-    view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+     view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
     //第三部分数据
-    view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
+     view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
     //第四部分数据
-    view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:nil];
+     view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:nil];
     //第五部分数据
-    view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
+     view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
     
    
     
