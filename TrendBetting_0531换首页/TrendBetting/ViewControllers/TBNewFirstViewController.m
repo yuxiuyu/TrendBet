@@ -60,12 +60,12 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:@"changeArea" object:nil];
-        [self addTimer];
+//        [self addTimer];
         
     }
     else
@@ -147,19 +147,19 @@
     [_fiveView addSubview:view5];
     isfristCreate=!isfristCreate;
 }
--(void)addTimer
-{
-    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
-}
--(void)checkPassword
-{
-    NSString*string=[[Utils sharedInstance] rebase64String:@"TB"];
-    if ([[[Utils sharedInstance] resha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
-    {
-        [self showKeyView];
-    }
-    
-}
+//-(void)addTimer
+//{
+//    checkTimer=[NSTimer scheduledTimerWithTimeInterval:1800 target:self selector:@selector(checkPassword) userInfo:nil repeats:YES];
+//}
+//-(void)checkPassword
+//{
+//    NSString*string=[[Utils sharedInstance] rebase64String:@"TB"];
+//    if ([[[Utils sharedInstance] resha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+//    {
+//        [self showKeyView];
+//    }
+//    
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

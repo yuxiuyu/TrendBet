@@ -14,49 +14,32 @@
 {
    
      NSMutableArray*resultArr=[[NSMutableArray alloc]initWithArray:arrGuessPartArray];
-    if (arrGuessPartArray&&arrGuessPartArray.count>=2)
+    if (resultArr&&resultArr.count>1)
     {
-        NSString*lastStr=[arrGuessPartArray lastObject];
-        NSString*nextStr=arrGuessPartArray[arrGuessPartArray.count-2];
-        
-        NSArray*lastStrArr=[lastStr componentsSeparatedByString:@"|"];
-        NSArray*nextStrArr=[nextStr componentsSeparatedByString:@"|"];
-        
-        if ([[lastStrArr firstObject] intValue]==[[nextStrArr lastObject] intValue]+1)//形成闭环了
-        {
+        NSArray*lastStrArr=[[arrGuessPartArray lastObject] componentsSeparatedByString:@"|"];
+
             if ([lastStrArr containsObject:[NSString stringWithFormat:@"%ld",partArray.count-1]])
             {
-                if ([[partArray lastObject] count]<=[partArray[[nextStrArr[lastStrArr.count-1] intValue]] count])
-                {
-                    return [self removeNotSameArr:resultArr partArray:partArray];
+                NSArray*resArr=[self removeNotSameArr:resultArr partArray:partArray];
+                if(resArr.count>1){
+                    return resArr;
                 }
-                
+               
             }
             else
             {
-                NSInteger b=lastStrArr.count==nextStrArr.count?0:lastStrArr.count;
-                NSInteger a=[nextStrArr[b] intValue];
-                NSInteger c=[nextStrArr[lastStrArr.count-1] intValue];
-                if ([[partArray[a] firstObject] isEqualToString:[[partArray lastObject] firstObject]]&&[partArray[partArray.count-2] count]==[partArray[c] count]) {
-                    
-                    
-                    if ( lastStrArr.count==nextStrArr.count)
-                    {
-                        [resultArr addObject:[NSString stringWithFormat:@"%ld",partArray.count-1]];
-                    }
-                    else
-                    {
-                    
-                        lastStr=[NSString stringWithFormat:@"%@|%ld",lastStr,partArray.count-1];
-                        [resultArr replaceObjectAtIndex:resultArr.count-1 withObject:lastStr];
-                       
-                    }
-                     return [self removeNotSameArr:resultArr partArray:partArray];
+                for(int i=0;i<resultArr.count;i++)
+                {
+                    NSArray*arr=[resultArr[i] componentsSeparatedByString:@"|"];
+                    NSString*str=[NSString stringWithFormat:@"%@|%d",resultArr[i],[[arr lastObject] intValue]+1];
+                    [resultArr replaceObjectAtIndex:i withObject:str];
                 }
+                NSArray*resArr=[self removeNotSameArr:resultArr partArray:partArray];
+                if(resArr.count>1){
+                    return resArr;
+                }
+
             }
-        }
-        
-        
     }
     
         
@@ -103,22 +86,12 @@
            
             NSArray*tepArr=[str componentsSeparatedByString:@"|"];
             position=[[tepArr firstObject] intValue]-1;
-//            if (position>=0&&![str containsString:[NSString stringWithFormat:@"%ld",begin]])
             if (position>=0)
             {
                 NSArray*array1=partArray[position];
                 NSArray*array2=partArray[begin];
                 if (array1.count==array2.count)
                 {
-//                    if (resultArr.count>0)
-//                    {
-//                        NSString*lastStr=[resultArr lastObject];
-//                        if ([lastStr containsString:[NSString stringWithFormat:@"%d",position]])
-//                        {
-//                            continue;
-//                        }
-//                    }
-                   
                    [resultArr addObject:[NSString stringWithFormat:@"%d|%@",position,str]];
                     
                 }
@@ -180,39 +153,32 @@
    
     return tempResultArr;
 }
-
+/*
+ 比较 最后一列小于等于其他规律的最后一列
+ 其他的要相等
+ */
 -(NSArray*)removeNotSameArr:(NSArray*)guessArr partArray:(NSArray*)PartArray
 {
     NSMutableArray*resArr=[[NSMutableArray alloc]init];
     NSArray*lastArr=[[guessArr lastObject] componentsSeparatedByString:@"|"];
-    NSArray*lastSecArr=[guessArr[guessArr.count-2] componentsSeparatedByString:@"|"];
     for (int i=0; i<guessArr.count-1; i++)
     {
-        NSArray*array2=[guessArr[i] componentsSeparatedByString:@"|"];
+        NSArray*array=[guessArr[i] componentsSeparatedByString:@"|"];
         BOOL isAdd=YES;
-        for (int j=0; j<lastSecArr.count; j++)
+        for (int j=0; j<array.count; j++)
         {
             
-            if (j<lastArr.count&&[PartArray[[lastArr[j] intValue]] count]>[PartArray[[array2[j] intValue]] count])
+            if (j<array.count-1&&[PartArray[[lastArr[j] intValue]] count]!=[PartArray[[array[j] intValue]] count])
             {
                 isAdd=NO;
                 break;
             }
-            if(guessArr.count>3)
+            else if (j==array.count&&[PartArray[[lastArr[j] intValue]] count]>[PartArray[[array[j] intValue]] count])
             {
-                if ([PartArray[[lastSecArr[j] intValue]] count]!=[PartArray[[array2[j] intValue]] count]&&lastArr.count==1)
-                {
-                    isAdd=NO;
-                    break;
-                }
+                isAdd=NO;
+                break;
             }
-//            else if([PartArray[[array1[j] intValue]] count]<[PartArray[[array2[j] intValue]] count])
-//            {
-//                if(guessArr.count>3)
-//                {
-//                    
-//                }
-//            }
+
         }
         if (isAdd)
         {
@@ -228,7 +194,7 @@
      原理：
      如1|2|3   5|6|7
      只比较最后一列，如果partArray最后一列7<下最后一列3    提示下最后一列 7 的最后一个
-                  如果partArray最后一列7>=下最后一列3   提示下最后一列 4 的最后一个
+                  如果partArray最后一列7==下最后一列3   提示下最后一列 4 的最后一个
     */
      NSString*guessStr=@"";
     
@@ -251,8 +217,8 @@
             {
                 if (![guessStr containsString:tempStr])
                 {
-//                    guessStr=@"confix";
-                    guessStr=[partArray[[str intValue]+1] lastObject];
+                    guessStr=@"";
+//                    guessStr=[partArray[[str intValue]+1] lastObject];
                     break ;
                 }
             }
@@ -268,10 +234,10 @@
             }
         }
     }
-    if (myTag>0&&guessStr.length>0)
-    {
-        guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
-    }
+//    if (myTag>0&&guessStr.length>0)
+//    {
+//        guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
+//    }
     
        return guessStr;
     
