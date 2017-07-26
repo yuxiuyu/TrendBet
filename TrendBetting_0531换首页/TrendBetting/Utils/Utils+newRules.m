@@ -105,50 +105,41 @@
         
     }
     /////////清
-    if (tempResultArr.count>0)
-    {
-        NSInteger a=partArray.count-1;
-        if (![tempResultArr[0] containsString:@"|"])
-        {
-            if([partArray[a] count]==1)//除
-            {
-              return @[];
-            }
-            if([partArray[a] count]==2)//加
-            {
-                return tempResultArr;
-            }
-        }
-      
-    }
+
     if (allcount<3)
     {
         return @[];
     }
-    //yxy add 2017/07/17 排除长跳的情况（必须三个一摸一样之后才有其他的提示）
-    if(allcount==3)
-    {
-        NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
-        if(tArr.count==3)
-        {
-            NSMutableArray*tMArr=[[NSMutableArray alloc]init];
-            for (int i=0; i<tempResultArr.count; i++) {
-                 NSArray*arr=[tempResultArr[i] componentsSeparatedByString:@"|"];
-                if ([partArray[[[arr lastObject] intValue]] count]==1)
-                {
-                    [tMArr addObject:tempResultArr[i]];
-                }
-            }
-            if(tMArr.count>1)
-            {
-                tempResultArr=[NSArray arrayWithArray:tMArr];
-            }
-            else
-            {
-                return @[];
-            }
-        }
+    //去掉长跳
+    NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
+    if(tArr.count==allcount){
+        return @[];
     }
+    
+    //yxy add 2017/07/17 排除长跳的情况（必须三个一摸一样之后才有其他的提示）
+//    if(allcount==3)
+//    {
+//        NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
+//        if(tArr.count==3)
+//        {
+//            NSMutableArray*tMArr=[[NSMutableArray alloc]init];
+//            for (int i=0; i<tempResultArr.count; i++) {
+//                 NSArray*arr=[tempResultArr[i] componentsSeparatedByString:@"|"];
+//                if ([partArray[[[arr lastObject] intValue]] count]==1)
+//                {
+//                    [tMArr addObject:tempResultArr[i]];
+//                }
+//            }
+//            if(tMArr.count>1)
+//            {
+//                tempResultArr=[NSArray arrayWithArray:tMArr];
+//            }
+//            else
+//            {
+//                return @[];
+//            }
+//        }
+//    }
     //yxy add 2017/07/17
    
     return tempResultArr;

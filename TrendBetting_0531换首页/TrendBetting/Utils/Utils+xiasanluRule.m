@@ -22,7 +22,7 @@
     NSMutableArray*forthPartArray=[[NSMutableArray alloc]init];
     NSMutableArray*fivePartArray=[[NSMutableArray alloc]init];
     //
-   
+    
     NSMutableArray*guessFristPartArray=[[NSMutableArray alloc]init];//文字
     NSMutableArray*guessSecondPartArray=[[NSMutableArray alloc]init];
     NSMutableArray*guessThirdPartArray=[[NSMutableArray alloc]init];
@@ -85,29 +85,31 @@
             fivePartArray=[self  setNewData:secondPartArray startCount:3 dataArray:fivePartArray];
             
             ////////////猜的数据
-           
+            
             [arrGuessSecondPartArray addObject:[self seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
             [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
             [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
             [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
             
             [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
-         
+            
         }
         
         [newListArray addObject:resultStr];
         [guessFristPartArray addObject:[[Utils sharedInstance] searchFirstRule:newListArray]];
-
+        
         
         
         //
-         NSString*str=@"";
+        NSString*str=@"";
         //yxy add 2017/07/17 新加把把下庄闲
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
-           str=@"R";
+            str=@"R";
+            [allGuessArray addObject:str];
         }
         else if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
-           str=@"B";
+            str=@"B";
+            [allGuessArray addObject:str];
         }
         //yxy add 2017/07/17
         else
@@ -116,44 +118,55 @@
             if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
                 [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
             }
-             secGuessLastStr=[guessSecondPartArray lastObject];
-           if (secGuessLastStr.length>0)
-            {
-                NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
-                NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
-                NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
-                
-                NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
-                NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
-                NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
-                
-                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            else{
+                secGuessLastStr=[guessSecondPartArray lastObject];
+                if (secGuessLastStr.length>0)
+                {
+                    NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+                    NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+                    NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+                    
+                    NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+                    NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+                    NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
+                    
+                    NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                    str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+                }
             }
+            [allGuessArray addObject:str];
         }
-        [allGuessArray addObject:str];
-       
+        
+        
     }
     ///////判断猜对猜错的个数  和收益
     NSArray* resultArray;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
     {
-         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
-         {
-             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:guessSecondPartArray];
-         }
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
+        {
+            NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
+            for (int i=0; i<tepguessSecondPartArray.count; i++) {
+                if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
+                {
+                    [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+                }
+            }
+            
+            resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:tepguessSecondPartArray];
+        }
         else
-         {
-             resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
-         }
-    
+        {
+            resultArray=[[Utils sharedInstance] xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+        }
+        
     }
     else
     {
         resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
     }
-
-//    NSArray*resultArray=[self xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+    
+    //    NSArray*resultArray=[self xiasanluJudgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
     NSArray*array= @[[NSString stringWithFormat:@"%d",RSumCount],//R总数
                      [NSString stringWithFormat:@"%d",BSumCount],//B总数
                      [NSString stringWithFormat:@"%d",TSumCount],//T总数
@@ -173,7 +186,7 @@
 
 #pragma mark------搜索（ 三 四 五）区域  个数 区域的趋势
 -(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray{
-//    NSInteger thdCount=0;
+    //    NSInteger thdCount=0;
     NSString*guessStr=@"";
     NSString*nameStr=@"";
     NSInteger allcount = fristPartArray.count;
@@ -183,20 +196,20 @@
         NSString*lastGuessStr=[resultArray lastObject];
         if ([lastGuessStr isEqualToString:[lastArray lastObject]]
             
-//            ||[lastGuessStr isEqualToString:@""]
+            //            ||[lastGuessStr isEqualToString:@""]
             
             ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
-            ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
-            &&![lastGuessStr isEqualToString:[lastArray lastObject]]
-            &&lastArray.count>1
-            &&[fristPartArray[allcount-2] count]==1)
+                ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
+               &&![lastGuessStr isEqualToString:[lastArray lastObject]]
+               &&lastArray.count>1
+               &&[fristPartArray[allcount-2] count]==1)
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
-            ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
-//            &&![lastGuessStr isEqualToString:@""]
-            &&![lastGuessStr isEqualToString:[lastArray lastObject]]
-            &&lastArray.count==1
-            &&[fristPartArray[allcount-2] count]>1))
+                ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
+               //            &&![lastGuessStr isEqualToString:@""]
+               &&![lastGuessStr isEqualToString:[lastArray lastObject]]
+               &&lastArray.count==1
+               &&[fristPartArray[allcount-2] count]>1))
         {
             nameStr=[resultArray firstObject];
             if ([nameStr containsString:@"长连"])
@@ -210,13 +223,13 @@
             {
                 NSArray*lastSecArray=fristPartArray[allcount-2];
                 NSLog(@"%ld  %@",[nameStr rangeOfString:@"路"].location,[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1]);
-                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1],[[nameStr substringFromIndex:[nameStr rangeOfString:@"路"].location+1] intValue]+1];
-                 guessStr=[resultArray lastObject];
+                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1],[[nameStr substringFromIndex:[nameStr rangeOfString:@"路"].location+1] intValue]+1];
+                guessStr=[resultArray lastObject];
                 if (lastArray.count==lastSecArray.count)
                 {
                     guessStr=[lastSecArray lastObject];
                 }
-                 return @[nameStr,guessStr];
+                return @[nameStr,guessStr];
             }
             else if([nameStr containsString:@"长跳"])
             {
@@ -248,23 +261,23 @@
             }
             else
             {
-
-                    NSArray*lastSecArray=fristPartArray[allcount-2];
-                     guessStr=[resultArray lastObject];
-                     nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:5],[[nameStr substringFromIndex:5] intValue]+1];
-                    if (lastSecArray.count>1)
-                    {
-                       
-                        guessStr=[lastSecArray lastObject];
-                        
-                    }
-                    return @[nameStr,guessStr];
+                
+                NSArray*lastSecArray=fristPartArray[allcount-2];
+                guessStr=[resultArray lastObject];
+                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:5],[[nameStr substringFromIndex:5] intValue]+1];
+                if (lastSecArray.count>1)
+                {
                     
-
+                    guessStr=[lastSecArray lastObject];
+                    
+                }
+                return @[nameStr,guessStr];
+                
+                
             }
         }
     }
-
+    
     /////
     return [self duodai:fristPartArray];
 }
@@ -273,13 +286,13 @@
     NSString*nameStr=@"";
     NSInteger allCount = fristPartArray.count-1;
     NSArray*lastArray=[fristPartArray lastObject];
-   if(fristPartArray.count>=4)
-   {
-       NSArray*array=[self noRule:fristPartArray];
-       if ([array[0] length]>0) {
-           return array;
-       }
-   }
+    if(fristPartArray.count>=4)
+    {
+        NSArray*array=[self noRule:fristPartArray];
+        if ([array[0] length]>0) {
+            return array;
+        }
+    }
     if(fristPartArray.count>=2)
     {
         NSInteger same=1;
@@ -320,34 +333,34 @@
     NSString*guessStr=@"";
     NSString*nameStr=@"";
     NSInteger allCount = fristPartArray.count-1;
-//    if (fristPartArray.count>=4)
-//    {
-         NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
-            if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
-            {
-                nameStr=@"一带不规则";
-                guessStr=[fristPartArray[allCount] lastObject];
-                if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
-                {
-                    nameStr=@"一带规则";
-                    guessStr=[fristPartArray[allCount-1] lastObject];
-                }
-                nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
-                return @[nameStr,guessStr];
-            }
-          else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
-          {
-              nameStr=@"不规则带一";
-              guessStr=[fristPartArray[allCount-1] lastObject];
-              if ([fristPartArray[allCount-1] count]==[fristPartArray[allCount-3] count])
-              {
-                  nameStr=@"规则带一";
-              }
-               nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
-              return @[nameStr,guessStr];
-          }
-//    }
-   
+    //    if (fristPartArray.count>=4)
+    //    {
+    NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
+    if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
+    {
+        nameStr=@"一带不规则";
+        guessStr=[fristPartArray[allCount] lastObject];
+        if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
+        {
+            nameStr=@"一带规则";
+            guessStr=[fristPartArray[allCount-1] lastObject];
+        }
+        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
+        return @[nameStr,guessStr];
+    }
+    else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
+    {
+        nameStr=@"不规则带一";
+        guessStr=[fristPartArray[allCount-1] lastObject];
+        if ([fristPartArray[allCount-1] count]==[fristPartArray[allCount-3] count])
+        {
+            nameStr=@"规则带一";
+        }
+        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
+        return @[nameStr,guessStr];
+    }
+    //    }
+    
     return @[nameStr,guessStr];
     
 }
@@ -437,8 +450,8 @@
     NSInteger allCount=listArray.count;
     if (allCount>17)
     {
-       
-       
+        
+        
         NSInteger thd=allCount%6;
         NSUInteger columThd=allCount/6;
         NSString*lastStr=listArray[6*(columThd-1)+thd];
@@ -479,17 +492,17 @@
                     }
                 }
             }
-             guessStr=@"";
+            guessStr=@"";
             if (goCount>=3)
             {
                 guessStr=secLastStr;
                 nameStr=[NSString stringWithFormat:@"%@%ld",isGO?@"长连":@"长跳",goCount];
             }
-
+            
         }
         
     }
-
+    
     
     return @[nameStr,guessStr];
 }
@@ -507,7 +520,7 @@
  */
 -(NSArray*)xiasanluJudgeGuessRightandWrong:(NSArray*)listArray allGuessArray:(NSArray*)allGuessArray
 {
-//    NSArray*moneyArr=@[@"1",@"5",@"2"];
+    //    NSArray*moneyArr=@[@"1",@"5",@"2"];
     NSInteger guessNo=0;//猜错的总数
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
@@ -523,7 +536,7 @@
         NSString*str=listArray[i];
         if (![str isEqualToString:@"T"])
         {
-//            if (i-Tcount>2) //yxy add 2017/07/17 新加把把下庄闲
+            //            if (i-Tcount>2) //yxy add 2017/07/17 新加把把下庄闲
             if (i-Tcount>0)
             {
                 NSString*guessStr=allGuessArray[i-1];
@@ -540,7 +553,7 @@
                         
                         reduceMoney+=[guessStr isEqualToString:@"R"]?Reduce_Money*nextMoney:0;
                         [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
-
+                        
                     }
                     else
                     {
@@ -549,7 +562,7 @@
                         guessNo++;
                         
                         [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
-
+                        
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
@@ -562,7 +575,7 @@
                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                 }
-
+                
             }
             
         }

@@ -24,7 +24,7 @@
     chartImageView *view5;
     
     NSMutableArray*listArray;//2
-
+    
     NSMutableArray*showSecondPartArray;//1
     NSMutableArray*secondPartArray;//1
     NSMutableArray*thirdPartArray;//3
@@ -39,17 +39,17 @@
     
     
     NSMutableArray*arrGuessSecondPartArray;
-
+    
     NSMutableArray*allGuessArray;
-
+    
     
     
     
     NSMutableArray*sanRoadGuessArray;
     BOOL isfristCreate;
     NSTimer*checkTimer;
- 
-
+    
+    
 }
 
 @end
@@ -64,8 +64,8 @@
     {
         isfristCreate=NO;
         [self initView];
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:@"changeArea" object:nil];
-//        [self addTimer];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:@"changeArea" object:nil];
+        //        [self addTimer];
         
     }
     else
@@ -105,7 +105,7 @@
 -(void)initView
 {
     listArray=[[NSMutableArray alloc]init];
-
+    
     //
     showSecondPartArray=[[NSMutableArray alloc]init];
     secondPartArray=[[NSMutableArray alloc]init];
@@ -120,8 +120,8 @@
     guessFivePartArray=[[NSMutableArray alloc]init];
     
     arrGuessSecondPartArray=[[NSMutableArray alloc]init];
-     allGuessArray=[[NSMutableArray alloc]init];
-
+    allGuessArray=[[NSMutableArray alloc]init];
+    
 }
 -(void)initFiveView
 {
@@ -158,7 +158,7 @@
 //    {
 //        [self showKeyView];
 //    }
-//    
+//
 //}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -180,33 +180,33 @@
     }
     else if(btn.tag==102)
     {
-         str=@"T";//和
+        str=@"T";//和
         /////
-         if(showSecondPartArray.count>0)
-         {
-             NSMutableArray*tepA=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
-             NSString*str=[tepA lastObject];
-             if (str.length==1)
-             {
-                 str=[NSString stringWithFormat:@"%@_1_",str];
-             }
-             else
-             {
-                 NSArray*arr=[str componentsSeparatedByString:@"_"];
-                 str=[NSString stringWithFormat:@"%@_%d_",arr[0],[arr[1] intValue]+1];
-             }
-             [tepA replaceObjectAtIndex:tepA.count-1 withObject:str];
-             [showSecondPartArray replaceObjectAtIndex:showSecondPartArray.count-1 withObject:tepA];
-             //第一部分数据
-             view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
-             
-         }
+        if(showSecondPartArray.count>0)
+        {
+            NSMutableArray*tepA=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
+            NSString*str=[tepA lastObject];
+            if (str.length==1)
+            {
+                str=[NSString stringWithFormat:@"%@_1_",str];
+            }
+            else
+            {
+                NSArray*arr=[str componentsSeparatedByString:@"_"];
+                str=[NSString stringWithFormat:@"%@_%d_",arr[0],[arr[1] intValue]+1];
+            }
+            [tepA replaceObjectAtIndex:tepA.count-1 withObject:str];
+            [showSecondPartArray replaceObjectAtIndex:showSecondPartArray.count-1 withObject:tepA];
+            //第一部分数据
+            view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+            
+        }
         /////
     }
     [listArray addObject:str];
     view2.itemArray=listArray;
     [guessFirstPartArray addObject:[[Utils sharedInstance] searchFirstRule:listArray]];
-
+    
     if (btn.tag!=102)
     {
         [self setData:str];
@@ -259,7 +259,7 @@
                     view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
                 }
             }
-
+            
         }
         [self setMoneyValue:NO];
         
@@ -298,7 +298,7 @@
         [guessFivePartArray removeLastObject];
         
         [arrGuessSecondPartArray removeLastObject];
-      
+        
     }
     else
     {
@@ -340,50 +340,52 @@
         
         [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
     }
-
-
     
-  
+    
+    
+    
     
     //第一部分数据
-     view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
+    view1.itemArray=[[Utils sharedInstance] newPartData:showSecondPartArray specArray:[arrGuessSecondPartArray lastObject]];
     //第三部分数据
-     view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
+    view3.itemArray=[[Utils sharedInstance] newPartData:thirdPartArray specArray:nil];
     //第四部分数据
-     view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:nil];
+    view4.itemArray=[[Utils sharedInstance] newPartData:forthPartArray specArray:nil];
     //第五部分数据
-     view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
+    view5.itemArray=[[Utils sharedInstance] newPartData:fivePartArray specArray:nil];
     
-   
+    
     
     
     
 }
--(void)changeArea:(NSInteger)indexp 
+-(void)changeArea:(NSInteger)indexp
 {
-        NSString*str=@"";
-        NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-        if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
-            [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
-        }
-  
-         secGuessLastStr=[guessSecondPartArray lastObject];
-         if (secGuessLastStr.length>0)
+    NSString*str=@"";
+    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+    if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+        [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
+    }
+    else{
+        
+        secGuessLastStr=[guessSecondPartArray lastObject];
+        if (secGuessLastStr.length>0)
         {
-                NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
-                NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
-                NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
-                
-                NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
-                NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
-                NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
-
-                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+            NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+            NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+            
+            NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+            NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+            NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
+            
+            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
             
         }
-        [allGuessArray addObject:str];
-    
+        
+    }
+    [allGuessArray addObject:str];
     
     
 }
@@ -391,9 +393,9 @@
 {
     if (isadd)
     {
-         [self changeArea:guessSecondPartArray.count-1];
+        [self changeArea:guessSecondPartArray.count-1];
     }
-   
+    
     
     NSArray*array0=[guessFirstPartArray lastObject];
     NSArray*array2=[guessThirdPartArray lastObject];
@@ -404,9 +406,9 @@
     NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
     NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
     
-   
+    
     NSString*str0=[[Utils sharedInstance] changeChina:[array0 lastObject] isWu:YES];
-//    NSString*str1=[[Utils sharedInstance] changeChina:[[guessSecondPartArray lastObject] isEqualToString:@"stop"]?@"":[guessSecondPartArray lastObject] isWu:YES];
+    //    NSString*str1=[[Utils sharedInstance] changeChina:[[guessSecondPartArray lastObject] isEqualToString:@"stop"]?@"":[guessSecondPartArray lastObject] isWu:YES];
     NSString*str1=[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:YES];
     NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
     NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];
@@ -435,44 +437,52 @@
         _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
         
     }
-    //yxy add 2017/07/17 
+    //yxy add 2017/07/17
     else
     {
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
-         {
-             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:guessSecondPartArray];
-             _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
-             
-         }
+        {
+            NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
+            for (int i=0; i<tepguessSecondPartArray.count; i++) {
+                if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
+                {
+                    [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+                }
+            }
+            resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:tepguessSecondPartArray];
+            _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
+            
+        }
         else
         {
             resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:allGuessArray];
             _memoLab.text =[[Utils sharedInstance] changeChina:[allGuessArray lastObject] isWu:NO];
         }
     }
-   
     
     
-
     
+    
+    NSString*money=resultArray[5];
     if([[listArray lastObject] isEqualToString:@"T"]&&[[guessSecondPartArray lastObject] length]>0){
         _memoLab.text =@"暂停";
-         str1=@"暂停";
+        str1=@"暂停";
+        money=@"";
     }
-   
+    
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];
-
+    
     
     _totalWinLab.text=[NSString stringWithFormat:@"总收益:%@",resultArray[2]];
-//    NSLog(@"++++++%@",[resultArray lastObject]);
+    //    NSLog(@"++++++%@",[resultArray lastObject]);
     _winOrLoseLab.text=[NSString stringWithFormat:@"输:%@    赢:%@",resultArray[0],resultArray[1]];
     if (_memoLab.text.length>0)
     {
-       _memoLab.text=[NSString stringWithFormat:@"%@  %@",resultArray[5],_memoLab.text];
+        _memoLab.text=[NSString stringWithFormat:@"%@  %@",money,_memoLab.text];
     }
-
+    
 }
 
 
@@ -565,7 +575,7 @@
 
 
 - (IBAction)clearBtnAction:(id)sender {
-
+    
     
     [listArray removeAllObjects];
     [secondPartArray removeAllObjects];
@@ -580,13 +590,13 @@
     [guessFivePartArray removeAllObjects];
     
     [arrGuessSecondPartArray removeAllObjects];
-     [allGuessArray removeAllObjects];
-//    [arrGuessThirdPartArray removeAllObjects];
-//    [arrGuessForthPartArray removeAllObjects];
-//    [arrGuessFivePartArray removeAllObjects];
-
+    [allGuessArray removeAllObjects];
+    //    [arrGuessThirdPartArray removeAllObjects];
+    //    [arrGuessForthPartArray removeAllObjects];
+    //    [arrGuessFivePartArray removeAllObjects];
     
-
+    
+    
     
     //第一部分数据
     view1.itemArray=[[Utils sharedInstance] ThirdPartData:secondPartArray];
@@ -598,7 +608,7 @@
     //第五部分数据
     view5.itemArray=[[Utils sharedInstance] ThirdPartData:fivePartArray];
     //
-
+    
     for (int i=0;i<6;i++)
     {
         UIImageView*imageView=[self.view viewWithTag:100+i];
@@ -606,16 +616,16 @@
     }
     
     ///
-  
-
+    
+    
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:无          大眼仔路:无"];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:无          小路:无"];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:无"];
     _memoLab.text=[[Utils sharedInstance] changeChina:@"" isWu:NO];
     _totalWinLab.text=@"总收益:0.00";
     _winOrLoseLab.text=@"输:0    赢:0";
-
-
+    
+    
     
 }
 
@@ -636,7 +646,7 @@
     {
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-
+            
             NSMutableDictionary*dic=[[NSMutableDictionary alloc]init];
             [dic setObject:@"" forKey:@"starttime"];
             [dic setObject:@"1" forKey:@"number"];
@@ -788,7 +798,7 @@
         vc.selectedTitle=@"结果显示";
         vc.dataArray=array;
         [self.navigationController pushViewController:vc animated:YES];
-
+        
     }
     else
     {
