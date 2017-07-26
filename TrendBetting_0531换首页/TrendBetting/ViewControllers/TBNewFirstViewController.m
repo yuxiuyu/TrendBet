@@ -361,27 +361,26 @@
 }
 -(void)changeArea:(NSInteger)indexp 
 {
-     NSString*str=@"";
- 
-        /*
-          原理：当大路有提示
-               大路提示对了一次后，大路有冲突后 根据另外四路判断
-               新增：当大路有趋势，但大路本身冲突，这时看下三路和文字的趋势 2017/6/29
-         */
+        NSString*str=@"";
         NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-       
+        if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+            [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
+        }
+  
+         secGuessLastStr=[guessSecondPartArray lastObject];
          if (secGuessLastStr.length>0)
         {
-            NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
-            NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
-            NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
-            
-            NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
-            NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
-            NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
+                NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
+                NSMutableArray*array3=[[NSMutableArray alloc]initWithArray:[guessForthPartArray lastObject]];
+                NSMutableArray*array4=[[NSMutableArray alloc]initWithArray:[guessFivePartArray lastObject]];
+                
+                NSString*guessStr2=[[array2 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array2 lastObject] myTag:1]:@"";
+                NSString*guessStr3=[[array3 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array3 lastObject] myTag:2]:@"";
+                NSString*guessStr4=[[array4 lastObject] length]>0?[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:[array4 lastObject] myTag:3]:@"";
 
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            
         }
         [allGuessArray addObject:str];
     
@@ -407,7 +406,7 @@
     
    
     NSString*str0=[[Utils sharedInstance] changeChina:[array0 lastObject] isWu:YES];
-//    NSString*str1=[[Utils sharedInstance] changeChina:[[guessSecondPartArray lastObject] isEqualToString:@"confix"]?@"":[guessSecondPartArray lastObject] isWu:YES];
+//    NSString*str1=[[Utils sharedInstance] changeChina:[[guessSecondPartArray lastObject] isEqualToString:@"stop"]?@"":[guessSecondPartArray lastObject] isWu:YES];
     NSString*str1=[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:YES];
     NSString*str2=[[Utils sharedInstance] changeChina:guessStr2 isWu:YES];
     NSString*str3=[[Utils sharedInstance] changeChina:guessStr3 isWu:YES];
@@ -456,7 +455,11 @@
     
 
     
-
+    if([[listArray lastObject] isEqualToString:@"T"]&&[[guessSecondPartArray lastObject] length]>0){
+        _memoLab.text =@"暂停";
+         str1=@"暂停";
+    }
+   
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];

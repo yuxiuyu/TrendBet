@@ -113,6 +113,10 @@
         else
         {
             NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+                [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
+            }
+             secGuessLastStr=[guessSecondPartArray lastObject];
            if (secGuessLastStr.length>0)
             {
                 NSMutableArray*array2=[[NSMutableArray alloc]initWithArray:[guessThirdPartArray lastObject]];
