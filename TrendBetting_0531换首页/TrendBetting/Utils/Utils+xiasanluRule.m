@@ -591,7 +591,8 @@
              changeTotalDic,
              [NSString stringWithFormat:@"%0.2f",nextMoney],
              [NSString stringWithFormat:@"%0.2f",reduceMoney],
-             [NSString stringWithFormat:@"%0.3f",backMoney]
+             [NSString stringWithFormat:@"%0.3f",backMoney],
+             [NSString stringWithFormat:@"%ld",goGuessYes]
              ];
     
 }

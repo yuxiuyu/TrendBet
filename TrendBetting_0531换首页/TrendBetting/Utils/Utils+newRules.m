@@ -74,6 +74,7 @@
          allcount=[[partArray lastObject] count];
         [resultArr addObject:[NSString stringWithFormat:@"%ld",begin]];
     }
+    NSMutableArray*stainArr=[[NSMutableArray alloc]initWithArray:resultArr];
     NSArray*tempResultArr;
     while (resultArr.count>1&&begin>=(partArray.count+1)/2)
     {
@@ -132,6 +133,9 @@
          thd0=[cArr[0] intValue];
          thd1=[cArr[1] intValue];
     }
+    
+    return  [self findLou:cArr.count resultArr:stainArr partArray:partArray];
+    
    ////
     
     
@@ -162,7 +166,43 @@
 //    }
     //yxy add 2017/07/17
    
-    return cutArr;
+//    return cutArr;
+}
+-(NSArray*)findLou:(NSInteger)allcount resultArr:(NSMutableArray*)resultArr partArray:(NSArray*)partArray{
+    NSInteger begin=partArray.count-1;
+    NSInteger a=begin;
+    NSArray*tempResultArr;
+
+    while (a-begin<allcount-1)
+    {
+        ///////
+        tempResultArr=[NSArray arrayWithArray:resultArr];
+        [resultArr removeAllObjects];
+        begin=begin-1;
+        for (NSString*str in tempResultArr)
+        {
+            
+            NSArray*tepArr=[str componentsSeparatedByString:@"|"];
+           int position=[[tepArr firstObject] intValue]-1;
+            if (position>=0)
+            {
+                NSArray*array1=partArray[position];
+                NSArray*array2=partArray[begin];
+                if (array1.count==array2.count)
+                {
+                    [resultArr addObject:[NSString stringWithFormat:@"%d|%@",position,str]];
+                    
+                }
+            }
+        }
+        if (resultArr.count>1)
+        {
+    
+            tempResultArr=[NSArray arrayWithArray:resultArr];
+        }
+        
+    }
+    return tempResultArr;
 }
 /*
  比较 最后一列小于等于其他规律的最后一列

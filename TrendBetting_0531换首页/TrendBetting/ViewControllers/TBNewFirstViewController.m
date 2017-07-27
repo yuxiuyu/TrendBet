@@ -480,7 +480,15 @@
     _winOrLoseLab.text=[NSString stringWithFormat:@"输:%@    赢:%@",resultArray[0],resultArray[1]];
     if (_memoLab.text.length>0)
     {
-        _memoLab.text=[NSString stringWithFormat:@"%@  %@",money,_memoLab.text];
+        NSString*goStr=resultArray[8];
+        if ([goStr intValue]<=0) {
+            goStr=@"";
+        }
+        else{
+            goStr=[NSString stringWithFormat:@"连赢:%@",resultArray[8]];
+        }
+        
+        _memoLab.text=[NSString stringWithFormat:@"%@  %@  %@",money,_memoLab.text,goStr];
     }
     
 }
