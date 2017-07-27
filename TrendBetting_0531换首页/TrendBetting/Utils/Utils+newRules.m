@@ -110,11 +110,31 @@
     {
         return @[];
     }
-    //去掉长跳
+    //去掉长跳 和单列的
     NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
-    if(tArr.count==allcount){
+    if(tArr.count==allcount||tArr.count==1){
         return @[];
     }
+    /// 两列的修改
+    NSMutableArray*cutArr=[[NSMutableArray alloc]initWithArray:tempResultArr];
+    NSArray*cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
+    int thd0=[cArr[0] intValue];
+    int thd1=[cArr[1] intValue];
+    while ([partArray[thd0] count]==1&&[partArray[thd1] count]==1) {
+        for (int k=0; k<cutArr.count; k++)
+        {
+            NSString*res=cutArr[k];
+            NSArray*aArr=[res componentsSeparatedByString:@"|"];
+            res=[res substringFromIndex:[aArr[0] length]+1];
+            [cutArr replaceObjectAtIndex:k withObject:res];
+        }
+        cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
+         thd0=[cArr[0] intValue];
+         thd1=[cArr[1] intValue];
+    }
+   ////
+    
+    
     
     //yxy add 2017/07/17 排除长跳的情况（必须三个一摸一样之后才有其他的提示）
 //    if(allcount==3)
@@ -142,7 +162,7 @@
 //    }
     //yxy add 2017/07/17
    
-    return tempResultArr;
+    return cutArr;
 }
 /*
  比较 最后一列小于等于其他规律的最后一列
