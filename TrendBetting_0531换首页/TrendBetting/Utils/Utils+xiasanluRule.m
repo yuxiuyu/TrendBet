@@ -196,7 +196,6 @@
         NSString*lastGuessStr=[resultArray lastObject];
         if ([lastGuessStr isEqualToString:[lastArray lastObject]]
             
-            //            ||[lastGuessStr isEqualToString:@""]
             
             ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
                 ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
@@ -206,7 +205,6 @@
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
                 ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
-               //            &&![lastGuessStr isEqualToString:@""]
                &&![lastGuessStr isEqualToString:[lastArray lastObject]]
                &&lastArray.count==1
                &&[fristPartArray[allcount-2] count]>1))
@@ -244,20 +242,28 @@
             }
             else if([[nameStr substringToIndex:3] isEqualToString:@"规则带"]||[[nameStr substringToIndex:3] isEqualToString:@"一带规"])
             {
-                NSArray*lastSecArray=fristPartArray[allcount-2];
-                NSArray*lastThirdArray=fristPartArray[allcount-3];
-                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],[[nameStr substringFromIndex:4] intValue]+1];
-                guessStr=[resultArray lastObject];
-                if (lastArray.count==lastThirdArray.count)
-                {
-                    guessStr=[lastSecArray lastObject];
-                }
-                else if (lastArray.count>[fristPartArray[allcount-3] count])
-                {
-                    nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
-                    guessStr=[lastArray lastObject];
-                }
-                return @[nameStr,guessStr];
+                //yxy add
+                int a=[[nameStr substringFromIndex:4] intValue]+1;
+                NSInteger b=[fristPartArray[allcount-1] count]+[fristPartArray[allcount-2] count]+[fristPartArray[allcount-3] count]+[fristPartArray[allcount-4] count];
+                if (a>b) {
+                    ///yxy add
+                    NSArray*lastSecArray=fristPartArray[allcount-2];
+                    NSArray*lastThirdArray=fristPartArray[allcount-3];
+                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],a];
+                    guessStr=[resultArray lastObject];
+                    if (lastArray.count==lastThirdArray.count)
+                    {
+                        guessStr=[lastSecArray lastObject];
+                    }
+                    else if (lastArray.count>[fristPartArray[allcount-3] count])
+                    {
+                        nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
+                        guessStr=[lastArray lastObject];
+                    }
+                    
+                    return @[nameStr,guessStr];
+                }//yxy add
+               
             }
             else
             {
@@ -333,20 +339,21 @@
     NSString*guessStr=@"";
     NSString*nameStr=@"";
     NSInteger allCount = fristPartArray.count-1;
-    //    if (fristPartArray.count>=4)
-    //    {
+
     NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
     if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
     {
-        nameStr=@"一带不规则";
-        guessStr=[fristPartArray[allCount] lastObject];
+//        nameStr=@"一带不规则";
+//        guessStr=[fristPartArray[allCount] lastObject];
         if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
         {
             nameStr=@"一带规则";
             guessStr=[fristPartArray[allCount-1] lastObject];
+            nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
+            return @[nameStr,guessStr];
         }
-        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
-        return @[nameStr,guessStr];
+//        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
+//        return @[nameStr,guessStr];
     }
     else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
     {
@@ -356,10 +363,17 @@
         {
             nameStr=@"规则带一";
         }
+        // yxy add
+        if (fristPartArray.count>4&&[fristPartArray[allCount-4] count]==1)
+        {
+            nameStr=@"一带不规则";
+            guessStr=[fristPartArray[allCount] lastObject];
+            a=a+1;
+        }
+        //yxy add 
         nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
         return @[nameStr,guessStr];
     }
-    //    }
     
     return @[nameStr,guessStr];
     
