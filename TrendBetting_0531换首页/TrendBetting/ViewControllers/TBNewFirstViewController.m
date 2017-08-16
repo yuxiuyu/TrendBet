@@ -60,7 +60,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -334,9 +334,11 @@
         fivePartArray=[[Utils sharedInstance]  setNewData:secondPartArray startCount:3 dataArray:fivePartArray];
         
         [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
-        [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:guessThirdPartArray.count>0?[guessThirdPartArray lastObject]:nil] ];
-        [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:guessForthPartArray.count>0?[guessForthPartArray lastObject]:nil]];
-        [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:guessFivePartArray.count>0?[guessFivePartArray lastObject]:nil]];
+        
+
+        [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject]] ];
+        [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject]]];
+        [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject]]];
         
         [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
     }
@@ -357,6 +359,59 @@
     
     
     
+    
+}
+-(void)guessArrayinitAdd
+{
+    NSMutableArray*tempSecondPartArray=[[NSMutableArray alloc]init];
+    
+    NSMutableArray*tepthirdPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*tepforthPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*tepfivePartArray=[[NSMutableArray alloc]init];
+
+    [guessThirdPartArray removeAllObjects];
+    [guessForthPartArray removeAllObjects];
+    [guessFivePartArray removeAllObjects];
+    
+    for (int i=0; i<listArray.count; i++)
+    {
+        NSString*resultStr=listArray[i];
+        if (![resultStr isEqualToString:@"T"])
+        {
+            
+            if(tempSecondPartArray.count>0)
+            {
+                NSMutableArray*tempArray=[[NSMutableArray alloc]initWithArray:[tempSecondPartArray lastObject]];
+                if ([[tempArray lastObject] isEqualToString:resultStr])
+                {
+                    [tempArray addObject:resultStr];
+                    [tempSecondPartArray replaceObjectAtIndex:tempSecondPartArray.count-1 withObject:tempArray];/////接着追加
+                }
+                else
+                {
+                    tempArray=[[NSMutableArray alloc]init];
+                    [tempArray addObject:resultStr];
+                    [tempSecondPartArray addObject:tempArray];
+                }
+            }
+            else
+            {
+                NSMutableArray*tempArray=[[NSMutableArray alloc]init];
+                [tempArray addObject:resultStr];
+                [tempSecondPartArray addObject:tempArray];
+            }
+            tepthirdPartArray=[[Utils sharedInstance] setNewData:tempSecondPartArray startCount:1 dataArray:tepthirdPartArray];
+            tepforthPartArray=[[Utils sharedInstance] setNewData:tempSecondPartArray startCount:2 dataArray:tepforthPartArray];
+            tepfivePartArray=[[Utils sharedInstance]  setNewData:tempSecondPartArray startCount:3 dataArray:tepfivePartArray];
+
+            [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepthirdPartArray resultArray:[guessThirdPartArray lastObject]] ];
+            [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepforthPartArray resultArray:[guessForthPartArray lastObject]]];
+            [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepfivePartArray resultArray:[guessFivePartArray lastObject]]];
+            
+        }
+        
+    }
+    [self changeArea:0];
     
 }
 -(void)changeArea:(NSInteger)indexp

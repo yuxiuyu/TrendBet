@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "IQKeyboardManager.h"
 @interface AppDelegate ()
-
+{
+    NSUserDefaults*defaults;
+}
 @end
 
 @implementation AppDelegate
@@ -24,50 +26,82 @@
     [self initRule];
     //获取组数组
     [self initGroupRule];
+    defaults=[NSUserDefaults standardUserDefaults];
     ////区域选择
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_AREASELECT])
+    if (![defaults objectForKey:SAVE_AREASELECT])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"1|1|1|1" forKey:SAVE_AREASELECT];
+        [defaults setObject:@"1|1|1|1" forKey:SAVE_AREASELECT];
     }
     ////下注提示选择
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_RBSELECT])
+    if (![defaults objectForKey:SAVE_RBSELECT])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"RB" forKey:SAVE_RBSELECT];
+        [defaults setObject:@"RB" forKey:SAVE_RBSELECT];
     }
     ////正向反向
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT])
+    if (![defaults objectForKey:SAVE_REVERSESELECT])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:SAVE_REVERSESELECT];
+        [defaults setObject:@"NO" forKey:SAVE_REVERSESELECT];
     }
     ////返利基数
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney])
+    if (![defaults objectForKey:SAVE_BackMoney])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"5" forKey:SAVE_BackMoney];
+        [defaults setObject:@"5" forKey:SAVE_BackMoney];
     }
     /////长跳
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GotwoCount])
+    if (![defaults objectForKey:SAVE_GotwoCount])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"4" forKey:SAVE_GotwoCount];
+        [defaults setObject:@"4" forKey:SAVE_GotwoCount];
     }
     /////长连
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoCount])
+    if (![defaults objectForKey:SAVE_GoCount])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"3" forKey:SAVE_GoCount];
+        [defaults setObject:@"3" forKey:SAVE_GoCount];
     }
      /////小二路
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount])
+    if (![defaults objectForKey:SAVE_GoXiaoCount])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"2" forKey:SAVE_GoXiaoCount];
+        [defaults setObject:@"2" forKey:SAVE_GoXiaoCount];
     }
     ////只看大路
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad])
+    if (![defaults objectForKey:SAVE_isbigRoad])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:SAVE_isbigRoad];
+        [defaults setObject:@"0" forKey:SAVE_isbigRoad];
     }
     ////把把庄闲选择
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect])
+    if (![defaults objectForKey:SAVE_isOnlyRBSelect])
     {
-        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:SAVE_isOnlyRBSelect];
+        [defaults setObject:@"0" forKey:SAVE_isOnlyRBSelect];
+    }
+    ///
+    ////设置中可关闭/开启一带不规则
+    if (![defaults objectForKey:SAVE_oneNORule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_oneNORule];
+    }
+    ////设置中可关闭/开启不规则带一
+    if (![defaults objectForKey:SAVE_noRuleOne])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_noRuleOne];
+    }
+    ////设置中可关闭/开启一带规则
+    if (![defaults objectForKey:SAVE_oneRule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_oneRule];
+    }
+    ////设置中可关闭／开启规则带一
+    if (![defaults objectForKey:SAVE_ruleOne])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_ruleOne];
+    }
+    ////设置中可关闭／开启平头规则
+    if (![defaults objectForKey:SAVE_sameRule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_sameRule];
+    }
+    ////设置中可关闭／开启文字区域的规则
+    if (![defaults objectForKey:SAVE_wordRule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_wordRule];
     }
     ////
     [self initKeyBoard];

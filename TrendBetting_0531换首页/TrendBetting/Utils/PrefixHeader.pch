@@ -47,6 +47,15 @@
 #define SAVE_GoXiaoCount @"goXiaoCount"  //小二路
 #define SAVE_isbigRoad @"isbigRoad"//是否是看所有0 只看大路1
 #define SAVE_isOnlyRBSelect @"isOnlyRBSelect"//0关闭 1把把庄  2把把闲
+
+
+#define SAVE_oneNORule @"oneNORule"//设置中可关闭/开启一带不规则
+#define SAVE_noRuleOne @"noRuleOne"//设置中可关闭/开启不规则带一
+#define SAVE_oneRule @"oneRule"//设置中可关闭/开启一带规则
+#define SAVE_ruleOne @"ruleOne"//设置中可关闭／开启规则带一
+#define SAVE_sameRule @"sameRule"//设置中可关闭／开启平头规则
+#define SAVE_wordRule @"wordRule"//设置中可关闭／开启文字区域的规则
+
 //#define back_Money 0.005  //返利
 
 
