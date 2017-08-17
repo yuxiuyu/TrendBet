@@ -12,21 +12,14 @@
 {
     NSArray*dataArray;
     NSUserDefaults*defaults;
+    BOOL ispostNotification;
+    BOOL iswordpostNotification;
 }
 @end
 @implementation switchUItableViewCell
 - (IBAction)switchChange:(id)sender {
-//    if ([self.delegate respondsToSelector:@selector(switchClick:)]) {
-//        [self.delegate switchClick:_indexStr];
-//    }
-    NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
-    switch ([_indexStr intValue]) {
-        case 10:
-             [defaults setObject:@"YES" forKey:SAVE_oneNORule];
-            break;
-            
-        default:
-            break;
+    if ([self.delegate respondsToSelector:@selector(switchClick:)]) {
+        [self.delegate switchClick:_indexStr];
     }
 }
 @end
@@ -43,7 +36,18 @@
     
     // Do any additional setup after loading the view.
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (ispostNotification)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_oneNORule}];
+    }
+//    if (iswordpostNotification) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_wordRule}];
+//    }
+    
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return dataArray.count;
@@ -147,7 +151,86 @@
 
 #pragma mark--switchOnOrOffProtocol
 -(void)switchClick:(NSString*)indexStr{
-    
+  
+    switch ([indexStr intValue]) {
+        case 11:
+        {
+            if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_oneNORule];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_oneNORule];
+            }
+              ispostNotification=YES;
+        }
+            break;
+        case 12:
+        {
+            if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_noRuleOne];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_noRuleOne];
+            }
+              ispostNotification=YES;
+        }
+            break;
+        case 13:
+        {
+            if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_oneRule];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_oneRule];
+            }
+              ispostNotification=YES;
+        }
+            break;
+        case 14:
+        {
+            if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_ruleOne];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_ruleOne];
+            }
+              ispostNotification=YES;
+        }
+            break;
+        case 15:
+        {
+            if ([[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_sameRule];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_sameRule];
+            }
+              ispostNotification=YES;
+        }
+            break;
+        case 16:
+        {
+            if ([[defaults objectForKey:SAVE_wordRule] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_wordRule];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_wordRule];
+            }
+            iswordpostNotification=YES;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    [defaults synchronize];
+
 }
 #pragma mark - Navigation
 

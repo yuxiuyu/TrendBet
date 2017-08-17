@@ -10,7 +10,7 @@
 
 @interface Utils (xiasanluRule)
 -(NSArray*)getNewFristArray:(NSArray*)listArray;
--(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray;
+-(NSArray*)seacherSpecRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray secondPartArray:(NSArray*)secondPartArray myTag:(NSInteger)myTag;
 //搜索第一区域的规则
 -(NSArray*)searchFirstRule:(NSArray*)listArray;
 -(NSArray*)xiasanluJudgeGuessRightandWrong:(NSArray*)listArray allGuessArray:(NSArray*)allGuessArray;

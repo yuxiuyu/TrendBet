@@ -475,6 +475,10 @@
 #pragma mark--------------根据有规律 猜出来的值 反推猜出来的值
 -(NSString*)backRuleSeacher:(NSArray*)fristPartArray ruleStr:(NSString*)ruleStr myTag:(NSInteger)myTag
 {
+    if (ruleStr.length<=0)
+    {
+        return @"";
+    }
     NSInteger mycount=fristPartArray.count-1;
     NSArray*tempArr1=fristPartArray[mycount];
     NSArray*tempArr2=fristPartArray[mycount-myTag];
