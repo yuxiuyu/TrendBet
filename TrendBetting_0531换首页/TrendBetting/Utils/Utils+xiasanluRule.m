@@ -209,11 +209,12 @@
             nameStr=[resultArray firstObject];
             if ([nameStr containsString:@"长连"])
             {
-                guessStr=resultArray[1];
-                nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:2],[[nameStr substringFromIndex:2] intValue]+1];
-                backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
-                return @[nameStr,guessStr,backguessStr];
-                
+                if (fristPartArray.count>1&&lastArray.count!=[fristPartArray[allcount-2] count]) {//判断可能存在小几路
+                    guessStr=resultArray[1];
+                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:2],[[nameStr substringFromIndex:2] intValue]+1];
+                    backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
+                    return @[nameStr,guessStr,backguessStr];
+                }
             }
             else if([nameStr containsString:@"小"])
             {
@@ -325,21 +326,29 @@
             guessStr=[lastSecArray lastObject];
             nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
         }
-        else if(lastArray.count>1&&same>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount] intValue])
+        else if(lastArray.count>=2&&same>=2)
         {
-            NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
-            if ([[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"]) {
-                guessStr=[lastSecArray lastObject];
-                nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+            if (lastArray.count==2)
+            {
+                if (same>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount] intValue]) {
+                    guessStr=[lastSecArray lastObject];
+                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+                }
+            }
+            else
+            {
+                NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
+                if ([[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"]) {
+                    guessStr=[lastSecArray lastObject];
+                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+                }
             }
         }
     }
     if (fristPartArray.count>=1&&nameStr.length<=0&&lastArray.count>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoCount] intValue])
     {
-        
-            nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
-            guessStr=[lastArray lastObject];
-        
+        nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
+        guessStr=[lastArray lastObject];
     }
     return @[nameStr,guessStr];
 }
@@ -541,7 +550,10 @@
         }
         
     }
-    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"])
+    {
+        return @[@"",@""];
+    }
     
     return @[nameStr,guessStr];
 }
