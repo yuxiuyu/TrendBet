@@ -127,6 +127,9 @@
                     NSString*guessStr4=[[guessFivePartArray lastObject] lastObject];
                     
                     NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule]isEqualToString:@"NO"]) {
+                        [guessArr removeObjectAtIndex:0];
+                    }
                     str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
                 }
             }
@@ -244,13 +247,13 @@
             else if([[nameStr substringToIndex:3] isEqualToString:@"规则带"]||[[nameStr substringToIndex:3] isEqualToString:@"一带规"])
             {
                 //yxy add
-                int a=[[nameStr substringFromIndex:4] intValue]+1;
+                NSInteger a=[[nameStr substringFromIndex:4] intValue]+1;
                 NSInteger b=[fristPartArray[allcount-1] count]+[fristPartArray[allcount-2] count]+[fristPartArray[allcount-3] count]+[fristPartArray[allcount-4] count];
                 if (a>b) {
                     ///yxy add
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                     NSArray*lastThirdArray=fristPartArray[allcount-3];
-                    nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:4],a];
+                    nameStr=[NSString stringWithFormat:@"%@%ld",[nameStr substringToIndex:4],a];
                     guessStr=resultArray[1];
                     if (lastArray.count==lastThirdArray.count)
                     {
@@ -274,9 +277,7 @@
                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:5],[[nameStr substringFromIndex:5] intValue]+1];
                 if (lastSecArray.count>1)
                 {
-                    
-                    guessStr=[lastSecArray lastObject];
-                    
+                   guessStr=[lastSecArray lastObject];
                 }
                 backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
                 return @[nameStr,guessStr,backguessStr];
@@ -368,7 +369,8 @@
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
-                guessStr=[fristPartArray[allCount-1] lastObject];
+                guessStr=[fristPartArray[allCount] lastObject];
+//                guessStr=[fristPartArray[allCount-1] lastObject];
                 nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
                 return @[nameStr,guessStr];
             }
@@ -380,6 +382,7 @@
     {
          if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
             nameStr=@"不规则带一";
+//            guessStr=[fristPartArray[allCount] lastObject];
             guessStr=[fristPartArray[allCount-1] lastObject];
            
          }
@@ -387,6 +390,7 @@
         {
              if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
                 nameStr=@"规则带一";
+//                guessStr=[fristPartArray[allCount] lastObject];
                 guessStr=[fristPartArray[allCount-1] lastObject];
              }
         }
@@ -396,6 +400,7 @@
             if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
                 guessStr=[fristPartArray[allCount] lastObject];
+//                guessStr=[fristPartArray[allCount-1] lastObject];
                 a=a+1;
             }
         }
@@ -550,11 +555,6 @@
         }
         
     }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"])
-    {
-        return @[@"",@""];
-    }
-    
     return @[nameStr,guessStr];
 }
 

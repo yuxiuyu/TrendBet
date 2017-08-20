@@ -48,6 +48,7 @@
     NSMutableArray*sanRoadGuessArray;
     BOOL isfristCreate;
     NSTimer*checkTimer;
+    NSInteger sumCount;
     
     
 }
@@ -181,6 +182,7 @@
     else if(btn.tag==102)
     {
         str=@"T";//和
+        sumCount++;
         /////
         if(showSecondPartArray.count>0)
         {
@@ -241,6 +243,7 @@
         }
         else
         {
+            sumCount--;
             if(showSecondPartArray.count>0)
             {
                 NSMutableArray*tepA=[[NSMutableArray alloc]initWithArray:[showSecondPartArray lastObject]];
@@ -405,74 +408,81 @@
             [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepfivePartArray resultArray:[guessFivePartArray lastObject]  secondPartArray:tempSecondPartArray myTag:3]];
             
         }
-      [self changeArea:tempSecondPartArray.count-1];
+      [self changeArea:listArray.count-1];
     }
     [self setMoneyValue:NO];
     
 }
--(void)changeArea:(NSInteger)indexp
-{
-    NSString*str=@"";
-    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-    if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
-        [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
-    }
-    else
-    {
-        secGuessLastStr=[guessSecondPartArray lastObject];
-        if (secGuessLastStr.length>0)
-        {
-            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,[[guessThirdPartArray lastObject] lastObject],[[guessForthPartArray lastObject] lastObject],[[guessFivePartArray lastObject] lastObject]]];
-            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
-        }
-    }
-    [allGuessArray addObject:str];
-    
-}
 //-(void)changeArea:(NSInteger)indexp
 //{
-//    
-//    for (NSInteger i=indexp; i<guessFirstPartArray.count; i++)
-//    {
-//        if (i==0)
-//        {
-//            [allGuessArray removeAllObjects];
-//        }
-//        NSString*str=@"";
-//        NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-//        if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
-//            [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
-//        }
-//        else
-//        {
-//            secGuessLastStr=[guessSecondPartArray lastObject];
-//            if (secGuessLastStr.length>0)
-//            {
-//                NSString*firstStr=[[guessFirstPartArray lastObject] lastObject];
-//                if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"]){
-//                    firstStr=@"";
-//                }
-//                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[firstStr,secGuessLastStr,[[guessThirdPartArray lastObject] lastObject],[[guessForthPartArray lastObject] lastObject],[[guessFivePartArray lastObject] lastObject]]];
-//                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
-//            }
-//        }
-//        [allGuessArray addObject:str];
+//    NSString*str=@"";
+//    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+//    if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+//        [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
 //    }
-//    if (indexp==0)
+//    else
 //    {
-//        [self setMoneyValue:NO];
+//        secGuessLastStr=[guessSecondPartArray lastObject];
+//        if (secGuessLastStr.length>0)
+//        {
+//            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,[[guessThirdPartArray lastObject] lastObject],[[guessForthPartArray lastObject] lastObject],[[guessFivePartArray lastObject] lastObject]]];
+//            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+//        }
 //    }
+//    [allGuessArray addObject:str];
 //    
 //}
+-(void)changeArea:(NSInteger)indexp
+{
+    
+    for (NSInteger i=indexp; i<listArray.count; i++)
+    {
+        if (i==0)
+        {
+            [allGuessArray removeAllObjects];
+            sumCount=0;
+        }
+        if ([listArray[i] isEqualToString:@"T"]&&indexp==0)
+        {
+            sumCount++;
+        }
+        NSString*str=@"";
+        NSString*secGuessLastStr=guessSecondPartArray[i-sumCount];
+        if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+            [guessSecondPartArray replaceObjectAtIndex:i-sumCount withObject:@"stop"];
+        }
+        else
+        {
+            secGuessLastStr=guessSecondPartArray[i-sumCount];
+            if (secGuessLastStr.length>0)
+            {
+                NSString*firstStr=[guessFirstPartArray[i] lastObject];
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"]){
+                    firstStr=@"";
+                }
+                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[firstStr,secGuessLastStr,[guessThirdPartArray[i-sumCount] lastObject],[guessForthPartArray[i-sumCount] lastObject],[guessFivePartArray[i-sumCount] lastObject]]];
+                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+            }
+        }
+        [allGuessArray addObject:str];
+    }
+    if (indexp==0)
+    {
+        [self setMoneyValue:NO];
+    }
+    
+}
 -(void)setMoneyValue:(BOOL)isadd
 {
     if (isadd)
     {
-        [self changeArea:guessSecondPartArray.count-1];
+        [self changeArea:listArray.count-1];
+    }
+    NSArray*array0=[guessFirstPartArray lastObject];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"]) {
+        array0=@[@"",@""];
     }
     
-    
-    NSArray*array0=[guessFirstPartArray lastObject];
     NSArray*array2=[guessThirdPartArray lastObject];
     NSArray*array3=[guessForthPartArray lastObject];
     NSArray*array4=[guessFivePartArray lastObject];
@@ -818,6 +828,14 @@
     else if([dic[@"title"] isEqualToString:SAVE_oneNORule])
     {
         [self guessArrayinitAdd];
+    }
+    else if([dic[@"title"] isEqualToString:SAVE_GoXiaoCount])
+    {
+        [self guessArrayinitAdd];
+    }
+    if ([dic[@"title"] isEqualToString:SAVE_wordRule])
+    {
+        [self changeArea:0];
     }
     
     //    if ([dic[@"title"] isEqualToString:SAVE_MONEY_TXT])

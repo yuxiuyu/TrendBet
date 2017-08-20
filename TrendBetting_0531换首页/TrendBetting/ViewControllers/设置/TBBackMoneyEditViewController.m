@@ -62,7 +62,7 @@
 
 - (IBAction)saveBtnAction:(id)sender
 {
-
+    BOOL ispostNotification=NO;
     NSUserDefaults *udefault=[NSUserDefaults standardUserDefaults];
     switch ([_tagStr intValue]) {
         case 0:
@@ -73,10 +73,12 @@
             if([_sumTextField.text intValue]<4)
             {
                  [self.view makeToast:@"最小个数必须大于等于4" duration:0.5f position:CSToastPositionCenter];
+                 return;
                
             }
             else
             {
+                ispostNotification=YES;
                 [udefault setObject:_sumTextField.text forKey:SAVE_GotwoCount];
                 [udefault synchronize];
             }
@@ -85,9 +87,11 @@
             if([_sumTextField.text intValue]<3)
             {
                 [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
+                 return;
             }
             else
             {
+                ispostNotification=YES;
                 [udefault setObject:_sumTextField.text forKey:SAVE_GoCount];
                 [udefault synchronize];
             }
@@ -96,10 +100,12 @@
             if([_sumTextField.text intValue]<2)
             {
                 [self.view makeToast:@"最小个数必须大于等于2" duration:0.5f position:CSToastPositionCenter];
+                 return;
                 
             }
             else
             {
+                ispostNotification=YES;
                 [udefault setObject:_sumTextField.text forKey:SAVE_GoXiaoCount];
                 [udefault synchronize];
             }
@@ -110,6 +116,9 @@
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    if (ispostNotification) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_GoXiaoCount}];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
