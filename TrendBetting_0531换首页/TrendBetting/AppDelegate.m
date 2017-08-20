@@ -50,7 +50,7 @@
     /////长跳
     if (![defaults objectForKey:SAVE_GotwoCount])
     {
-        [defaults setObject:@"4" forKey:SAVE_GotwoCount];
+        [defaults setObject:@"3" forKey:SAVE_GotwoCount];
     }
     /////长连
     if (![defaults objectForKey:SAVE_GoCount])
@@ -102,6 +102,11 @@
     if (![defaults objectForKey:SAVE_wordRule])
     {
         [defaults setObject:@"YES" forKey:SAVE_wordRule];
+    }
+    ////设置中可关闭／开启和暂停的规则
+    if (![defaults objectForKey:SAVE_TRule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_TRule];
     }
     ////
     [self initKeyBoard];

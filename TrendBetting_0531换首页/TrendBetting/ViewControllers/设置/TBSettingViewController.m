@@ -30,7 +30,7 @@
     self.title=@"设置";
     defaults=[NSUserDefaults standardUserDefaults];
     self.navigationController.navigationBarHidden=NO;
-    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则"];
+    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
@@ -84,6 +84,9 @@
                 break;
             case 16:
                 cell.mySwitch.on=[[defaults objectForKey:SAVE_wordRule] isEqualToString:@"YES"];
+                break;
+            case 17:
+                cell.mySwitch.on=[[defaults objectForKey:SAVE_TRule] isEqualToString:@"YES"];
                 break;
                 
             default:
@@ -221,6 +224,18 @@
             else
             {
                 [defaults setObject:@"YES" forKey:SAVE_wordRule];
+            }
+            iswordpostNotification=YES;
+        }
+            break;
+        case 17:
+        {
+            if ([[defaults objectForKey:SAVE_TRule] isEqualToString:@"YES"]) {
+                [defaults setObject:@"NO" forKey:SAVE_TRule];
+            }
+            else
+            {
+                [defaults setObject:@"YES" forKey:SAVE_TRule];
             }
             iswordpostNotification=YES;
         }

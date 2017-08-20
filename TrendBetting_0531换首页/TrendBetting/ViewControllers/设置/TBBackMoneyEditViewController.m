@@ -24,7 +24,7 @@
             break;
         case 1:
             _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GotwoCount];
-            _sumTextField.placeholder=@"不可小于4";
+            _sumTextField.placeholder=@"不可小于3";
             _nameLab.text=@"长跳个数";
             break;
         case 2:
@@ -70,9 +70,9 @@
             [udefault synchronize];
             break;
         case 1:
-            if([_sumTextField.text intValue]<4)
+            if([_sumTextField.text intValue]<3)
             {
-                 [self.view makeToast:@"最小个数必须大于等于4" duration:0.5f position:CSToastPositionCenter];
+                 [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
                  return;
                
             }

@@ -61,7 +61,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -338,7 +338,7 @@
         
         [arrGuessSecondPartArray addObject:[[Utils sharedInstance] seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
         
-
+        
         [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
         [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:2]];
         [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject]  secondPartArray:secondPartArray myTag:3]];
@@ -367,7 +367,7 @@
     NSMutableArray*tepthirdPartArray=[[NSMutableArray alloc]init];
     NSMutableArray*tepforthPartArray=[[NSMutableArray alloc]init];
     NSMutableArray*tepfivePartArray=[[NSMutableArray alloc]init];
-
+    
     [guessThirdPartArray removeAllObjects];
     [guessForthPartArray removeAllObjects];
     [guessFivePartArray removeAllObjects];
@@ -402,13 +402,13 @@
             tepthirdPartArray=[[Utils sharedInstance] setNewData:tempSecondPartArray startCount:1 dataArray:tepthirdPartArray];
             tepforthPartArray=[[Utils sharedInstance] setNewData:tempSecondPartArray startCount:2 dataArray:tepforthPartArray];
             tepfivePartArray=[[Utils sharedInstance]  setNewData:tempSecondPartArray startCount:3 dataArray:tepfivePartArray];
-
+            
             [guessThirdPartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepthirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:tempSecondPartArray myTag:1]];
             [guessForthPartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepforthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:tempSecondPartArray myTag:2]];
             [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepfivePartArray resultArray:[guessFivePartArray lastObject]  secondPartArray:tempSecondPartArray myTag:3]];
             
         }
-      [self changeArea:listArray.count-1];
+        [self changeArea:listArray.count-1];
     }
     [self setMoneyValue:NO];
     
@@ -430,7 +430,7 @@
 //        }
 //    }
 //    [allGuessArray addObject:str];
-//    
+//
 //}
 -(void)changeArea:(NSInteger)indexp
 {
@@ -448,7 +448,7 @@
         }
         NSString*str=@"";
         NSString*secGuessLastStr=guessSecondPartArray[i-sumCount];
-        if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+        if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]){
             [guessSecondPartArray replaceObjectAtIndex:i-sumCount withObject:@"stop"];
         }
         else
@@ -524,11 +524,15 @@
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
         {
             NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
-            for (int i=0; i<tepguessSecondPartArray.count; i++) {
-                if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
-                {
-                    [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+            if ([[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
+            {
+                for (int i=0; i<tepguessSecondPartArray.count; i++) {
+                    if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
+                    {
+                        [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+                    }
                 }
+                
             }
             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:tepguessSecondPartArray];
             _memoLab.text =[[Utils sharedInstance] changeChina:[guessSecondPartArray lastObject] isWu:NO];
@@ -544,12 +548,14 @@
     
     
     NSString*money=resultArray[5];
-    if([[listArray lastObject] isEqualToString:@"T"]&&[[guessSecondPartArray lastObject] length]>0){
-        _memoLab.text =@"暂停";
-        str1=@"暂停";
-        money=@"";
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]) {
+        if([[listArray lastObject] isEqualToString:@"T"]&&[[guessSecondPartArray lastObject] length]>0){
+            _memoLab.text =@"暂停";
+            str1=@"暂停";
+            money=@"";
+        }
+
     }
-    
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",array0[0],str0,nameStr3,str3];
     _areaTrendLab1.text=[NSString stringWithFormat:@"                      小强路:%@%@",nameStr4,str4];
