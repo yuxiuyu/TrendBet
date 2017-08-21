@@ -115,7 +115,7 @@
         else
         {
             NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
+            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]){
                 [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
             }
             else{
@@ -145,13 +145,15 @@
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
         {
             NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
-            for (int i=0; i<tepguessSecondPartArray.count; i++) {
-                if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
-                {
-                    [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+            if ([[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
+            {
+                for (int i=0; i<tepguessSecondPartArray.count; i++) {
+                    if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
+                    {
+                        [tepguessSecondPartArray replaceObjectAtIndex:i withObject:@""];
+                    }
                 }
             }
-            
             resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:tepguessSecondPartArray];
         }
         else
