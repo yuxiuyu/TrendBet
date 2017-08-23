@@ -550,6 +550,15 @@
     }
     guessStr=[self getReverseStr:guessStr];//反向
     guessStr=[self getRBSelected:guessStr];//庄闲选择
+    //yxy 2017-08-23 计算相同趋势的个数
+    if (!isLength&&guessStr.length>0) {
+        if (countB>0) {
+            guessStr = [NSString stringWithFormat:@"%@_%ld",guessStr,countB];
+        }
+        else {
+             guessStr = [NSString stringWithFormat:@"%@_%ld",guessStr,countR];
+        }
+    }
     return guessStr;
 }
 

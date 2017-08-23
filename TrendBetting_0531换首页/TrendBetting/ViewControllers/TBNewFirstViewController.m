@@ -61,7 +61,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -413,25 +413,7 @@
     [self setMoneyValue:NO];
     
 }
-//-(void)changeArea:(NSInteger)indexp
-//{
-//    NSString*str=@"";
-//    NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-//    if([[listArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0){
-//        [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
-//    }
-//    else
-//    {
-//        secGuessLastStr=[guessSecondPartArray lastObject];
-//        if (secGuessLastStr.length>0)
-//        {
-//            NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFirstPartArray lastObject] lastObject],secGuessLastStr,[[guessThirdPartArray lastObject] lastObject],[[guessForthPartArray lastObject] lastObject],[[guessFivePartArray lastObject] lastObject]]];
-//            str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
-//        }
-//    }
-//    [allGuessArray addObject:str];
-//
-//}
+
 -(void)changeArea:(NSInteger)indexp
 {
     

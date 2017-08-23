@@ -573,7 +573,7 @@
  */
 -(NSArray*)xiasanluJudgeGuessRightandWrong:(NSArray*)listArray allGuessArray:(NSArray*)allGuessArray
 {
-    //    NSArray*moneyArr=@[@"1",@"5",@"2"];
+   
     NSInteger guessNo=0;//猜错的总数
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
@@ -582,6 +582,19 @@
     float reduceMoney=0.0;//抽水的钱
     float backMoney=0.0;//返利的钱
     float nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];//下一次下注的钱
+    // yxy add 2017-08-23
+    NSInteger winonecount = 0;
+    NSInteger wintwocount = 0;
+    NSInteger winthreecount = 0;
+    NSInteger winforthcount = 0;
+    NSInteger winfivecount = 0;
+    
+    NSInteger failonecount = 0;
+    NSInteger failtwocount = 0;
+    NSInteger failthreecount = 0;
+    NSInteger failforthcount = 0;
+    NSInteger failfivecount = 0;
+    
     NSMutableDictionary*changeDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary*changeTotalDic=[[NSMutableDictionary alloc]init];
     for (int i=0; i<listArray.count; i++)
@@ -595,17 +608,42 @@
                 NSString*guessStr=allGuessArray[i-1];
                 if (guessStr.length>0)
                 {
+                    NSArray*countArr = [guessStr componentsSeparatedByString:@"_"];
+                    
                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     backMoney=backMoney+nextMoney*([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney] intValue]/1000.0);
-                    if ([str isEqualToString:guessStr])
+                    if ([guessStr containsString:str])
                     {
-                        totalMoney=[guessStr isEqualToString:@"R"]?totalMoney+(1-Reduce_Money)*nextMoney:totalMoney+nextMoney ;
+                        totalMoney=[guessStr containsString:@"R"]?totalMoney+(1-Reduce_Money)*nextMoney:totalMoney+nextMoney ;
                         guessYes++;
                         goGuessYes++;
                         
-                        reduceMoney+=[guessStr isEqualToString:@"R"]?Reduce_Money*nextMoney:0;
-                        [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        reduceMoney+=[guessStr containsString:@"R"]?Reduce_Money*nextMoney:0;
+                        [changeDic setObject:[guessStr containsString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        //yxy add 2017-08-23
+                        switch ([countArr[1] intValue]) {
+                            case 1:
+                                winonecount++;
+                                break;
+                            case 2:
+                                wintwocount++;
+                                break;
+                            case 3:
+                                winthreecount++;
+                                break;
+                            case 4:
+                                winforthcount++;
+                                break;
+                            case 5:
+                                winfivecount++;
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                        
+                        
                         
                     }
                     else
@@ -616,6 +654,27 @@
                         
                         [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                         
+                        //yxy add 2017-08-23
+                        switch ([countArr[1] intValue]) {
+                            case 1:
+                                failonecount++;
+                                break;
+                            case 2:
+                                failtwocount++;
+                                break;
+                            case 3:
+                                failthreecount++;
+                                break;
+                            case 4:
+                                failforthcount++;
+                                break;
+                            case 5:
+                                failfivecount++;
+                                break;
+                                
+                            default:
+                                break;
+                        }
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
@@ -645,7 +704,17 @@
              [NSString stringWithFormat:@"%0.2f",nextMoney],
              [NSString stringWithFormat:@"%0.2f",reduceMoney],
              [NSString stringWithFormat:@"%0.3f",backMoney],
-             [NSString stringWithFormat:@"%ld",goGuessYes]
+             [NSString stringWithFormat:@"%ld",goGuessYes],
+             [NSString stringWithFormat:@"%ld",winonecount],
+             [NSString stringWithFormat:@"%ld",wintwocount],
+             [NSString stringWithFormat:@"%ld",winthreecount],
+             [NSString stringWithFormat:@"%ld",winforthcount],
+             [NSString stringWithFormat:@"%ld",winfivecount],
+             [NSString stringWithFormat:@"%ld",failonecount],
+             [NSString stringWithFormat:@"%ld",failtwocount],
+             [NSString stringWithFormat:@"%ld",failthreecount],
+             [NSString stringWithFormat:@"%ld",failforthcount],
+             [NSString stringWithFormat:@"%ld",failfivecount]
              ];
     
 }
