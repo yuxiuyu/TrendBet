@@ -179,7 +179,9 @@
                      [NSString stringWithFormat:@"%@",resultArray[7]],//抽水的钱
                      newListArray,//r总数
                      resultArray[3],//每一局赢或输钱的变动
-                     resultArray[4]//每一局总的钱的变动
+                     resultArray[4],//每一局总的钱的变动
+                     resultArray[9],//赢的
+                     resultArray[10]//
                      ];
     
     return array;
@@ -696,6 +698,16 @@
             Tcount++;
         }
     }
+    NSArray * winArr=@[ [NSString stringWithFormat:@"%ld",winonecount],
+                        [NSString stringWithFormat:@"%ld",wintwocount],
+                        [NSString stringWithFormat:@"%ld",winthreecount],
+                        [NSString stringWithFormat:@"%ld",winforthcount],
+                        [NSString stringWithFormat:@"%ld",winfivecount]];
+    NSArray *failArr=@[ [NSString stringWithFormat:@"%ld",failonecount],
+                        [NSString stringWithFormat:@"%ld",failtwocount],
+                        [NSString stringWithFormat:@"%ld",failthreecount],
+                        [NSString stringWithFormat:@"%ld",failforthcount],
+                        [NSString stringWithFormat:@"%ld",failfivecount]];
     return @[[NSString stringWithFormat:@"%ld",guessNo],
              [NSString stringWithFormat:@"%ld",guessYes],
              [NSString stringWithFormat:@"%0.2f",totalMoney],
@@ -705,16 +717,8 @@
              [NSString stringWithFormat:@"%0.2f",reduceMoney],
              [NSString stringWithFormat:@"%0.3f",backMoney],
              [NSString stringWithFormat:@"%ld",goGuessYes],
-             [NSString stringWithFormat:@"%ld",winonecount],
-             [NSString stringWithFormat:@"%ld",wintwocount],
-             [NSString stringWithFormat:@"%ld",winthreecount],
-             [NSString stringWithFormat:@"%ld",winforthcount],
-             [NSString stringWithFormat:@"%ld",winfivecount],
-             [NSString stringWithFormat:@"%ld",failonecount],
-             [NSString stringWithFormat:@"%ld",failtwocount],
-             [NSString stringWithFormat:@"%ld",failthreecount],
-             [NSString stringWithFormat:@"%ld",failforthcount],
-             [NSString stringWithFormat:@"%ld",failfivecount]
+             winArr,
+             failArr,
              ];
     
 }

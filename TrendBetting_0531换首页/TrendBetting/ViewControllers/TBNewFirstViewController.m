@@ -879,21 +879,21 @@
     }
 }
 //数据显示
-- (IBAction)dataShowBtnAction:(id)sender {
-    if (listArray.count>0)
-    {
-        NSArray*array=[[Utils sharedInstance] getNewFristArray:listArray];
-        TBNewRule_TimeViewController*vc=[[UIStoryboard storyboardWithName:@"newResultData" bundle:nil] instantiateViewControllerWithIdentifier:@"TBNewRule_TimeViewController"];
-        vc.selectedTitle=@"结果显示";
-        vc.dataArray=array;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    }
-    else
-    {
-        [self.view makeToast:@"请先录入数据" duration:3 position:CSToastPositionCenter];
-    }
-}
+//- (IBAction)dataShowBtnAction:(id)sender {
+//    if (listArray.count>0)
+//    {
+//        NSArray*array=[[Utils sharedInstance] getNewFristArray:listArray];
+//        TBNewRule_TimeViewController*vc=[[UIStoryboard storyboardWithName:@"newResultData" bundle:nil] instantiateViewControllerWithIdentifier:@"TBNewRule_TimeViewController"];
+//        vc.selectedTitle=@"结果显示";
+//        vc.dataArray=array;
+//        [self.navigationController pushViewController:vc animated:YES];
+//        
+//    }
+//    else
+//    {
+//        [self.view makeToast:@"请先录入数据" duration:3 position:CSToastPositionCenter];
+//    }
+//}
 
 
 @end

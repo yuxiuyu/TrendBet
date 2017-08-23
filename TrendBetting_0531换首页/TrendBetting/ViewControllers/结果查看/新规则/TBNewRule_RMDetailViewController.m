@@ -40,8 +40,9 @@
         [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=(NSDictionary*)obj;
             NSArray*array=dic[@"daycount"];
-            for (int i=0; i<array.count; i++)
+            for (int i=0; i<monthSumWinCountArray.count; i++)
             {
+                
                 NSString*str1=[NSString stringWithFormat:@"%d",[monthSumWinCountArray[i] intValue]+[array[i] intValue]];
                 NSString*str2=[NSString stringWithFormat:@"%d",[houseSumWinCountArray[i] intValue]+[array[i] intValue]];
                 if (i==5||i==7)

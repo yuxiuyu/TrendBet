@@ -23,8 +23,8 @@
         createPath=[NSString stringWithFormat:@"%@/%@",documentDictionary,SAVE_RULE_FILENAME];
         fileData = [[self arrayToJson:saveArray] dataUsingEncoding:NSUTF8StringEncoding];
         
-         NSString*nameStr=[NSString stringWithFormat:@"%@.txt",filePathStr];
-         filePath=[createPath stringByAppendingPathComponent:nameStr];
+        NSString*nameStr=[NSString stringWithFormat:@"%@.txt",filePathStr];
+        filePath=[createPath stringByAppendingPathComponent:nameStr];
     }
     else
     {
@@ -33,10 +33,10 @@
         fileData = [[self dictionaryToJson:dic] dataUsingEncoding:NSUTF8StringEncoding];
         NSString*nameStr=[NSString stringWithFormat:@"%d.txt",[arr[2] intValue]];
         filePath=[createPath stringByAppendingPathComponent:nameStr];
-
+        
     }
-  
-   
+    
+    
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath])
     {
         [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -48,7 +48,7 @@
 ////读取我的数据
 -(NSDictionary*)readData:(NSString*)str
 {
-   
+    
     NSString*documentDictionary=[self getHomePath];
     if (str)
     {
@@ -60,7 +60,7 @@
         //
         documentDictionary=[NSString stringWithFormat:@"%@/%@/%@-%@/%d.txt",documentDictionary,SAVE_DATA_FILENAME,arr[0],arr[1],[arr[2] intValue]];
     }
-   
+    
     NSDictionary*dic;
     if ([[NSFileManager defaultManager] fileExistsAtPath:documentDictionary])
     {
@@ -69,7 +69,7 @@
         dic=[responseString objectFromJSONString];
     }
     return dic;
-
+    
 }
 /////读取数据类数据 如资金策略
 -(NSArray*)readMoneyData:(NSString*)str
@@ -97,7 +97,7 @@
     {
         pathStr=[NSString stringWithFormat:@"%@/%@",pathStr,str];
     }
-   
+    
     NSMutableArray * tempFileList = [[NSMutableArray alloc] initWithArray:[fileManager contentsOfDirectoryAtPath:pathStr error:nil]];
     for (int i=0; i<tempFileList.count; i++)
     {
@@ -114,7 +114,7 @@
         }
         
     }
-
+    
     return tempFileList;
 }
 
@@ -200,7 +200,7 @@
         NSMutableArray*allArr=[[NSMutableArray alloc]init];
         for (int i=0; i<time.dataArr.count; i++)
         {
-             TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
+            TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
             if (isContinue)
             {
                 [allArr addObjectsFromArray:tempDataArr.result];
@@ -217,7 +217,7 @@
             [timeDic setObject:array forKey:dayNameStr];
         }
     }
-  
+    
     
     return timeDic;
     
@@ -227,7 +227,9 @@
 -(NSDictionary*)getNewRuleDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr
 {
     TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:[NSString stringWithFormat:@"%@/%@",monthStr,dayNameStr]]];
-    NSMutableArray*daySumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableArray*daySumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     NSMutableDictionary*timeDic=[[NSMutableDictionary alloc]init];
     if (roomEntry.roomArr.count>0)
     {
@@ -242,17 +244,30 @@
             [timeDic setObject:array forKey:[NSString stringWithFormat:@"%d",i+1]];
             for (int j=0; j<daySumWinCountArray.count; j++)
             {
-                NSString*str=[NSString stringWithFormat:@"%d",[daySumWinCountArray[j] intValue]+[array[j] intValue]];
-                if (j==5||j==7)
-                {
-                    str=[NSString stringWithFormat:@"%0.2f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                if (j<=8) {
+                    NSString*str=[NSString stringWithFormat:@"%d",[daySumWinCountArray[j] intValue]+[array[j] intValue]];
+                    if (j==5||j==7)
+                    {
+                        str=[NSString stringWithFormat:@"%0.2f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                    }
+                    if (j==8)
+                    {
+                        str=[NSString stringWithFormat:@"%0.3f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                    }
+                    [daySumWinCountArray replaceObjectAtIndex:j withObject:str];
                 }
-                if (j==8)
+                else
                 {
-                    str=[NSString stringWithFormat:@"%0.3f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                    NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:daySumWinCountArray[j]];
+                    for (int k=0; k<wArr.count; k++) {
+                       
+                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[k] intValue]];
+                        [wArr replaceObjectAtIndex:k withObject:s];
+                    }
+                    [daySumWinCountArray replaceObjectAtIndex:j withObject:wArr];
                 }
                 
-                [daySumWinCountArray replaceObjectAtIndex:j withObject:str];
+                
                 
             }
             
