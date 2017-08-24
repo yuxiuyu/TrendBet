@@ -14,6 +14,8 @@
     NSMutableArray*dataArray;
     NSMutableDictionary*dateDic;
     NSMutableArray*houseSumWinCountArray;
+    NSMutableDictionary*houseMonthDic;
+    NSThread*thread;
     
 }
 @end
@@ -32,17 +34,61 @@
     _tableview.tableFooterView=[[UIView alloc]init];
     dateDic=[[NSMutableDictionary alloc]init];
     dataArray=[[NSMutableArray alloc]init];
+    
+    thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
+    [thread start];
+   
+//    NSDictionary*monthDic=[Utils sharedInstance].housesDic[_selectedTitle];
+    
+    
+    
+    // Do any additional setup after loading the view.
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [thread cancel];
+    thread=nil;
+}
+-(void)getDataRead
+{
+         [self showProgress:YES];
+        houseMonthDic=[[NSMutableDictionary alloc]init];
+        NSArray*monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
+        for (NSString*monthstr in monthsArr)
+        {
+            NSString*monthFileNameStr=[NSString stringWithFormat:@"%@/%@",_selectedTitle,monthstr];
+            NSArray*daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
+            NSMutableDictionary*daysDic=[[NSMutableDictionary alloc]init];
+            for (NSString*dayStr in daysArr)
+            {
+                if ([[NSThread currentThread] isCancelled])
+                {
+                    [self hidenProgress];
+                    [NSThread exit];
+                    return;
+                }
+                NSArray*array=[dayStr componentsSeparatedByString:@"."];
+                NSDictionary*tepDic=[[Utils sharedInstance] getNewRuleDayData:monthFileNameStr dayStr:array[0] ];
+                [daysDic setObject:tepDic forKey:array[0]];
+            }
+            [houseMonthDic setObject:daysDic forKey:monthstr];
+        }
+
+//    [Utils sharedInstance].housesDic=[[NSDictionary alloc] initWithDictionary:housesDic];
+    [self performSelectorOnMainThread:@selector(dealData) withObject:nil waitUntilDone:YES];
+}
+
+-(void)dealData{
     NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
-    NSDictionary*monthDic=[Utils sharedInstance].housesDic[_selectedTitle];
-    
     ///////
-    [monthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSDictionary*daysDic=monthDic[key];
+    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSDictionary*daysDic=houseMonthDic[key];
         [dataArray addObject:key];
-//        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
-//        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+        //        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+        //        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
         [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=(NSDictionary*)obj;
@@ -101,13 +147,9 @@
     reduceStr=[reduceStr stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
     NSString*backmoneyStr=[[Utils sharedInstance]removeFloatAllZero:houseSumWinCountArray[8]];
     _winCountLab.text=[NSString stringWithFormat:@"赢:%@  输:%@  盈利:%@  抽水:%@  洗码:%@",houseSumWinCountArray[4],houseSumWinCountArray[3],[[Utils sharedInstance]removeFloatAllZero:houseSumWinCountArray[5]],reduceStr,backmoneyStr];
-    
-    
-    
-    // Do any additional setup after loading the view.
+     [self hidenProgress];
+
 }
-
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -141,7 +183,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":dataArray[indexPath.row],@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]]}];
+    NSString*str=dataArray[indexPath.row];
+    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":str,@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"monthDic":houseMonthDic[str]}];
     
     
 }

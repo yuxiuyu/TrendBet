@@ -64,16 +64,17 @@
     [formatter setDateFormat:@"yyyy-MM"];
     
     
-    self.myCalendarView.fileDateDic=[Utils sharedInstance].housesDic[_roomStr][_selectedTitle];
+    self.myCalendarView.fileDateDic=_monthDic;
     self.myCalendarView.date=[formatter dateFromString:_selectedTitle];
     __weak typeof(self)weakself= self;
     self.myCalendarView.calendarBlock=^(NSInteger day, NSInteger month, NSInteger year)
     {
         
         NSString*dayStr=[NSString stringWithFormat:@"%ld",day];
-        if ([Utils sharedInstance].housesDic[weakself.roomStr][weakself.selectedTitle][dayStr])
+       
+        if (weakself.monthDic[dayStr])
         {
-            [weakself performSegueWithIdentifier:@"showNewRule_DayVC" sender:@{@"selectedTitle":[NSString stringWithFormat:@"%@-%@",weakself.selectedTitle,dayStr],@"dayDic":[Utils sharedInstance].housesDic[weakself.roomStr][weakself.selectedTitle][dayStr]}];
+            [weakself performSegueWithIdentifier:@"showNewRule_DayVC" sender:@{@"selectedTitle":[NSString stringWithFormat:@"%@-%@",weakself.selectedTitle,dayStr],@"dayDic":weakself.monthDic[dayStr]}];
         }
         
     };

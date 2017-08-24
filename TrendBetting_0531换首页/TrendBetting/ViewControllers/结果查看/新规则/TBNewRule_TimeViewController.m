@@ -36,8 +36,8 @@
     
     countResult=_dataArray[9];
     [self setData];
-    changeDic=_dataArray[_dataArray.count-2];
-    changeTotalDic=[_dataArray lastObject];
+    changeDic=_dataArray[10];
+    changeTotalDic=_dataArray[11];
     NSMutableArray*keyArr=[[NSMutableArray alloc ]initWithArray:[changeTotalDic allKeys]];
     xArray=[keyArr sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         if ([obj1 intValue]>[obj2 intValue])

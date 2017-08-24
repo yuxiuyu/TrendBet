@@ -35,11 +35,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1号房间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Nj-0g-KBX">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="EFt-yZ-ryu"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9BR-dr-Fhl">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="+120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9BR-dr-Fhl">
+                                                    <frame key="frameInset" minY="33" width="60" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -65,8 +69,8 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="9BR-dr-Fhl" firstAttribute="top" secondItem="8Nj-0g-KBX" secondAttribute="bottom" constant="3" id="010-zl-Ift"/>
                                             <constraint firstAttribute="trailing" secondItem="qu7-9P-dbz" secondAttribute="trailing" id="ASh-fv-Tba"/>
+                                            <constraint firstItem="8Nj-0g-KBX" firstAttribute="centerY" secondItem="ml1-AA-aLa" secondAttribute="centerY" id="KBy-rL-80V"/>
                                             <constraint firstItem="8Nj-0g-KBX" firstAttribute="leading" secondItem="ml1-AA-aLa" secondAttribute="leading" id="NIs-tr-RDw"/>
                                             <constraint firstItem="bqV-aJ-o4T" firstAttribute="top" secondItem="ml1-AA-aLa" secondAttribute="top" id="OC7-eq-89F"/>
                                             <constraint firstAttribute="bottom" secondItem="qu7-9P-dbz" secondAttribute="bottom" id="UeZ-CL-sjv"/>
@@ -75,7 +79,6 @@
                                             <constraint firstItem="qu7-9P-dbz" firstAttribute="leading" secondItem="ml1-AA-aLa" secondAttribute="leading" id="c56-Ig-OVK"/>
                                             <constraint firstItem="9BR-dr-Fhl" firstAttribute="leading" secondItem="ml1-AA-aLa" secondAttribute="leading" id="gPk-A8-g4r"/>
                                             <constraint firstAttribute="trailing" secondItem="8Nj-0g-KBX" secondAttribute="trailing" id="m3Z-G1-EoE"/>
-                                            <constraint firstItem="8Nj-0g-KBX" firstAttribute="top" secondItem="ml1-AA-aLa" secondAttribute="top" constant="13" id="nH7-gZ-QF7"/>
                                             <constraint firstAttribute="trailing" secondItem="bqV-aJ-o4T" secondAttribute="trailing" id="ypD-qU-jn7"/>
                                         </constraints>
                                         <connections>
