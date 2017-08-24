@@ -261,7 +261,7 @@
                     NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:daySumWinCountArray[j]];
                     for (int k=0; k<wArr.count; k++) {
                        
-                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[k] intValue]];
+                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[j+3][k] intValue]];
                         [wArr replaceObjectAtIndex:k withObject:s];
                     }
                     [daySumWinCountArray replaceObjectAtIndex:j withObject:wArr];

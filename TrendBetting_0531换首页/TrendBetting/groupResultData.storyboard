@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iNg-NE-GPa">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iNg-NE-GPa">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -311,9 +311,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rST-fe-y9c" firstAttribute="top" secondItem="6u6-oO-ac5" secondAttribute="bottom" id="ATZ-kA-tyK"/>
                             <constraint firstAttribute="trailing" secondItem="6u6-oO-ac5" secondAttribute="trailing" id="OnJ-EN-Q8F"/>
                             <constraint firstItem="6u6-oO-ac5" firstAttribute="leading" secondItem="qXL-et-e8E" secondAttribute="leading" id="QjO-yY-IhQ"/>
-                            <constraint firstItem="rST-fe-y9c" firstAttribute="top" secondItem="6u6-oO-ac5" secondAttribute="bottom" id="UI1-Hy-pfn"/>
                             <constraint firstItem="6u6-oO-ac5" firstAttribute="top" secondItem="qXL-et-e8E" secondAttribute="top" id="kE5-wh-OQJ"/>
                         </constraints>
                     </view>

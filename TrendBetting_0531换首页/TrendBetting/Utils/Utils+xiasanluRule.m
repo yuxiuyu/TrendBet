@@ -145,7 +145,7 @@
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
         {
             NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
-            if ([[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
+            if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
             {
                 for (int i=0; i<tepguessSecondPartArray.count; i++) {
                     if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
@@ -226,7 +226,7 @@
             else if([nameStr containsString:@"小"])
             {
                 NSArray*lastSecArray=fristPartArray[allcount-2];
-                NSLog(@"%ld  %@",[nameStr rangeOfString:@"路"].location,[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1]);
+//                NSLog(@"%ld  %@",[nameStr rangeOfString:@"路"].location,[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1]);
                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1],[[nameStr substringFromIndex:[nameStr rangeOfString:@"路"].location+1] intValue]+1];
                 guessStr=resultArray[1];
                 if (lastArray.count==lastSecArray.count)
@@ -718,7 +718,7 @@
              [NSString stringWithFormat:@"%0.3f",backMoney],
              [NSString stringWithFormat:@"%ld",goGuessYes],
              winArr,
-             failArr,
+             failArr
              ];
     
 }

@@ -23,7 +23,7 @@
     NSMutableArray*newListArray=[[NSMutableArray alloc]init];
     
     NSMutableArray*fristPartArray=[[NSMutableArray alloc]init];
-
+    
     //
     NSString*listFristStr=@"";
     NSString*listThirdStr=@"";
@@ -56,8 +56,8 @@
                 resultStr=@"B";
                 BSumCount++;
             }
-           
-           ////////////////////
+            
+            ////////////////////
             if(fristPartArray.count>0)
             {
                 
@@ -102,15 +102,15 @@
             {
                 [allGuessArray addObject:[self setGuessValue:[self changeArea:guessArr] isLength:YES]];
             }
-
-
+            
+            
         }
-         [newListArray addObject:resultStr];
-
+        [newListArray addObject:resultStr];
+        
     }
-       ///////判断猜对猜错的个数  和收益
-       NSArray*resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
-       NSArray*array= @[[NSString stringWithFormat:@"%d",RSumCount],//R总数
+    ///////判断猜对猜错的个数  和收益
+    NSArray*resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:newListArray allGuessArray:allGuessArray];
+    NSArray*array= @[[NSString stringWithFormat:@"%d",RSumCount],//R总数
                      [NSString stringWithFormat:@"%d",BSumCount],//B总数
                      [NSString stringWithFormat:@"%d",TSumCount],//T总数
                      [NSString stringWithFormat:@"%@",resultArray[0]],//1、猜错的数量
@@ -123,7 +123,7 @@
                      resultArray[3],//每一局赢或输钱的变动
                      resultArray[4]//每一局总的钱的变动
                      ];
-
+    
     return array;
 }
 -(NSArray*)changeArea:(NSArray*)dataArray
@@ -132,46 +132,46 @@
     NSArray*array=[NSArray arrayWithArray:[str componentsSeparatedByString:@"|"]];
     NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:dataArray];
     
-        int removeCount=0;
-        for (int j=0; j<array.count; j++)
+    int removeCount=0;
+    for (int j=0; j<array.count; j++)
+    {
+        if ([array[j] intValue]==0)
         {
-            if ([array[j] intValue]==0)
-            {
-                [guessArr removeObjectAtIndex:j-removeCount];
-                removeCount++;
-            }
+            [guessArr removeObjectAtIndex:j-removeCount];
+            removeCount++;
         }
+    }
     return guessArr;
 }
 -(NSString*)seacherLengthRule:(NSArray*)array
 {
     NSString*maxStr=@"";
-//    if (countGuessFristPartArray.count>0)
-//    {
-
-        NSMutableArray*sameArray=[[NSMutableArray alloc]init];
-
-        maxStr=array[0];
-        for (int i=1; i<array.count; i++)
+    //    if (countGuessFristPartArray.count>0)
+    //    {
+    
+    NSMutableArray*sameArray=[[NSMutableArray alloc]init];
+    
+    maxStr=array[0];
+    for (int i=1; i<array.count; i++)
+    {
+        if (maxStr.length<[array[i] length])
         {
-            if (maxStr.length<[array[i] length])
+            maxStr=array[i];
+        }
+    }
+    if (maxStr.length>0)
+    {
+        for (int i=0; i<array.count; i++)
+        {
+            if (maxStr.length==[array[i] length])
             {
-                maxStr=array[i];
+                [sameArray addObject:array[i]];
             }
         }
-        if (maxStr.length>0)
-        {
-            for (int i=0; i<array.count; i++)
-            {
-                if (maxStr.length==[array[i] length])
-                {
-                    [sameArray addObject:array[i]];
-                }
-            }
-            maxStr=[[Utils sharedInstance] setGuessValue:sameArray isLength:YES];
-        }
-        
-//    }
+        maxStr=[[Utils sharedInstance] setGuessValue:sameArray isLength:YES];
+    }
+    
+    //    }
     return maxStr;
     
 }
@@ -198,7 +198,7 @@
                 addStr=@"B";
             }
             ////////////
-          
+            
             
             ///////////////
             if(dataArray.count>0)
@@ -251,7 +251,7 @@
                 addStr=@"B";
             }
             listDataStr=[NSString stringWithFormat:@"%@%@",listDataStr,addStr];
-           
+            
             
         }
     }
@@ -285,6 +285,19 @@
     float reduceMoney=0.0;//抽水的钱
     float backMoney=0.0;//返利的钱
     float nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];//下一次下注的钱
+    // yxy add 2017-08-23
+    NSInteger winonecount = 0;
+    NSInteger wintwocount = 0;
+    NSInteger winthreecount = 0;
+    NSInteger winforthcount = 0;
+    NSInteger winfivecount = 0;
+    
+    NSInteger failonecount = 0;
+    NSInteger failtwocount = 0;
+    NSInteger failthreecount = 0;
+    NSInteger failforthcount = 0;
+    NSInteger failfivecount = 0;
+    
     NSMutableDictionary*changeDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary*changeTotalDic=[[NSMutableDictionary alloc]init];
     for (int i=0; i<listArray.count; i++)
@@ -297,18 +310,48 @@
                 NSString*guessStr=allGuessArray[i-Tcount-1];
                 if (guessStr.length>0)
                 {
-                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
-                     nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
-
+                    NSArray*countArr = [guessStr componentsSeparatedByString:@"_"];
+                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
+                    
                     backMoney=backMoney+nextMoney*([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney] intValue]/1000.0);
+                    
                     if ([str isEqualToString:guessStr])
                     {
                         totalMoney=[guessStr isEqualToString:@"R"]?totalMoney+(1-Reduce_Money)*nextMoney:totalMoney+nextMoney ;
                         guessYes++;
                         goGuessYes++;
-                      
+                        
                         reduceMoney+=[guessStr isEqualToString:@"R"]?Reduce_Money*nextMoney:0;
                         [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        //yxy add 2017-08-23
+                        if (countArr.count>1) {
+                            switch ([countArr[1] intValue]) {
+                                case 1:
+                                    winonecount++;
+                                    break;
+                                case 2:
+                                    wintwocount++;
+                                    break;
+                                case 3:
+                                    winthreecount++;
+                                    break;
+                                case 4:
+                                    winforthcount++;
+                                    break;
+                                case 5:
+                                    winfivecount++;
+                                    break;
+                                    
+                                default:
+                                    break;
+                            }
+                            
+                        }
+                        else{
+                            winonecount++;
+                        }
+                        
                     }
                     else
                     {
@@ -316,6 +359,32 @@
                         totalMoney=totalMoney-nextMoney;
                         guessNo++;
                         [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        //yxy add 2017-08-23
+                        if (countArr.count>1) {
+                            switch ([countArr[1] intValue]) {
+                                case 1:
+                                    failonecount++;
+                                    break;
+                                case 2:
+                                    failtwocount++;
+                                    break;
+                                case 3:
+                                    failthreecount++;
+                                    break;
+                                case 4:
+                                    failforthcount++;
+                                    break;
+                                case 5:
+                                    failfivecount++;
+                                    break;
+                                    
+                                default:
+                                    break;
+                            }
+                        }else{
+                            failonecount++;
+                        }
+                        
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
@@ -326,8 +395,9 @@
                     goGuessYes=0;//连续猜对的次数
                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
+                    
                 }
-
+                
             }
             
         }
@@ -336,6 +406,16 @@
             Tcount++;
         }
     }
+    NSArray * winArr=@[ [NSString stringWithFormat:@"%ld",winonecount],
+                        [NSString stringWithFormat:@"%ld",wintwocount],
+                        [NSString stringWithFormat:@"%ld",winthreecount],
+                        [NSString stringWithFormat:@"%ld",winforthcount],
+                        [NSString stringWithFormat:@"%ld",winfivecount]];
+    NSArray *failArr=@[ [NSString stringWithFormat:@"%ld",failonecount],
+                        [NSString stringWithFormat:@"%ld",failtwocount],
+                        [NSString stringWithFormat:@"%ld",failthreecount],
+                        [NSString stringWithFormat:@"%ld",failforthcount],
+                        [NSString stringWithFormat:@"%ld",failfivecount]];
     return @[[NSString stringWithFormat:@"%ld",guessNo],
              [NSString stringWithFormat:@"%ld",guessYes],
              [NSString stringWithFormat:@"%0.2f",totalMoney],
@@ -344,9 +424,11 @@
              [NSString stringWithFormat:@"%0.2f",nextMoney],
              [NSString stringWithFormat:@"%0.2f",reduceMoney],
              [NSString stringWithFormat:@"%0.3f",backMoney],
-             [NSString stringWithFormat:@"%ld",goGuessYes]
+             [NSString stringWithFormat:@"%ld",goGuessYes],
+             winArr,
+             failArr
              ];
-
+    
 }
 #pragma mark--------------B R 转成 庄 闲
 -(NSString*)changeChina:(NSString*)memoStr isWu:(BOOL)isWu
@@ -541,7 +623,7 @@
     {
         if (countB>0&&countR==0)
         {
-             guessStr = @"B";
+            guessStr = @"B";
         }
         else if (countR>0&&countB==0)
         {
@@ -556,7 +638,7 @@
             guessStr = [NSString stringWithFormat:@"%@_%ld",guessStr,countB];
         }
         else {
-             guessStr = [NSString stringWithFormat:@"%@_%ld",guessStr,countR];
+            guessStr = [NSString stringWithFormat:@"%@_%ld",guessStr,countR];
         }
     }
     return guessStr;

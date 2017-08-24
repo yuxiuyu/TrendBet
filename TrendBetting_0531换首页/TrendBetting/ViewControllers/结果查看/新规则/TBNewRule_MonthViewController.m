@@ -49,6 +49,9 @@
     [super viewDidLoad];
     self.title=_selectedTitle;
     
+     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
+     self.navigationItem.rightBarButtonItem=item;
+    
     _resultCountLab.text=[NSString stringWithFormat:@"庄:%@  闲:%@  和:%@",_winCountArray[0],_winCountArray[1],_winCountArray[2]];
     NSString*reduceStr=[[Utils sharedInstance]removeFloatAllZero:_winCountArray[7]];
     reduceStr=[reduceStr stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
@@ -155,11 +158,16 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"showNewRule_DayVC"])
-    {
+//    if ([segue.identifier isEqualToString:@"showNewRule_DayVC"])
+//    {
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-    }
+//    }
 }
-
+#pragma mark--resultBtnAction
+-(void)resultBtnAction
+{
+    [self performSegueWithIdentifier:@"show_newMonthResultVC" sender:@{@"winArray":_winCountArray[9],@"failArray":_winCountArray[10]
+                                                                       }];
+}
 @end

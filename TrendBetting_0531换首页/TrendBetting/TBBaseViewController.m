@@ -26,7 +26,8 @@
 {
     if (show)
     {
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+         [SVProgressHUD showWithStatus:@"数据读取中"];
     }
 }
 

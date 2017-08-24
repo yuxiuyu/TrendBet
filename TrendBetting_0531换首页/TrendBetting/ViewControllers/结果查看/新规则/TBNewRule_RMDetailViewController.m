@@ -36,27 +36,38 @@
     [monthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         NSDictionary*daysDic=monthDic[key];
         [dataArray addObject:key];
-        NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0"]];
+        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+        NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
         [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=(NSDictionary*)obj;
             NSArray*array=dic[@"daycount"];
             for (int i=0; i<monthSumWinCountArray.count; i++)
             {
-                
-                NSString*str1=[NSString stringWithFormat:@"%d",[monthSumWinCountArray[i] intValue]+[array[i] intValue]];
-                NSString*str2=[NSString stringWithFormat:@"%d",[houseSumWinCountArray[i] intValue]+[array[i] intValue]];
-                if (i==5||i==7)
-                {
-                    str1=[NSString stringWithFormat:@"%0.2f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                    str2=[NSString stringWithFormat:@"%0.2f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                if (i<=8) {
+                    NSString*str1=[NSString stringWithFormat:@"%d",[monthSumWinCountArray[i] intValue]+[array[i] intValue]];
+                    NSString*str2=[NSString stringWithFormat:@"%d",[houseSumWinCountArray[i] intValue]+[array[i] intValue]];
+                    if (i==5||i==7)
+                    {
+                        str1=[NSString stringWithFormat:@"%0.2f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                        str2=[NSString stringWithFormat:@"%0.2f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                    }
+                    if (i==8)
+                    {
+                        str1=[NSString stringWithFormat:@"%0.3f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                        str2=[NSString stringWithFormat:@"%0.3f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                    }
+                    [monthSumWinCountArray replaceObjectAtIndex:i withObject:str1];
+                    [houseSumWinCountArray replaceObjectAtIndex:i withObject:str2];
+                } else {
+                    NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:monthSumWinCountArray[i]];
+                    for (int k=0; k<wArr.count; k++) {
+                        
+                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[i][k] intValue]];
+                        [wArr replaceObjectAtIndex:k withObject:s];
+                    }
+                    [monthSumWinCountArray replaceObjectAtIndex:i withObject:wArr];
                 }
-                if (i==8)
-                {
-                    str1=[NSString stringWithFormat:@"%0.3f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                    str2=[NSString stringWithFormat:@"%0.3f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                }
-                [monthSumWinCountArray replaceObjectAtIndex:i withObject:str1];
-                [houseSumWinCountArray replaceObjectAtIndex:i withObject:str2];
             }
         }];
         [dateDic setObject:monthSumWinCountArray forKey:key];

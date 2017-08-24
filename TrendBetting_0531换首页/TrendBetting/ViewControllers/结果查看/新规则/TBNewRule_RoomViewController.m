@@ -71,7 +71,6 @@
     
     for (int i=0;i<allHouseArr.count;i++)
     {
-        
         NSString*houseStr = allHouseArr[i];
         NSArray*monthsArr=[[Utils sharedInstance] getAllFileName:houseStr];////房间里的数据
         NSMutableDictionary*monthsDic=[[NSMutableDictionary alloc] init];
