@@ -26,18 +26,23 @@
     self.title=_selectedTitle;
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationController.navigationBarHidden=NO;
+    UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
+    self.navigationItem.rightBarButtonItem=item;
+    
     _tableview.tableFooterView=[[UIView alloc]init];
     dateDic=[[NSMutableDictionary alloc]init];
     dataArray=[[NSMutableArray alloc]init];
-    houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+    NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+    houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     NSDictionary*monthDic=[Utils sharedInstance].housesDic[_selectedTitle];
     
     ///////
     [monthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         NSDictionary*daysDic=monthDic[key];
         [dataArray addObject:key];
-        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
-        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+//        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+//        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
         [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=(NSDictionary*)obj;
@@ -60,13 +65,17 @@
                     [monthSumWinCountArray replaceObjectAtIndex:i withObject:str1];
                     [houseSumWinCountArray replaceObjectAtIndex:i withObject:str2];
                 } else {
-                    NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:monthSumWinCountArray[i]];
-                    for (int k=0; k<wArr.count; k++) {
+                    NSMutableArray*wArr1=[[NSMutableArray alloc]initWithArray:monthSumWinCountArray[i]];
+                    NSMutableArray*wArr2=[[NSMutableArray alloc]initWithArray:houseSumWinCountArray[i]];
+                    for (int k=0; k<wArr1.count; k++) {
                         
-                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[i][k] intValue]];
-                        [wArr replaceObjectAtIndex:k withObject:s];
+                        NSString*s1=[NSString stringWithFormat:@"%d",[wArr1[k] intValue]+[array[i][k] intValue]];
+                        [wArr1 replaceObjectAtIndex:k withObject:s1];
+                        NSString*s2=[NSString stringWithFormat:@"%d",[wArr2[k] intValue]+[array[i][k] intValue]];
+                        [wArr2 replaceObjectAtIndex:k withObject:s2];
                     }
-                    [monthSumWinCountArray replaceObjectAtIndex:i withObject:wArr];
+                    [monthSumWinCountArray replaceObjectAtIndex:i withObject:wArr1];
+                    [houseSumWinCountArray replaceObjectAtIndex:i withObject:wArr2];
                 }
             }
         }];
@@ -149,7 +158,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark--resultBtnAction
+-(void)resultBtnAction
+{
+    [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]
+                                                                       }];
+}
 
 #pragma mark - Navigation
 
@@ -157,11 +171,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"showNewRule_MonthVC"])
-    {
+   
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-    }
+    
 }
 
 @end
