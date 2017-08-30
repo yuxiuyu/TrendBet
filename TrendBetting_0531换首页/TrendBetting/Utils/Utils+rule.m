@@ -436,7 +436,7 @@
     NSString*str=@"";
     if ([memoStr length]>0)
     {
-        str=[memoStr isEqualToString:@"B"]?@"闲":@"庄";
+        str=[memoStr containsString:@"B"]?@"闲":@"庄";
     }
     else
     {
