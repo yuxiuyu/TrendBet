@@ -98,7 +98,7 @@
             [monthsDic setObject:daysDic forKey:monthstr];
         }
         [housesDic setObject:monthsDic forKey:houseStr];
-        [houseMoneyDic setObject:[NSString stringWithFormat:@"%0.2f",winMoney] forKey:houseStr];
+        [houseMoneyDic setObject:[NSString stringWithFormat:@"%0.3f",winMoney] forKey:houseStr];
     }
     [Utils sharedInstance].housesDic=[[NSDictionary alloc] initWithDictionary:housesDic];
     [self performSelectorOnMainThread:@selector(runMainThread) withObject:nil waitUntilDone:YES];

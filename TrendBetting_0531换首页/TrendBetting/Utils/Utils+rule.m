@@ -323,7 +323,7 @@
                         goGuessYes++;
                         
                         reduceMoney+=[guessStr isEqualToString:@"R"]?Reduce_Money*nextMoney:0;
-                        [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        [changeDic setObject:[guessStr isEqualToString:@"R"]?[NSString stringWithFormat:@"+%0.3f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.3f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                         //yxy add 2017-08-23
                         if (countArr.count>1) {
                             switch ([countArr[1] intValue]) {
@@ -358,7 +358,7 @@
                         goGuessYes=0;
                         totalMoney=totalMoney-nextMoney;
                         guessNo++;
-                        [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        [changeDic setObject:[NSString stringWithFormat:@"-%0.3f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                         //yxy add 2017-08-23
                         if (countArr.count>1) {
                             switch ([countArr[1] intValue]) {
@@ -388,7 +388,7 @@
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
-                    [changeTotalDic setObject:[NSString stringWithFormat:@"%0.2f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                    [changeTotalDic setObject:[NSString stringWithFormat:@"%0.3f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                 }
                 else
                 {
@@ -418,11 +418,11 @@
                         [NSString stringWithFormat:@"%ld",failfivecount]];
     return @[[NSString stringWithFormat:@"%ld",guessNo],
              [NSString stringWithFormat:@"%ld",guessYes],
-             [NSString stringWithFormat:@"%0.2f",totalMoney],
+             [NSString stringWithFormat:@"%0.3f",totalMoney],
              changeDic,
              changeTotalDic,
-             [NSString stringWithFormat:@"%0.2f",nextMoney],
-             [NSString stringWithFormat:@"%0.2f",reduceMoney],
+             [NSString stringWithFormat:@"%0.3f",nextMoney],
+             [NSString stringWithFormat:@"%0.3f",reduceMoney],
              [NSString stringWithFormat:@"%0.3f",backMoney],
              [NSString stringWithFormat:@"%ld",goGuessYes],
              winArr,

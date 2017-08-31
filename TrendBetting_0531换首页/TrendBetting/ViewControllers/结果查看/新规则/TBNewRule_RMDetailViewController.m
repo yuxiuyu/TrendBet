@@ -100,8 +100,8 @@
                     NSString*str2=[NSString stringWithFormat:@"%d",[houseSumWinCountArray[i] intValue]+[array[i] intValue]];
                     if (i==5||i==7)
                     {
-                        str1=[NSString stringWithFormat:@"%0.2f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                        str2=[NSString stringWithFormat:@"%0.2f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                        str1=[NSString stringWithFormat:@"%0.3f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
+                        str2=[NSString stringWithFormat:@"%0.3f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
                     }
                     if (i==8)
                     {
@@ -171,7 +171,7 @@
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     NSArray*array=dateDic[dataArray[indexPath.row]];
-    cell.textLabel.font=[UIFont systemFontOfSize:14.0f];
+    cell.textLabel.font=[UIFont systemFontOfSize:13.0f];
     NSString*reduceStr=[[Utils sharedInstance]removeFloatAllZero:array[7]];
     reduceStr=[reduceStr stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
     NSString*backmoneyStr=[[Utils sharedInstance]removeFloatAllZero:array[8]];

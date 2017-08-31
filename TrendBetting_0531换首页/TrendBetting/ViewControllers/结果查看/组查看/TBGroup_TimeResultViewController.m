@@ -180,7 +180,7 @@
     cell.textLabel.font=[UIFont systemFontOfSize:14.0f];
     NSString*str=showArray[indexPath.row];
     NSArray*array=[str componentsSeparatedByString:@"|"];
-    cell.textLabel.text=[NSString stringWithFormat:@"第%ld位：赢%@   输%@   盈利%0.2f",indexPath.row+1,array[0],array[1],[array[0] floatValue]+[array[1] floatValue]];
+    cell.textLabel.text=[NSString stringWithFormat:@"第%ld位：赢%@   输%@   盈利%0.3f",indexPath.row+1,array[0],array[1],[array[0] floatValue]+[array[1] floatValue]];
     
     
     

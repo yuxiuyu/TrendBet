@@ -67,7 +67,7 @@
         NSArray*tparray=_dayDic[dataArray[i]];
         [answerArray addObject:[[Utils sharedInstance]removeFloatAllZero:tparray[5]]];
         float a=[tparray[5] floatValue]+[[totalAnswerArray lastObject] floatValue];
-        [totalAnswerArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.2f",a]]];
+        [totalAnswerArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
         
     }
     

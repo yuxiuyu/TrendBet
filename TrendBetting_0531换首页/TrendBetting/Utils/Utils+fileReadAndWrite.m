@@ -167,7 +167,7 @@
                 NSString*str=[NSString stringWithFormat:@"%d",[daySumWinCountArray[j] intValue]+[array[j] intValue]];
                 if (j==5||j==7)
                 {
-                    str=[NSString stringWithFormat:@"%0.2f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                    str=[NSString stringWithFormat:@"%0.3f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
                 }
                 if (j==8)
                 {
@@ -248,7 +248,7 @@
                     NSString*str=[NSString stringWithFormat:@"%d",[daySumWinCountArray[j] intValue]+[array[j] intValue]];
                     if (j==5||j==7)
                     {
-                        str=[NSString stringWithFormat:@"%0.2f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
+                        str=[NSString stringWithFormat:@"%0.3f",[daySumWinCountArray[j] floatValue]+[array[j] floatValue]];
                     }
                     if (j==8)
                     {

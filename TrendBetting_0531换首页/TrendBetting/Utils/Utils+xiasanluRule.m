@@ -363,39 +363,48 @@
     NSString*guessStr=@"";
     NSString*nameStr=@"";
     NSInteger allCount = fristPartArray.count-1;
-
+    
     NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
     if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
     {
-         if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
+        //        nameStr=@"一带不规则";
+        //        guessStr=[fristPartArray[allCount] lastObject];
+        if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
                 guessStr=[fristPartArray[allCount] lastObject];
-//                guessStr=[fristPartArray[allCount-1] lastObject];
+                //                guessStr=[fristPartArray[allCount-1] lastObject];
                 nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
                 return @[nameStr,guessStr];
             }
-         }
+        }
+        //        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
+        //        return @[nameStr,guessStr];
     }
     else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
     {
-         if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]&&[fristPartArray[allCount-1] count]!=[fristPartArray[allCount-3] count]) {
+        if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
             nameStr=@"不规则带一";
+            //            guessStr=[fristPartArray[allCount] lastObject];
             guessStr=[fristPartArray[allCount-1] lastObject];
-           
-         }
-        if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]&&[fristPartArray[allCount-1] count]==[fristPartArray[allCount-3] count])
+            
+        }
+        if ([fristPartArray[allCount-1] count]==[fristPartArray[allCount-3] count])
         {
+            if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
                 nameStr=@"规则带一";
+                //                guessStr=[fristPartArray[allCount] lastObject];
                 guessStr=[fristPartArray[allCount-1] lastObject];
+            }
         }
         // yxy add
-        if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]&&fristPartArray.count>4&&[fristPartArray[allCount-4] count]==1)
+        if (fristPartArray.count>4&&[fristPartArray[allCount-4] count]==1)
         {
-            if ([fristPartArray[allCount-1] count]!=[fristPartArray[allCount-3] count]) {
+            if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
                 guessStr=[fristPartArray[allCount] lastObject];
+                //                guessStr=[fristPartArray[allCount-1] lastObject];
                 a=a+1;
             }
         }
@@ -404,15 +413,14 @@
             nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
             return @[nameStr,guessStr];
         }
-      
+        
         //yxy add
-      
+        
     }
     
     return @[nameStr,guessStr];
     
-}
-//-(NSArray*)noRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray isyxy:(BOOL)isyxy
+}//-(NSArray*)noRule:(NSArray*)fristPartArray  resultArray:(NSArray*)resultArray isyxy:(BOOL)isyxy
 //{
 //    //不规则
 //    NSString*guessStr=@"";
@@ -613,7 +621,7 @@
                         goGuessYes++;
                         
                         reduceMoney+=[guessStr containsString:@"R"]?Reduce_Money*nextMoney:0;
-                        [changeDic setObject:[guessStr containsString:@"R"]?[NSString stringWithFormat:@"+%0.2f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        [changeDic setObject:[guessStr containsString:@"R"]?[NSString stringWithFormat:@"+%0.3f",(1-Reduce_Money)*nextMoney]:[NSString stringWithFormat:@"+%0.3f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                         //yxy add 2017-08-23
                         switch ([countArr[1] intValue]) {
                             case 1:
@@ -645,7 +653,7 @@
                         totalMoney=totalMoney-nextMoney;
                         guessNo++;
                         
-                        [changeDic setObject:[NSString stringWithFormat:@"-%0.2f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        [changeDic setObject:[NSString stringWithFormat:@"-%0.3f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                         
                         //yxy add 2017-08-23
                         switch ([countArr[1] intValue]) {
@@ -672,7 +680,7 @@
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     
-                    [changeTotalDic setObject:[NSString stringWithFormat:@"%0.2f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                    [changeTotalDic setObject:[NSString stringWithFormat:@"%0.3f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                 }
                 else
                 {
@@ -701,11 +709,11 @@
                         [NSString stringWithFormat:@"%ld",failfivecount]];
     return @[[NSString stringWithFormat:@"%ld",guessNo],
              [NSString stringWithFormat:@"%ld",guessYes],
-             [NSString stringWithFormat:@"%0.2f",totalMoney],
+             [NSString stringWithFormat:@"%0.3f",totalMoney],
              changeDic,
              changeTotalDic,
-             [NSString stringWithFormat:@"%0.2f",nextMoney],
-             [NSString stringWithFormat:@"%0.2f",reduceMoney],
+             [NSString stringWithFormat:@"%0.3f",nextMoney],
+             [NSString stringWithFormat:@"%0.3f",reduceMoney],
              [NSString stringWithFormat:@"%0.3f",backMoney],
              [NSString stringWithFormat:@"%ld",goGuessYes],
              winArr,

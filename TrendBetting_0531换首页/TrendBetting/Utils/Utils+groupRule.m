@@ -158,13 +158,13 @@
                            
                             if (goGuessYes>=numberArr.count)
                             {
-                                [numberArr addObject: [NSString stringWithFormat:@"%0.2f|0",nextMoney]];
+                                [numberArr addObject: [NSString stringWithFormat:@"%0.3f|0",nextMoney]];
                             }
                             else
                             {
                                 NSString*str=numberArr[goGuessYes];
                                 NSArray*money=[str componentsSeparatedByString:@"|"];
-                                [numberArr replaceObjectAtIndex:goGuessYes withObject:[NSString stringWithFormat:@"%0.2f|%@",nextMoney+[money[0] floatValue],money[1]]];
+                                [numberArr replaceObjectAtIndex:goGuessYes withObject:[NSString stringWithFormat:@"%0.3f|%@",nextMoney+[money[0] floatValue],money[1]]];
                             }
                              goGuessYes++;
                              nextMoney=[[Utils sharedInstance].moneySelectedArray[goGuessYes%[Utils sharedInstance].moneySelectedArray.count] floatValue];
@@ -173,13 +173,13 @@
                         {
                             if (goGuessYes>=numberArr.count)
                             {
-                                [numberArr addObject: [NSString stringWithFormat:@"0|%0.2f",-nextMoney]];
+                                [numberArr addObject: [NSString stringWithFormat:@"0|%0.3f",-nextMoney]];
                             }
                             else
                             {
                                 NSString*str=numberArr[goGuessYes];
                                 NSArray*money=[str componentsSeparatedByString:@"|"];
-                                [numberArr replaceObjectAtIndex:goGuessYes withObject:[NSString stringWithFormat:@"%@|%0.2f",money[0],[money[1] floatValue]-nextMoney]];
+                                [numberArr replaceObjectAtIndex:goGuessYes withObject:[NSString stringWithFormat:@"%@|%0.3f",money[0],[money[1] floatValue]-nextMoney]];
                             }
 
                              goGuessYes=0;
@@ -188,7 +188,7 @@
                             
                         }
                         
-                        [changeTotalDic setObject:[NSString stringWithFormat:@"%0.2f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
+                        [changeTotalDic setObject:[NSString stringWithFormat:@"%0.3f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                     }
                 }
                 

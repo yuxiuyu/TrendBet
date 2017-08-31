@@ -297,7 +297,7 @@
                     if (areaNumArr.count>n)
                     {
                         NSArray*sepB=[areaNumArr[n] componentsSeparatedByString:@"|"];
-                        NSString*myStr=[NSString stringWithFormat:@"%0.2f|%0.2f",[sepB[0] floatValue]+[sepA[0] floatValue],[sepB[1] floatValue]+[sepA[1] floatValue]];
+                        NSString*myStr=[NSString stringWithFormat:@"%0.3f|%0.3f",[sepB[0] floatValue]+[sepA[0] floatValue],[sepB[1] floatValue]+[sepA[1] floatValue]];
                         [areaNumArr replaceObjectAtIndex:n withObject:myStr];
                     }
                     else
@@ -349,7 +349,7 @@
                     if (tempnumberArr.count>n)
                     {
                         NSArray*sepB=[tempnumberArr[n] componentsSeparatedByString:@"|"];
-                        NSString*myStr=[NSString stringWithFormat:@"%0.2f|%0.2f",[sepB[0] floatValue]+[sepA[0] floatValue],[sepB[1] floatValue]+[sepA[1] floatValue]];
+                        NSString*myStr=[NSString stringWithFormat:@"%0.3f|%0.3f",[sepB[0] floatValue]+[sepA[0] floatValue],[sepB[1] floatValue]+[sepA[1] floatValue]];
                         [tempnumberArr replaceObjectAtIndex:n withObject:myStr];
                     }
                     else

@@ -101,7 +101,7 @@
         NSArray*dataarray=dic[@"daycount"];
         [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
         float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
-        [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.2f",a]]];
+        [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
     }
     if (xArray.count>1)
     {
