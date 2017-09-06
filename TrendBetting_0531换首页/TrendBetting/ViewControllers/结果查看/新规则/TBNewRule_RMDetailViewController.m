@@ -31,6 +31,9 @@
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
     
+    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthresultBtnAction)];
+    self.navigationItem.rightBarButtonItems=@[goItem,item];
+    
     _tableview.tableFooterView=[[UIView alloc]init];
     dateDic=[[NSMutableDictionary alloc]init];
     dataArray=[[NSMutableArray alloc]init];
@@ -204,8 +207,11 @@
 #pragma mark--resultBtnAction
 -(void)resultBtnAction
 {
-    [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]
-                                                                       }];
+    [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
+}
+-(void)goMonthresultBtnAction{
+    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:nil];
+
 }
 
 #pragma mark - Navigation

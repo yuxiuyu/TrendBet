@@ -25,6 +25,7 @@
 		5B6640251E5ADF15007524F3 /* Utils+rule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6640241E5ADF15007524F3 /* Utils+rule.m */; };
 		5B6F37271F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F37261F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m */; };
 		5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */; };
+		5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */; };
 		5BC10EA21E67AC990008CADE /* TBRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC10EA11E67AC990008CADE /* TBRuleEditViewController.m */; };
 		5BC10EBD1E681D220008CADE /* TBResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC10EB31E681D220008CADE /* TBResultViewController.m */; };
 		5BC10EC61E68202A0008CADE /* resultData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC10EC41E68202A0008CADE /* resultData.storyboard */; };
@@ -130,6 +131,8 @@
 		5B6F37261F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBNewRule_MonthResultViewController.m; sourceTree = "<group>"; };
 		5B9AB00B1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBOnlyRBSelectViewController.h; sourceTree = "<group>"; };
 		5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBOnlyRBSelectViewController.m; sourceTree = "<group>"; };
+		5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewRule_goMonthViewController.h; sourceTree = "<group>"; };
+		5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBNewRule_goMonthViewController.m; sourceTree = "<group>"; };
 		5BC10EA01E67AC990008CADE /* TBRuleEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRuleEditViewController.h; sourceTree = "<group>"; };
 		5BC10EA11E67AC990008CADE /* TBRuleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRuleEditViewController.m; sourceTree = "<group>"; };
 		5BC10EB21E681D220008CADE /* TBResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBResultViewController.h; sourceTree = "<group>"; };
@@ -302,6 +305,8 @@
 				5B609A0D1EF90B7700D9305B /* TBNewRule_RoomViewController.m */,
 				5B609A0F1EF91B9800D9305B /* TBNewRule_RMDetailViewController.h */,
 				5B609A101EF91B9800D9305B /* TBNewRule_RMDetailViewController.m */,
+				5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */,
+				5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */,
 				5B609A061EF90A9200D9305B /* TBNewRule_MonthViewController.h */,
 				5B609A071EF90A9200D9305B /* TBNewRule_MonthViewController.m */,
 				5B6F37251F4EA11500E606D7 /* TBNewRule_MonthResultViewController.h */,
@@ -773,6 +778,7 @@
 				5BD8B7821EA72A2F0088E8C4 /* TBGroupAddViewController.m in Sources */,
 				5BF499311E52A1DA008AA7AA /* Utils.m in Sources */,
 				5B609A0A1EF90A9200D9305B /* TBNewRule_MonthViewController.m in Sources */,
+				5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */,
 				5BDA05DB1E136AEA0060CCE5 /* ViewController.m in Sources */,
 				5B609A111EF91B9800D9305B /* TBNewRule_RMDetailViewController.m in Sources */,
 				5B6F37271F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m in Sources */,
