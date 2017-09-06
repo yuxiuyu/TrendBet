@@ -367,26 +367,21 @@
     NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
     if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
     {
-        //        nameStr=@"一带不规则";
-        //        guessStr=[fristPartArray[allCount] lastObject];
-        if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
+                if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
                 guessStr=[fristPartArray[allCount] lastObject];
-                //                guessStr=[fristPartArray[allCount-1] lastObject];
                 nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
                 return @[nameStr,guessStr];
             }
         }
-        //        nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
-        //        return @[nameStr,guessStr];
+       
     }
     else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
     {
         if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
             nameStr=@"不规则带一";
-            //            guessStr=[fristPartArray[allCount] lastObject];
             guessStr=[fristPartArray[allCount-1] lastObject];
             
         }
@@ -394,7 +389,6 @@
         {
             if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
                 nameStr=@"规则带一";
-                //                guessStr=[fristPartArray[allCount] lastObject];
                 guessStr=[fristPartArray[allCount-1] lastObject];
             }
         }
@@ -404,7 +398,6 @@
             if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
                 guessStr=[fristPartArray[allCount] lastObject];
-                //                guessStr=[fristPartArray[allCount-1] lastObject];
                 a=a+1;
             }
         }

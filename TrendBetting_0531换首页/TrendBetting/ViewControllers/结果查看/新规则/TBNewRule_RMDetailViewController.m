@@ -16,6 +16,9 @@
     NSMutableArray*houseSumWinCountArray;
     NSMutableDictionary*houseMonthDic;
     NSThread*thread;
+    NSMutableArray*totalDayKeyArr;//所有月连日
+    NSMutableArray*totalDayValueArr;//所有月连日结果相加
+    
     
 }
 @end
@@ -33,6 +36,9 @@
     
     UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthresultBtnAction)];
     self.navigationItem.rightBarButtonItems=@[goItem,item];
+    
+    totalDayKeyArr=[[NSMutableArray alloc]init];
+    totalDayValueArr=[[NSMutableArray alloc]init];
     
     _tableview.tableFooterView=[[UIView alloc]init];
     dateDic=[[NSMutableDictionary alloc]init];
@@ -87,30 +93,34 @@
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     ///////
-    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+    NSArray*tepMonthKeyArray=[self orderArr:[houseMonthDic allKeys]];
+    for (int p=0; p<tepMonthKeyArray.count; p++) {
+
+//    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString*key=tepMonthKeyArray[p];
         NSDictionary*daysDic=houseMonthDic[key];
         [dataArray addObject:key];
-        //        NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
-        //        NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
+       
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
-        [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            NSDictionary*dic=(NSDictionary*)obj;
+        NSArray*tepDayKeyArray=[self orderArr:[daysDic allKeys]];
+        for (int k=0; k<tepDayKeyArray.count; k++) {
+            
+        
+//        [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSDictionary*dic=daysDic[tepDayKeyArray[k]];
             NSArray*array=dic[@"daycount"];
+            float a= [array[5] floatValue]+[[totalDayValueArr lastObject] floatValue];
             for (int i=0; i<monthSumWinCountArray.count; i++)
             {
                 if (i<=8) {
                     NSString*str1=[NSString stringWithFormat:@"%d",[monthSumWinCountArray[i] intValue]+[array[i] intValue]];
                     NSString*str2=[NSString stringWithFormat:@"%d",[houseSumWinCountArray[i] intValue]+[array[i] intValue]];
-                    if (i==5||i==7)
+                    if (i==5||i==7||i==8)
                     {
                         str1=[NSString stringWithFormat:@"%0.3f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
                         str2=[NSString stringWithFormat:@"%0.3f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
                     }
-                    if (i==8)
-                    {
-                        str1=[NSString stringWithFormat:@"%0.3f",[monthSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                        str2=[NSString stringWithFormat:@"%0.3f",[houseSumWinCountArray[i] floatValue]+[array[i] floatValue]];
-                    }
+                   
                     [monthSumWinCountArray replaceObjectAtIndex:i withObject:str1];
                     [houseSumWinCountArray replaceObjectAtIndex:i withObject:str2];
                 } else {
@@ -127,9 +137,12 @@
                     [houseSumWinCountArray replaceObjectAtIndex:i withObject:wArr2];
                 }
             }
-        }];
+            NSArray*monKey=[key componentsSeparatedByString:@"-"];
+            [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%d",monKey[1],k]];
+            [totalDayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        }
         [dateDic setObject:monthSumWinCountArray forKey:key];
-    }];
+    };
 #warning - yxy0409 - edit
     NSArray*tepArray=[dataArray sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
                       {
@@ -210,10 +223,29 @@
     [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
 }
 -(void)goMonthresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:nil];
+    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr}];
 
 }
-
+//排序
+-(NSArray*)orderArr:(NSArray*)arr{
+    NSArray*xArray=[arr sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        obj1=[(NSString*)obj1 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        obj2=[(NSString*)obj2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        if ([obj1 intValue]>[obj2 intValue])
+        {
+            return NSOrderedDescending;
+        }
+        else if ([obj1 intValue]>[obj2 intValue])
+        {
+            return NSOrderedAscending;
+        }
+        else
+        {
+            return NSOrderedSame;
+        }
+    }];
+    return xArray;
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

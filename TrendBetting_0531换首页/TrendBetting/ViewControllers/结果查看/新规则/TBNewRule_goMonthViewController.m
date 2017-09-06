@@ -18,12 +18,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self showFirstAndFouthQuardrant:_totalDayKeyArr vArray:_totalDayValueArr];
+    _mainScrollview.contentSize=CGSizeMake(50*_totalDayValueArr.count, SCREEN_HEIGHT-20);
     // Do any additional setup after loading the view.
 }
 //第一四象限
-- (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray count:(int)acount
+- (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray
 {
-    JHLineChart *lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
+    JHLineChart *lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(0, 0, 50*_totalDayValueArr.count, SCREEN_HEIGHT-20) andLineChartType:JHChartLineValueNotForEveryX];
     lineChart.xLineDataArr = xarray;
     lineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
     lineChart.valueArr = @[vArray];
