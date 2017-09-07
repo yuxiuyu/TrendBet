@@ -257,21 +257,36 @@
                     ///yxy add
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                     NSArray*lastThirdArray=fristPartArray[allcount-3];
-                    nameStr=[NSString stringWithFormat:@"%@%ld",[nameStr substringToIndex:4],a];
-                    guessStr=resultArray[1];
+                    
+                    
                     if (lastArray.count==lastThirdArray.count)
                     {
+                        nameStr=[NSString stringWithFormat:@"%@%ld",[nameStr substringToIndex:4],a];
                         guessStr=[lastSecArray lastObject];
+                        backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
+                        return @[nameStr,guessStr,backguessStr];
                     }
                     else if (lastArray.count>[fristPartArray[allcount-3] count])
                     {
-                        nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
-                        guessStr=[lastArray lastObject];
+                        NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
+                        if (([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]&&[nameStr containsString:@"一带规则"])||([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
+                        {
+                            nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
+                            guessStr=[lastArray lastObject];
+                            backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
+                            return @[nameStr,guessStr,backguessStr];
+                            
+                        }
                     }
-                    backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
-                    return @[nameStr,guessStr,backguessStr];
+                    else{
+                        guessStr=resultArray[1];
+                        nameStr=[NSString stringWithFormat:@"%@%ld",[nameStr substringToIndex:4],a];
+                        backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
+                        return @[nameStr,guessStr,backguessStr];
+                    }
+                    
+                    
                 }//yxy add
-               
             }
             else
             {
