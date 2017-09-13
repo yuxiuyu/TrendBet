@@ -37,6 +37,26 @@
     return @"";
    
 }
+//排序
+-(NSArray*)orderArr:(NSArray*)arr{
+    NSArray*xArray=[arr sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        obj1=[(NSString*)obj1 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        obj2=[(NSString*)obj2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        if ([obj1 intValue]>[obj2 intValue])
+        {
+            return NSOrderedDescending;
+        }
+        else if ([obj1 intValue]>[obj2 intValue])
+        {
+            return NSOrderedAscending;
+        }
+        else
+        {
+            return NSOrderedSame;
+        }
+    }];
+    return xArray;
+}
 -(void)getSelectedMoneyArr
 {
     for (int i=0; i<_moneyRuleArray.count; i++)

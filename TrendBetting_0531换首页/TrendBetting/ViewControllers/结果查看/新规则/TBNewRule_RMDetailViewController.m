@@ -34,7 +34,7 @@
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
     
-    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthresultBtnAction)];
+    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthsresultBtnAction)];
     self.navigationItem.rightBarButtonItems=@[goItem,item];
     
     totalDayKeyArr=[[NSMutableArray alloc]init];
@@ -93,7 +93,7 @@
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     ///////
-    NSArray*tepMonthKeyArray=[self orderArr:[houseMonthDic allKeys]];
+    NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[houseMonthDic allKeys]];
     for (int p=0; p<tepMonthKeyArray.count; p++) {
 
 //    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -102,7 +102,7 @@
         [dataArray addObject:key];
        
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
-        NSArray*tepDayKeyArray=[self orderArr:[daysDic allKeys]];
+        NSArray*tepDayKeyArray=[[Utils sharedInstance] orderArr:[daysDic allKeys]];
         for (int k=0; k<tepDayKeyArray.count; k++) {
             
         
@@ -222,30 +222,11 @@
 {
     [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
 }
--(void)goMonthresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr}];
+-(void)goMonthsresultBtnAction{
+    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"titleStr":@"连月结果"}];
 
 }
-//排序
--(NSArray*)orderArr:(NSArray*)arr{
-    NSArray*xArray=[arr sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        obj1=[(NSString*)obj1 stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        obj2=[(NSString*)obj2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        if ([obj1 intValue]>[obj2 intValue])
-        {
-            return NSOrderedDescending;
-        }
-        else if ([obj1 intValue]>[obj2 intValue])
-        {
-            return NSOrderedAscending;
-        }
-        else
-        {
-            return NSOrderedSame;
-        }
-    }];
-    return xArray;
-}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

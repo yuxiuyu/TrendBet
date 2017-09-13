@@ -24,6 +24,8 @@
     CGFloat sHeight;
     NSThread*thread;
     BOOL isrefresh;
+    NSMutableArray*totalTimeKeyArr;//所有日连此
+    NSMutableArray*totalTimeValueArr;//所有日连次结果相加
 
     
     
@@ -50,7 +52,8 @@
     self.title=_selectedTitle;
     
      UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
-     self.navigationItem.rightBarButtonItem=item;
+    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连日结果" style:UIBarButtonItemStylePlain target:self action:@selector(goDaysresultBtnAction)];
+    self.navigationItem.rightBarButtonItems=@[goItem,item];
     
     _resultCountLab.text=[NSString stringWithFormat:@"庄:%@  闲:%@  和:%@",_winCountArray[0],_winCountArray[1],_winCountArray[2]];
     NSString*reduceStr=[[Utils sharedInstance]removeFloatAllZero:_winCountArray[7]];
@@ -63,6 +66,8 @@
     NSDateFormatter*formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     
+    totalTimeKeyArr=[[NSMutableArray alloc]init];
+    totalTimeValueArr=[[NSMutableArray alloc]init];
     
     self.myCalendarView.fileDateDic=_monthDic;
     self.myCalendarView.date=[formatter dateFromString:_selectedTitle];
@@ -79,20 +84,8 @@
         
     };
     NSArray*tepArray=[self.myCalendarView.fileDateDic allKeys];
-    NSArray*xArray=[tepArray sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        if ([obj1 intValue]>[obj2 intValue])
-        {
-            return NSOrderedDescending;
-        }
-        else if ([obj1 intValue]>[obj2 intValue])
-        {
-            return NSOrderedAscending;
-        }
-        else
-        {
-            return NSOrderedSame;
-        }
-    }];
+
+    NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray];
     NSMutableArray*vArray=[[NSMutableArray alloc]init];
     NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
     for (int i=0; i<xArray.count; i++)
@@ -102,6 +95,20 @@
         [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
         float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
         [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        
+       //月里的日长连次
+        NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
+        [xkeyArray removeObject:@"daycount"];
+        NSArray*xtimeArr=[[Utils sharedInstance] orderArr:xkeyArray];
+        for (int k=0; k<xtimeArr.count; k++)
+        {
+            NSArray*tparray=dic[xtimeArr[k]];
+           
+            float a=[tparray[5] floatValue]+[[totalTimeValueArr lastObject] floatValue];
+            [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%d.%d",i+1,k+1]];
+            [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        }//
+        
     }
     if (xArray.count>1)
     {
@@ -171,4 +178,9 @@
     [self performSegueWithIdentifier:@"show_newMonthResultVC" sender:@{@"winArray":_winCountArray[9],@"failArray":_winCountArray[10]
                                                                        }];
 }
+-(void)goDaysresultBtnAction{
+    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连月结果"}];
+    
+}
+
 @end

@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 
 ////去掉浮点数后面多余的0
 -(NSString*)removeFloatAllZero:(NSString*)string;
+//排序
+-(NSArray*)orderArr:(NSArray*)arr;
 ///获取选中的收益规则
 -(void)getSelectedMoneyArr;
 ///获取选中的趋势规则

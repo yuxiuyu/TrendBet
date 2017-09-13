@@ -47,21 +47,7 @@
     
     NSMutableArray*array=[[NSMutableArray alloc]initWithArray:[_dayDic allKeys]];
     [array removeObject:@"daycount"];
-    dataArray=[array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        if ([obj1 intValue]>[obj2 intValue])
-        {
-            return NSOrderedDescending;
-        }
-        else if ([obj1 intValue]<[obj2 intValue])
-        {
-            return NSOrderedAscending;
-        }
-        else
-        {
-            return NSOrderedSame;
-        }
-        
-    }];
+    dataArray=[[Utils sharedInstance] orderArr:array];
     for (int i=0; i<dataArray.count; i++)
     {
         NSArray*tparray=_dayDic[dataArray[i]];

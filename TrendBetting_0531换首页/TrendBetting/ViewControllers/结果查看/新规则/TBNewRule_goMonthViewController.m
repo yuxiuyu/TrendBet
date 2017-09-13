@@ -10,6 +10,9 @@
 #import "JHChart.h"
 #import "JHLineChart.h"
 @interface TBNewRule_goMonthViewController ()<UIScrollViewDelegate>
+{
+    int keyWidth;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollview;
 
 @end
@@ -18,14 +21,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title=_titleStr;
+    keyWidth=_totalDayKeyArr.count>200?35:50;
+    
     [self showFirstAndFouthQuardrant:_totalDayKeyArr vArray:_totalDayValueArr];
-    _mainScrollview.contentSize=CGSizeMake(50*_totalDayValueArr.count, SCREEN_HEIGHT-20);
+    _mainScrollview.contentSize=CGSizeMake(keyWidth*_totalDayValueArr.count, SCREEN_HEIGHT-30);
     // Do any additional setup after loading the view.
 }
 //第一四象限
 - (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray
 {
-    JHLineChart *lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(0, 0, 50*_totalDayValueArr.count, SCREEN_HEIGHT-20) andLineChartType:JHChartLineValueNotForEveryX];
+    JHLineChart *lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(0, 0, keyWidth*_totalDayValueArr.count, SCREEN_HEIGHT-30) andLineChartType:JHChartLineValueNotForEveryX];
     lineChart.xLineDataArr = xarray;
     lineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
     lineChart.valueArr = @[vArray];
