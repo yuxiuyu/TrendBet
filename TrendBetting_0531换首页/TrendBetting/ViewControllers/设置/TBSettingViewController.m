@@ -7,7 +7,7 @@
 //
 
 #import "TBSettingViewController.h"
-
+#import "TBSwitchTableViewCell.h"
 @interface TBSettingViewController ()<switchOnOrOffProtocol>
 {
     NSArray*dataArray;
@@ -16,13 +16,13 @@
     BOOL iswordpostNotification;
 }
 @end
-@implementation switchUItableViewCell
-- (IBAction)switchChange:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(switchClick:)]) {
-        [self.delegate switchClick:_indexStr];
-    }
-}
-@end
+//@implementation switchUItableViewCell
+//- (IBAction)switchChange:(id)sender {
+//    if ([self.delegate respondsToSelector:@selector(switchClick:)]) {
+//        [self.delegate switchClick:_indexStr];
+//    }
+//}
+//@end
 @implementation TBSettingViewController
 
 - (void)viewDidLoad {
@@ -54,8 +54,8 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString*cellIndentier=@"switchTableViewCell";
-    switchUItableViewCell*cell=[tableView dequeueReusableCellWithIdentifier:cellIndentier forIndexPath:indexPath];
+//    static NSString*cellIndentier=@"switchTableViewCell";
+    TBSwitchTableViewCell*cell=[TBSwitchTableViewCell loadSwitchTableViewCell:tableView];
     cell.delegate=self;
     if (indexPath.row<=11)
     {
@@ -123,7 +123,7 @@
                 str=@"show_setting_groupVC";
                 break;
             case 6:
-                str=@"show_setting_groupVC";
+                str=@"show_setting_fixgroupVC";
                 break;
             case 7:
                 dic=@{@"tagStr":@"1"};
