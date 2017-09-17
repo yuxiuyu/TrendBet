@@ -15,6 +15,10 @@
 -(NSArray*)readMoneyData:(NSString*)str;
 /////保存我的数据
 -(BOOL)saveData:(NSDictionary*)dic  saveArray:(NSArray*)saveArray filePathStr:(NSString*)filePathStr;
+/////保存我的ten数据
+-(BOOL)saveTenData:(NSDictionary*)dic name:(NSString*)name;
+////读取我的Ten数据
+-(NSDictionary*)readTenData:(NSString*)str;
 -(NSArray*)getAllFileName:(NSString*)str;
 /////////对读取到的数据进行处理
 

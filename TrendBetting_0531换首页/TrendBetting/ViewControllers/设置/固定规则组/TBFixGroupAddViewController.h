@@ -9,7 +9,7 @@
 #import "TBBaseViewController.h"
 
 @interface TBFixGroupAddViewController : TBBaseViewController
-@property(strong,nonatomic)NSString*selectedIndex;
+@property(strong,nonatomic)NSString*keyStr;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @end

@@ -9,7 +9,12 @@
 #import "TBFixGroupListViewController.h"
 #import "TBSelectTableViewCell.h"
 @interface TBFixGroupListViewController ()<TBSelectTableViewCellDelegate>
-
+{
+    NSMutableDictionary*allDic;
+    NSArray*nameArr;
+    tenRuleModel*tenM;
+    NSUserDefaults *defaults;
+}
 @end
 
 @implementation TBFixGroupListViewController
@@ -18,42 +23,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"选择组";
-    [[Utils sharedInstance] getSelectedGroupArr];
     self.navigationController.navigationBarHidden=NO;
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"添加组" style:UIBarButtonItemStylePlain target:self action:@selector(addGroupBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
+    
+    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
+    nameArr=[allDic allKeys];
     _tableview.tableFooterView=[[UIView alloc]init];
+     defaults=[NSUserDefaults standardUserDefaults];
+     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenListBlodRule]];
     
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
+     nameArr=[allDic allKeys];
     [_tableview reloadData];
 }
 -(void)addGroupBtnAction
 {
-    [self performSegueWithIdentifier:@"edit_groupVC" sender:nil];
+    [self performSegueWithIdentifier:@"edit_fixgroupVC" sender:nil];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [Utils sharedInstance].groupArray.count;
+    return nameArr.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TBSelectTableViewCell*cell=[TBSelectTableViewCell loadSelectTableViewCell:tableView];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    NSDictionary*dic=[Utils sharedInstance].groupArray[indexPath.row];
-    cell.nameLab.text=dic[@"name"];
-    if ([dic[@"selected"] isEqualToString:@"YES"])
-    {
-        cell.selectBtn.selected=YES;
-    }
-    else
-    {
-        cell.selectBtn.selected=NO;
-    }
+//    NSDictionary*dic=allDic[nameArr[indexPath.row]];
+    cell.nameLab.text=nameArr[indexPath.row];
+
+   
+        cell.selectBtn.hidden=NO;
+        if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]])
+        {
+            cell.selectBtn.selected=YES;
+        }
+        else
+        {
+            cell.selectBtn.selected=NO;
+        }
+    
+   
     cell.delegate=self;
     cell.selectedInp=indexPath.row;
     
@@ -62,12 +78,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [self performSegueWithIdentifier:@"edit_fixgroupVC" sender:@{@"selectedIndex":[NSString stringWithFormat:@"%ld",indexPath.row]}];
+    [self performSegueWithIdentifier:@"edit_fixgroupVC" sender:@{@"keyStr":nameArr[indexPath.row]}];
     
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [Utils sharedInstance].groupArray.count>1?YES:NO;
+    return nameArr.count>1?YES:NO;
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -77,25 +93,16 @@
 {
     if (editingStyle==UITableViewCellEditingStyleDelete)
     {
-        NSMutableArray*tempArr=[[NSMutableArray alloc]initWithArray:[Utils sharedInstance].groupArray];
-        [tempArr removeObjectAtIndex:indexPath.row];
-        BOOL issuccess= [[Utils sharedInstance] saveData:nil saveArray:tempArr filePathStr:SAVE_Group_TXT];
-        if (issuccess)
-        {
-            
-            
-            NSDictionary*dic=[Utils sharedInstance].groupArray[indexPath.row];
-            [[Utils sharedInstance].groupArray removeObjectAtIndex:indexPath.row];
-            if ([dic[@"selected"] isEqualToString:@"YES"]&&[Utils sharedInstance].groupSelectedArr.count==1)
-            {
-                [self backSelected:0];
-            }
-            [_tableview reloadData];
+        [allDic removeObjectForKey:nameArr[indexPath.row]];
+        if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]]) {
+            [defaults removeObjectForKey:SAVE_TenListBlodRule];
+            [defaults synchronize];
         }
-        else
-        {
-            [self.view makeToast:@"删除失败" duration:0.5f position:CSToastPositionCenter];
-        }
+        nameArr=[allDic allKeys];
+        tenM=nil;
+       [[Utils sharedInstance] saveTenData:allDic name:SAVE_TenGroup_TXT];
+        [_tableview reloadData];
+
         
     }
 }
@@ -106,38 +113,46 @@
 #pragma mark--TBSelectTableViewCellDelegate
 -(void)backSelected:(NSInteger)selectedIndex
 {
-    NSMutableDictionary*dic=[[NSMutableDictionary alloc]initWithDictionary:[Utils sharedInstance].groupArray[selectedIndex]];
-    NSString*str=dic[@"selected"];
-    if ([str isEqualToString:@"YES"])
-    {
-        if ([Utils sharedInstance].groupSelectedArr.count==1)
-        {
-            return;
-        }
-        [dic setObject:@"NO" forKey:@"selected"];
-    }
-    else
-    {
-        [dic setObject:@"YES" forKey:@"selected"];
-    }
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSMutableArray*tempArr=[[NSMutableArray alloc]initWithArray:[Utils sharedInstance].groupArray];
-        [tempArr replaceObjectAtIndex:selectedIndex withObject:dic];
-        BOOL issuccess= [[Utils sharedInstance] saveData:nil saveArray:tempArr filePathStr:SAVE_Group_TXT];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (issuccess)
-            {
-                [Utils sharedInstance].groupArray=tempArr;
-                [[Utils sharedInstance]getSelectedGroupArr];
+    NSDictionary*dic=allDic[nameArr[selectedIndex]];
+    tenM=[[tenRuleModel alloc]init];
+    [tenM initWithDic:dic];
+    tenM.nameStr=nameArr[selectedIndex];
+    
+    NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
+    [defaults setObject:data forKey:SAVE_TenListBlodRule];
+    [defaults synchronize];
+//    NSMutableDictionary*dic=[[NSMutableDictionary alloc]initWithDictionary:[Utils sharedInstance].groupArray[selectedIndex]];
+//    NSString*str=dic[@"selected"];
+//    if ([str isEqualToString:@"YES"])
+//    {
+//        if (nameArr.count==1)
+//        {
+//            return;
+//        }
+//        [dic setObject:@"NO" forKey:@"selected"];
+//    }
+//    else
+//    {
+//        [dic setObject:@"YES" forKey:@"selected"];
+//    }
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        NSMutableArray*tempArr=[[NSMutableArray alloc]initWithArray:[Utils sharedInstance].groupArray];
+//        [tempArr replaceObjectAtIndex:selectedIndex withObject:dic];
+//        BOOL issuccess= [[Utils sharedInstance] saveData:nil saveArray:tempArr filePathStr:SAVE_Group_TXT];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (issuccess)
+//            {
+//                [Utils sharedInstance].groupArray=tempArr;
+//                [[Utils sharedInstance]getSelectedGroupArr];
                 [_tableview reloadData];
-                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_RULE_TXT}];
-            }
-            else
-            {
-                [self.view makeToast:@"修改失败" duration:0.5f position:CSToastPositionCenter];
-            }
-        });
-    });
+//                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_RULE_TXT}];
+//            }
+//            else
+//            {
+//                [self.view makeToast:@"修改失败" duration:0.5f position:CSToastPositionCenter];
+//            }
+//        });
+//    });
     
     
     

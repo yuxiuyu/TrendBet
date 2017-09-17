@@ -49,6 +49,7 @@
     BOOL isfristCreate;
     NSTimer*checkTimer;
     NSInteger sumCount;
+    tenRuleModel*tenM;
     
     
 }
@@ -66,6 +67,7 @@
         isfristCreate=NO;
         [self initView];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotification:) name:@"changeArea" object:nil];
+        
         //        [self addTimer];
         
     }
@@ -93,6 +95,8 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
+    tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TenBlodRule]];
+    [Utils sharedInstance].tenModel=tenM;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -408,8 +412,9 @@
             [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepfivePartArray resultArray:[guessFivePartArray lastObject]  secondPartArray:tempSecondPartArray myTag:3]];
             
         }
-        [self changeArea:listArray.count-1];
+       
     }
+     [self changeArea:0];
     [self setMoneyValue:NO];
     
 }
@@ -430,7 +435,7 @@
         }
         NSString*str=@"";
         NSString*secGuessLastStr=guessSecondPartArray[i-sumCount];
-        if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]){
+        if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[tenM.tRule isEqualToString:@"YES"]){
             [guessSecondPartArray replaceObjectAtIndex:i-sumCount withObject:@"stop"];
         }
         else
@@ -439,7 +444,7 @@
             if (secGuessLastStr.length>0)
             {
                 NSString*firstStr=[guessFirstPartArray[i] lastObject];
-                if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"]){
+                if ([tenM.wordRule isEqualToString:@"NO"]){
                     firstStr=@"";
                 }
                 NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[firstStr,secGuessLastStr,[guessThirdPartArray[i-sumCount] lastObject],[guessForthPartArray[i-sumCount] lastObject],[guessFivePartArray[i-sumCount] lastObject]]];
@@ -461,7 +466,7 @@
         [self changeArea:listArray.count-1];
     }
     NSArray*array0=[guessFirstPartArray lastObject];
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule] isEqualToString:@"NO"]) {
+    if ([tenM.wordRule isEqualToString:@"NO"]) {
         array0=@[@"",@""];
     }
     
@@ -506,7 +511,7 @@
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
         {
             NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
-            if ([[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
+            if ([tenM.tRule isEqualToString:@"YES"])
             {
                 for (int i=0; i<tepguessSecondPartArray.count; i++) {
                     if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
@@ -530,7 +535,7 @@
     
     
     NSString*money=resultArray[5];
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]) {
+    if ([tenM.tRule isEqualToString:@"YES"]) {
         if([[listArray lastObject] isEqualToString:@"T"]&&[[guessSecondPartArray lastObject] length]>0){
             _memoLab.text =@"暂停";
             str1=@"暂停";
@@ -806,6 +811,9 @@
 #pragma mark--一三四五区域的选择
 -(void)getNotification:(NSNotification*)userInfo
 {
+    tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TenBlodRule]];
+    [Utils sharedInstance].tenModel=tenM;
+
     NSDictionary*dic=userInfo.userInfo;
     if ([dic[@"title"] isEqualToString:SAVE_isbigRoad])
     {
@@ -828,26 +836,6 @@
         [self changeArea:0];
     }
     
-    //    if ([dic[@"title"] isEqualToString:SAVE_MONEY_TXT])
-    //    {
-    //        [self changeArea:0];
-    //    }
-    //    else if ([dic[@"title"] isEqualToString:SAVE_AREASELECT])
-    //    {
-    //        [self changeArea:0];
-    //    }
-    //    else if ([dic[@"title"] isEqualToString:SAVE_RBSELECT])
-    //    {
-    //        [self changeArea:0];
-    //    }
-    //    else if([dic[@"title"] isEqualToString:SAVE_RULE_TXT])
-    //    {
-    //        [self guessArrayinitAdd];
-    //    }
-    //    else if([dic[@"title"] isEqualToString:SAVE_REVERSESELECT])
-    //    {
-    //        [self changeArea:0];
-    //    }
     
 }
 #pragma mark - Navigation

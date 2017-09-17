@@ -7,7 +7,7 @@
 //
 
 #import "TBNewRule_RoomViewController.h"
-
+#import "TBFixGroupListViewController.h"
 @interface TBNewRule_RoomViewController ()
 {
     NSMutableArray*allHouseArr;
@@ -29,6 +29,8 @@
     [super viewDidLoad];
     self.title=@"房间";
     self.edgesForExtendedLayout=UIRectEdgeNone;
+    UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"规则选择" style:UIBarButtonItemStylePlain target:self action:@selector(tenRuleBtnAction)];
+    self.navigationItem.rightBarButtonItem=item;
     
     
     
@@ -136,6 +138,14 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
+    NSData*data=[defaults objectForKey:SAVE_TenListBlodRule];
+    if (!data) {
+        data=[defaults objectForKey:SAVE_TenBlodRule];
+    }
+    tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+  
+    [Utils sharedInstance].tenModel=tenM;
     [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
 }
 
@@ -157,6 +167,10 @@
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
     }
+}
+-(void)tenRuleBtnAction{
+    TBFixGroupListViewController*vc=[[UIStoryboard storyboardWithName:@"setting" bundle:nil] instantiateViewControllerWithIdentifier:@"fixGroupListViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

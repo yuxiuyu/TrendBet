@@ -32,7 +32,7 @@
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationController.navigationBarHidden=NO;
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
-    self.navigationItem.rightBarButtonItem=item;
+//    self.navigationItem.rightBarButtonItem=item;
     
     UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthsresultBtnAction)];
     self.navigationItem.rightBarButtonItems=@[goItem,item];

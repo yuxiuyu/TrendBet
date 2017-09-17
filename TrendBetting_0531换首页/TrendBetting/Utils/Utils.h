@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "tenRuleModel.h"
 typedef NS_ENUM(NSInteger,TBTrendCode)
 {
     TBAreaTrend=0,
@@ -29,7 +30,7 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 //
 @property(strong,nonatomic)NSMutableArray*groupArray;//总的组的数组
 @property(strong,nonatomic)NSMutableArray*groupSelectedArr;//选中的总的组的数组
-
+@property(strong,nonatomic)tenRuleModel*tenModel;
 
 ////去掉浮点数后面多余的0
 -(NSString*)removeFloatAllZero:(NSString*)string;

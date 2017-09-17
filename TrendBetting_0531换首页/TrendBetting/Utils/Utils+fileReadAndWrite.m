@@ -45,6 +45,27 @@
     return isScuess;
     
 }
+/////保存我的ten数据
+-(BOOL)saveTenData:(NSDictionary*)dic name:(NSString*)name
+{
+    NSFileManager*fileManager=[[NSFileManager alloc]init];
+    NSString*documentDictionary=[self getHomePath];
+    NSString*createPath=@"";
+    NSData *fileData;
+    NSString*filePath;
+    createPath=[NSString stringWithFormat:@"%@/%@",documentDictionary,SAVE_RULE_FILENAME];
+    fileData = [[self dictionaryToJson:dic] dataUsingEncoding:NSUTF8StringEncoding];
+    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",name];
+    filePath=[createPath stringByAppendingPathComponent:nameStr];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath])
+    {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    BOOL isScuess=[fileManager createFileAtPath:filePath contents:fileData attributes:nil];
+    return isScuess;
+    
+}
 ////读取我的数据
 -(NSDictionary*)readData:(NSString*)str
 {
@@ -60,6 +81,27 @@
         //
         documentDictionary=[NSString stringWithFormat:@"%@/%@/%@-%@/%d.txt",documentDictionary,SAVE_DATA_FILENAME,arr[0],arr[1],[arr[2] intValue]];
     }
+    
+    NSDictionary*dic;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:documentDictionary])
+    {
+        NSString*dataStr=[[NSString alloc]initWithContentsOfFile:documentDictionary encoding:NSUTF8StringEncoding error:nil];
+        NSString *responseString = [dataStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+        dic=[responseString objectFromJSONString];
+    }
+    return dic;
+    
+}
+////读取我的Ten数据
+-(NSDictionary*)readTenData:(NSString*)str
+{
+    
+    NSString*documentDictionary=[self getHomePath];
+    if (str)
+    {
+        documentDictionary=[NSString stringWithFormat:@"%@/%@.txt",documentDictionary,str];
+    }
+    
     
     NSDictionary*dic;
     if ([[NSFileManager defaultManager] fileExistsAtPath:documentDictionary])

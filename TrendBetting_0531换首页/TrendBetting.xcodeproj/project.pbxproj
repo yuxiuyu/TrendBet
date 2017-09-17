@@ -17,8 +17,6 @@
 		5B2E6BF11EA8928F005CCA08 /* Utils+groupRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E6BEF1EA8928F005CCA08 /* Utils+groupRule.m */; };
 		5B5326FE1E5D90220056EE11 /* money.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5326FD1E5D90220056EE11 /* money.storyboard */; };
 		5B5327021E5D90E00056EE11 /* TBMoneySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5327011E5D90E00056EE11 /* TBMoneySelectViewController.m */; };
-		5B58139A1F6BC31900424EB4 /* TBFixGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5813991F6BC31900424EB4 /* TBFixGroupListViewController.m */; };
-		5B58139D1F6BC35200424EB4 /* TBFixGroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B58139C1F6BC35200424EB4 /* TBFixGroupAddViewController.m */; };
 		5B5813A61F6BD22800424EB4 /* TBSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5813A41F6BD22800424EB4 /* TBSwitchTableViewCell.m */; };
 		5B5813A71F6BD22800424EB4 /* TBSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5813A51F6BD22800424EB4 /* TBSwitchTableViewCell.xib */; };
 		5B5813AA1F6BD75C00424EB4 /* tenRuleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5813A91F6BD75C00424EB4 /* tenRuleModel.m */; };
@@ -81,6 +79,8 @@
 		B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */; };
 		B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF421ED073F300E248C8 /* Utils+newRules.m */; };
 		B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */; };
+		B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */; };
+		B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,10 +120,6 @@
 		5B5326FD1E5D90220056EE11 /* money.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = money.storyboard; sourceTree = "<group>"; };
 		5B5327001E5D90E00056EE11 /* TBMoneySelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMoneySelectViewController.h; sourceTree = "<group>"; };
 		5B5327011E5D90E00056EE11 /* TBMoneySelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMoneySelectViewController.m; sourceTree = "<group>"; };
-		5B5813981F6BC31900424EB4 /* TBFixGroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFixGroupListViewController.h; sourceTree = "<group>"; };
-		5B5813991F6BC31900424EB4 /* TBFixGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupListViewController.m; sourceTree = "<group>"; };
-		5B58139B1F6BC35200424EB4 /* TBFixGroupAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFixGroupAddViewController.h; sourceTree = "<group>"; };
-		5B58139C1F6BC35200424EB4 /* TBFixGroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupAddViewController.m; sourceTree = "<group>"; };
 		5B5813A31F6BD22800424EB4 /* TBSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBSwitchTableViewCell.h; sourceTree = "<group>"; };
 		5B5813A41F6BD22800424EB4 /* TBSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSwitchTableViewCell.m; sourceTree = "<group>"; };
 		5B5813A51F6BD22800424EB4 /* TBSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TBSwitchTableViewCell.xib; sourceTree = "<group>"; };
@@ -242,6 +238,10 @@
 		B649DF421ED073F300E248C8 /* Utils+newRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+newRules.m"; sourceTree = "<group>"; };
 		B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBigRoadSelectViewController.m; sourceTree = "<group>"; };
 		B654DD9A1F16691D006D8C65 /* TBBigRoadSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBigRoadSelectViewController.h; sourceTree = "<group>"; };
+		B6A18AE01F6E13C100D27E7F /* TBFixGroupAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFixGroupAddViewController.h; sourceTree = "<group>"; };
+		B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupAddViewController.m; sourceTree = "<group>"; };
+		B6A18AE21F6E13DC00D27E7F /* TBFixGroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFixGroupListViewController.h; sourceTree = "<group>"; };
+		B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupListViewController.m; sourceTree = "<group>"; };
 		B881D9EA69C1B759B04079FD /* Pods-TrendBetting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.release.xcconfig"; sourceTree = "<group>"; };
 		E5A7C1BDBEE915D2A233C8D8 /* Pods-TrendBetting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.debug.xcconfig"; sourceTree = "<group>"; };
 		F78CDA40625A2D80D9C72A13 /* libPods-TrendBetting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrendBetting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,10 +326,10 @@
 		5B5813971F6BC09D00424EB4 /* 固定规则组 */ = {
 			isa = PBXGroup;
 			children = (
-				5B5813981F6BC31900424EB4 /* TBFixGroupListViewController.h */,
-				5B5813991F6BC31900424EB4 /* TBFixGroupListViewController.m */,
-				5B58139B1F6BC35200424EB4 /* TBFixGroupAddViewController.h */,
-				5B58139C1F6BC35200424EB4 /* TBFixGroupAddViewController.m */,
+				B6A18AE21F6E13DC00D27E7F /* TBFixGroupListViewController.h */,
+				B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */,
+				B6A18AE01F6E13C100D27E7F /* TBFixGroupAddViewController.h */,
+				B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */,
 			);
 			path = "固定规则组";
 			sourceTree = "<group>";
@@ -794,12 +794,12 @@
 			files = (
 				5BC6877C1E5E92AA001C2ACC /* TBSelectTableViewCell.m in Sources */,
 				5BD19BB01E5D22FE00D62D62 /* JHLineChart.m in Sources */,
+				B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */,
 				5BE72CD31E51B2890001AFFC /* TBFileRoomResult_roomArr.m in Sources */,
 				5BD8B77A1EA700010088E8C4 /* TBRBSelectViewController.m in Sources */,
 				5BF664231EAEF255000A179F /* TBGroup_TimeResultViewController.m in Sources */,
 				5BE507BA1E54390A00855A9D /* MyCalendarItem.m in Sources */,
 				5BC6567F1EF8FCAC00F040CE /* TBRoomDetail_MonthViewController.m in Sources */,
-				5B58139A1F6BC31900424EB4 /* TBFixGroupListViewController.m in Sources */,
 				5B1856E01E1B75810033200D /* UIView+border.m in Sources */,
 				5B6640251E5ADF15007524F3 /* Utils+rule.m in Sources */,
 				5B5813A61F6BD22800424EB4 /* TBSwitchTableViewCell.m in Sources */,
@@ -832,13 +832,13 @@
 				5BC10EBD1E681D220008CADE /* TBResultViewController.m in Sources */,
 				5BD8B7781EA700010088E8C4 /* TBAreaSelectViewController.m in Sources */,
 				5B2E6BEE1EA85250005CCA08 /* TBGroup_DayViewController.m in Sources */,
-				5B58139D1F6BC35200424EB4 /* TBFixGroupAddViewController.m in Sources */,
 				5BC656811EF8FCAC00F040CE /* TBRoomDetailViewController.m in Sources */,
 				5BDA060B1E136B770060CCE5 /* TBBaseViewController.m in Sources */,
 				5BC687781E5E8103001C2ACC /* TBMoneyEditViewController.m in Sources */,
 				5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */,
 				5BDA05D81E136AEA0060CCE5 /* AppDelegate.m in Sources */,
 				5B2E6BEB1EA8523E005CCA08 /* TBGroup_MonthViewController.m in Sources */,
+				B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */,
 				B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */,
 				5BE72CD01E51B2130001AFFC /* TBFileRoomResult_entry.m in Sources */,
 				B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */,

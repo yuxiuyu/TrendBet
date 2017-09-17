@@ -14,15 +14,10 @@
     NSUserDefaults*defaults;
     BOOL ispostNotification;
     BOOL iswordpostNotification;
+    tenRuleModel*tenM;
 }
 @end
-//@implementation switchUItableViewCell
-//- (IBAction)switchChange:(id)sender {
-//    if ([self.delegate respondsToSelector:@selector(switchClick:)]) {
-//        [self.delegate switchClick:_indexStr];
-//    }
-//}
-//@end
+
 @implementation TBSettingViewController
 
 - (void)viewDidLoad {
@@ -30,8 +25,9 @@
     self.title=@"设置";
     defaults=[NSUserDefaults standardUserDefaults];
     self.navigationController.navigationBarHidden=NO;
-    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"设置新规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
+    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"设置新规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
     _tableview.tableFooterView=[[UIView alloc]init];
+    tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenBlodRule]];
     
     
     // Do any additional setup after loading the view.
@@ -68,25 +64,34 @@
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         switch (indexPath.row) {
             case 12:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.gotwoLu isEqualToString:@"YES"];
                 break;
             case 13:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.goLu isEqualToString:@"YES"];
                 break;
             case 14:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.goXiaoLu isEqualToString:@"YES"];
                 break;
             case 15:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.oneNORule isEqualToString:@"YES"];
                 break;
             case 16:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.noRuleOne isEqualToString:@"YES"];
                 break;
             case 17:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_wordRule] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.oneRule isEqualToString:@"YES"];
                 break;
             case 18:
-                cell.mySwitch.on=[[defaults objectForKey:SAVE_TRule] isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.ruleOne isEqualToString:@"YES"];
+                break;
+            case 19:
+                cell.mySwitch.on=[tenM.sameRule isEqualToString:@"YES"];
+                break;
+            case 20:
+                cell.mySwitch.on=[tenM.wordRule isEqualToString:@"YES"];
+                break;
+            case 21:
+                cell.mySwitch.on=[tenM.tRule isEqualToString:@"YES"];
                 break;
                 
             default:
@@ -161,85 +166,61 @@
     switch ([indexStr intValue]) {
         case 12:
         {
-            if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_oneNORule];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_oneNORule];
-            }
-              ispostNotification=YES;
+           tenM.gotwoLu=[tenM.gotwoLu isEqualToString:@"YES"]?@"NO":@"YES";
+           ispostNotification=YES;
         }
             break;
         case 13:
         {
-            if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_noRuleOne];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_noRuleOne];
-            }
-              ispostNotification=YES;
+            tenM.goLu=[tenM.goLu isEqualToString:@"YES"]?@"NO":@"YES";
+            ispostNotification=YES;
         }
             break;
         case 14:
         {
-            if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_oneRule];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_oneRule];
-            }
-              ispostNotification=YES;
+            tenM.goXiaoLu=[tenM.goXiaoLu isEqualToString:@"YES"]?@"NO":@"YES";
+            ispostNotification=YES;
         }
             break;
         case 15:
         {
-            if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_ruleOne];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_ruleOne];
-            }
-              ispostNotification=YES;
+             tenM.oneNORule=[tenM.oneNORule isEqualToString:@"YES"]?@"NO":@"YES";
+            ispostNotification=YES;
         }
             break;
         case 16:
         {
-            if ([[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_sameRule];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_sameRule];
-            }
+             tenM.noRuleOne=[tenM.noRuleOne isEqualToString:@"YES"]?@"NO":@"YES";
               ispostNotification=YES;
         }
             break;
         case 17:
         {
-            if ([[defaults objectForKey:SAVE_wordRule] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_wordRule];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_wordRule];
-            }
-            iswordpostNotification=YES;
+              tenM.oneRule=[tenM.oneRule isEqualToString:@"YES"]?@"NO":@"YES";
+              ispostNotification=YES;
         }
             break;
         case 18:
         {
-            if ([[defaults objectForKey:SAVE_TRule] isEqualToString:@"YES"]) {
-                [defaults setObject:@"NO" forKey:SAVE_TRule];
-            }
-            else
-            {
-                [defaults setObject:@"YES" forKey:SAVE_TRule];
-            }
+            tenM.ruleOne=[tenM.ruleOne isEqualToString:@"YES"]?@"NO":@"YES";
+            ispostNotification=YES;
+        }
+            break;
+        case 19:
+        {
+             tenM.sameRule=[tenM.sameRule isEqualToString:@"YES"]?@"NO":@"YES";
+              ispostNotification=YES;
+        }
+            break;
+        case 20:
+        {
+             tenM.wordRule=[tenM.wordRule isEqualToString:@"YES"]?@"NO":@"YES";
+            iswordpostNotification=YES;
+        }
+            break;
+        case 21:
+        {
+             tenM.tRule=[tenM.tRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;
         }
             break;
@@ -247,6 +228,8 @@
         default:
             break;
     }
+    NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
+    [defaults setObject:data forKey:SAVE_TenBlodRule];
     [defaults synchronize];
 
 }

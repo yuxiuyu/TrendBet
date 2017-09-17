@@ -9,7 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @interface tenRuleModel : NSObject
-{
-    
-}
+@property(copy,nonatomic)NSString*nameStr;
+@property(copy,nonatomic)NSString*gotwoLu;
+@property(copy,nonatomic)NSString*goLu;
+@property(copy,nonatomic)NSString*goXiaoLu;
+@property(copy,nonatomic)NSString*oneNORule;
+@property(copy,nonatomic)NSString*noRuleOne;
+@property(copy,nonatomic)NSString*oneRule;
+@property(copy,nonatomic)NSString*ruleOne;
+@property(copy,nonatomic)NSString*sameRule;
+@property(copy,nonatomic)NSString*wordRule;
+@property(copy,nonatomic)NSString*tRule;
+-(void)initWithYes;
+-(void)initWithDic:(NSDictionary*)dic;
 @end

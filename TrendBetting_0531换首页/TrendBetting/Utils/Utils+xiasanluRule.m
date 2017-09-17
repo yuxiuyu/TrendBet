@@ -115,7 +115,7 @@
         else
         {
             NSString*secGuessLastStr=[guessSecondPartArray lastObject];
-            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"]){
+            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[self.tenModel.tRule isEqualToString:@"YES"]){
                 [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
             }
             else{
@@ -127,7 +127,7 @@
                     NSString*guessStr4=[[guessFivePartArray lastObject] lastObject];
                     
                     NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-                    if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordRule]isEqualToString:@"NO"]) {
+                    if ([self.tenModel.wordRule isEqualToString:@"NO"]) {
                         [guessArr removeObjectAtIndex:0];
                     }
                     str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
@@ -145,7 +145,7 @@
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==0)
         {
             NSMutableArray*tepguessSecondPartArray=[[NSMutableArray alloc]initWithArray:guessSecondPartArray];
-            if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TRule] isEqualToString:@"YES"])
+            if ([self.tenModel.tRule isEqualToString:@"YES"])
             {
                 for (int i=0; i<tepguessSecondPartArray.count; i++) {
                     if ([tepguessSecondPartArray[i] isEqualToString:@"stop"])
@@ -268,8 +268,7 @@
                     }
                     else if (lastArray.count>[fristPartArray[allcount-3] count])
                     {
-                        NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
-                        if (([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]&&[nameStr containsString:@"一带规则"])||([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
+                        if (([self.tenModel.oneNORule isEqualToString:@"YES"]&&[nameStr containsString:@"一带规则"])||([self.tenModel.noRuleOne isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
                         {
                             nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
                             guessStr=[lastArray lastObject];
@@ -317,6 +316,7 @@
     NSString*nameStr=@"";
     NSInteger allCount = fristPartArray.count-1;
     NSArray*lastArray=[fristPartArray lastObject];
+    NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
     if(fristPartArray.count>=4)
     {
         NSArray*array=[self noRule:fristPartArray];
@@ -341,34 +341,39 @@
             }
         }
         NSArray*lastSecArray=fristPartArray[allCount-1];
-        if (lastArray.count==1&&same>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GotwoCount] intValue])
+        if (lastArray.count==1&&same>=[[defaults objectForKey:SAVE_GotwoCount] intValue])
         {
-            guessStr=[lastSecArray lastObject];
-            nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
+            if ([self.tenModel.gotwoLu isEqualToString:@"YES"]) {
+                guessStr=[lastSecArray lastObject];
+                nameStr=[NSString stringWithFormat:@"长跳%ld",sumcount];
+            }
         }
         else if(lastArray.count>=2&&same>=2)
         {
             if (lastArray.count==2)
             {
-                if (same>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoXiaoCount] intValue]) {
-                    guessStr=[lastSecArray lastObject];
-                    nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+                if ([self.tenModel.goXiaoLu isEqualToString:@"YES"]) {
+                    if (same>=[[defaults objectForKey:SAVE_GoXiaoCount] intValue]) {
+                        guessStr=[lastSecArray lastObject];
+                        nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
+                    }
                 }
             }
             else
             {
-                NSUserDefaults*defaults=[NSUserDefaults standardUserDefaults];
-                if ([[defaults objectForKey:SAVE_sameRule] isEqualToString:@"YES"]) {
+                if ([self.tenModel.sameRule isEqualToString:@"YES"]) {
                     guessStr=[lastSecArray lastObject];
                     nameStr=[NSString stringWithFormat:@"小%ld路%ld",lastArray.count,sumcount];
                 }
             }
         }
     }
-    if (fristPartArray.count>=1&&nameStr.length<=0&&lastArray.count>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_GoCount] intValue])
+    if (fristPartArray.count>=1&&nameStr.length<=0&&lastArray.count>=[[defaults objectForKey:SAVE_GoCount] intValue])
     {
-        nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
-        guessStr=[lastArray lastObject];
+        if ([self.tenModel.goLu isEqualToString:@"YES"]) {
+            nameStr=[NSString stringWithFormat:@"长连%ld",lastArray.count];
+            guessStr=[lastArray lastObject];
+        }
     }
     return @[nameStr,guessStr];
 }
@@ -382,7 +387,7 @@
     NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
     if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
     {
-                if ([[defaults objectForKey:SAVE_oneRule] isEqualToString:@"YES"]) {
+        if ([self.tenModel.oneRule isEqualToString:@"YES"]) {
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
@@ -395,14 +400,14 @@
     }
     else if ([fristPartArray[allCount] count]==1&&[fristPartArray[allCount-1] count]>=2&&[fristPartArray[allCount-2] count]==1&&[fristPartArray[allCount-3] count]>=2)
     {
-        if ([[defaults objectForKey:SAVE_noRuleOne] isEqualToString:@"YES"]) {
+        if ([self.tenModel.noRuleOne isEqualToString:@"YES"]) {
             nameStr=@"不规则带一";
             guessStr=[fristPartArray[allCount-1] lastObject];
             
         }
         if ([fristPartArray[allCount-1] count]==[fristPartArray[allCount-3] count])
         {
-            if ([[defaults objectForKey:SAVE_ruleOne] isEqualToString:@"YES"]) {
+            if ([self.tenModel.ruleOne isEqualToString:@"YES"]) {
                 nameStr=@"规则带一";
                 guessStr=[fristPartArray[allCount-1] lastObject];
             }
@@ -410,7 +415,7 @@
         // yxy add
         if (fristPartArray.count>4&&[fristPartArray[allCount-4] count]==1)
         {
-            if ([[defaults objectForKey:SAVE_oneNORule] isEqualToString:@"YES"]) {
+            if ([self.tenModel.oneNORule isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
                 guessStr=[fristPartArray[allCount] lastObject];
                 a=a+1;

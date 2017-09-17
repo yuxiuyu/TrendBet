@@ -72,42 +72,66 @@
     {
         [defaults setObject:@"0" forKey:SAVE_isOnlyRBSelect];
     }
-    ///
-    ////设置中可关闭/开启一带不规则
-    if (![defaults objectForKey:SAVE_oneNORule])
+    
+    
+    /////////////
+    if (![defaults objectForKey:SAVE_TenBlodRule])
     {
-        [defaults setObject:@"YES" forKey:SAVE_oneNORule];
+        tenRuleModel*tenM=[[tenRuleModel alloc]init];
+        [tenM initWithYes];
+        NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
+        [defaults setObject:data forKey:SAVE_TenBlodRule];
     }
-    ////设置中可关闭/开启不规则带一
-    if (![defaults objectForKey:SAVE_noRuleOne])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_noRuleOne];
-    }
-    ////设置中可关闭/开启一带规则
-    if (![defaults objectForKey:SAVE_oneRule])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_oneRule];
-    }
-    ////设置中可关闭／开启规则带一
-    if (![defaults objectForKey:SAVE_ruleOne])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_ruleOne];
-    }
-    ////设置中可关闭／开启平头规则
-    if (![defaults objectForKey:SAVE_sameRule])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_sameRule];
-    }
-    ////设置中可关闭／开启文字区域的规则
-    if (![defaults objectForKey:SAVE_wordRule])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_wordRule];
-    }
-    ////设置中可关闭／开启和暂停的规则
-    if (![defaults objectForKey:SAVE_TRule])
-    {
-        [defaults setObject:@"YES" forKey:SAVE_TRule];
-    }
+//    ////设置中可关闭／开启长跳的规则
+//    if (![defaults objectForKey:SAVE_gotwoRule])
+//    {
+//       [defaults setObject:@"YES" forKey:SAVE_gotwoRule];
+//    }
+//    ////设置中可关闭／开启长连的规则
+//    if (![defaults objectForKey:SAVE_goRule])
+//    {
+//       [defaults setObject:@"YES" forKey:SAVE_goRule];
+//    }
+//    ////设置中可关闭／开启小二路的规则
+//    if (![defaults objectForKey:SAVE_xiaoRule])
+//    {
+//       [defaults setObject:@"YES" forKey:SAVE_xiaoRule];
+//    }
+//    ////设置中可关闭/开启一带不规则
+//    if (![defaults objectForKey:SAVE_oneNORule])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_oneNORule];
+//    }
+//    ////设置中可关闭/开启不规则带一
+//    if (![defaults objectForKey:SAVE_noRuleOne])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_noRuleOne];
+//    }
+//    ////设置中可关闭/开启一带规则
+//    if (![defaults objectForKey:SAVE_oneRule])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_oneRule];
+//    }
+//    ////设置中可关闭／开启规则带一
+//    if (![defaults objectForKey:SAVE_ruleOne])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_ruleOne];
+//    }
+//    ////设置中可关闭／开启平头规则
+//    if (![defaults objectForKey:SAVE_sameRule])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_sameRule];
+//    }
+//    ////设置中可关闭／开启文字区域的规则
+//    if (![defaults objectForKey:SAVE_wordRule])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_wordRule];
+//    }
+//    ////设置中可关闭／开启和暂停的规则
+//    if (![defaults objectForKey:SAVE_TRule])
+//    {
+//        [defaults setObject:@"YES" forKey:SAVE_TRule];
+//    }
     ////
     [self initKeyBoard];
 
