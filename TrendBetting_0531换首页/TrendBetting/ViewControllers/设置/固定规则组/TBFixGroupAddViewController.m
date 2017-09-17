@@ -84,6 +84,7 @@
     }
     else
     {
+        
         if ([allDic objectForKey:_nameTextField.text]&&![_nameTextField.text isEqualToString:_keyStr])
         {
             [self.view makeToast:@"已存在这个组名称"];
@@ -95,6 +96,16 @@
             NSDictionary*dic=@{@"listTen":ansArr,
                                @"selected":@"NO"};
             [allDic setObject:dic forKey:_nameTextField.text];
+            
+            NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
+            NSData*data=[defaults objectForKey:SAVE_TenListBlodRule];
+            tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            if (tenM&&[tenM.nameStr isEqualToString:_nameTextField.text]) {
+                 [tenM initWithDic:dic];
+                NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
+                [defaults setObject:data forKey:SAVE_TenListBlodRule];
+                [defaults synchronize];
+            }
         }
     }
     BOOL issuccess= [[Utils sharedInstance] saveTenData:allDic name:SAVE_TenGroup_TXT];
