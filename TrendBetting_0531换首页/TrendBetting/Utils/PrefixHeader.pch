@@ -52,6 +52,7 @@
 
 #define SAVE_TenBlodRule @"tenBlodRule" //十个规则
 #define SAVE_TenListBlodRule @"tenListBlodRule" //十个规则
+#define SAVE_TenDeleteBlodRule @"tenDeleteBlodRule" //十个规则
 
 //#define SAVE_gotwoRule @"gotwoRule"//设置中可关闭／开启长跳的规则
 //#define SAVE_goRule @"goRule"//设置中可关闭／开启长连的规则

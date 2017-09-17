@@ -81,6 +81,7 @@
 		B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */; };
 		B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */; };
 		B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */; };
+		B6A18AE81F6EB80F00D27E7F /* TBDeleteFixViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE71F6EB80F00D27E7F /* TBDeleteFixViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,8 @@
 		B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupAddViewController.m; sourceTree = "<group>"; };
 		B6A18AE21F6E13DC00D27E7F /* TBFixGroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBFixGroupListViewController.h; sourceTree = "<group>"; };
 		B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupListViewController.m; sourceTree = "<group>"; };
+		B6A18AE61F6EB80F00D27E7F /* TBDeleteFixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDeleteFixViewController.h; sourceTree = "<group>"; };
+		B6A18AE71F6EB80F00D27E7F /* TBDeleteFixViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDeleteFixViewController.m; sourceTree = "<group>"; };
 		B881D9EA69C1B759B04079FD /* Pods-TrendBetting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.release.xcconfig"; sourceTree = "<group>"; };
 		E5A7C1BDBEE915D2A233C8D8 /* Pods-TrendBetting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrendBetting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting.debug.xcconfig"; sourceTree = "<group>"; };
 		F78CDA40625A2D80D9C72A13 /* libPods-TrendBetting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TrendBetting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +333,8 @@
 				B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */,
 				B6A18AE01F6E13C100D27E7F /* TBFixGroupAddViewController.h */,
 				B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */,
+				B6A18AE61F6EB80F00D27E7F /* TBDeleteFixViewController.h */,
+				B6A18AE71F6EB80F00D27E7F /* TBDeleteFixViewController.m */,
 			);
 			path = "固定规则组";
 			sourceTree = "<group>";
@@ -807,6 +812,7 @@
 				5B609A0E1EF90B7700D9305B /* TBNewRule_RoomViewController.m in Sources */,
 				5B5813AA1F6BD75C00424EB4 /* tenRuleModel.m in Sources */,
 				5BDA060E1E136BD00060CCE5 /* TBFristPageViewController.m in Sources */,
+				B6A18AE81F6EB80F00D27E7F /* TBDeleteFixViewController.m in Sources */,
 				5B609A141EF91DFC00D9305B /* TBNewRule_DayViewController.m in Sources */,
 				B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */,
 				5B609A171EF91E1B00D9305B /* TBNewRule_TimeViewController.m in Sources */,
