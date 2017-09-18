@@ -42,4 +42,6 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 -(void)getSelectedRuleArr:(NSString*)tag;
 ///获取选中的总的组的数组
 -(void)getSelectedGroupArr;
+///获取当前选中的十个规则组
+-(void)initSetTenModel;
 @end

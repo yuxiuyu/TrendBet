@@ -9,5 +9,5 @@
 #import "TBBaseViewController.h"
 
 @interface TBDeleteFixViewController : TBBaseViewController
-
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 @end

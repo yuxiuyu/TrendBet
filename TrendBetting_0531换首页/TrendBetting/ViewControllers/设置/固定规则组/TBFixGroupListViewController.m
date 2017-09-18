@@ -96,6 +96,7 @@
         [allDic removeObjectForKey:nameArr[indexPath.row]];
         if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]]) {
             [defaults removeObjectForKey:SAVE_TenListBlodRule];
+            [defaults removeObjectForKey:SAVE_TenDeleteBlodRule];
             [defaults synchronize];
         }
         nameArr=[allDic allKeys];
@@ -120,44 +121,10 @@
     
     NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
     [defaults setObject:data forKey:SAVE_TenListBlodRule];
+    [defaults setObject:data forKey:SAVE_TenDeleteBlodRule];
     [defaults synchronize];
-//    NSMutableDictionary*dic=[[NSMutableDictionary alloc]initWithDictionary:[Utils sharedInstance].groupArray[selectedIndex]];
-//    NSString*str=dic[@"selected"];
-//    if ([str isEqualToString:@"YES"])
-//    {
-//        if (nameArr.count==1)
-//        {
-//            return;
-//        }
-//        [dic setObject:@"NO" forKey:@"selected"];
-//    }
-//    else
-//    {
-//        [dic setObject:@"YES" forKey:@"selected"];
-//    }
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        NSMutableArray*tempArr=[[NSMutableArray alloc]initWithArray:[Utils sharedInstance].groupArray];
-//        [tempArr replaceObjectAtIndex:selectedIndex withObject:dic];
-//        BOOL issuccess= [[Utils sharedInstance] saveData:nil saveArray:tempArr filePathStr:SAVE_Group_TXT];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (issuccess)
-//            {
-//                [Utils sharedInstance].groupArray=tempArr;
-//                [[Utils sharedInstance]getSelectedGroupArr];
-                [_tableview reloadData];
-//                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_RULE_TXT}];
-//            }
-//            else
-//            {
-//                [self.view makeToast:@"修改失败" duration:0.5f position:CSToastPositionCenter];
-//            }
-//        });
-//    });
-    
-    
-    
-    
-    
+    [_tableview reloadData];
+
 }
 
 

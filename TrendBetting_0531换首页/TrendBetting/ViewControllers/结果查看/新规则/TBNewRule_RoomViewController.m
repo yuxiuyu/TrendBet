@@ -138,14 +138,8 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
-    NSData*data=[defaults objectForKey:SAVE_TenListBlodRule];
-    if (!data) {
-        data=[defaults objectForKey:SAVE_TenBlodRule];
-    }
-    tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
   
-    [Utils sharedInstance].tenModel=tenM;
+    [[Utils sharedInstance] initSetTenModel];
     [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
 }
 

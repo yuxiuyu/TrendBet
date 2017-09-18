@@ -104,6 +104,7 @@
                  [tenM initWithDic:dic];
                 NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
                 [defaults setObject:data forKey:SAVE_TenListBlodRule];
+                [defaults setObject:data forKey:SAVE_TenDeleteBlodRule];
                 [defaults synchronize];
             }
         }

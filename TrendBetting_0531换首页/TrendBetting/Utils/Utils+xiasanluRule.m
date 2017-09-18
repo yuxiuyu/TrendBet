@@ -12,6 +12,7 @@
 -(NSArray*)getNewFristArray:(NSArray*)listArray
 
 {
+     [[Utils sharedInstance] initSetTenModel];
     int TSumCount=0;
     int RSumCount=0;
     int BSumCount=0;
@@ -138,7 +139,10 @@
         
         
     }
+    
     ///////判断猜对猜错的个数  和收益
+    NSArray*deleteArr=[self getDeleteBlodArray:listArray];
+    allGuessArray=[self compareDeleteSameArr:allGuessArray deleteArr:deleteArr];
     NSArray* resultArray;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad] intValue]==1)
     {
@@ -185,6 +189,155 @@
                      ];
     
     return array;
+}
+-(NSMutableArray*)compareDeleteSameArr:(NSMutableArray*)allGuessArray deleteArr:(NSArray*)deleteArr{
+    if (deleteArr&&deleteArr.count>0)
+    {
+        for (int i=0; i<allGuessArray.count; i++) {
+            NSString*str1=allGuessArray[i];
+            if ([str1 containsString:@"1"]&&[str1 isEqualToString:deleteArr[i]]) {
+                [allGuessArray replaceObjectAtIndex:i withObject:@""];
+            }
+        }
+    }
+    return allGuessArray;
+}
+-(NSArray*)getDeleteBlodArray:(NSArray*)listArray{
+    NSUserDefaults*def=[NSUserDefaults standardUserDefaults];
+    NSData*data=[def objectForKey:SAVE_TenDeleteBlodRule];
+    if (data) {
+       tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [Utils sharedInstance].tenModel=tenM;
+    
+    int TSumCount=0;
+    int RSumCount=0;
+    int BSumCount=0;
+    NSMutableArray*newListArray=[[NSMutableArray alloc]init];
+    
+    NSMutableArray*secondPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*thirdPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*forthPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*fivePartArray=[[NSMutableArray alloc]init];
+    //
+    
+    NSMutableArray*guessFristPartArray=[[NSMutableArray alloc]init];//文字
+    NSMutableArray*guessSecondPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*guessThirdPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*guessForthPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*guessFivePartArray=[[NSMutableArray alloc]init];
+    
+    NSMutableArray*arrGuessSecondPartArray=[[NSMutableArray alloc]init];
+    NSMutableArray*allGuessArray=[[NSMutableArray alloc]init];
+    
+    
+    for (int i=0; i<listArray.count; i++)
+    {
+        NSString*resultStr=[NSString stringWithFormat:@"%@",listArray[i]];
+        if ([resultStr intValue]==12||[resultStr isEqualToString:@"T"])//和
+        {
+            resultStr=@"T";
+            TSumCount++;
+        }
+        else
+        {
+            if ([resultStr intValue]==10||[resultStr isEqualToString:@"R"])
+            {//庄
+                resultStr=@"R";
+                RSumCount++;
+            }
+            else if ([resultStr intValue]==11||[resultStr isEqualToString:@"B"])
+            {//闲
+                resultStr=@"B";
+                BSumCount++;
+            }
+            
+            ////////////////////
+            if(secondPartArray.count>0)
+            {
+                
+                NSMutableArray*tempArray=[[NSMutableArray alloc]initWithArray:[secondPartArray lastObject]];
+                NSString*str=[NSString stringWithFormat:@"%@",[tempArray lastObject]];
+                if ([str isEqualToString:resultStr])
+                {
+                    [tempArray addObject:resultStr];
+                    [secondPartArray replaceObjectAtIndex:secondPartArray.count-1 withObject:tempArray];/////接着追加
+                }
+                else
+                {
+                    tempArray=[[NSMutableArray alloc]init];
+                    [tempArray addObject:resultStr];
+                    [secondPartArray addObject:tempArray];
+                }
+            }
+            else
+            {
+                NSMutableArray*tempArray=[[NSMutableArray alloc]init];
+                [tempArray addObject:resultStr];
+                [secondPartArray addObject:tempArray];
+            }
+            
+            /////
+            thirdPartArray=[self setNewData:secondPartArray startCount:1 dataArray:thirdPartArray];
+            forthPartArray=[self setNewData:secondPartArray startCount:2 dataArray:forthPartArray];
+            fivePartArray=[self  setNewData:secondPartArray startCount:3 dataArray:fivePartArray];
+            
+            ////////////猜的数据
+            
+            [arrGuessSecondPartArray addObject:[self seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
+            [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
+            [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:2]];
+            [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:3]];
+            
+            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
+            
+        }
+        
+        [newListArray addObject:resultStr];
+        [guessFristPartArray addObject:[[Utils sharedInstance] searchFirstRule:newListArray]];
+        
+        
+        
+        //
+        NSString*str=@"";
+        //yxy add 2017/07/17 新加把把下庄闲
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
+            str=@"R";
+            [allGuessArray addObject:str];
+        }
+        else if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
+            str=@"B";
+            [allGuessArray addObject:str];
+        }
+        //yxy add 2017/07/17
+        else
+        {
+            NSString*secGuessLastStr=[guessSecondPartArray lastObject];
+            if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[self.tenModel.tRule isEqualToString:@"YES"]){
+                [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
+            }
+            else{
+                secGuessLastStr=[guessSecondPartArray lastObject];
+                if (secGuessLastStr.length>0)
+                {
+                    NSString*guessStr2=[[guessThirdPartArray lastObject] lastObject];
+                    NSString*guessStr3=[[guessForthPartArray lastObject] lastObject];
+                    NSString*guessStr4=[[guessFivePartArray lastObject] lastObject];
+                    
+                    NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                    if ([self.tenModel.wordRule isEqualToString:@"NO"]) {
+                        [guessArr removeObjectAtIndex:0];
+                    }
+                    str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+                }
+            }
+            [allGuessArray addObject:str];
+        }
+        
+        
+    }
+         return allGuessArray;
+    }
+    return @[];
 }
 
 #pragma mark------搜索（ 三 四 五）区域  个数 区域的趋势

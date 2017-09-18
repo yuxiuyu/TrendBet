@@ -107,4 +107,14 @@
     }
 
 }
+///获取当前选中的十个规则组
+-(void)initSetTenModel{
+    NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
+    NSData*data=[defaults objectForKey:SAVE_TenListBlodRule];
+    if (!data) {
+        data=[defaults objectForKey:SAVE_TenBlodRule];
+    }
+    tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    _tenModel=tenM;
+}
 @end
