@@ -22,7 +22,8 @@
     self.title=@"结果查看";
     self.navigationController.navigationBarHidden=NO;
     _tableview.tableFooterView=[[UIView alloc]init];
-    dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果",@"读取新规则结果"];
+    dataArray=@[@"读取新规则结果"];
+//    dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果",@"读取新规则结果"];
 //     dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果"];
     // Do any additional setup after loading the view.
 }
@@ -49,24 +50,24 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0)
-    {
-        [self performSegueWithIdentifier:@"showRoomDetailVC" sender:nil];
-    }
-    else if(indexPath.row==1)
-    {
-        [self getDataRead];
-         [self performSegueWithIdentifier:@"showresultRoomVC" sender:@{@"selectedTitle":@"我保存的数据"}];
-    }
-    else if(indexPath.row==2)
-    {
-         [self performSegueWithIdentifier:@"show_groupRoomVC" sender:nil];
-        
-    }
-    else{
+//    if (indexPath.row==0)
+//    {
+//        [self performSegueWithIdentifier:@"showRoomDetailVC" sender:nil];
+//    }
+//    else if(indexPath.row==1)
+//    {
+//        [self getDataRead];
+//         [self performSegueWithIdentifier:@"showresultRoomVC" sender:@{@"selectedTitle":@"我保存的数据"}];
+//    }
+//    else if(indexPath.row==2)
+//    {
+//         [self performSegueWithIdentifier:@"show_groupRoomVC" sender:nil];
+//        
+//    }
+//    else{
          [self performSegueWithIdentifier:@"show_newResultRoomVC" sender:nil];
     
-    }
+//    }
 }
 
 - (void)didReceiveMemoryWarning {

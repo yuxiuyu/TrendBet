@@ -234,6 +234,9 @@
     }
     NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
     [defaults setObject:data forKey:SAVE_TenBlodRule];
+    if (![defaults objectForKey:SAVE_TenListBlodRule]&&[defaults objectForKey:SAVE_TenDeleteBlodRule]) {
+        [defaults removeObjectForKey:SAVE_TenDeleteBlodRule];
+    }
     [defaults synchronize];
 
 }
