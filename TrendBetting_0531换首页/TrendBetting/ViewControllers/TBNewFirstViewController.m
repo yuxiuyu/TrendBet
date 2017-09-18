@@ -434,13 +434,13 @@
             sumCount++;
         }
         NSString*str=@"";
-        NSString*secGuessLastStr=guessSecondPartArray[i-sumCount];
+        NSString*secGuessLastStr=guessSecondPartArray.count>0?guessSecondPartArray[i-sumCount]:@"";
         if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[tenM.tRule isEqualToString:@"YES"]){
             [guessSecondPartArray replaceObjectAtIndex:i-sumCount withObject:@"stop"];
         }
         else
         {
-            secGuessLastStr=guessSecondPartArray[i-sumCount];
+            secGuessLastStr=guessSecondPartArray.count>0?guessSecondPartArray[i-sumCount]:@"";
             if (secGuessLastStr.length>0)
             {
                 NSString*firstStr=[guessFirstPartArray[i] lastObject];
