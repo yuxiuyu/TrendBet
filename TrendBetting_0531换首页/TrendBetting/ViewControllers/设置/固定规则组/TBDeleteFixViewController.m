@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"要去掉的规则组";
+     self.navigationController.navigationBarHidden=NO;
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
     _tableview.tableFooterView=[[UIView alloc]init];

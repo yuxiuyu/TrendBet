@@ -96,7 +96,9 @@
         [allDic removeObjectForKey:nameArr[indexPath.row]];
         if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]]) {
             [defaults removeObjectForKey:SAVE_TenListBlodRule];
-            [defaults removeObjectForKey:SAVE_TenDeleteBlodRule];
+            if ([defaults objectForKey:SAVE_TenDeleteBlodRule]) {
+                [defaults removeObjectForKey:SAVE_TenDeleteBlodRule];
+            }
             [defaults synchronize];
         }
         nameArr=[allDic allKeys];
@@ -121,7 +123,10 @@
     
     NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
     [defaults setObject:data forKey:SAVE_TenListBlodRule];
-    [defaults setObject:data forKey:SAVE_TenDeleteBlodRule];
+    
+    if ([defaults objectForKey:SAVE_TenDeleteBlodRule]) {
+        [defaults setObject:data forKey:SAVE_TenDeleteBlodRule];
+    }
     [defaults synchronize];
     [_tableview reloadData];
 
