@@ -62,7 +62,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -815,23 +815,16 @@
     [Utils sharedInstance].tenModel=tenM;
 
     NSDictionary*dic=userInfo.userInfo;
-    if ([dic[@"title"] isEqualToString:SAVE_isbigRoad])
+   
+    if ([dic[@"title"] isEqualToString:SAVE_isOnlyRBSelect])// SAVE_isOnlyRBSelect、SAVE_isbigRoad
     {
         [self setMoneyValue:NO];
     }
-    if ([dic[@"title"] isEqualToString:SAVE_isOnlyRBSelect])
-    {
-        [self setMoneyValue:NO];
-    }
-    else if([dic[@"title"] isEqualToString:SAVE_oneNORule])
+    else if([dic[@"title"] isEqualToString:SAVE_oneNORule])//SAVE_oneNORule、SAVE_GoXiaoCount
     {
         [self guessArrayinitAdd];
     }
-    else if([dic[@"title"] isEqualToString:SAVE_GoXiaoCount])
-    {
-        [self guessArrayinitAdd];
-    }
-    if ([dic[@"title"] isEqualToString:SAVE_wordRule])
+    if ([dic[@"title"] isEqualToString:SAVE_wordRule])//SAVE_wordRule、SAVE_REVERSESELECT
     {
         [self changeArea:0];
     }

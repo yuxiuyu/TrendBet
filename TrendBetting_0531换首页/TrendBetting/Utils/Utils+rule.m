@@ -648,7 +648,7 @@
 -(NSString*)getReverseStr:(NSString*)resultStr
 {
     ////反向
-    NSString*reverseStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT];
+    NSString*reverseStr=[Utils sharedInstance].tenModel.reverseRule;
     if ([reverseStr isEqualToString:@"YES"]&&resultStr.length>0)
     {
         resultStr=[resultStr isEqualToString:@"R"]?@"B":@"R";

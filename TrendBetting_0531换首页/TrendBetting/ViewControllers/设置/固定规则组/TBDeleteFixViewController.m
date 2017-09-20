@@ -48,25 +48,25 @@
 -(void)getAllData{
      NSData*data1=[defaults objectForKey:SAVE_TenDeleteBlodRule];
     dataArray=@[@"无",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
-    ansArr=[[NSMutableArray alloc] initWithArray:@[@"NO",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES"]];
+    ansArr=[[NSMutableArray alloc] initWithArray:@[@"NO",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
     NSData*data2=[defaults objectForKey:SAVE_TenListBlodRule];
     if (!data2) {
         data2=[defaults objectForKey:SAVE_TenBlodRule];
     }
     tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data2];
-    fixansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule]];
+    fixansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
     if (!data1) {
         ansArr=[NSMutableArray arrayWithArray:fixansArr];
     } else {
         tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data1];
-        ansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule]];
+        ansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
     }
     [_tableview reloadData];
 
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return ansArr.count;
+    return dataArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -117,6 +117,7 @@
 
 -(void)saveBtnAction
 {
+    
     if ([ansArr[0] isEqualToString:@"NO"]) {
         tenRuleModel*tenM=[[tenRuleModel alloc] init];
         [ansArr removeObjectAtIndex:0];

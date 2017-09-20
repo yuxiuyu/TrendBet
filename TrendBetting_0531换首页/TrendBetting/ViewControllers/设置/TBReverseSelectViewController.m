@@ -26,10 +26,10 @@
 
      dataArray=@[@"正向",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
-    if (!_isback)
-    {
-        _resultStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT];
-    }
+//    if (!_isback)
+//    {
+//        _resultStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT];
+//    }
     
     
     // Do any additional setup after loading the view.
@@ -37,20 +37,20 @@
 
 -(void)saveBtnAction
 {
-    if (_isback)
-    {
+//    if (_isback)
+//    {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedGroupRule" object:self userInfo:@{@"indexp":@"2",@"reverseSelect":_resultStr}];
        
-    }
-    else
-    {
-       
-        if (![_resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT]])
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:_resultStr forKey:SAVE_REVERSESELECT];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_REVERSESELECT}];
-        }
-    }
+//    }
+//    else
+//    {
+//       
+//        if (![_resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_REVERSESELECT]])
+//        {
+//            [[NSUserDefaults standardUserDefaults] setObject:_resultStr forKey:SAVE_REVERSESELECT];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_REVERSESELECT}];
+//        }
+//    }
   
     [self.navigationController popViewControllerAnimated:YES];
     

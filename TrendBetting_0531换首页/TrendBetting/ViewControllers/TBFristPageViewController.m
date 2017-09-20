@@ -704,10 +704,10 @@
     {
         [self guessArrayinitAdd];
     }
-    else if([dic[@"title"] isEqualToString:SAVE_REVERSESELECT])
-    {
-         [self changeArea:0];
-    }
+//    else if([dic[@"title"] isEqualToString:SAVE_REVERSESELECT])
+//    {
+//         [self changeArea:0];
+//    }
    
 }
 -(void)guessArrayinitAdd

@@ -39,7 +39,7 @@
         if (![resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isbigRoad]])
         {
             [[NSUserDefaults standardUserDefaults] setObject:resultStr forKey:SAVE_isbigRoad];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_isbigRoad}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_isOnlyRBSelect}];
         }
     
     

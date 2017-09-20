@@ -37,6 +37,16 @@
             _nameLab.text=@"小二路个数";
             _sumTextField.placeholder=@"不可小于2";
             break;
+        case 4:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordGoCount];
+            _nameLab.text=@"文字长连个数";
+            _sumTextField.placeholder=@"不可小于3";
+            break;
+        case 5:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordGotwoCount];
+            _nameLab.text=@"文字长跳个数";
+            _sumTextField.placeholder=@"不可小于3";
+            break;
             
         default:
             break;
@@ -110,6 +120,34 @@
                 [udefault synchronize];
             }
             break;
+        case 4://文字长连
+            if([_sumTextField.text intValue]<3)
+            {
+                [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
+                return;
+                
+            }
+            else
+            {
+                ispostNotification=YES;
+                [udefault setObject:_sumTextField.text forKey:SAVE_wordGoCount];
+                [udefault synchronize];
+            }
+            break;
+        case 5: //文字长跳
+            if([_sumTextField.text intValue]<3)
+            {
+                [self.view makeToast:@"最小个数必须大于等于3" duration:0.5f position:CSToastPositionCenter];
+                return;
+                
+            }
+            else
+            {
+                ispostNotification=YES;
+                [udefault setObject:_sumTextField.text forKey:SAVE_wordGotwoCount];
+                [udefault synchronize];
+            }
+            break;
             
         default:
             break;
@@ -117,7 +155,7 @@
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     if (ispostNotification) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_GoXiaoCount}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_oneNORule}];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -18,6 +18,7 @@
 #define SameRule @"sameRule"
 #define WordRule @"wordRule"
 #define TRule @"TRule"
+#define ResverseRule @"resverseRule"
 
 @implementation tenRuleModel
 -(void)initWithYes{
@@ -32,6 +33,7 @@
     _sameRule  = @"YES";
     _wordRule  = @"YES";
     _tRule  = @"YES";
+    _reverseRule =@"NO";
 }
 -(void)initWithDic:(NSDictionary*)dic{
     NSArray*arr=dic[@"listTen"];
@@ -45,6 +47,7 @@
     _sameRule  = arr[7];
     _wordRule  = arr[8];
     _tRule  = arr[9];
+    _reverseRule =arr[10];
     
     
 }
@@ -61,6 +64,7 @@
     [aCoder encodeObject:self.sameRule forKey:SameRule];
     [aCoder encodeObject:self.wordRule forKey:WordRule];
     [aCoder encodeObject:self.tRule forKey:TRule];
+    [aCoder encodeObject:self.reverseRule forKey:ResverseRule];
 }
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -76,6 +80,7 @@
         self.sameRule = [aDecoder decodeObjectForKey:SameRule];
         self.wordRule = [aDecoder decodeObjectForKey:WordRule];
         self.tRule = [aDecoder decodeObjectForKey:TRule];
+        self.reverseRule = [aDecoder decodeObjectForKey:ResverseRule];
     }
     
     return self;

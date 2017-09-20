@@ -26,7 +26,7 @@
     defaults=[NSUserDefaults standardUserDefaults];
     self.navigationController.navigationBarHidden=NO;
 //    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
-     dataArray=@[@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
+     dataArray=@[@"资金策略",@"下注提示选择",@"洗码基数",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"文字长连个数设置",@"文字长跳个数设置",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenBlodRule]];
     
@@ -54,7 +54,7 @@
 //    static NSString*cellIndentier=@"switchTableViewCell";
     TBSwitchTableViewCell*cell=[TBSwitchTableViewCell loadSwitchTableViewCell:tableView];
     cell.delegate=self;
-    if (indexPath.row<=9)
+    if (indexPath.row<=10)
     {
         cell.mySwitch.hidden=YES;
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -64,35 +64,38 @@
         cell.mySwitch.hidden=NO;
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         switch (indexPath.row) {
-            case 10:
+            case 11:
                 cell.mySwitch.on=[tenM.gotwoLu isEqualToString:@"YES"];
                 break;
-            case 11:
+            case 12:
                 cell.mySwitch.on=[tenM.goLu isEqualToString:@"YES"];
                 break;
-            case 12:
+            case 13:
                 cell.mySwitch.on=[tenM.goXiaoLu isEqualToString:@"YES"];
                 break;
-            case 13:
+            case 14:
                 cell.mySwitch.on=[tenM.oneNORule isEqualToString:@"YES"];
                 break;
-            case 14:
+            case 15:
                 cell.mySwitch.on=[tenM.noRuleOne isEqualToString:@"YES"];
                 break;
-            case 15:
+            case 16:
                 cell.mySwitch.on=[tenM.oneRule isEqualToString:@"YES"];
                 break;
-            case 16:
+            case 17:
                 cell.mySwitch.on=[tenM.ruleOne isEqualToString:@"YES"];
                 break;
-            case 17:
+            case 18:
                 cell.mySwitch.on=[tenM.sameRule isEqualToString:@"YES"];
                 break;
-            case 18:
+            case 19:
                 cell.mySwitch.on=[tenM.wordRule isEqualToString:@"YES"];
                 break;
-            case 19:
+            case 20:
                 cell.mySwitch.on=[tenM.tRule isEqualToString:@"YES"];
+                break;
+            case 21:
+                cell.mySwitch.on=[tenM.reverseRule isEqualToString:@"YES"];
                 break;
                 
             default:
@@ -106,7 +109,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row<=9)
+    if (indexPath.row<=10)
     {
         NSString*str=@"show_setting_areaVC";
         NSDictionary*dic=nil;
@@ -118,40 +121,49 @@
             case 1:
                 str=@"show_setting_rbVC";
                 break;
+//            case 2:
+//                str=@"show_setting_reverseVC";
+//                break;
             case 2:
-                str=@"show_setting_reverseVC";
-                break;
-            case 3:
                 dic=@{@"tagStr":@"0"};
                 str=@"show_setting_backMoneyVC";
                 break;
 //            case 5:
 //                str=@"show_setting_groupVC";
 //                break;
-            case 4:
+            case 3:
                 str=@"show_setting_fixgroupVC";
                 break;
-            case 5:
+            case 4:
                 str=@"show_setting_deleteFixVC";
                 break;
-            case 6:
+            case 5:
                 dic=@{@"tagStr":@"1"};
                 str=@"show_setting_backMoneyVC";
                 break;
-            case 7:
+            case 6:
                 dic=@{@"tagStr":@"2"};
                 str=@"show_setting_backMoneyVC";
                 break;
-            case 8:
+            case 7:
                 dic=@{@"tagStr":@"3"};
+                str=@"show_setting_backMoneyVC";
+                break;
+            case 8:
+                dic=@{@"tagStr":@"4"};
+                str=@"show_setting_backMoneyVC";
+                break;
+            case 9:
+                dic=@{@"tagStr":@"5"};
                 str=@"show_setting_backMoneyVC";
                 break;
 //            case 9:
 //                str=@"show_setting_bigRoadVC";
 //                break;
-            case 9:
+            case 10:
                 str=@"show_setting_onlyRBSelectVC";
                 break;
+                
             default:
                 break;
         }
@@ -168,63 +180,69 @@
 -(void)switchClick:(NSString*)indexStr{
   
     switch ([indexStr intValue]) {
-        case 10:
+        case 11:
         {
            tenM.gotwoLu=[tenM.gotwoLu isEqualToString:@"YES"]?@"NO":@"YES";
            ispostNotification=YES;
         }
             break;
-        case 11:
+        case 12:
         {
             tenM.goLu=[tenM.goLu isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case 12:
+        case 13:
         {
             tenM.goXiaoLu=[tenM.goXiaoLu isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case 13:
+        case 14:
         {
              tenM.oneNORule=[tenM.oneNORule isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case 14:
+        case 15:
         {
              tenM.noRuleOne=[tenM.noRuleOne isEqualToString:@"YES"]?@"NO":@"YES";
               ispostNotification=YES;
         }
             break;
-        case 15:
+        case 16:
         {
               tenM.oneRule=[tenM.oneRule isEqualToString:@"YES"]?@"NO":@"YES";
               ispostNotification=YES;
         }
             break;
-        case 16:
+        case 17:
         {
             tenM.ruleOne=[tenM.ruleOne isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case 17:
+        case 18:
         {
              tenM.sameRule=[tenM.sameRule isEqualToString:@"YES"]?@"NO":@"YES";
               ispostNotification=YES;
         }
             break;
-        case 18:
+        case 19:
         {
              tenM.wordRule=[tenM.wordRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;
         }
             break;
-        case 19:
+        case 20:
         {
              tenM.tRule=[tenM.tRule isEqualToString:@"YES"]?@"NO":@"YES";
+            iswordpostNotification=YES;
+        }
+            break;
+        case 21:
+        {
+            tenM.reverseRule=[tenM.reverseRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;
         }
             break;

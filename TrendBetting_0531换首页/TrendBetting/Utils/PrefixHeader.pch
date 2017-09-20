@@ -39,7 +39,7 @@
 #define SAVE_PASSWORD @"myKeyPassword"//秘钥
 #define SAVE_AREASELECT @"areaSelected"//区域选择
 #define SAVE_RBSELECT @"rbSelected"//庄闲选择
-#define SAVE_REVERSESELECT @"reverseSelected"//正反选择
+//#define SAVE_REVERSESELECT @"reverseSelected"//正反选择
 #define SAVE_BackMoney @"backMoney"//返利基数
 #define SAVE_isGroupRule @"isGroupData"//是否是新的规则
 
@@ -47,6 +47,10 @@
 #define SAVE_GotwoCount @"gotwoCount"  //长跳
 #define SAVE_GoCount @"goCount"  //长连
 #define SAVE_GoXiaoCount @"goXiaoCount"  //小二路
+
+#define SAVE_wordGoCount @"goCount"  //文字长连
+#define SAVE_wordGotwoCount @"gotwoCount"  //文字长跳
+
 #define SAVE_isbigRoad @"isbigRoad"//是否是看所有0 只看大路1
 #define SAVE_isOnlyRBSelect @"isOnlyRBSelect"//0关闭 1把把庄  2把把闲
 

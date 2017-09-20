@@ -24,7 +24,7 @@
     UIBarButtonItem*leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
     self.navigationItem.leftBarButtonItem=leftItem;
     
-    dataArray=@[@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
+    dataArray=@[@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
     
 
@@ -37,7 +37,7 @@
     }
     else
     {
-         ansArr=[[NSMutableArray alloc] initWithArray:@[@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES"]];
+         ansArr=[[NSMutableArray alloc] initWithArray:@[@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
     }
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rulePassBack:) name:@"selectedGroupRule" object:nil];
     _tableview.tableFooterView=[[UIView alloc]init];

@@ -38,10 +38,10 @@
         [defaults setObject:@"RB" forKey:SAVE_RBSELECT];
     }
     ////正向反向
-    if (![defaults objectForKey:SAVE_REVERSESELECT])
-    {
-        [defaults setObject:@"NO" forKey:SAVE_REVERSESELECT];
-    }
+//    if (![defaults objectForKey:SAVE_REVERSESELECT])
+//    {
+//        [defaults setObject:@"NO" forKey:SAVE_REVERSESELECT];
+//    }
     ////返利基数
     if (![defaults objectForKey:SAVE_BackMoney])
     {
@@ -62,6 +62,17 @@
     {
         [defaults setObject:@"2" forKey:SAVE_GoXiaoCount];
     }
+    /////文字长跳
+    if (![defaults objectForKey:SAVE_wordGotwoCount])
+    {
+        [defaults setObject:@"3" forKey:SAVE_GotwoCount];
+    }
+    /////文字长连
+    if (![defaults objectForKey:SAVE_wordGoCount])
+    {
+        [defaults setObject:@"3" forKey:SAVE_GoCount];
+    }
+
     ////只看大路
     if (![defaults objectForKey:SAVE_isbigRoad])
     {

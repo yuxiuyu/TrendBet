@@ -715,10 +715,14 @@
                 }
             }
             guessStr=@"";
-            if (goCount>=3)
+            if (isGO&&goCount>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordGoCount] intValue]) {
+                guessStr=secLastStr;
+                nameStr=[NSString stringWithFormat:@"%@%ld",@"长连",goCount];
+            }
+            else if (!isGO&&goCount>=[[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_wordGotwoCount] intValue])
             {
                 guessStr=secLastStr;
-                nameStr=[NSString stringWithFormat:@"%@%ld",isGO?@"长连":@"长跳",goCount];
+                nameStr=[NSString stringWithFormat:@"%@%ld",@"长跳",goCount];
             }
             
         }
