@@ -71,6 +71,7 @@
 
 //#define back_Money 0.005  //返利
 
+#define SAVE_oneList @"oneList"  ///设置中可关闭／开启 大路规则一列还是两列
 #define SAVE_trueOneNORule @"trueOneNORule"
 #define SAVE_trueOneRule @"trueOneRule"
 #define xiasanroad_notifation @"xiasanRoadNotifation"

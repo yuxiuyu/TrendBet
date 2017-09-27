@@ -143,6 +143,11 @@
 //    {
 //        [defaults setObject:@"YES" forKey:SAVE_TRule];
 //    }
+    ////设置中可关闭／开启 大路规则一列还是两列
+    if (![defaults objectForKey:SAVE_oneList])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_oneList];
+    }
     ////设置中可关闭／开启正确的一带规则
     if (![defaults objectForKey:SAVE_trueOneRule])
     {
