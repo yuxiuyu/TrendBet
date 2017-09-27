@@ -65,12 +65,12 @@
     /////文字长跳
     if (![defaults objectForKey:SAVE_wordGotwoCount])
     {
-        [defaults setObject:@"3" forKey:SAVE_GotwoCount];
+        [defaults setObject:@"3" forKey:SAVE_wordGotwoCount];
     }
     /////文字长连
     if (![defaults objectForKey:SAVE_wordGoCount])
     {
-        [defaults setObject:@"3" forKey:SAVE_GoCount];
+        [defaults setObject:@"3" forKey:SAVE_wordGoCount];
     }
 
     ////只看大路

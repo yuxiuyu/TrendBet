@@ -48,8 +48,8 @@
 #define SAVE_GoCount @"goCount"  //长连
 #define SAVE_GoXiaoCount @"goXiaoCount"  //小二路
 
-#define SAVE_wordGoCount @"goCount"  //文字长连
-#define SAVE_wordGotwoCount @"gotwoCount"  //文字长跳
+#define SAVE_wordGoCount @"wordGoCount"  //文字长连
+#define SAVE_wordGotwoCount @"wordGotwoCount"  //文字长跳
 
 #define SAVE_isbigRoad @"isbigRoad"//是否是看所有0 只看大路1
 #define SAVE_isOnlyRBSelect @"isOnlyRBSelect"//0关闭 1把把庄  2把把闲
