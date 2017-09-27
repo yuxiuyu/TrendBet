@@ -406,7 +406,7 @@
                 //yxy add
                 NSInteger a=[[nameStr substringFromIndex:4] intValue]+1;
                 NSInteger b=[fristPartArray[allcount-1] count]+[fristPartArray[allcount-2] count]+[fristPartArray[allcount-3] count]+[fristPartArray[allcount-4] count];
-                if (a>b) {
+                if (a>=b) {
                     ///yxy add
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                     NSArray*lastThirdArray=fristPartArray[allcount-3];
@@ -544,7 +544,12 @@
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
-                guessStr=[fristPartArray[allCount] lastObject];
+                if ([[defaults objectForKey:SAVE_trueOneRule] isEqualToString:@"YES"]) {
+                    guessStr=[fristPartArray[allCount-1] lastObject];
+                } else {
+                     guessStr=[fristPartArray[allCount] lastObject];
+                }
+                
                 nameStr=[NSString stringWithFormat:@"%@%ld",nameStr,a];
                 return @[nameStr,guessStr];
             }
@@ -570,7 +575,11 @@
         {
             if ([self.tenModel.oneNORule isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
-                guessStr=[fristPartArray[allCount] lastObject];
+                if ([[defaults objectForKey:SAVE_trueOneNORule] isEqualToString:@"YES"]) {
+                   guessStr=[fristPartArray[allCount-1] lastObject];
+                } else {
+                    guessStr=[fristPartArray[allCount] lastObject];
+                }
                 a=a+1;
             }
         }

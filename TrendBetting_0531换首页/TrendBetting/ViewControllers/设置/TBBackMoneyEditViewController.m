@@ -155,7 +155,7 @@
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     if (ispostNotification) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_oneNORule}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":xiasanroad_notifation}];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

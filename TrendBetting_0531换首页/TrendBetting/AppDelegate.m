@@ -143,6 +143,16 @@
 //    {
 //        [defaults setObject:@"YES" forKey:SAVE_TRule];
 //    }
+    ////设置中可关闭／开启正确的一带规则
+    if (![defaults objectForKey:SAVE_trueOneRule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_trueOneRule];
+    }
+    ////设置中可关闭／开启正确的一带不规则
+    if (![defaults objectForKey:SAVE_trueOneNORule])
+    {
+        [defaults setObject:@"YES" forKey:SAVE_trueOneNORule];
+    }
     ////
     [self initKeyBoard];
 
