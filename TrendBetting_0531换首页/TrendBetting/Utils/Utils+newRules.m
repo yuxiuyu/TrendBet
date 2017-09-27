@@ -112,29 +112,31 @@
         return @[];
     }
     //去掉长跳 和单列的
-    NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
-    if(tArr.count==allcount||tArr.count==1){
-        return @[];
-    }
-    /// 两列的修改
-    NSMutableArray*cutArr=[[NSMutableArray alloc]initWithArray:tempResultArr];
-    NSArray*cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
-    int thd0=[cArr[0] intValue];
-    int thd1=[cArr[1] intValue];
-    while ([partArray[thd0] count]==1&&[partArray[thd1] count]==1) {
-        for (int k=0; k<cutArr.count; k++)
-        {
-            NSString*res=cutArr[k];
-            NSArray*aArr=[res componentsSeparatedByString:@"|"];
-            res=[res substringFromIndex:[aArr[0] length]+1];
-            [cutArr replaceObjectAtIndex:k withObject:res];
-        }
-        cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
-         thd0=[cArr[0] intValue];
-         thd1=[cArr[1] intValue];
-    }
-    
-    return  [self findLou:cArr.count resultArr:stainArr partArray:partArray];
+//    NSArray*tArr=[[tempResultArr lastObject] componentsSeparatedByString:@"|"];
+//    if(tArr.count==allcount||tArr.count==1){
+//        return @[];
+//    }
+//    
+//    /// 两列的修改  只能是两列 其中一列大于1
+//    NSMutableArray*cutArr=[[NSMutableArray alloc]initWithArray:tempResultArr];
+//    NSArray*cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
+//    int thd0=[cArr[0] intValue];
+//    int thd1=[cArr[1] intValue];
+//    while ([partArray[thd0] count]==1&&[partArray[thd1] count]==1) {
+//        for (int k=0; k<cutArr.count; k++)
+//        {
+//            NSString*res=cutArr[k];
+//            NSArray*aArr=[res componentsSeparatedByString:@"|"];
+//            res=[res substringFromIndex:[aArr[0] length]+1];
+//            [cutArr replaceObjectAtIndex:k withObject:res];
+//        }
+//        cArr=[[cutArr lastObject] componentsSeparatedByString:@"|"];
+//         thd0=[cArr[0] intValue];
+//         thd1=[cArr[1] intValue];
+//    }
+//    
+//    return  [self findLou:cArr.count resultArr:stainArr partArray:partArray];
+    return tempResultArr;
     
    ////
     
