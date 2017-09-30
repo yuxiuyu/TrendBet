@@ -138,7 +138,7 @@
                 }
             }
             NSArray*monKey=[key componentsSeparatedByString:@"-"];
-            [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%d",monKey[1],k]];
+            [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%d",monKey[1],k+1]];
             [totalDayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
         }
         [dateDic setObject:monthSumWinCountArray forKey:key];
