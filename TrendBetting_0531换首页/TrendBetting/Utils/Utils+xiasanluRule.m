@@ -406,7 +406,7 @@
                 //yxy add
                 NSInteger a=[[nameStr substringFromIndex:4] intValue]+1;
                 NSInteger b=[fristPartArray[allcount-1] count]+[fristPartArray[allcount-2] count]+[fristPartArray[allcount-3] count]+[fristPartArray[allcount-4] count];
-                if (a>=b) {
+                if (a>b) {
                     ///yxy add
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                     NSArray*lastThirdArray=fristPartArray[allcount-3];

@@ -244,7 +244,7 @@
               ispostNotification=YES;
         }
             break;
-        case 29:
+        case 19:
         {
             tenM.ruleOne=[tenM.ruleOne isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;

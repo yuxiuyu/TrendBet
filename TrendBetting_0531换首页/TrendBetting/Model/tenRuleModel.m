@@ -13,7 +13,7 @@
 #define GoXiaoLu @"goXiaoLu"
 #define OneNORule @"oneNORule"
 #define NoRuleOne @"noRuleOne"
-#define OneRule  @"oneRule "
+#define OneRule  @"oneRule"
 #define RuleOne @"ruleOne"
 #define SameRule @"sameRule"
 #define WordRule @"wordRule"
@@ -59,7 +59,7 @@
     [aCoder encodeObject:self.goXiaoLu forKey:GoXiaoLu];
     [aCoder encodeObject:self.oneNORule forKey:OneNORule];
     [aCoder encodeObject:self.noRuleOne forKey:NoRuleOne];
-    [aCoder encodeObject:self.oneRule  forKey:OneRule ];
+    [aCoder encodeObject:self.oneRule  forKey:OneRule];
     [aCoder encodeObject:self.ruleOne forKey:RuleOne];
     [aCoder encodeObject:self.sameRule forKey:SameRule];
     [aCoder encodeObject:self.wordRule forKey:WordRule];
