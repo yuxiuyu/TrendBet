@@ -46,21 +46,31 @@
     // Do any additional setup after loading the view.
 }
 -(void)getAllData{
-     NSData*data1=[defaults objectForKey:SAVE_TenDeleteBlodRule];
-    dataArray=@[@"无",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
-    ansArr=[[NSMutableArray alloc] initWithArray:@[@"NO",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
+    
+    dataArray=@[@"无",@"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
+    ansArr=[[NSMutableArray alloc] initWithArray:@[@"NO",@"YES",@"YES",@"YES",@"YES",@"NO",@"YES",@"NO",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
     NSData*data2=[defaults objectForKey:SAVE_TenListBlodRule];
     if (!data2) {
         data2=[defaults objectForKey:SAVE_TenBlodRule];
     }
     tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data2];
-    fixansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
-    if (!data1) {
-        ansArr=[NSMutableArray arrayWithArray:fixansArr];
-    } else {
-        tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data1];
-        ansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneNORule,tenM.noRuleOne,tenM.oneRule,tenM.ruleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
+    fixansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,@"NO",@"NO",@"NO",@"NO",tenM.ruleOne,tenM.noRuleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
+    
+    if ([tenM.oneRule isEqualToString:@"YES"]||[tenM.trueOneRule isEqualToString:@"YES"]) {
+        [fixansArr replaceObjectAtIndex:4 withObject:@"YES"];
+        [fixansArr replaceObjectAtIndex:5 withObject:@"YES"];
     }
+    
+    if ([tenM.oneNORule isEqualToString:@"YES"]||[tenM.trueOneNORule isEqualToString:@"YES"]) {
+        [fixansArr replaceObjectAtIndex:6 withObject:@"YES"];
+        [fixansArr replaceObjectAtIndex:7 withObject:@"YES"];
+    }
+    //
+    NSData*data1=[defaults objectForKey:SAVE_TenDeleteBlodRule];
+    if (data1) {
+        tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data1];
+    }
+    ansArr=[NSMutableArray arrayWithArray:@[@"NO",tenM.gotwoLu,tenM.goLu,tenM.goXiaoLu,tenM.oneRule,tenM.trueOneRule,tenM.oneNORule,tenM.trueOneNORule,tenM.ruleOne,tenM.noRuleOne,tenM.sameRule,tenM.wordRule,tenM.tRule,tenM.reverseRule]];
     [_tableview reloadData];
 
 }
@@ -100,8 +110,39 @@
 
 #pragma mark--switchOnOrOffProtocol
 -(void)switchClick:(NSString*)indexStr{
-    
+    switch ([indexStr intValue]) {
+        case 4:
+            if ([ansArr[5] isEqualToString:@"YES"]&&[ansArr[4] isEqualToString:@"NO"]) {
+                [ansArr replaceObjectAtIndex:5 withObject:@"NO"];
+            }
+
+            break;
+        case 5:
+            if ([ansArr[5] isEqualToString:@"NO"]&&[ansArr[4] isEqualToString:@"YES"]) {
+                [ansArr replaceObjectAtIndex:4 withObject:@"NO"];
+            }
+            
+            break;
+        case 6:
+            if ([ansArr[7] isEqualToString:@"YES"]&&[ansArr[6] isEqualToString:@"NO"]) {
+                [ansArr replaceObjectAtIndex:7 withObject:@"NO"];
+            }
+            
+            break;
+        case 7:
+            if ([ansArr[7] isEqualToString:@"NO"]&&[ansArr[6] isEqualToString:@"YES"]) {
+                [ansArr replaceObjectAtIndex:6 withObject:@"NO"];
+            }
+            
+            break;
+            
+        default:
+            break;
+    }
     [ansArr replaceObjectAtIndex:[indexStr intValue] withObject:[ansArr[[indexStr intValue]] isEqualToString:@"YES"]?@"NO":@"YES"];
+    [_tableview reloadData];
+    
+    
 }
 #pragma mark--TBSelectTableViewCellDelegate
 -(void)backSelected:(NSInteger)selectedIndex

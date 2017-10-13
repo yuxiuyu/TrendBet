@@ -12,7 +12,7 @@
 {
     NSArray*dataArray;
     NSMutableArray*ansArr;
-    NSMutableDictionary*allDic;
+    NSMutableArray*allArr;
 }
 @end
 
@@ -24,20 +24,21 @@
     UIBarButtonItem*leftItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backBtnAction)];
     self.navigationItem.leftBarButtonItem=leftItem;
     
-    dataArray=@[@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
-    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
+    dataArray=@[@"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
+    allArr=[[NSMutableArray alloc] initWithArray: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
     
 
-    if (_keyStr)
+    if (_indexStr)
     {
         self.title=@"编辑组";
-        _nameTextField.text=_keyStr;
-        ansArr=[[NSMutableArray alloc] initWithArray:allDic[_keyStr][@"listTen"]];
+        NSDictionary*dic=allArr[[_indexStr intValue]];
+        _nameTextField.text=dic[@"name"];
+        ansArr=[[NSMutableArray alloc] initWithArray:dic[@"listTen"]];
 
     }
     else
     {
-         ansArr=[[NSMutableArray alloc] initWithArray:@[@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
+        ansArr=[[NSMutableArray alloc] initWithArray:@[@"YES",@"YES",@"YES",@"YES",@"NO",@"YES",@"NO",@"YES",@"YES",@"YES",@"YES",@"YES",@"NO"]];
     }
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rulePassBack:) name:@"selectedGroupRule" object:nil];
     _tableview.tableFooterView=[[UIView alloc]init];
@@ -67,35 +68,20 @@
         return;
     }
     
+    NSDictionary*dic=@{ @"name":_nameTextField.text,
+                        @"listTen":ansArr
+                        };
 
-    if (!_keyStr)
+    if (!_indexStr)
     {
-        if ([allDic objectForKey:_nameTextField.text])
-        {
-            [self.view makeToast:@"已存在这个组名称"];
-            return;
-        }
-        else
-        {
-            NSDictionary*dic=@{@"listTen":ansArr,
-                               @"selected":@"NO"};
-            [allDic setObject:dic forKey:_nameTextField.text];
-        }
+
+        [allArr addObject:dic];
+
     }
     else
     {
         
-        if ([allDic objectForKey:_nameTextField.text]&&![_nameTextField.text isEqualToString:_keyStr])
-        {
-            [self.view makeToast:@"已存在这个组名称"];
-            return;
-        }
-        else
-        {
-            [allDic removeObjectForKey:_keyStr];
-            NSDictionary*dic=@{@"listTen":ansArr,
-                               @"selected":@"NO"};
-            [allDic setObject:dic forKey:_nameTextField.text];
+            [allArr replaceObjectAtIndex:[_indexStr intValue] withObject:dic];
             
             NSUserDefaults* defaults=[NSUserDefaults standardUserDefaults];
             NSData*data=[defaults objectForKey:SAVE_TenListBlodRule];
@@ -109,9 +95,9 @@
                 }
                 [defaults synchronize];
             }
-        }
+
     }
-    BOOL issuccess= [[Utils sharedInstance] saveTenData:allDic name:SAVE_TenGroup_TXT];
+    BOOL issuccess= [[Utils sharedInstance] saveTenData:allArr name:SAVE_TenGroup_TXT];
     if (issuccess)
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -143,7 +129,39 @@
 #pragma mark--switchOnOrOffProtocol
 -(void)switchClick:(NSString*)indexStr{
     
+    switch ([indexStr intValue]) {
+        case 3:
+            if ([ansArr[4] isEqualToString:@"YES"]&&[ansArr[3] isEqualToString:@"NO"]) {
+                [ansArr replaceObjectAtIndex:4 withObject:@"NO"];
+            }
+            
+            break;
+        case 4:
+            if ([ansArr[4] isEqualToString:@"NO"]&&[ansArr[3] isEqualToString:@"YES"]) {
+                [ansArr replaceObjectAtIndex:3 withObject:@"NO"];
+            }
+            
+            break;
+        case 5:
+            if ([ansArr[6] isEqualToString:@"YES"]&&[ansArr[5] isEqualToString:@"NO"]) {
+                [ansArr replaceObjectAtIndex:6 withObject:@"NO"];
+            }
+            
+            break;
+        case 6:
+            if ([ansArr[6] isEqualToString:@"NO"]&&[ansArr[5] isEqualToString:@"YES"]) {
+                [ansArr replaceObjectAtIndex:5 withObject:@"NO"];
+            }
+            
+            break;
+            
+        default:
+            break;
+    }
+
     [ansArr replaceObjectAtIndex:[indexStr intValue] withObject:[ansArr[[indexStr intValue]] isEqualToString:@"YES"]?@"NO":@"YES"];
+    [_tableview reloadData];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

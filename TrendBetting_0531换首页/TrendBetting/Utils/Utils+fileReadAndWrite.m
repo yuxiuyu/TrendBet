@@ -46,7 +46,7 @@
     
 }
 /////保存我的ten数据
--(BOOL)saveTenData:(NSDictionary*)dic name:(NSString*)name
+-(BOOL)saveTenData:(NSArray*)arr name:(NSString*)name
 {
     NSFileManager*fileManager=[[NSFileManager alloc]init];
     NSString*documentDictionary=[self getHomePath];
@@ -54,7 +54,7 @@
     NSData *fileData;
     NSString*filePath;
     createPath=[NSString stringWithFormat:@"%@/%@",documentDictionary,SAVE_RULE_FILENAME];
-    fileData = [[self dictionaryToJson:dic] dataUsingEncoding:NSUTF8StringEncoding];
+    fileData =  [[self arrayToJson:arr] dataUsingEncoding:NSUTF8StringEncoding];
     NSString*nameStr=[NSString stringWithFormat:@"%@.txt",name];
     filePath=[createPath stringByAppendingPathComponent:nameStr];
     
@@ -93,7 +93,7 @@
     
 }
 ////读取我的Ten数据
--(NSDictionary*)readTenData:(NSString*)str
+-(NSArray*)readTenData:(NSString*)str
 {
     
     NSString*documentDictionary=[self getHomePath];
@@ -103,14 +103,23 @@
     }
     
     
-    NSDictionary*dic;
+//    NSDictionary*dic;
     if ([[NSFileManager defaultManager] fileExistsAtPath:documentDictionary])
     {
-        NSString*dataStr=[[NSString alloc]initWithContentsOfFile:documentDictionary encoding:NSUTF8StringEncoding error:nil];
-        NSString *responseString = [dataStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-        dic=[responseString objectFromJSONString];
+//        NSString*dataStr=[[NSString alloc]initWithContentsOfFile:documentDictionary encoding:NSUTF8StringEncoding error:nil];
+//        NSString *responseString = [dataStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+//        dic=[responseString objectFromJSONString];
+        NSData*data=[NSData dataWithContentsOfFile:documentDictionary];
+        if (data)
+        {
+            id jsonObject = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:NSJSONReadingAllowFragments
+                                                              error:nil];
+            return  [NSArray arrayWithArray:jsonObject];
+        }
+
     }
-    return dic;
+    return @[];
     
 }
 /////读取数据类数据 如资金策略

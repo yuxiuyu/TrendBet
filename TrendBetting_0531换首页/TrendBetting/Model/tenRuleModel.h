@@ -14,8 +14,10 @@
 @property(copy,nonatomic)NSString*goLu;
 @property(copy,nonatomic)NSString*goXiaoLu;
 @property(copy,nonatomic)NSString*oneNORule;
+@property(copy,nonatomic)NSString*trueOneNORule;
 @property(copy,nonatomic)NSString*noRuleOne;
 @property(copy,nonatomic)NSString*oneRule;
+@property(copy,nonatomic)NSString*trueOneRule;
 @property(copy,nonatomic)NSString*ruleOne;
 @property(copy,nonatomic)NSString*sameRule;
 @property(copy,nonatomic)NSString*wordRule;

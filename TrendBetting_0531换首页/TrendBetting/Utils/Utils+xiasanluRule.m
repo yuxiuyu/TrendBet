@@ -421,7 +421,7 @@
                     }
                     else if (lastArray.count>[fristPartArray[allcount-3] count])
                     {
-                        if (([self.tenModel.oneNORule isEqualToString:@"YES"]&&[nameStr containsString:@"一带规则"])||([self.tenModel.noRuleOne isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
+                        if ((([self.tenModel.oneNORule isEqualToString:@"YES"]||[self.tenModel.trueOneNORule isEqualToString:@"YES"])&&[nameStr containsString:@"一带规则"])||([self.tenModel.noRuleOne isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
                         {
                             nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
                             guessStr=[lastArray lastObject];
@@ -540,11 +540,11 @@
     NSInteger a=[fristPartArray[allCount] count]+[fristPartArray[allCount-1] count]+[fristPartArray[allCount-2] count]+[fristPartArray[allCount-3] count];
     if ([fristPartArray[allCount] count]>=2&&[fristPartArray[allCount-1] count]==1&&[fristPartArray[allCount-2] count]>=2&&[fristPartArray[allCount-3] count]==1)
     {
-        if ([self.tenModel.oneRule isEqualToString:@"YES"]) {
+        if ([self.tenModel.oneRule isEqualToString:@"YES"]||[self.tenModel.trueOneRule isEqualToString:@"YES"]) {
             if ([fristPartArray[allCount] count]==[fristPartArray[allCount-2] count])
             {
                 nameStr=@"一带规则";
-                if ([[defaults objectForKey:SAVE_trueOneRule] isEqualToString:@"YES"]) {
+                if ([self.tenModel.trueOneRule isEqualToString:@"YES"]) {
                     guessStr=[fristPartArray[allCount-1] lastObject];
                 } else {
                      guessStr=[fristPartArray[allCount] lastObject];
@@ -573,9 +573,9 @@
         // yxy add
         if (fristPartArray.count>4&&[fristPartArray[allCount-4] count]==1)
         {
-            if ([self.tenModel.oneNORule isEqualToString:@"YES"]) {
+            if ([self.tenModel.oneNORule isEqualToString:@"YES"]||[self.tenModel.trueOneNORule isEqualToString:@"YES"]) {
                 nameStr=@"一带不规则";
-                if ([[defaults objectForKey:SAVE_trueOneNORule] isEqualToString:@"YES"]) {
+                if ([self.tenModel.trueOneNORule isEqualToString:@"YES"]) {
                    guessStr=[fristPartArray[allCount-1] lastObject];
                 } else {
                     guessStr=[fristPartArray[allCount] lastObject];

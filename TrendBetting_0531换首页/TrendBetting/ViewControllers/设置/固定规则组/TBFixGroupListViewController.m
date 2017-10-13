@@ -10,8 +10,8 @@
 #import "TBSelectTableViewCell.h"
 @interface TBFixGroupListViewController ()<TBSelectTableViewCellDelegate>
 {
-    NSMutableDictionary*allDic;
-    NSArray*nameArr;
+    NSMutableArray*allArr;
+//    NSArray*nameArr;
     tenRuleModel*tenM;
     NSUserDefaults *defaults;
 }
@@ -27,8 +27,8 @@
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"添加组" style:UIBarButtonItemStylePlain target:self action:@selector(addGroupBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
     
-    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
-    nameArr=[allDic allKeys];
+//    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
+//    nameArr=[allDic allKeys];
     _tableview.tableFooterView=[[UIView alloc]init];
      defaults=[NSUserDefaults standardUserDefaults];
      tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenListBlodRule]];
@@ -38,8 +38,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    allDic=[[NSMutableDictionary alloc] initWithDictionary: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
-     nameArr=[allDic allKeys];
+    allArr=[[NSMutableArray alloc] initWithArray: [[Utils sharedInstance] readTenData:[NSString stringWithFormat:@"%@/%@",SAVE_RULE_FILENAME,SAVE_TenGroup_TXT]]];
     [_tableview reloadData];
 }
 -(void)addGroupBtnAction
@@ -49,18 +48,19 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return nameArr.count;
+    return allArr.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TBSelectTableViewCell*cell=[TBSelectTableViewCell loadSelectTableViewCell:tableView];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-//    NSDictionary*dic=allDic[nameArr[indexPath.row]];
-    cell.nameLab.text=nameArr[indexPath.row];
+    NSDictionary*dic=allArr[indexPath.row];
+    
+    cell.nameLab.text=dic[@"name"];
 
    
         cell.selectBtn.hidden=NO;
-        if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]])
+        if ([tenM.nameStr isEqualToString:dic[@"name"]])
         {
             cell.selectBtn.selected=YES;
         }
@@ -78,7 +78,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [self performSegueWithIdentifier:@"edit_fixgroupVC" sender:@{@"keyStr":nameArr[indexPath.row]}];
+    [self performSegueWithIdentifier:@"edit_fixgroupVC" sender:@{@"indexStr":@(indexPath.row)}];
     
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -93,17 +93,18 @@
 {
     if (editingStyle==UITableViewCellEditingStyleDelete)
     {
-        [allDic removeObjectForKey:nameArr[indexPath.row]];
-        if ([tenM.nameStr isEqualToString:nameArr[indexPath.row]]) {
+        
+        NSDictionary*dic=allArr[indexPath.row];
+        if ([tenM.nameStr isEqualToString:dic[@"name"]]) {
             [defaults removeObjectForKey:SAVE_TenListBlodRule];
             if ([defaults objectForKey:SAVE_TenDeleteBlodRule]) {
                 [defaults removeObjectForKey:SAVE_TenDeleteBlodRule];
             }
             [defaults synchronize];
         }
-        nameArr=[allDic allKeys];
+        [allArr removeObjectAtIndex:indexPath.row];
         tenM=nil;
-       [[Utils sharedInstance] saveTenData:allDic name:SAVE_TenGroup_TXT];
+       [[Utils sharedInstance] saveTenData:allArr name:SAVE_TenGroup_TXT];
         [_tableview reloadData];
 
         
@@ -116,10 +117,10 @@
 #pragma mark--TBSelectTableViewCellDelegate
 -(void)backSelected:(NSInteger)selectedIndex
 {
-    NSDictionary*dic=allDic[nameArr[selectedIndex]];
+    NSDictionary*dic=allArr[selectedIndex];
     tenM=[[tenRuleModel alloc]init];
     [tenM initWithDic:dic];
-    tenM.nameStr=nameArr[selectedIndex];
+    tenM.nameStr=dic[@"name"];
     
     NSData*data=[NSKeyedArchiver archivedDataWithRootObject:tenM];
     [defaults setObject:data forKey:SAVE_TenListBlodRule];
