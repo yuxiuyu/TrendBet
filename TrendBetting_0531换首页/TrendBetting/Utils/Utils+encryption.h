@@ -9,6 +9,8 @@
 #import "Utils.h"
 
 @interface Utils (encryption)
-- (NSString*)base64String:(NSString*)signStr;
-- (NSString*)sha1:(NSString*)string;
+- (NSString *)base64String:(NSString*)signStr;
+- (NSString *)sha1:(NSString*)string;
+- (NSString *)stringFromMD5:(NSString *)string;
+- (NSString *)getNowTimeTimestamp;
 @end

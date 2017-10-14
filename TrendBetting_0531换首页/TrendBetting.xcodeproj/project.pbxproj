@@ -29,6 +29,8 @@
 		5B6F37271F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F37261F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m */; };
 		5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */; };
 		5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */; };
+		5BA931281F91E60100216C7B /* TBWebService+Login&Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA931251F91E60100216C7B /* TBWebService+Login&Register.m */; };
+		5BA931291F91E60100216C7B /* TBWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA931271F91E60100216C7B /* TBWebService.m */; };
 		5BC10EA21E67AC990008CADE /* TBRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC10EA11E67AC990008CADE /* TBRuleEditViewController.m */; };
 		5BC10EBD1E681D220008CADE /* TBResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC10EB31E681D220008CADE /* TBResultViewController.m */; };
 		5BC10EC61E68202A0008CADE /* resultData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC10EC41E68202A0008CADE /* resultData.storyboard */; };
@@ -144,6 +146,10 @@
 		5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBOnlyRBSelectViewController.m; sourceTree = "<group>"; };
 		5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewRule_goMonthViewController.h; sourceTree = "<group>"; };
 		5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBNewRule_goMonthViewController.m; sourceTree = "<group>"; };
+		5BA931241F91E60100216C7B /* TBWebService+Login&Register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TBWebService+Login&Register.h"; sourceTree = "<group>"; };
+		5BA931251F91E60100216C7B /* TBWebService+Login&Register.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TBWebService+Login&Register.m"; sourceTree = "<group>"; };
+		5BA931261F91E60100216C7B /* TBWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBWebService.h; sourceTree = "<group>"; };
+		5BA931271F91E60100216C7B /* TBWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBWebService.m; sourceTree = "<group>"; };
 		5BC10EA01E67AC990008CADE /* TBRuleEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBRuleEditViewController.h; sourceTree = "<group>"; };
 		5BC10EA11E67AC990008CADE /* TBRuleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBRuleEditViewController.m; sourceTree = "<group>"; };
 		5BC10EB21E681D220008CADE /* TBResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBResultViewController.h; sourceTree = "<group>"; };
@@ -360,6 +366,17 @@
 			path = "新规则";
 			sourceTree = "<group>";
 		};
+		5BA931231F91E60100216C7B /* WebService */ = {
+			isa = PBXGroup;
+			children = (
+				5BA931241F91E60100216C7B /* TBWebService+Login&Register.h */,
+				5BA931251F91E60100216C7B /* TBWebService+Login&Register.m */,
+				5BA931261F91E60100216C7B /* TBWebService.h */,
+				5BA931271F91E60100216C7B /* TBWebService.m */,
+			);
+			path = WebService;
+			sourceTree = "<group>";
+		};
 		5BC10EAF1E681C9A0008CADE /* 结果查看 */ = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +571,7 @@
 		5BDA060F1E136BE00060CCE5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5BA931231F91E60100216C7B /* WebService */,
 				5BD19BB11E5D263900D62D62 /* JHChart.h */,
 				5BD19BB21E5D263900D62D62 /* JHChart.m */,
 				5BD19BAE1E5D22FE00D62D62 /* JHLineChart.h */,
@@ -809,6 +827,7 @@
 				5B6640251E5ADF15007524F3 /* Utils+rule.m in Sources */,
 				5B5813A61F6BD22800424EB4 /* TBSwitchTableViewCell.m in Sources */,
 				B643C6B51EE822A50019E6B0 /* Utils+xiasanluRule.m in Sources */,
+				5BA931281F91E60100216C7B /* TBWebService+Login&Register.m in Sources */,
 				5B609A0E1EF90B7700D9305B /* TBNewRule_RoomViewController.m in Sources */,
 				5B5813AA1F6BD75C00424EB4 /* tenRuleModel.m in Sources */,
 				5BDA060E1E136BD00060CCE5 /* TBFristPageViewController.m in Sources */,
@@ -856,6 +875,7 @@
 				5B19B1E61E1CD500001537B0 /* chartImageView.m in Sources */,
 				5BF499341E52A2D1008AA7AA /* Utils+encryption.m in Sources */,
 				5B2E6BE81EA84EEB005CCA08 /* TBGroup_RoomDetailViewController.m in Sources */,
+				5BA931291F91E60100216C7B /* TBWebService.m in Sources */,
 				5BC6567E1EF8FCAC00F040CE /* TBRoomDetail_DayViewController.m in Sources */,
 				5BD8B77C1EA700010088E8C4 /* TBSettingViewController.m in Sources */,
 			);

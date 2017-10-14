@@ -1,11 +1,33 @@
 PODS:
-  - IQKeyboardManager (4.0.1)
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - IQKeyboardManager (4.0.3)
   - JSONKit-NoWarning (1.2)
   - MJExtension (3.0.10)
   - SVProgressHUD (2.0.3)
   - Toast (3.0)
 
 DEPENDENCIES:
+  - AFNetworking (~> 2.5.3)
   - IQKeyboardManager (~> 4.0.1)
   - JSONKit-NoWarning (~> 1.2)
   - MJExtension (~> 3.0.10)
@@ -13,7 +35,8 @@ DEPENDENCIES:
   - Toast (~> 3.0)
 
 SPEC CHECKSUMS:
-  IQKeyboardManager: 0c11a0cb402a621f7aa1aff506f60ab6d2388969
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  IQKeyboardManager: be9695ffc5a52077deb4847608f338771022d6d1
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
