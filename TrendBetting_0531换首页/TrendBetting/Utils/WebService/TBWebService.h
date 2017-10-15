@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define SERVER_URL @"http://user.mg.to3.cc/" // test
+#define SERVER_URL @"http://usermanage.gc.to3.cc/" // test
 //#define SERVER_URL  @"http://www.yhjnh.com.cn:8080/as/"    //  这个是线上环境的地址
 
 //#define IMAGESERVER_URL @"http://120.27.41.82:8080/asupload/"

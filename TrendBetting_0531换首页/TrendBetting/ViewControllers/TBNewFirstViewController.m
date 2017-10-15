@@ -62,7 +62,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSString*roomStr=@"1";
-    NSString*endtimeStr=[NSString stringWithFormat:@"%ld",[[NSDate date] timeIntervalSince1970]];
+    NSDateFormatter*formater=[[NSDateFormatter alloc]init];
+    [formater setDateFormat:@"yyyy-MM-dd"];
+    NSString*endtimeStr=[NSString stringWithFormat:@"%ld",[[formater dateFromString:@"2017-10-13"] timeIntervalSince1970]];
     NSString*seekStr=[NSString stringWithFormat:@"%.8d",arc4random()%100000000];
     NSDictionary*dic=@{@"roomid":roomStr,
                        @"endtime":endtimeStr,
