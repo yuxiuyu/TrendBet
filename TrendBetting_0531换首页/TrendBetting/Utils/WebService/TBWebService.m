@@ -54,8 +54,12 @@
 //      {
 //          failure(@"noUser");
 //      }
-         success(@{@"msg":responseString});
-//    
+//         success(@{@"msg":responseString});
+//
+//      NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+      
+      NSDictionary* responseDict = [responseString objectFromJSONString];
+      success(responseDict);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
        [self hidenProgress];
     WBSLog(@"Error: %@", error);

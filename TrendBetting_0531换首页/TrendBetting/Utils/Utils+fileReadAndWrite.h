@@ -15,6 +15,7 @@
 -(NSArray*)readMoneyData:(NSString*)str;
 /////保存我的数据
 -(BOOL)saveData:(NSDictionary*)dic  saveArray:(NSArray*)saveArray filePathStr:(NSString*)filePathStr;
+-(BOOL)saveServerData:(NSString*)dataStr houseStr:(NSString*)houseStr monthStr:(NSString*)monthStr dayStr:(NSString*)dayStr;
 /////保存我的ten数据
 -(BOOL)saveTenData:(NSArray*)arr name:(NSString*)name;
 ////读取我的Ten数据

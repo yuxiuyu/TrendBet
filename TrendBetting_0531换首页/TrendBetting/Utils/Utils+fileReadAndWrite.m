@@ -45,6 +45,23 @@
     return isScuess;
     
 }
+-(BOOL)saveServerData:(NSString*)dataStr houseStr:(NSString*)houseStr monthStr:(NSString*)monthStr dayStr:(NSString*)dayStr{
+    NSFileManager*fileManager=[[NSFileManager alloc]init];
+    NSString*documentDictionary=[self getHomePath];
+    NSString*createPath=[NSString stringWithFormat:@"%@/%@号/%@",documentDictionary,houseStr,monthStr];
+    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",dayStr];
+    NSString* filePath=[createPath stringByAppendingPathComponent:nameStr];
+    NSData*fileData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:createPath])
+    {
+        [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    BOOL isScuess=[fileManager createFileAtPath:filePath contents:fileData attributes:nil];
+    return isScuess;
+//    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",dayStr];
+//    filePath=[createPath stringByAppendingPathComponent:createPath];
+
+}
 /////保存我的ten数据
 -(BOOL)saveTenData:(NSArray*)arr name:(NSString*)name
 {

@@ -61,10 +61,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString*roomStr=@"1";
+    NSString*roomStr=@"4";
     NSDateFormatter*formater=[[NSDateFormatter alloc]init];
     [formater setDateFormat:@"yyyy-MM-dd"];
-    NSString*endtimeStr=[NSString stringWithFormat:@"%ld",[[formater dateFromString:@"2017-10-13"] timeIntervalSince1970]];
+    NSTimeInterval a=[[formater dateFromString:@"2017-10-13"] timeIntervalSince1970];
+    NSString*endtimeStr=[NSString stringWithFormat:@"%.0f",a];
     NSString*seekStr=[NSString stringWithFormat:@"%.8d",arc4random()%100000000];
     NSDictionary*dic=@{@"roomid":roomStr,
                        @"endtime":endtimeStr,
@@ -72,6 +73,7 @@
                        @"md5str":[[Utils sharedInstance] stringFromMD5:[NSString stringWithFormat:@"%@%@%@",roomStr,endtimeStr,seekStr]]};
     [[TBWebService sharedInstance] getServerData:dic success:^(NSDictionary *responseObject) {
          NSLog(@"res is %@",responseObject);
+//        [[Utils sharedInstance] saveServerData:responseObject[@"orgstr"] houseStr:roomStr monthStr:@"2017-10" dayStr:@"13"];
     } failure:^(NSString *error) {
          NSLog(@"error is %@",error);
     }];
