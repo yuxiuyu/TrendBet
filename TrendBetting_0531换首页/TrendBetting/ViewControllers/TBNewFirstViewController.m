@@ -61,6 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //下载文件
     [[Utils sharedInstance] downLoadServerFile:@"4" timeStr:@"2017-10-13"];
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
     if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])

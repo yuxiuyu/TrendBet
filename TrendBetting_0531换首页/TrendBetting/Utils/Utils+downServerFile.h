@@ -9,5 +9,7 @@
 #import "Utils.h"
 
 @interface Utils (downServerFile)
+//下载文件
 -(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr;
 @end
+ 

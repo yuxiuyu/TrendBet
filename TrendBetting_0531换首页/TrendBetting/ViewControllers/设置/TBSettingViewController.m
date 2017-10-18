@@ -27,7 +27,7 @@
     self.navigationController.navigationBarHidden=NO;
 //    dataArray=@[@"区域选择",@"资金策略",@"下注提示选择",@"正反",@"洗码基数",@"设置组",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"只看大路",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停"];
 //     dataArray=@[@"资金策略",@"下注提示选择",@"洗码基数",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"文字长连个数设置",@"文字长跳个数设置",@"把把庄闲选择",@"正确的一带规则",@"正确的一带不规则",@"大路一列",@"长跳",@"长连",@"小二路",@"一带不规则",@"不规则带一",@"一带规则",@"规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
-    dataArray=@[@"资金策略",@"下注提示选择",@"洗码基数",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"文字长连个数设置",@"文字长跳个数设置",@"把把庄闲选择",@"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
+    dataArray=@[@"资金策略",@"下注提示选择",@"洗码基数",@"设置新规则组",@"去掉规则组",@"长跳个数设置",@"长连个数设置",@"小二路个数设置",@"文字长连个数设置",@"文字长跳个数设置",@"把把庄闲选择",@"下载文件",@"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenBlodRule]];
     
@@ -55,7 +55,7 @@
 //    static NSString*cellIndentier=@"switchTableViewCell";
     TBSwitchTableViewCell*cell=[TBSwitchTableViewCell loadSwitchTableViewCell:tableView];
     cell.delegate=self;
-    if (indexPath.row<=10)
+    if (indexPath.row<=11)
     {
         cell.mySwitch.hidden=YES;
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -64,7 +64,7 @@
     {
         cell.mySwitch.hidden=NO;
         [cell setAccessoryType:UITableViewCellAccessoryNone];
-        switch (indexPath.row) {
+        switch (indexPath.row-1) {
             
            //            case 13:
 //                cell.mySwitch.on=[[defaults objectForKey:SAVE_oneList] isEqualToString:@"YES"];
@@ -121,7 +121,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row<=10)
+    if (indexPath.row<=11)
     {
         NSString*str=@"show_setting_areaVC";
         NSDictionary*dic=nil;
@@ -175,6 +175,10 @@
             case 10:
                 str=@"show_setting_onlyRBSelectVC";
                 break;
+            case 11:
+                str=@"show_setting_downVC";
+                break;
+                
                 
             default:
                 break;
@@ -191,7 +195,7 @@
 #pragma mark--switchOnOrOffProtocol
 -(void)switchClick:(NSString*)indexStr{
   
-    switch ([indexStr intValue]) {
+    switch ([indexStr intValue]-1) {
        
         
 //        case 13:

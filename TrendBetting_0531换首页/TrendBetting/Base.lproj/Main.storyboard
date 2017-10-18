@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9zY-Gt-fgd">
@@ -585,7 +585,7 @@
                         <viewControllerLayoutGuide type="bottom" id="1B1-Zv-weo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8m7-0B-EsB">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xx4-qT-doP">
@@ -1142,7 +1142,7 @@
                 <viewControllerPlaceholder storyboardName="setting" id="czK-9Q-DFa" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exl-Bo-got" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="806" y="2202"/>
+            <point key="canvasLocation" x="839" y="2202"/>
         </scene>
     </scenes>
     <resources>
