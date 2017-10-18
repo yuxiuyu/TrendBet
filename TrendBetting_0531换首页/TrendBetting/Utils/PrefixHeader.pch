@@ -26,6 +26,7 @@
 #import "TBFileRoomResult_roomArr.h"
 #import "TBFileRoomResult_timeArr.h"
 #import "TBFileRoomResult_dataArr.h"
+#import "Utils+downServerFile.h"
 #import <UIView+Toast.h>
 #import "tenRuleModel.h"
 #define SAVE_DATA_FILENAME @"myData"

@@ -15,7 +15,7 @@
 #import "Utils+reencryption.h"
 #import "Utils+xiasanluRule.h"
 #import "TBNewRule_TimeViewController.h"
-#import "TBWebService+Login&Register.h"
+
 @interface TBNewFirstViewController ()
 {
     chartImageView *view1;
@@ -61,23 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString*roomStr=@"4";
-    NSDateFormatter*formater=[[NSDateFormatter alloc]init];
-    [formater setDateFormat:@"yyyy-MM-dd"];
-    NSTimeInterval a=[[formater dateFromString:@"2017-10-13"] timeIntervalSince1970];
-    NSString*endtimeStr=[NSString stringWithFormat:@"%.0f",a];
-    NSString*seekStr=[NSString stringWithFormat:@"%.8d",arc4random()%100000000];
-    NSDictionary*dic=@{@"roomid":roomStr,
-                       @"endtime":endtimeStr,
-                       @"seek":seekStr,
-                       @"md5str":[[Utils sharedInstance] stringFromMD5:[NSString stringWithFormat:@"%@%@%@",roomStr,endtimeStr,seekStr]]};
-    [[TBWebService sharedInstance] getServerData:dic success:^(NSDictionary *responseObject) {
-         NSLog(@"res is %@",responseObject);
-//        [[Utils sharedInstance] saveServerData:responseObject[@"orgstr"] houseStr:roomStr monthStr:@"2017-10" dayStr:@"13"];
-    } failure:^(NSString *error) {
-         NSLog(@"error is %@",error);
-    }];
-    
+    [[Utils sharedInstance] downLoadServerFile:@"4" timeStr:@"2017-10-13"];
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
     if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {

@@ -77,6 +77,7 @@
 		5BF499341E52A2D1008AA7AA /* Utils+encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF499331E52A2D1008AA7AA /* Utils+encryption.m */; };
 		5BF664231EAEF255000A179F /* TBGroup_TimeResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF664221EAEF255000A179F /* TBGroup_TimeResultViewController.m */; };
 		925C4822E73CC45E98EC762F /* libPods-TrendBetting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F78CDA40625A2D80D9C72A13 /* libPods-TrendBetting.a */; };
+		B60A64EC1F979F4800B63E87 /* Utils+downServerFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B60A64EB1F979F4800B63E87 /* Utils+downServerFile.m */; };
 		B643C6B51EE822A50019E6B0 /* Utils+xiasanluRule.m in Sources */ = {isa = PBXBuildFile; fileRef = B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */; };
 		B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */; };
 		B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF421ED073F300E248C8 /* Utils+newRules.m */; };
@@ -237,6 +238,8 @@
 		5BF499331E52A2D1008AA7AA /* Utils+encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+encryption.m"; sourceTree = "<group>"; };
 		5BF664211EAEF255000A179F /* TBGroup_TimeResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBGroup_TimeResultViewController.h; sourceTree = "<group>"; };
 		5BF664221EAEF255000A179F /* TBGroup_TimeResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBGroup_TimeResultViewController.m; sourceTree = "<group>"; };
+		B60A64EA1F979F4800B63E87 /* Utils+downServerFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Utils+downServerFile.h"; sourceTree = "<group>"; };
+		B60A64EB1F979F4800B63E87 /* Utils+downServerFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+downServerFile.m"; sourceTree = "<group>"; };
 		B643C6B31EE822A50019E6B0 /* Utils+xiasanluRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Utils+xiasanluRule.h"; sourceTree = "<group>"; };
 		B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+xiasanluRule.m"; sourceTree = "<group>"; };
 		B649DF3B1ED06DCF00E248C8 /* TBNewFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewFirstViewController.h; sourceTree = "<group>"; };
@@ -587,6 +590,8 @@
 				5BDA06181E13835D0060CCE5 /* Utils+size.h */,
 				5B6640231E5ADF15007524F3 /* Utils+rule.h */,
 				5B6640241E5ADF15007524F3 /* Utils+rule.m */,
+				B60A64EA1F979F4800B63E87 /* Utils+downServerFile.h */,
+				B60A64EB1F979F4800B63E87 /* Utils+downServerFile.m */,
 				5B2E6BF01EA8928F005CCA08 /* Utils+groupRule.h */,
 				5B2E6BEF1EA8928F005CCA08 /* Utils+groupRule.m */,
 				B649DF411ED073F300E248C8 /* Utils+newRules.h */,
@@ -843,6 +848,7 @@
 				5B5327021E5D90E00056EE11 /* TBMoneySelectViewController.m in Sources */,
 				5BD19BB31E5D263900D62D62 /* JHChart.m in Sources */,
 				5BD8B77B1EA700010088E8C4 /* TBReverseSelectViewController.m in Sources */,
+				B60A64EC1F979F4800B63E87 /* Utils+downServerFile.m in Sources */,
 				5BD8B7821EA72A2F0088E8C4 /* TBGroupAddViewController.m in Sources */,
 				5BF499311E52A1DA008AA7AA /* Utils.m in Sources */,
 				5B609A0A1EF90A9200D9305B /* TBNewRule_MonthViewController.m in Sources */,
