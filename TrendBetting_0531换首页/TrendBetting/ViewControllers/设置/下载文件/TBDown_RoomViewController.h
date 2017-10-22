@@ -11,6 +11,7 @@
 @interface TBDown_RoomViewController : TBBaseViewController
 
 @end
+
 @interface downroomCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *roomLab;
 

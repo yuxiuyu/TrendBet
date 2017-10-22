@@ -7,6 +7,7 @@
 //
 
 #import "TBDown_RoomViewController.h"
+#define SYSTEM_DIR_OLD [ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory , NSUserDomainMask , YES ) objectAtIndex : 0 ]
 
 @interface TBDown_RoomViewController ()
 
@@ -38,7 +39,7 @@
     self.navigationController.navigationBarHidden=NO;
     allHouseArr=@[@"1",@"2",@"3",@"4"];
     
-    
+    NSLog(@"%@",SYSTEM_DIR_OLD);
     
     
 }
@@ -61,7 +62,10 @@
 {
     
     [[Utils sharedInstance] initSetTenModel];
-//    [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
+    NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:allHouseArr[indexPath.row],@"selectedRoom", nil];
+    [self performSegueWithIdentifier:@"showMonthVC" sender:dic];
+
+    //    [self performSegueWithIdentifier:@"showMonthVC" sender:@{@"selectedMonth":allHouseArr[indexPath.row]}];
 }
 
 
@@ -77,12 +81,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"showNewRuleRoomVC"])
+    if ([segue.identifier isEqualToString:@"showMonthVC"])
     {
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
     }
 }
+
 
 
 @end

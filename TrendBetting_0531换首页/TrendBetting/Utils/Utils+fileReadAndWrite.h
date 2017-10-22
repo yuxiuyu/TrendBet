@@ -27,4 +27,8 @@
 -(NSDictionary*)getGroupDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isContinue:(BOOL)isContinue;
 /////////对读取到的新的规则数据进行处理
 -(NSDictionary*)getNewRuleDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr;
+
+/////////按照房间、月份和日期获取文件
+-(NSArray*)readDataWithRoom:(NSString *)roomId andMonth:(NSString *)month andDay:(NSString *)day;
+
 @end

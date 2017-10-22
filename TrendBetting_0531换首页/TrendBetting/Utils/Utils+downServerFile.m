@@ -23,13 +23,27 @@
                        @"endtime":endtimeStr,
                        @"seek":seekStr,
                        @"md5str":[[Utils sharedInstance] stringFromMD5:[NSString stringWithFormat:@"%@%@%@",roomStr,endtimeStr,seekStr]]};
+    NSDictionary *notiDic = [[NSDictionary alloc]initWithObjectsAndKeys:roomStr,@"roomStr",timeStr,@"timeStr", nil];
+    NSNotification *errnotification =[NSNotification notificationWithName:@"DownErrNotification" object:nil userInfo:notiDic];
+    NSNotification *sucnotification =[NSNotification notificationWithName:@"InfoNotification" object:nil userInfo:notiDic];
 //    __weak typeof(self) weakself =self;
     [[TBWebService sharedInstance] getServerData:dic success:^(NSDictionary *responseObject) {
         NSLog(@"res is %@",responseObject);
-        NSArray*array=[timeStr componentsSeparatedByString:@"-"];
-       [[Utils sharedInstance] saveServerData:responseObject[@"orgstr"] houseStr:roomStr monthStr:[NSString stringWithFormat:@"%@-%@",array[0],array[1]] dayStr:array[2]];
+        if ([[responseObject objectForKey:@"code"] integerValue] == 200) {
+            // 下载完成
+
+            NSArray*array=[timeStr componentsSeparatedByString:@"-"];
+            [[Utils sharedInstance] saveServerData:responseObject[@"orgstr"] houseStr:roomStr monthStr:[NSString stringWithFormat:@"%@-%@",array[0],array[1]] dayStr:array[2]];
+            [[NSNotificationCenter defaultCenter] postNotification:sucnotification];
+        }
+       
     } failure:^(NSString *error) {
         NSLog(@"error is %@",error);
+        if ([error isEqualToString:@"The request timed out."]) {
+            
+            [[NSNotificationCenter defaultCenter] postNotification:errnotification];
+        }
+        
     }];
 //    return issuccess;
 }
