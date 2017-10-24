@@ -112,6 +112,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     dayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"dayCell"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.downBtn.selected = NO;
     cell.downBtn.tag = indexPath.row + CELL_TAG;
@@ -119,6 +120,7 @@
     NSString *fileName = dayDataArr[indexPath.row];
     if ([daysArr containsObject:fileName]) {
         cell.downBtn.selected = YES;
+        cell.downBtn.userInteractionEnabled = NO;
     }
     cell.dayLab.text = fileName;
     
@@ -170,10 +172,13 @@
 {
     NSDictionary *userInfo = d.userInfo;
     
+    NSString *tipStr = [NSString stringWithFormat:@"下载成功"];
+    [SVProgressHUD showErrorWithStatus:tipStr];
     NSIndexPath *index = [NSIndexPath indexPathForRow:selectIndex inSection:0];
     dayCell *cell = [_mytableView cellForRowAtIndexPath:index];
     cell.downBtn.selected = YES;
     [_mytableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
+    [_mytableView reloadData];
 }
 
 
