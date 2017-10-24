@@ -69,9 +69,21 @@
     NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
     
-//    int year =(int) [dateComponent year];
+    int year =(int) [dateComponent year];
     int month = (int) [dateComponent month];
     int day = (int) [dateComponent day];
+
+    NSDate *nowDate = [NSDate date];
+    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+    NSDate *lastDate = [formatter dateFromString:str];
+
+    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
+        day = day+1;
+    }
+
+    
     for (int i = 1; i<5; i++) {
         NSString *timeStr = [NSString stringWithFormat:@"2017-%02d-%02d",month,day];
         [[Utils sharedInstance] downLoadServerFile:[NSString stringWithFormat:@"%d",i] timeStr:timeStr];

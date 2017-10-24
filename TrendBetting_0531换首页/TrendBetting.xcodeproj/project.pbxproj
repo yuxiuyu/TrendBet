@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		034DF05A1F98E026007A0F52 /* TBMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034DF0591F98E026007A0F52 /* TBMonthViewController.m */; };
-		034DF05D1F99C0BF007A0F52 /* TBDayDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034DF05C1F99C0BF007A0F52 /* TBDayDataViewController.m */; };
+		03EF82551F9EDB4D008FE17C /* TBDayDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EF82521F9EDB4D008FE17C /* TBDayDataViewController.m */; };
+		03EF82561F9EDB4D008FE17C /* TBMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EF82541F9EDB4D008FE17C /* TBMonthViewController.m */; };
 		5B1856E01E1B75810033200D /* UIView+border.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1856DF1E1B75810033200D /* UIView+border.m */; };
 		5B19B1E61E1CD500001537B0 /* chartImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19B1E51E1CD500001537B0 /* chartImageView.m */; };
 		5B2E6BE21EA84471005CCA08 /* TBGroup_TimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E6BE11EA84471005CCA08 /* TBGroup_TimeViewController.m */; };
@@ -109,10 +109,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		034DF0581F98E026007A0F52 /* TBMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMonthViewController.h; sourceTree = "<group>"; };
-		034DF0591F98E026007A0F52 /* TBMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMonthViewController.m; sourceTree = "<group>"; };
-		034DF05B1F99C0BF007A0F52 /* TBDayDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDayDataViewController.h; sourceTree = "<group>"; };
-		034DF05C1F99C0BF007A0F52 /* TBDayDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDayDataViewController.m; sourceTree = "<group>"; };
+		03EF82511F9EDB4D008FE17C /* TBDayDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDayDataViewController.h; sourceTree = "<group>"; };
+		03EF82521F9EDB4D008FE17C /* TBDayDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDayDataViewController.m; sourceTree = "<group>"; };
+		03EF82531F9EDB4D008FE17C /* TBMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMonthViewController.h; sourceTree = "<group>"; };
+		03EF82541F9EDB4D008FE17C /* TBMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMonthViewController.m; sourceTree = "<group>"; };
 		5B1856DE1E1B75810033200D /* UIView+border.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+border.h"; sourceTree = "<group>"; };
 		5B1856DF1E1B75810033200D /* UIView+border.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+border.m"; sourceTree = "<group>"; };
 		5B19B1E41E1CD500001537B0 /* chartImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chartImageView.h; sourceTree = "<group>"; };
@@ -637,10 +637,10 @@
 			children = (
 				B632B6AD1F97B3640022FA09 /* TBDown_RoomViewController.h */,
 				B632B6AE1F97B3640022FA09 /* TBDown_RoomViewController.m */,
-				034DF0581F98E026007A0F52 /* TBMonthViewController.h */,
-				034DF0591F98E026007A0F52 /* TBMonthViewController.m */,
-				034DF05B1F99C0BF007A0F52 /* TBDayDataViewController.h */,
-				034DF05C1F99C0BF007A0F52 /* TBDayDataViewController.m */,
+				03EF82511F9EDB4D008FE17C /* TBDayDataViewController.h */,
+				03EF82521F9EDB4D008FE17C /* TBDayDataViewController.m */,
+				03EF82531F9EDB4D008FE17C /* TBMonthViewController.h */,
+				03EF82541F9EDB4D008FE17C /* TBMonthViewController.m */,
 			);
 			path = "下载文件";
 			sourceTree = "<group>";
@@ -874,7 +874,6 @@
 				5BC10EA21E67AC990008CADE /* TBRuleEditViewController.m in Sources */,
 				5B5327021E5D90E00056EE11 /* TBMoneySelectViewController.m in Sources */,
 				5BD19BB31E5D263900D62D62 /* JHChart.m in Sources */,
-				034DF05A1F98E026007A0F52 /* TBMonthViewController.m in Sources */,
 				5BD8B77B1EA700010088E8C4 /* TBReverseSelectViewController.m in Sources */,
 				B60A64EC1F979F4800B63E87 /* Utils+downServerFile.m in Sources */,
 				5BD8B7821EA72A2F0088E8C4 /* TBGroupAddViewController.m in Sources */,
@@ -896,6 +895,7 @@
 				5BDA060B1E136B770060CCE5 /* TBBaseViewController.m in Sources */,
 				5BC687781E5E8103001C2ACC /* TBMoneyEditViewController.m in Sources */,
 				5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */,
+				03EF82551F9EDB4D008FE17C /* TBDayDataViewController.m in Sources */,
 				5BDA05D81E136AEA0060CCE5 /* AppDelegate.m in Sources */,
 				5B2E6BEB1EA8523E005CCA08 /* TBGroup_MonthViewController.m in Sources */,
 				B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */,
@@ -906,9 +906,9 @@
 				5BDA05D51E136AEA0060CCE5 /* main.m in Sources */,
 				5B2E6BE21EA84471005CCA08 /* TBGroup_TimeViewController.m in Sources */,
 				5B2E6BF11EA8928F005CCA08 /* Utils+groupRule.m in Sources */,
-				034DF05D1F99C0BF007A0F52 /* TBDayDataViewController.m in Sources */,
 				5BE72CD91E51B3280001AFFC /* TBFileRoomResult_dataArr.m in Sources */,
 				5B19B1E61E1CD500001537B0 /* chartImageView.m in Sources */,
+				03EF82561F9EDB4D008FE17C /* TBMonthViewController.m in Sources */,
 				5BF499341E52A2D1008AA7AA /* Utils+encryption.m in Sources */,
 				5B2E6BE81EA84EEB005CCA08 /* TBGroup_RoomDetailViewController.m in Sources */,
 				5BA931291F91E60100216C7B /* TBWebService.m in Sources */,

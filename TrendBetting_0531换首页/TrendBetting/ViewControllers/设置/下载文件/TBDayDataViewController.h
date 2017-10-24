@@ -2,7 +2,7 @@
 //  TBDayDataViewController.h
 //  TrendBetting
 //
-//  Created by 王昕 on 2017/10/20.
+//  Created by WX on 2017/10/20.
 //  Copyright © 2017年 yxy. All rights reserved.
 //
 
