@@ -7,6 +7,7 @@
 //
 
 #import "TBDayDataViewController.h"
+#import "SVProgressHUD.h"
 //#import "Utils+encryption.h"
 //#import "Utils+newRules.h"
 //#import "Utils+reencryption.h"
@@ -29,7 +30,6 @@
     if ([self.delegate respondsToSelector:@selector(downBtnClick:)])
     {
         [self.delegate downBtnClick:btn.tag-CELL_TAG];
-        btn.selected = YES;
     }
 }
 
@@ -44,6 +44,7 @@
     NSMutableArray *dayDataArr;
     NSInteger allday;
     NSArray*daysArr;
+    NSInteger selectIndex;
 }
 
 @end
@@ -54,6 +55,9 @@
     [super viewDidLoad];
     
     self.title = @"文件";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nofileNotificationAction:) name:@"noFileInfoNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errNotificationAction:) name:@"DownErrNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
     
     NSString*monthFileNameStr=[NSString stringWithFormat:@"%@号/2017-%@",self.selectedRoom,self.selectedMonth];
     daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
@@ -139,9 +143,37 @@
     // 下载按钮点击
     NSLog(@"下载文件:%@号 2017-%@ %ld.txt",self.selectedRoom,self.selectedMonth,tag+1);
     NSString *timeStr = [NSString stringWithFormat:@"2017-%@-%ld",self.selectedMonth,tag+1];
-    
+    selectIndex = tag;
     [[Utils sharedInstance] downLoadServerFile:self.selectedRoom timeStr:timeStr];
     
+}
+
+
+#pragma mark -- notification
+-(void)nofileNotificationAction:(NSNotification *)d
+{
+    NSDictionary *userInfo = d.userInfo;
+    NSString *tipStr = [NSString stringWithFormat:@"文件不存在"];
+    [SVProgressHUD showErrorWithStatus:tipStr];
+    
+}
+
+-(void)errNotificationAction:(NSNotification *)d
+{
+    NSDictionary *userInfo = d.userInfo;
+    NSString *tipStr = [NSString stringWithFormat:@"下载超时"];
+    [SVProgressHUD showErrorWithStatus:tipStr];
+    
+}
+
+-(void)sucNotificationAction:(NSNotification *)d
+{
+    NSDictionary *userInfo = d.userInfo;
+    
+    NSIndexPath *index = [NSIndexPath indexPathForRow:selectIndex inSection:0];
+    dayCell *cell = [_mytableView cellForRowAtIndexPath:index];
+    cell.downBtn.selected = YES;
+    [_mytableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 

@@ -30,5 +30,6 @@
 
 @property(nonatomic,strong) NSString *selectedMonth;
 @property(nonatomic,strong) NSString *selectedRoom;
+@property (weak, nonatomic) IBOutlet UITableView *mytableView;
 
 @end

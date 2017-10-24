@@ -9,6 +9,7 @@
 #import "TBResultViewController.h"
 #import "TBFileRoomResult_entry.h"
 #import "TBFileRoomResult_roomArr.h"
+#import "SVProgressHUD.h"
 @interface TBResultViewController ()
 {
     NSArray*dataArray;
@@ -163,6 +164,19 @@
     [self presentViewController:alert animated:NO completion:nil];
 }
 
+-(void)nofileNotificationAction:(NSNotification *)d
+{
+    NSDictionary *userInfo = d.userInfo;
+    NSString *tipStr = [NSString stringWithFormat:@"文件不存在"];
+    [SVProgressHUD showErrorWithStatus:tipStr];
+    
+}
+
+-(void)sucNotificationAction:(NSNotification *)d
+{
+    NSDictionary *userInfo = d.userInfo;
+    
+}
 
 
 @end
