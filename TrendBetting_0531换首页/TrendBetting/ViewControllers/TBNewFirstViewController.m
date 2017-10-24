@@ -62,33 +62,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downErrNotificationAction:) name:@"DownErrNotification" object:nil];
-    //下载文件
-    NSDate *now = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
-    
-    int year =(int) [dateComponent year];
-    int month = (int) [dateComponent month];
-    int day = (int) [dateComponent day];
 
-    NSDate *nowDate = [NSDate date];
-    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
-    NSDate *lastDate = [formatter dateFromString:str];
-
-    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
-        day = day+1;
-    }
-
-    
-    for (int i = 1; i<5; i++) {
-        NSString *timeStr = [NSString stringWithFormat:@"2017-%02d-%02d",month,day];
-        [[Utils sharedInstance] downLoadServerFile:[NSString stringWithFormat:@"%d",i] timeStr:timeStr];
-    }
-    
 //    [[Utils sharedInstance] downLoadServerFile:@"3" timeStr:@"2017-10-22"];
     
     
@@ -910,23 +884,6 @@
 //    }
 //}
 
-
-// 接收下载失败的通知
-- (void)downErrNotificationAction:(NSNotification *)notification{
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *tipStr = [NSString stringWithFormat:@"%@号房间下载超时",[userInfo objectForKey:@"roomStr"]];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:tipStr preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    UIAlertAction *reDown = [UIAlertAction actionWithTitle:@"重试" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        [[Utils sharedInstance] downLoadServerFile:[userInfo objectForKey:@"roomStr"] timeStr:[userInfo objectForKey:@"timeStr"]];
-    }];
-    [alert addAction:cancel];
-    [alert addAction:reDown];
-    [self presentViewController:alert animated:NO completion:nil];
-}
 
 
 @end
