@@ -13,6 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *winCountLab;
 @property(copy,nonatomic)NSString * selectedTitle;
 @property(copy,nonatomic)NSDictionary * dayDic;
+
+@property(copy,nonatomic)NSString * houseStr;
+@property(copy,nonatomic)NSString * isCurrentDay;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
 @interface newRuleDayCollectionViewCell : UICollectionViewCell

@@ -16,6 +16,7 @@
     JHLineChart *totalLineChart;
     NSMutableArray*answerArray;
     NSMutableArray*totalAnswerArray;
+    NSThread*thread;
     
 }
 @end
@@ -30,9 +31,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
-    self.title=_selectedTitle;
     
     
+    
+    
+  
+    if ([_isCurrentDay intValue]==1) {
+        
+        [self getDataRead];
+    } else {
+        self.title=_selectedTitle;
+        [self updateView];
+    }
+    
+    // Do any additional setup after loading the view.
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [thread cancel];
+    thread=nil;
+}
+-(void)getDataRead
+{
+    NSArray*curDay=[[Utils sharedInstance] getCurrentYearMonthDay];
+    self.title=[NSString stringWithFormat:@"%@-%@-%@",curDay[0],curDay[1],curDay[2]];
+    _dayDic=[[Utils sharedInstance] getNewRuleDayData:[NSString stringWithFormat:@"%@/%@-%@",_selectedTitle,curDay[0],curDay[1]] dayStr:curDay[2]];
+    [self updateView];
+
+}
+-(void)updateView{
     
     dataArray=[[NSMutableArray alloc]init];
     answerArray=[[NSMutableArray alloc]init];
@@ -58,10 +86,8 @@
     }
     
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"foot1"];
-    
-    
-    // Do any additional setup after loading the view.
 }
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return dataArray.count;

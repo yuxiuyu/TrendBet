@@ -24,5 +24,5 @@
 
 -(void)editUserInfo:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure;
 #pragma mark 获取记录json串
--(void)getServerData:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure;
+-(void)getServerData:(NSDictionary *)d isanimated:(BOOL)isanimated success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure;
 @end

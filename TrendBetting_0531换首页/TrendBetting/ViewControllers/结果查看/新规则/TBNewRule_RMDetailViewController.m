@@ -61,7 +61,7 @@
 }
 -(void)getDataRead
 {
-         [self showProgress:YES];
+        [self showProgress:YES];
         houseMonthDic=[[NSMutableDictionary alloc]init];
         NSArray*monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
         for (NSString*monthstr in monthsArr)

@@ -10,7 +10,7 @@
 #import "Utils+encryption.h"
 #import "TBWebService+Login&Register.h"
 @implementation Utils (downServerFile)
--(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr{
+-(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr isanimated:(BOOL)isanimated{
     //    NSString*roomStr=@"4";
     //    NSString*timeStr=@"2017-10-13";
     //    BOOL issuccess = YES;
@@ -28,7 +28,7 @@
     NSNotification *sucnotification =[NSNotification notificationWithName:@"InfoNotification" object:nil userInfo:notiDic];
     NSNotification *noFilenotification =[NSNotification notificationWithName:@"noFileInfoNotification" object:nil userInfo:notiDic];
     //    __weak typeof(self) weakself =self;
-    [[TBWebService sharedInstance] getServerData:dic success:^(NSDictionary *responseObject) {
+    [[TBWebService sharedInstance] getServerData:dic isanimated:isanimated success:^(NSDictionary *responseObject) {
         NSLog(@"res is %@",responseObject);
         if ([[responseObject objectForKey:@"code"] integerValue] == 200) {
             // 下载完成
@@ -50,5 +50,67 @@
         
     }];
     //    return issuccess;
+}
+-(NSArray*)getCurrentYearMonthDay{
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+    
+    int year =(int) [dateComponent year];
+    int month = (int) [dateComponent month];
+    int day = (int) [dateComponent day];
+    NSArray *monthArr = @[@"1",@"3",@"5",@"7",@"8",@"10",@"12"];
+    
+    NSDate *nowDate = [NSDate date];
+    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+    NSDate *lastDate = [formatter dateFromString:str];
+    
+    
+    NSString *monthStr = [NSString stringWithFormat:@"%d",month];
+    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
+        if ([monthArr containsObject:monthStr]) {
+            if (day == 31) {
+                if (month == 12) {
+                    year = year + 1;
+                    month = 1;
+                    day = 1;
+                }else{
+                    day = 1;
+                    month = month + 1;
+                }
+            }else{
+                day = day + 1;
+            }
+        }else if(month == 2)
+        {
+            if (year % 4 == 0) {
+                if (day == 29) {
+                    day = 1;
+                    month = month + 1;
+                }else{
+                    day = day + 1;
+                }
+            }else{
+                if (day == 28) {
+                    day = 1;
+                    month = month + 1;
+                }else{
+                    day = day + 1;
+                }
+            }
+        }else
+        {
+            if (day == 30) {
+                day = 1;
+                month = month + 1;
+            }else{
+                day = day + 1;
+            }
+        }
+    }
+    return @[[NSString stringWithFormat:@"%d",year],[NSString stringWithFormat:@"%d",month],[NSString stringWithFormat:@"%d",day]];
 }
 @end

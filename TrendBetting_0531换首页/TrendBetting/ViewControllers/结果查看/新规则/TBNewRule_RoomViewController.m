@@ -27,15 +27,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self hidenProgress];
     self.title=@"房间";
     self.edgesForExtendedLayout=UIRectEdgeNone;
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"规则选择" style:UIBarButtonItemStylePlain target:self action:@selector(tenRuleBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
     
     
     self.navigationController.navigationBarHidden=NO;
-      allHouseArr=[[NSMutableArray alloc]init];
+    [self getData];
+   
+//    houseMoneyDic=[[NSMutableDictionary alloc]init];
+    
+//    if ([_isCurrentDay intValue]==1)
+//    {
+//        thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
+//        [thread start];
+//    }
+    
+    
+    
+   
+}
+-(void)getData{
+    allHouseArr=[[NSMutableArray alloc]init];
     [allHouseArr addObjectsFromArray:[[Utils sharedInstance] getAllFileName:nil]];
     
     for (int i=0;i<allHouseArr.count;i++)
@@ -49,16 +65,7 @@
         }
     }
 
-//    houseMoneyDic=[[NSMutableDictionary alloc]init];
-    
-//    thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
-//    [thread start];
-    
-    
-    
-   
 }
-
 //-(void)viewWillDisappear:(BOOL)animated
 //{
 //    [super viewWillDisappear:animated];
@@ -140,7 +147,12 @@
 {
   
     [[Utils sharedInstance] initSetTenModel];
-    [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
+    if ([_isCurrentDay intValue]==0) {
+         [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
+    } else if ([_isCurrentDay intValue]==1) {
+         [self performSegueWithIdentifier:@"showNewRuleDayVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item],@"isCurrentDay":_isCurrentDay}];
+    }
+   
 }
 
 
@@ -156,16 +168,22 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"showNewRuleRoomVC"])
-    {
+//    if ([segue.identifier isEqualToString:@"showNewRuleRoomVC"])
+//    {
         UIViewController*vc=[segue destinationViewController];
         [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-    }
+//    }
 }
 -(void)tenRuleBtnAction{
     TBFixGroupListViewController*vc=[[UIStoryboard storyboardWithName:@"setting" bundle:nil] instantiateViewControllerWithIdentifier:@"fixGroupListViewController"];
     [self.navigationController pushViewController:vc animated:YES];
 }
-
+-(void)sucNotificationAction:(NSNotification *)d
+{
+    //    NSDictionary *userInfo = d.userInfo;
+    [self getData];
+    [_collectionview reloadData];
+    
+}
 
 @end

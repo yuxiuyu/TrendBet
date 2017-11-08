@@ -9,10 +9,11 @@
 #import "TBBaseViewController.h"
 
 @interface TBNewRule_RoomViewController : TBBaseViewController
-
+@property(copy,nonatomic)NSString * isCurrentDay;
 @end
 @interface newroomCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *roomLab;
 @property (weak, nonatomic) IBOutlet UILabel *resultCountLab;
+
 
 @end

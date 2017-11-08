@@ -49,7 +49,7 @@
     NSFileManager*fileManager=[[NSFileManager alloc]init];
     NSString*documentDictionary=[self getHomePath];
     NSString*createPath=[NSString stringWithFormat:@"%@/%@号/%@",documentDictionary,houseStr,monthStr];
-    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",dayStr];
+    NSString*nameStr=[NSString stringWithFormat:@"%d.txt",[dayStr intValue]];
     NSString* filePath=[createPath stringByAppendingPathComponent:nameStr];
     NSData*fileData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath])

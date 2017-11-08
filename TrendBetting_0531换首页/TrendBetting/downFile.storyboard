@@ -198,17 +198,27 @@
                                                         <action selector="downBtnAction:" destination="Du4-SS-m7k" eventType="touchUpInside" id="Rrd-Sc-uQj"/>
                                                     </connections>
                                                 </button>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="已存在" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqq-5t-bNG">
+                                                    <frame key="frameInset" minX="265" minY="12" width="56" height="21"/>
+                                                    <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="RCt-7y-URa" firstAttribute="leading" secondItem="Tqq-5t-bNG" secondAttribute="trailing" constant="16" id="60b-HC-7k9"/>
                                                 <constraint firstItem="RCt-7y-URa" firstAttribute="centerY" secondItem="LyI-Xj-tCc" secondAttribute="centerY" id="9sV-yL-vtc"/>
                                                 <constraint firstItem="x93-32-CPV" firstAttribute="centerY" secondItem="LyI-Xj-tCc" secondAttribute="centerY" id="GhM-bP-35Q"/>
                                                 <constraint firstAttribute="trailing" secondItem="RCt-7y-URa" secondAttribute="trailing" constant="8" id="S66-lq-SGg"/>
                                                 <constraint firstItem="x93-32-CPV" firstAttribute="leading" secondItem="LyI-Xj-tCc" secondAttribute="leadingMargin" id="y2B-CG-yo9"/>
+                                                <constraint firstItem="Tqq-5t-bNG" firstAttribute="centerY" secondItem="LyI-Xj-tCc" secondAttribute="centerY" id="yVL-Re-Onb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dayLab" destination="x93-32-CPV" id="DF8-dL-1Ip"/>
                                             <outlet property="downBtn" destination="RCt-7y-URa" id="oFx-dH-oa3"/>
+                                            <outlet property="yicunzai" destination="Tqq-5t-bNG" id="pi4-Eo-PWn"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -221,8 +231,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="k4i-JC-neo" firstAttribute="top" secondItem="l3n-q3-E4f" secondAttribute="bottom" id="1tI-95-62g"/>
-                            <constraint firstAttribute="trailing" secondItem="l3n-q3-E4f" secondAttribute="trailing" id="XKv-Kk-c4e"/>
                             <constraint firstItem="l3n-q3-E4f" firstAttribute="leading" secondItem="RNh-Vz-CsJ" secondAttribute="leading" id="oX0-o2-Uxr"/>
+                            <constraint firstAttribute="trailing" secondItem="l3n-q3-E4f" secondAttribute="trailing" id="viH-Zl-7Gh"/>
                             <constraint firstItem="l3n-q3-E4f" firstAttribute="top" secondItem="RNh-Vz-CsJ" secondAttribute="top" id="ySs-c5-5dt"/>
                         </constraints>
                     </view>

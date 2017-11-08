@@ -45,17 +45,17 @@
     ////返利基数
     if (![defaults objectForKey:SAVE_BackMoney])
     {
-        [defaults setObject:@"5" forKey:SAVE_BackMoney];
+        [defaults setObject:@"8" forKey:SAVE_BackMoney];
     }
     /////长跳
     if (![defaults objectForKey:SAVE_GotwoCount])
     {
-        [defaults setObject:@"3" forKey:SAVE_GotwoCount];
+        [defaults setObject:@"4" forKey:SAVE_GotwoCount];
     }
     /////长连
     if (![defaults objectForKey:SAVE_GoCount])
     {
-        [defaults setObject:@"3" forKey:SAVE_GoCount];
+        [defaults setObject:@"4" forKey:SAVE_GoCount];
     }
      /////小二路
     if (![defaults objectForKey:SAVE_GoXiaoCount])

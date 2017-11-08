@@ -29,7 +29,7 @@
   return _sharedInstance;
 }
 
-- (void)bascRequest:(NSString*)api postData:(id)postData success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure{
+- (void)bascRequest:(NSString*)api postData:(id)postData isanimated:(BOOL)isanimated success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure{
     NSString* fullUrl = [NSString stringWithFormat:@"%@%@", SERVER_URL, api];
       
 
@@ -38,10 +38,14 @@
   manager.requestSerializer = [AFJSONRequestSerializer serializer];
   [manager.requestSerializer setTimeoutInterval:RequestTimeoutInterval];
   manager.responseSerializer = [AFCompoundResponseSerializer serializer];
-     [self showProgress:YES];
+    if (isanimated)
+    {
+          [SVProgressHUD showWithStatus:@"文件下载中"];
+    }
+
   [manager POST:fullUrl parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-     [self hidenProgress];
+    
 //      if (responseString.length==6)
 //      {
 //          success(@{@"msg":@"success"});
@@ -59,9 +63,16 @@
 //      NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
       
       NSDictionary* responseDict = [responseString objectFromJSONString];
+      if (isanimated) {
+          [self hidenProgress];
+      }
+      
       success(responseDict);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-       [self hidenProgress];
+      if (isanimated) {
+          [self hidenProgress];
+      }
+      
     WBSLog(@"Error: %@", error);
     WBSLog(@"Error: %@", [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding]);
     if (failure) {

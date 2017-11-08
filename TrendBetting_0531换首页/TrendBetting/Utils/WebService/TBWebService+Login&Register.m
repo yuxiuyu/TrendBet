@@ -17,30 +17,30 @@
 
 -(void)login:(NSString*)phoneNumber password:(NSString*)password success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure{
   NSDictionary* postDict = @{@"phone":phoneNumber,@"pwd":password};
-  [self bascRequest:@"api/login" postData:postDict success:success failure:failure];
+  [self bascRequest:@"api/login" postData:postDict isanimated:YES success:success failure:failure];
 }
 
 #pragma mark 获取salt码
 
 -(void)getSalt:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure
 {
-    [self bascRequest:@"api/Uservalidate/getsalt" postData:d success:success failure:failure];
+    [self bascRequest:@"api/Uservalidate/getsalt" postData:d isanimated:YES success:success failure:failure];
 }
 #pragma mark 获取用户信息
 
 -(void)getUserInfo:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure
 {
-    [self bascRequest:@"api/Uservalidate/getuserinfo" postData:d success:success failure:failure];
+    [self bascRequest:@"api/Uservalidate/getuserinfo" postData:d isanimated:YES success:success failure:failure];
 }
 #pragma mark 修改用户标识
 
 -(void)editUserInfo:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure
 {
-    [self bascRequest:@"api/Uservalidate/setuniquestr" postData:d success:success failure:failure];
+    [self bascRequest:@"api/Uservalidate/setuniquestr" postData:d isanimated:YES success:success failure:failure];
 }
 #pragma mark 获取记录json串
--(void)getServerData:(NSDictionary *)d success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure
+-(void)getServerData:(NSDictionary *)d isanimated:(BOOL)isanimated success:(void (^)(NSDictionary * responseObject))success failure:(void (^)(NSString * error))failure
 {
-    [self bascRequest:@"api/Game/jsonstr" postData:d success:success failure:failure];
+    [self bascRequest:@"api/Game/jsonstr" postData:d isanimated:isanimated success:success failure:failure];
 }
 @end

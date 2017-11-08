@@ -13,6 +13,8 @@
 @interface TBResultViewController ()
 {
     NSArray*dataArray;
+    NSInteger mytimeCount;
+    BOOL isappera;
 }
 @end
 
@@ -21,38 +23,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"结果查看";
+    isappera=YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downErrNotificationAction:) name:@"DownErrNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nofileNotificationAction:) name:@"noFileInfoNotification" object:nil];
     //下载文件
-    NSDate *now = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+   
     
-    int year =(int) [dateComponent year];
-    int month = (int) [dateComponent month];
-    int day = (int) [dateComponent day];
-    
-    NSDate *nowDate = [NSDate date];
-    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
-    NSDate *lastDate = [formatter dateFromString:str];
-    
-    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
-        day = day+1;
-    }
-    
-    
+    mytimeCount=0;
+     [SVProgressHUD showWithStatus:@"文件下载中"];
+    NSArray*curDay=[[Utils sharedInstance] getCurrentYearMonthDay];
     for (int i = 1; i<5; i++) {
-        NSString *timeStr = [NSString stringWithFormat:@"2017-%02d-%02d",month,day];
-        [[Utils sharedInstance] downLoadServerFile:[NSString stringWithFormat:@"%d",i] timeStr:timeStr];
+        NSString *timeStr = [NSString stringWithFormat:@"%d-%02d-%02d",[curDay[0] intValue],[curDay[1] intValue],[curDay[2] intValue]];
+        [[Utils sharedInstance] downLoadServerFile:[NSString stringWithFormat:@"%d",i] timeStr:timeStr isanimated:NO];
     }
     
     
     self.navigationController.navigationBarHidden=NO;
     _tableview.tableFooterView=[[UIView alloc]init];
-    dataArray=@[@"读取新规则结果"];
+    dataArray=@[@"读取新规则结果",@"读取今天的结果"];
 //    dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果",@"读取新规则结果"];
 //     dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果"];
     // Do any additional setup after loading the view.
@@ -95,7 +85,7 @@
 //        
 //    }
 //    else{
-         [self performSegueWithIdentifier:@"show_newResultRoomVC" sender:nil];
+    [self performSegueWithIdentifier:@"show_newResultRoomVC" sender:@{@"isCurrentDay":[NSString stringWithFormat:@"%ld",indexPath.row]}];
     
 //    }
 }
@@ -157,7 +147,7 @@
     }];
     UIAlertAction *reDown = [UIAlertAction actionWithTitle:@"重试" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        [[Utils sharedInstance] downLoadServerFile:[userInfo objectForKey:@"roomStr"] timeStr:[userInfo objectForKey:@"timeStr"]];
+        [[Utils sharedInstance] downLoadServerFile:[userInfo objectForKey:@"roomStr"] timeStr:[userInfo objectForKey:@"timeStr"] isanimated:NO];
     }];
     [alert addAction:cancel];
     [alert addAction:reDown];
@@ -167,16 +157,28 @@
 -(void)nofileNotificationAction:(NSNotification *)d
 {
     NSDictionary *userInfo = d.userInfo;
-    NSString *tipStr = [NSString stringWithFormat:@"文件不存在"];
-    [SVProgressHUD showErrorWithStatus:tipStr];
+    NSString *tipStr = [NSString stringWithFormat:@"%@号-%@ 文件不存在",userInfo[@"roomStr"],userInfo[@"timeStr"]];
+    [self.view makeToast:tipStr duration:2.0f position:CSToastPositionBottom];
+    mytimeCount++;
+    [self refreshData];
     
 }
 
 -(void)sucNotificationAction:(NSNotification *)d
 {
-    NSDictionary *userInfo = d.userInfo;
-    
+//    NSDictionary *userInfo = d.userInfo;
+    mytimeCount++;
+    [self refreshData];
+
 }
 
-
+-(void)refreshData{
+    if (mytimeCount==4&&isappera) {
+         [self hidenProgress];
+    }
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    isappera=NO;
+}
 @end

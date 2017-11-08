@@ -10,6 +10,7 @@
 
 @interface Utils (downServerFile)
 //下载文件
--(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr;
+-(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr isanimated:(BOOL)isanimated;
+-(NSArray*)getCurrentYearMonthDay;
 @end
  

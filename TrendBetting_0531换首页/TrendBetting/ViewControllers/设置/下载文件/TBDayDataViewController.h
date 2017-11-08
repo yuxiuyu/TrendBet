@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dayLab;
 @property (weak, nonatomic) IBOutlet UIButton *downBtn;
 - (IBAction)downBtnAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *yicunzai;
 
 @end
 
@@ -28,6 +29,7 @@
 
 @interface TBDayDataViewController : TBBaseViewController
 
+@property(nonatomic, strong) NSString *currentAllDay;
 @property(nonatomic,strong) NSString *selectedMonth;
 @property(nonatomic,strong) NSString *selectedRoom;
 @property (weak, nonatomic) IBOutlet UITableView *mytableView;

@@ -67,7 +67,7 @@
     
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -99,6 +99,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+     [self hidenProgress];
     self.navigationController.navigationBarHidden=YES;
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TenBlodRule]];
     [Utils sharedInstance].tenModel=tenM;

@@ -54,7 +54,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"文件";
+    self.title=[NSString stringWithFormat:@"%@号房间 %@月",self.selectedRoom,self.selectedMonth];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nofileNotificationAction:) name:@"noFileInfoNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errNotificationAction:) name:@"DownErrNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
@@ -74,10 +74,13 @@
 
     
     dayDataArr = [[NSMutableArray alloc]init];
-    NSArray *arr1 = @[@"1",@"3",@"5",@"7",@"8",@"10",@"12"];
+    NSArray *arr1 = @[@"01",@"03",@"05",@"07",@"08",@"10",@"12"];
     
-    if ([self.selectedMonth integerValue] == month) {
-        allday = day;
+
+    if ([self.selectedMonth integerValue] > month) {
+        allday = 1;
+    }else if ([self.selectedMonth integerValue] == month) {
+        allday = [self.currentAllDay integerValue];
     }else if ([self.selectedMonth integerValue] == 2) {
         if (year%4 == 0) {
             allday = 29;
@@ -115,12 +118,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.downBtn.selected = NO;
+    cell.downBtn.userInteractionEnabled = YES;
     cell.downBtn.tag = indexPath.row + CELL_TAG;
     
     NSString *fileName = dayDataArr[indexPath.row];
     if ([daysArr containsObject:fileName]) {
-        cell.downBtn.selected = YES;
-        cell.downBtn.userInteractionEnabled = NO;
+        cell.yicunzai.hidden = NO;
     }
     cell.dayLab.text = fileName;
     
@@ -146,7 +149,7 @@
     NSLog(@"下载文件:%@号 2017-%@ %ld.txt",self.selectedRoom,self.selectedMonth,tag+1);
     NSString *timeStr = [NSString stringWithFormat:@"2017-%@-%ld",self.selectedMonth,tag+1];
     selectIndex = tag;
-    [[Utils sharedInstance] downLoadServerFile:self.selectedRoom timeStr:timeStr];
+    [[Utils sharedInstance] downLoadServerFile:self.selectedRoom timeStr:timeStr isanimated:YES];
     
 }
 
@@ -154,31 +157,36 @@
 #pragma mark -- notification
 -(void)nofileNotificationAction:(NSNotification *)d
 {
-    NSDictionary *userInfo = d.userInfo;
+//    NSDictionary *userInfo = d.userInfo;
     NSString *tipStr = [NSString stringWithFormat:@"文件不存在"];
-    [SVProgressHUD showErrorWithStatus:tipStr];
+    [self.view makeToast:tipStr duration:3.0f position:CSToastPositionCenter];
+//    [SVProgressHUD showErrorWithStatus:tipStr];
     
 }
 
 -(void)errNotificationAction:(NSNotification *)d
 {
-    NSDictionary *userInfo = d.userInfo;
+//    NSDictionary *userInfo = d.userInfo;
     NSString *tipStr = [NSString stringWithFormat:@"下载超时"];
-    [SVProgressHUD showErrorWithStatus:tipStr];
+     [self.view makeToast:tipStr duration:3.0f position:CSToastPositionCenter];
+//    [SVProgressHUD showErrorWithStatus:tipStr];
     
 }
 
 -(void)sucNotificationAction:(NSNotification *)d
 {
-    NSDictionary *userInfo = d.userInfo;
+//    NSDictionary *userInfo = d.userInfo;
     
     NSString *tipStr = [NSString stringWithFormat:@"下载成功"];
-    [SVProgressHUD showErrorWithStatus:tipStr];
+    NSString*monthFileNameStr=[NSString stringWithFormat:@"%@号/2017-%@",self.selectedRoom,self.selectedMonth];
+    daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
+     [self.view makeToast:tipStr duration:3.0f position:CSToastPositionCenter];
+//    [SVProgressHUD showErrorWithStatus:tipStr];
     NSIndexPath *index = [NSIndexPath indexPathForRow:selectIndex inSection:0];
     dayCell *cell = [_mytableView cellForRowAtIndexPath:index];
-    cell.downBtn.selected = YES;
+    cell.yicunzai.hidden = NO;
     [_mytableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
-    [_mytableView reloadData];
+//    [_mytableView reloadData];
 }
 
 

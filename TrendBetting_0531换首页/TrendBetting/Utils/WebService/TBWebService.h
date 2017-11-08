@@ -15,7 +15,7 @@
 
 + (instancetype)sharedInstance;
 
-- (void)bascRequest:(NSString*)api postData:(id)postData success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure;
+- (void)bascRequest:(NSString*)api postData:(id)postData isanimated:(BOOL)isanimated success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure;
 
 - (void)bascRequestGet:(NSString*)api postData:(id)postData success:(void (^)(NSDictionary* responseObject))success failure:(void (^)(NSString* error))failure;
 
