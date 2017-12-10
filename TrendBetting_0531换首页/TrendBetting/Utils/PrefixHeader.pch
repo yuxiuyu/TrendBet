@@ -31,6 +31,7 @@
 #import "tenRuleModel.h"
 #define SAVE_DATA_FILENAME @"myData"
 #define SAVE_RULE_FILENAME @"myRuleData"
+#define SAVE_EXPORT_FILENAME @"myExportData"
 
 #define SAVE_MONEY_TXT @"myMoney"
 #define SAVE_RULE_TXT @"myRule"
