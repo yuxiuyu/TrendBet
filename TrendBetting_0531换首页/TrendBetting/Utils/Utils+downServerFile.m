@@ -44,7 +44,7 @@
     } failure:^(NSString *error) {
         NSLog(@"error is %@",error);
         if ([error isEqualToString:@"The request timed out."]) {
-            
+        
             [[NSNotificationCenter defaultCenter] postNotification:errnotification];
         }
         
@@ -112,5 +112,12 @@
         }
     }
     return @[[NSString stringWithFormat:@"%d",year],[NSString stringWithFormat:@"%d",month],[NSString stringWithFormat:@"%d",day]];
+}
+-(NSInteger)getAllDayFromDate:(NSDate*)date{
+    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]; // 指定日历的算法 NSGregorianCalendar - ios 8
+    NSRange range = [calendar rangeOfUnit:NSCalendarUnitDay  //NSDayCalendarUnit - ios 8
+                                   inUnit: NSCalendarUnitMonth //NSMonthCalendarUnit - ios 8
+                                  forDate:date];
+    return range.length;
 }
 @end

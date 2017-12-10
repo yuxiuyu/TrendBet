@@ -31,11 +31,12 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 @property(strong,nonatomic)NSMutableArray*groupArray;//总的组的数组
 @property(strong,nonatomic)NSMutableArray*groupSelectedArr;//选中的总的组的数组
 @property(strong,nonatomic)tenRuleModel*tenModel;
+@property(nonatomic, assign) BOOL isNetwork;
 
 ////去掉浮点数后面多余的0
 -(NSString*)removeFloatAllZero:(NSString*)string;
 //排序
--(NSArray*)orderArr:(NSArray*)arr;
+-(NSArray*)orderArr:(NSArray*)arr isArc:(BOOL)isArc;
 ///获取选中的收益规则
 -(void)getSelectedMoneyArr;
 ///获取选中的趋势规则

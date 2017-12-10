@@ -9,7 +9,7 @@
 #ifndef Utils_size_h
 #define Utils_size_h
 #import <Foundation/Foundation.h>
-#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width==812 ? [[UIScreen mainScreen] bounds].size.width-44-44 : [[UIScreen mainScreen] bounds].size.width
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? YES : NO)
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)

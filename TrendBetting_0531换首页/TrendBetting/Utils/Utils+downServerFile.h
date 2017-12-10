@@ -12,5 +12,6 @@
 //下载文件
 -(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr isanimated:(BOOL)isanimated;
 -(NSArray*)getCurrentYearMonthDay;
+-(NSInteger)getAllDayFromDate:(NSDate*)date;
 @end
  

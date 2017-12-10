@@ -38,17 +38,17 @@
    
 }
 //排序
--(NSArray*)orderArr:(NSArray*)arr{
+-(NSArray*)orderArr:(NSArray*)arr isArc:(BOOL)isArc{
     NSArray*xArray=[arr sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         obj1=[(NSString*)obj1 stringByReplacingOccurrencesOfString:@"-" withString:@""];
         obj2=[(NSString*)obj2 stringByReplacingOccurrencesOfString:@"-" withString:@""];
         if ([obj1 intValue]>[obj2 intValue])
         {
-            return NSOrderedDescending;
+            return isArc?NSOrderedDescending:NSOrderedAscending;
         }
         else if ([obj1 intValue]>[obj2 intValue])
         {
-            return NSOrderedAscending;
+            return isArc?NSOrderedAscending:NSOrderedDescending;
         }
         else
         {
