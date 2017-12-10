@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "IQKeyboardManager.h"
+#import "AFNetworkReachabilityManager.h"
 @interface AppDelegate ()
 {
     NSUserDefaults*defaults;
@@ -162,6 +163,7 @@
 //    }
     ////
     [self initKeyBoard];
+    [self monitorNetworking];
 
 
     return YES;
@@ -238,6 +240,50 @@
     //    manager.toolbarManageBehaviour = IQAutoToolbarBySubviews;
     
     
+}
+#pragma mark - ------------- 监测网络状态 -------------
+- (void)monitorNetworking
+{
+    [Utils sharedInstance].isNetwork = YES;
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case -1:
+                 [Utils sharedInstance].isNetwork = YES;
+                NSLog(@"未知网络");
+                break;
+            case 0:
+                NSLog(@"网络不可达");
+                 [Utils sharedInstance].isNetwork = NO;
+                break;
+            case 1:
+            {
+                 [Utils sharedInstance].isNetwork = YES;
+                NSLog(@"GPRS网络");
+                //发通知，带头搞事
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"1" userInfo:nil];
+            }
+                break;
+            case 2:
+            {
+                 [Utils sharedInstance].isNetwork = YES;
+                NSLog(@"wifi网络");
+                //发通知，搞事情
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"2" userInfo:nil];
+            }
+                break;
+            default:
+                break;
+        }
+        if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+             [Utils sharedInstance].isNetwork = YES;
+            NSLog(@"有网");
+            
+        }else{
+            [Utils sharedInstance].isNetwork = NO;
+            NSLog(@"没网");
+        }
+    }];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
