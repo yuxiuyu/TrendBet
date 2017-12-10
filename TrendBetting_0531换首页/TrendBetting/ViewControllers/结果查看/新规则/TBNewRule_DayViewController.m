@@ -75,7 +75,7 @@
     
     NSMutableArray*array=[[NSMutableArray alloc]initWithArray:[_dayDic allKeys]];
     [array removeObject:@"daycount"];
-    dataArray=[[Utils sharedInstance] orderArr:array];
+    dataArray=[[Utils sharedInstance] orderArr:array isArc:YES];
     for (int i=0; i<dataArray.count; i++)
     {
         NSArray*tparray=_dayDic[dataArray[i]];

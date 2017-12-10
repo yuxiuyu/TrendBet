@@ -7,7 +7,7 @@
 //
 
 #import "TBNewRule_RMDetailViewController.h"
-
+#import "JHLineChart.h"
 @interface TBNewRule_RMDetailViewController ()
 {
     
@@ -18,6 +18,11 @@
     NSThread*thread;
     NSMutableArray*totalDayKeyArr;//所有月连日
     NSMutableArray*totalDayValueArr;//所有月连日结果相加
+    JHLineChart *lineChart;
+    JHLineChart *totalLineChart;
+    
+    NSMutableArray*oneAnswerArray;
+    NSMutableArray*totalOneAnswerArray;
     
     
 }
@@ -44,6 +49,8 @@
     dateDic=[[NSMutableDictionary alloc]init];
     dataArray=[[NSMutableArray alloc]init];
     
+    oneAnswerArray = [[NSMutableArray alloc]init];
+    totalOneAnswerArray = [[NSMutableArray alloc]init];
     thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
     [thread start];
    
@@ -93,7 +100,7 @@
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     ///////
-    NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[houseMonthDic allKeys]];
+    NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[houseMonthDic allKeys] isArc:YES];
     for (int p=0; p<tepMonthKeyArray.count; p++) {
 
 //    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -102,7 +109,7 @@
         [dataArray addObject:key];
        
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
-        NSArray*tepDayKeyArray=[[Utils sharedInstance] orderArr:[daysDic allKeys]];
+        NSArray*tepDayKeyArray=[[Utils sharedInstance] orderArr:[daysDic allKeys] isArc:YES];
         for (int k=0; k<tepDayKeyArray.count; k++) {
             
         
@@ -138,7 +145,7 @@
                 }
             }
             NSArray*monKey=[key componentsSeparatedByString:@"-"];
-            [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%d",monKey[1],k+1]];
+            [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%@.%@",monKey[0],monKey[1],tepDayKeyArray[k]]];
             [totalDayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
         }
         [dateDic setObject:monthSumWinCountArray forKey:key];
@@ -155,6 +162,13 @@
                       }];
     dataArray=[[NSMutableArray alloc]initWithArray:tepArray];
 #warning - yxy0409 - edit
+    float ysum = 0;
+    for (int y=0; y<dataArray.count; y++) {
+         NSArray*yarray=dateDic[dataArray[y]];
+        ysum = ysum + [yarray[5] floatValue];
+        [oneAnswerArray addObject:[[Utils sharedInstance]removeFloatAllZero:yarray[5]]];
+        [totalOneAnswerArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",ysum]]];
+    }
     [_tableview reloadData];
     
     
@@ -212,6 +226,27 @@
     }
     return 0;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    return 45;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 600+45*dataArray.count;
+}
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView*resView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 600)];
+    if (dataArray.count>1)
+    {
+        [self showFirstAndFouthQuardrant:dataArray vArray:oneAnswerArray];
+        [resView addSubview:lineChart];
+        
+        [self showFirstAndFouthQuardrant1:dataArray vArray:totalOneAnswerArray];
+        [resView addSubview:totalLineChart];
+    }
+    return resView;
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -223,10 +258,86 @@
     [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
 }
 -(void)goMonthsresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"titleStr":@"连月结果"}];
+    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle]}];
 
 }
+//第一四象限
+- (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray
+{
+    if (!lineChart)
+    {
+        lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, 45*dataArray.count, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
+        lineChart.xLineDataArr = xarray;
+        lineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
+        lineChart.valueArr = @[vArray];
+        lineChart.yDescTextFontSize = lineChart.xDescTextFontSize = 9.0;
+        lineChart.valueFontSize = 9.0;
+        /* 值折线的折线颜色 默认暗黑色*/
+        lineChart.valueLineColorArr =@[ [UIColor redColor], [UIColor greenColor]];
+        
+        /* 值点的颜色 默认橘黄色*/
+        lineChart.pointColorArr = @[[UIColor orangeColor],[UIColor yellowColor]];
+        
+        /*        是否展示Y轴分层线条 默认否        */
+        lineChart.showYLevelLine = NO;
+        lineChart.showValueLeadingLine = NO;
+        lineChart.showYLevelLine = YES;
+        lineChart.showYLine = YES;
+        
+        /* X和Y轴的颜色 默认暗黑色 */
+        lineChart.xAndYLineColor = [UIColor darkGrayColor];
+        lineChart.backgroundColor = [UIColor whiteColor];
+        /* XY轴的刻度颜色 m */
+        lineChart.xAndYNumberColor = [UIColor darkGrayColor];
+        
+        lineChart.contentFill = YES;
+        
+        lineChart.pathCurve = YES;
+        
+        lineChart.contentFillColorArr = @[[UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:0.386],[UIColor colorWithRed:0.000 green:1 blue:0 alpha:0.472]];
+        [lineChart showAnimation];
+        
+    }
+}
 
+//第一四象限
+- (void)showFirstAndFouthQuardrant1:(NSArray*)xarray vArray:(NSArray*)vArray
+{
+    if (!totalLineChart)
+    {
+        totalLineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, 45*dataArray.count+300, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
+        totalLineChart.xLineDataArr = xarray;
+        totalLineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
+        totalLineChart.valueArr = @[vArray];
+        totalLineChart.yDescTextFontSize = lineChart.xDescTextFontSize = 9.0;
+        totalLineChart.valueFontSize = 9.0;
+        /* 值折线的折线颜色 默认暗黑色*/
+        totalLineChart.valueLineColorArr =@[ [UIColor redColor], [UIColor greenColor]];
+        
+        /* 值点的颜色 默认橘黄色*/
+        totalLineChart.pointColorArr = @[[UIColor orangeColor],[UIColor yellowColor]];
+        
+        /*        是否展示Y轴分层线条 默认否        */
+        totalLineChart.showYLevelLine = NO;
+        totalLineChart.showValueLeadingLine = NO;
+        totalLineChart.showYLevelLine = YES;
+        totalLineChart.showYLine = YES;
+        
+        /* X和Y轴的颜色 默认暗黑色 */
+        totalLineChart.xAndYLineColor = [UIColor darkGrayColor];
+        totalLineChart.backgroundColor = [UIColor whiteColor];
+        /* XY轴的刻度颜色 m */
+        totalLineChart.xAndYNumberColor = [UIColor darkGrayColor];
+        
+        totalLineChart.contentFill = YES;
+        
+        totalLineChart.pathCurve = YES;
+        
+        totalLineChart.contentFillColorArr = @[[UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:0.386],[UIColor colorWithRed:0.000 green:1 blue:0 alpha:0.472]];
+        [totalLineChart showAnimation];
+        
+    }
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

@@ -93,8 +93,8 @@
         allday = 30;
     }
     
-    for (int i =1; i<allday+1; i++) {
-        NSString *dayDataStr = [NSString stringWithFormat:@"%d.txt",i];
+    for (NSInteger i =allday; i>0; i--) {
+        NSString *dayDataStr = [NSString stringWithFormat:@"%ld.txt",i];
         [dayDataArr addObject:dayDataStr];
     }
     
@@ -119,9 +119,10 @@
     cell.delegate = self;
     cell.downBtn.selected = NO;
     cell.downBtn.userInteractionEnabled = YES;
-    cell.downBtn.tag = indexPath.row + CELL_TAG;
+    cell.downBtn.tag = allday - indexPath.row + CELL_TAG;
     
     NSString *fileName = dayDataArr[indexPath.row];
+    cell.yicunzai.hidden = YES;
     if ([daysArr containsObject:fileName]) {
         cell.yicunzai.hidden = NO;
     }
@@ -146,10 +147,15 @@
 -(void)downBtnClick:(NSInteger)tag
 {
     // 下载按钮点击
-    NSLog(@"下载文件:%@号 2017-%@ %ld.txt",self.selectedRoom,self.selectedMonth,tag+1);
-    NSString *timeStr = [NSString stringWithFormat:@"2017-%@-%ld",self.selectedMonth,tag+1];
-    selectIndex = tag;
-    [[Utils sharedInstance] downLoadServerFile:self.selectedRoom timeStr:timeStr isanimated:YES];
+    if ([Utils sharedInstance].isNetwork) {
+        NSLog(@"下载文件:%@号 2017-%@ %ld.txt",self.selectedRoom,self.selectedMonth,tag);
+        NSString *timeStr = [NSString stringWithFormat:@"2017-%@-%ld",self.selectedMonth,tag];
+        selectIndex =allday - tag;
+        [[Utils sharedInstance] downLoadServerFile:self.selectedRoom timeStr:timeStr isanimated:YES];
+    } else {
+         [self.view makeToast:@"请检查网络设置" duration:3.0f position:CSToastPositionCenter];
+    }
+   
     
 }
 
@@ -167,7 +173,7 @@
 -(void)errNotificationAction:(NSNotification *)d
 {
 //    NSDictionary *userInfo = d.userInfo;
-    NSString *tipStr = [NSString stringWithFormat:@"下载超时"];
+     NSString *tipStr = [NSString stringWithFormat:@"下载超时"];
      [self.view makeToast:tipStr duration:3.0f position:CSToastPositionCenter];
 //    [SVProgressHUD showErrorWithStatus:tipStr];
     

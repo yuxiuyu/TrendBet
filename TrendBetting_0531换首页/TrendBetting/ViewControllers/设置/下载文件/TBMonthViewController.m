@@ -106,12 +106,13 @@
     
     allMonthArr = [[NSMutableArray alloc]init];
     monthStrArr = [[NSMutableArray alloc]init];
-    for (int i =4; i<month+1; i++) {
+    for (int i =month; i>=4; i--) {
         NSString *mothStr = [NSString stringWithFormat:@"%d-%02d",year,i];
         NSString *moth = [NSString stringWithFormat:@"%02d",i];
         [allMonthArr addObject:mothStr];
         [monthStrArr addObject:moth];
     }
+//    allMonthArr =[[NSMutableArray alloc] initWithArray:[[Utils sharedInstance] orderArr:allMonthArr isArc:NO]];
     
     // Do any additional setup after loading the view.
 }

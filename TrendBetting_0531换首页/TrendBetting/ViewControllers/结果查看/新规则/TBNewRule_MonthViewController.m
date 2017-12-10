@@ -85,7 +85,7 @@
     };
     NSArray*tepArray=[self.myCalendarView.fileDateDic allKeys];
 
-    NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray];
+    NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
     NSMutableArray*vArray=[[NSMutableArray alloc]init];
     NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
     for (int i=0; i<xArray.count; i++)
@@ -99,7 +99,7 @@
        //月里的日长连次
         NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
         [xkeyArray removeObject:@"daycount"];
-        NSArray*xtimeArr=[[Utils sharedInstance] orderArr:xkeyArray];
+        NSArray*xtimeArr=[[Utils sharedInstance] orderArr:xkeyArray isArc:YES];
         for (int k=0; k<xtimeArr.count; k++)
         {
             NSArray*tparray=dic[xtimeArr[k]];
@@ -179,7 +179,7 @@
                                                                        }];
 }
 -(void)goDaysresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连月结果"}];
+    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连日结果"}];
     
 }
 

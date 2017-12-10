@@ -30,14 +30,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nofileNotificationAction:) name:@"noFileInfoNotification" object:nil];
     //下载文件
    
-    
+     if ([Utils sharedInstance].isNetwork) {
     mytimeCount=0;
-     [SVProgressHUD showWithStatus:@"文件下载中"];
+    [SVProgressHUD showWithStatus:@"文件下载中"];
     NSArray*curDay=[[Utils sharedInstance] getCurrentYearMonthDay];
     for (int i = 1; i<5; i++) {
         NSString *timeStr = [NSString stringWithFormat:@"%d-%02d-%02d",[curDay[0] intValue],[curDay[1] intValue],[curDay[2] intValue]];
         [[Utils sharedInstance] downLoadServerFile:[NSString stringWithFormat:@"%d",i] timeStr:timeStr isanimated:NO];
     }
+     } else{
+          [self.view makeToast:@"请检查网络设置" duration:3.0f position:CSToastPositionCenter];
+     }
     
     
     self.navigationController.navigationBarHidden=NO;
@@ -152,6 +155,8 @@
     [alert addAction:cancel];
     [alert addAction:reDown];
     [self presentViewController:alert animated:NO completion:nil];
+     mytimeCount++;
+    [self refreshData];
 }
 
 -(void)nofileNotificationAction:(NSNotification *)d

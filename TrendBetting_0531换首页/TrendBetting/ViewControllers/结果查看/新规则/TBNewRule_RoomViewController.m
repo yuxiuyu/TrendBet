@@ -57,7 +57,7 @@
     for (int i=0;i<allHouseArr.count;i++)
     {
         NSString*houseStr = allHouseArr[i];
-        if ([houseStr isEqualToString:SAVE_DATA_FILENAME]||[houseStr isEqualToString:SAVE_RULE_FILENAME])
+        if ([houseStr isEqualToString:SAVE_DATA_FILENAME]||[houseStr isEqualToString:SAVE_RULE_FILENAME]||[houseStr isEqualToString:SAVE_EXPORT_FILENAME])
         {
             [allHouseArr removeObject:houseStr];
             i--;
