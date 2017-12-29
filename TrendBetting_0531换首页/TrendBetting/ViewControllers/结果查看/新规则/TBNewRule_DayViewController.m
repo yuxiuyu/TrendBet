@@ -8,15 +8,22 @@
 
 #import "TBNewRule_DayViewController.h"
 #import "TBFileRoomResult_dataArr.h"
-#import "JHLineChart.h"
-@interface TBNewRule_DayViewController ()<UICollectionViewDelegate>
+//#import "JHLineChart.h"
+//#import "WSLineChartView.h"
+#import "Charts-Swift.h"
+
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+
+@interface TBNewRule_DayViewController ()<UICollectionViewDelegate,ChartViewDelegate>
 {
     NSArray*dataArray;
-    JHLineChart *lineChart;
-    JHLineChart *totalLineChart;
+//    JHLineChart *lineChart;
+//    JHLineChart *totalLineChart;
     NSMutableArray*answerArray;
     NSMutableArray*totalAnswerArray;
     NSThread*thread;
+     LineChartView*_chartView;
     
 }
 @end
@@ -109,11 +116,13 @@
     UICollectionReusableView*resView=[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"foot1" forIndexPath:indexPath];
     if (dataArray.count>1)
     {
-        [self showFirstAndFouthQuardrant:dataArray vArray:answerArray];
-        [resView addSubview:lineChart];
         
-        [self showFirstAndFouthQuardrant1:dataArray vArray:totalAnswerArray];
-        [resView addSubview:totalLineChart];
+//        [self showFirstAndFouthQuardrant:dataArray vArray:answerArray];
+//        [resView addSubview:lineChart];
+//
+//        [self showFirstAndFouthQuardrant1:dataArray vArray:totalAnswerArray];
+        [self initChartView];
+        [resView addSubview:_chartView];
     }
     return resView;
     
@@ -122,7 +131,7 @@
 {
     if (dataArray.count>1)
     {
-        return CGSizeMake(SCREEN_WIDTH, 600);
+        return CGSizeMake(SCREEN_WIDTH, 300);
     }
     else
     {
@@ -148,81 +157,95 @@
     }
 }
 
-//第一四象限
-- (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray
-{
-    if (!lineChart)
+
+
+-(void)initChartView {
+    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
+    _chartView.backgroundColor=TBLineGaryColor;
+    _chartView.delegate = self;
+    _chartView.chartDescription.enabled = NO;
+    _chartView.dragEnabled = YES;
+    [_chartView setScaleEnabled:YES];
+    _chartView.pinchZoomEnabled = YES;
+    _chartView.xAxis.granularityEnabled = YES;//设置重复的值不显示
+    _chartView.xAxis.labelPosition = XAxisLabelPositionBottomInside;// X轴的位置
+    
+    //
+    //
+    _chartView.xAxis.gridLineDashLengths = @[@5.0, @10.0];
+    
+    _chartView.drawGridBackgroundEnabled = NO;
+    
+    ChartYAxis *leftAxis = _chartView.leftAxis;
+    [leftAxis removeAllLimitLines];
+    leftAxis.gridLineDashLengths = @[@5.f, @5.f];
+    leftAxis.drawZeroLineEnabled = NO;
+    leftAxis.drawLimitLinesBehindDataEnabled = YES;
+    
+    _chartView.rightAxis.enabled = NO;
+    [self setData];
+    [_chartView animateWithXAxisDuration:2.5];
+//    [_mainScrollView addSubview:_chartView];
+}
+-(void)setData{
+    
+    NSMutableArray *values1 = [[NSMutableArray alloc] init];
+    NSMutableArray *values2 = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < dataArray.count; i++)
     {
-        lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
-        lineChart.xLineDataArr = xarray;
-        lineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
-        lineChart.valueArr = @[vArray];
-        lineChart.yDescTextFontSize = lineChart.xDescTextFontSize = 9.0;
-        lineChart.valueFontSize = 9.0;
-        /* 值折线的折线颜色 默认暗黑色*/
-        lineChart.valueLineColorArr =@[ [UIColor redColor], [UIColor greenColor]];
-        
-        /* 值点的颜色 默认橘黄色*/
-        lineChart.pointColorArr = @[[UIColor orangeColor],[UIColor yellowColor]];
-        
-        /*        是否展示Y轴分层线条 默认否        */
-        lineChart.showYLevelLine = NO;
-        lineChart.showValueLeadingLine = NO;
-        lineChart.showYLevelLine = YES;
-        lineChart.showYLine = YES;
-        
-        /* X和Y轴的颜色 默认暗黑色 */
-        lineChart.xAndYLineColor = [UIColor darkGrayColor];
-        lineChart.backgroundColor = [UIColor whiteColor];
-        /* XY轴的刻度颜色 m */
-        lineChart.xAndYNumberColor = [UIColor darkGrayColor];
-        
-        lineChart.contentFill = YES;
-        
-        lineChart.pathCurve = YES;
-        
-        lineChart.contentFillColorArr = @[[UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:0.386],[UIColor colorWithRed:0.000 green:1 blue:0 alpha:0.472]];
-        [lineChart showAnimation];
-        
+        float x = [dataArray[i] floatValue];
+        float y1 = [answerArray[i] floatValue];
+        float y2 = [totalAnswerArray[i] floatValue];
+        [values1 addObject:[[ChartDataEntry alloc] initWithX:x y:y1]];
+        [values2 addObject:[[ChartDataEntry alloc] initWithX:x y:y2]];
     }
+    
+    //创建LineChartDataSet对象
+    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:values1 label:@"局结果"];
+    set1.drawIconsEnabled = NO;
+    set1.lineDashLengths = @[@5.f, @2.5f];
+    set1.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set1 setColor:UIColor.orangeColor];
+    [set1 setCircleColor:UIColor.orangeColor];
+    set1.lineWidth = 1.0;
+    set1.circleRadius = 3.0;
+    set1.drawCircleHoleEnabled = NO;
+    set1.valueFont = [UIFont systemFontOfSize:8.f];
+    set1.formLineDashLengths = @[@5.f, @2.5f];
+    set1.formLineWidth = 1.0;
+    set1.formSize = 15.0;
+    
+    
+    NSMutableArray *dataSets = [[NSMutableArray alloc] init];
+    [dataSets addObject:set1];
+    
+    
+    
+    //纵轴数据
+    
+    //创建LineChartDataSet对象
+    LineChartDataSet *set2 = [[LineChartDataSet alloc] initWithValues:values2 label:@"局累加结果"];
+    set2.drawIconsEnabled = NO;
+    set2.lineDashLengths = @[@5.f, @2.5f];
+    set2.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set2 setColor:UIColor.greenColor];
+    [set2 setCircleColor:UIColor.greenColor];
+    set2.lineWidth = 1.0;
+    set2.circleRadius = 3.0;
+    set2.drawCircleHoleEnabled = NO;
+    set2.valueFont = [UIFont systemFontOfSize:8.f];
+    set2.formLineDashLengths = @[@5.f, @2.5f];
+    set2.formLineWidth = 1.0;
+    set2.formSize = 15.0;
+    [dataSets addObject:set2];
+    
+    
+    
+    LineChartData *data = [[LineChartData alloc] initWithDataSets:dataSets];
+    
+    _chartView.data = data;
+    
 }
 
-//第一四象限
-- (void)showFirstAndFouthQuardrant1:(NSArray*)xarray vArray:(NSArray*)vArray
-{
-    if (!totalLineChart)
-    {
-        totalLineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, 300, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
-        totalLineChart.xLineDataArr = xarray;
-        totalLineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
-        totalLineChart.valueArr = @[vArray];
-        totalLineChart.yDescTextFontSize = lineChart.xDescTextFontSize = 9.0;
-        totalLineChart.valueFontSize = 9.0;
-        /* 值折线的折线颜色 默认暗黑色*/
-        totalLineChart.valueLineColorArr =@[ [UIColor redColor], [UIColor greenColor]];
-        
-        /* 值点的颜色 默认橘黄色*/
-        totalLineChart.pointColorArr = @[[UIColor orangeColor],[UIColor yellowColor]];
-        
-        /*        是否展示Y轴分层线条 默认否        */
-        totalLineChart.showYLevelLine = NO;
-        totalLineChart.showValueLeadingLine = NO;
-        totalLineChart.showYLevelLine = YES;
-        totalLineChart.showYLine = YES;
-        
-        /* X和Y轴的颜色 默认暗黑色 */
-        totalLineChart.xAndYLineColor = [UIColor darkGrayColor];
-        totalLineChart.backgroundColor = [UIColor whiteColor];
-        /* XY轴的刻度颜色 m */
-        totalLineChart.xAndYNumberColor = [UIColor darkGrayColor];
-        
-        totalLineChart.contentFill = YES;
-        
-        totalLineChart.pathCurve = YES;
-        
-        totalLineChart.contentFillColorArr = @[[UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:0.386],[UIColor colorWithRed:0.000 green:1 blue:0 alpha:0.472]];
-        [totalLineChart showAnimation];
-        
-    }
-}
 @end

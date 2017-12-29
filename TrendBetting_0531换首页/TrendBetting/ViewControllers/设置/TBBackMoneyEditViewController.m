@@ -47,6 +47,17 @@
             _nameLab.text=@"文字长跳个数";
             _sumTextField.placeholder=@"不可小于3";
             break;
+        case 6:
+            _sumTextField.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_dateSqrCount];
+            _sumTextField1.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_dateDaySqrCount];
+            _sumTextField2.text=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_dateTimeSqrCount];
+            _nameLab.text=@"连月均线天数设置";
+            _sumTextField.placeholder=@"不可小于1";
+            _nameLab1.hidden = NO;
+            _nameLab2.hidden = NO;
+            _sumTextField1.hidden = NO;
+            _sumTextField2.hidden = NO;
+            break;
             
         default:
             break;
@@ -147,6 +158,28 @@
                 [udefault setObject:_sumTextField.text forKey:SAVE_wordGotwoCount];
                 [udefault synchronize];
             }
+            break;
+        case 6: //均线
+            if([_sumTextField.text intValue]<=0)
+            {
+                [self.view makeToast:@"连月最小均线必须大于1" duration:0.5f position:CSToastPositionCenter];
+                return;
+            }
+            else if ([_sumTextField1.text intValue]<=0)
+            {
+                [self.view makeToast:@"连日最小均线必须大于1" duration:0.5f position:CSToastPositionCenter];
+                return;
+            }
+            else if ([_sumTextField2.text intValue]<=0)
+            {
+                [self.view makeToast:@"连句最小均线必须大于1" duration:0.5f position:CSToastPositionCenter];
+                return;
+            }
+            
+            [udefault setObject:_sumTextField.text forKey:SAVE_dateSqrCount];
+            [udefault setObject:_sumTextField1.text forKey:SAVE_dateDaySqrCount];
+            [udefault setObject:_sumTextField2.text forKey:SAVE_dateTimeSqrCount];
+            [udefault synchronize];
             break;
             
         default:

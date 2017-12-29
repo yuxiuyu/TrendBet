@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bxd-hu-P0N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bxd-hu-P0N">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -88,21 +88,43 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资金方式：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7e-tI-CNg">
+                                <rect key="frame" x="116.5" y="211.5" width="87" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YsE-R4-dgq">
+                                <rect key="frame" x="293.5" y="207" width="80" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hrH-73-e29"/>
+                                    <constraint firstAttribute="width" constant="80" id="tDg-zi-30D"/>
+                                </constraints>
+                                <state key="normal" title="正追"/>
+                                <connections>
+                                    <action selector="moneyDirectionBtnActin:" destination="UWt-Md-sXr" eventType="touchUpInside" id="fCz-au-2hi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="YsE-R4-dgq" firstAttribute="top" secondItem="sKm-zp-MzC" secondAttribute="bottom" constant="40" id="6tB-FG-oQv"/>
+                            <constraint firstItem="YsE-R4-dgq" firstAttribute="centerY" secondItem="r7e-tI-CNg" secondAttribute="centerY" id="Gnc-oG-azP"/>
                             <constraint firstItem="sKm-zp-MzC" firstAttribute="leading" secondItem="5OE-t9-Oi9" secondAttribute="trailing" constant="15" id="Pvk-K0-c1o"/>
                             <constraint firstItem="Ftq-FE-7S3" firstAttribute="centerX" secondItem="jBd-Sp-296" secondAttribute="centerX" constant="30" id="RZA-dq-xrs"/>
                             <constraint firstItem="Ftq-FE-7S3" firstAttribute="centerY" secondItem="YlI-AA-m0G" secondAttribute="centerY" id="UFo-jM-3CK"/>
                             <constraint firstItem="sKm-zp-MzC" firstAttribute="centerX" secondItem="jBd-Sp-296" secondAttribute="centerX" constant="30" id="VoB-Cx-c2Q"/>
                             <constraint firstItem="sKm-zp-MzC" firstAttribute="centerY" secondItem="5OE-t9-Oi9" secondAttribute="centerY" id="aeI-0C-Xrv"/>
                             <constraint firstItem="sKm-zp-MzC" firstAttribute="top" secondItem="Ftq-FE-7S3" secondAttribute="bottom" constant="30" id="iln-zC-7DS"/>
+                            <constraint firstItem="YsE-R4-dgq" firstAttribute="centerX" secondItem="ohQ-cS-bX0" secondAttribute="centerX" id="joj-vn-3DT"/>
                             <constraint firstItem="Ftq-FE-7S3" firstAttribute="leading" secondItem="YlI-AA-m0G" secondAttribute="trailing" constant="15" id="jwQ-Jl-nLa"/>
                             <constraint firstItem="Ftq-FE-7S3" firstAttribute="top" secondItem="jBd-Sp-296" secondAttribute="top" constant="35" id="ltG-5w-3fc"/>
+                            <constraint firstItem="YsE-R4-dgq" firstAttribute="leading" secondItem="r7e-tI-CNg" secondAttribute="trailing" constant="90" id="sTc-uL-ZZe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jBd-Sp-296"/>
                     </view>
                     <connections>
+                        <outlet property="directionBtn" destination="YsE-R4-dgq" id="CJH-vW-aBf"/>
                         <outlet property="moneyTextF" destination="sKm-zp-MzC" id="iwy-1J-STT"/>
                         <outlet property="nameTextF" destination="Ftq-FE-7S3" id="yRb-7y-TIs"/>
                     </connections>

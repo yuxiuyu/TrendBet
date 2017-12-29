@@ -8,9 +8,10 @@
 
 #import "TBNewRule_MonthViewController.h"
 #import "MyCalendarItem.h"
-#import "JHChart.h"
-#import "JHLineChart.h"
-@interface TBNewRule_MonthViewController ()
+//#import "JHChart.h"
+//#import "JHLineChart.h"
+#import "Charts-Swift.h"
+@interface TBNewRule_MonthViewController ()<ChartViewDelegate>
 {
     NSMutableArray*daysNameArr;//有数据的天名
     NSMutableArray*totalYArr;
@@ -26,6 +27,7 @@
     BOOL isrefresh;
     NSMutableArray*totalTimeKeyArr;//所有日连此
     NSMutableArray*totalTimeValueArr;//所有日连次结果相加
+    LineChartView*_chartView;
 
     
     
@@ -105,16 +107,17 @@
             NSArray*tparray=dic[xtimeArr[k]];
            
             float a=[tparray[5] floatValue]+[[totalTimeValueArr lastObject] floatValue];
-            [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%d.%d",i+1,k+1]];
+            [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",xArray[i],k+1]];
             [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
         }//
         
     }
     if (xArray.count>1)
     {
-        [self showFirstAndFouthQuardrant:xArray vArray:vArray count:0];
-        [self showFirstAndFouthQuardrant:xArray vArray:totalvArray count:1];
-        _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+600);
+//        [self showFirstAndFouthQuardrant:xArray vArray:vArray count:0];
+//        [self showFirstAndFouthQuardrant:xArray vArray:totalvArray count:1];
+        [self initChartView:xArray yarray1:vArray yarray2:totalvArray];
+        _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+300);
     }
     
     // Do any additional setup after loading the view.
@@ -124,41 +127,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//第一四象限
-- (void)showFirstAndFouthQuardrant:(NSArray*)xarray vArray:(NSArray*)vArray count:(int)acount
-{
-    JHLineChart *lineChart = [[JHLineChart alloc] initWithFrame:CGRectMake(10, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+300*acount, SCREEN_WIDTH-20, 300) andLineChartType:JHChartLineValueNotForEveryX];
-    lineChart.xLineDataArr = xarray;
-    lineChart.lineChartQuadrantType = JHLineChartQuadrantTypeFirstAndFouthQuardrant;
-    lineChart.valueArr = @[vArray];
-    lineChart.yDescTextFontSize = lineChart.xDescTextFontSize = 9.0;
-    lineChart.valueFontSize = 9.0;
-    /* 值折线的折线颜色 默认暗黑色*/
-    lineChart.valueLineColorArr =@[ [UIColor redColor], [UIColor greenColor]];
-    
-    /* 值点的颜色 默认橘黄色*/
-    lineChart.pointColorArr = @[[UIColor orangeColor],[UIColor yellowColor]];
-    
-    /*        是否展示Y轴分层线条 默认否        */
-    lineChart.showYLevelLine = NO;
-    lineChart.showValueLeadingLine = NO;
-    lineChart.showYLevelLine = YES;
-    lineChart.showYLine = YES;
-    
-    /* X和Y轴的颜色 默认暗黑色 */
-    lineChart.xAndYLineColor = [UIColor darkGrayColor];
-    lineChart.backgroundColor = [UIColor whiteColor];
-    /* XY轴的刻度颜色 m */
-    lineChart.xAndYNumberColor = [UIColor darkGrayColor];
-    
-    lineChart.contentFill = YES;
-    
-    lineChart.pathCurve = YES;
-    
-    lineChart.contentFillColorArr = @[[UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:0.386],[UIColor colorWithRed:0.000 green:1 blue:0 alpha:0.472]];
-    [_mainScrollView addSubview:lineChart];
-    [lineChart showAnimation];
-}
+
 
 #pragma mark - Navigation
 
@@ -181,6 +150,95 @@
 -(void)goDaysresultBtnAction{
     [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连日结果"}];
     
+}
+
+-(void)initChartView:(NSArray*)xarray yarray1:(NSArray*)yarray1 yarray2:(NSArray*)yarray2 {
+    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-NAVBAR_HEIGHT-20, SCREEN_WIDTH, 300)];
+    _chartView.backgroundColor=TBLineGaryColor;
+    _chartView.delegate = self;
+    _chartView.chartDescription.enabled = NO;
+    _chartView.dragEnabled = YES;
+    [_chartView setScaleEnabled:YES];
+    _chartView.pinchZoomEnabled = YES;
+    _chartView.xAxis.granularityEnabled = YES;//设置重复的值不显示
+    _chartView.xAxis.labelPosition = XAxisLabelPositionBottomInside;// X轴的位置
+    
+    //
+    //
+    _chartView.xAxis.gridLineDashLengths = @[@5.0, @10.0];
+    
+    _chartView.drawGridBackgroundEnabled = NO;
+    
+    ChartYAxis *leftAxis = _chartView.leftAxis;
+    [leftAxis removeAllLimitLines];
+    leftAxis.gridLineDashLengths = @[@5.f, @5.f];
+    leftAxis.drawZeroLineEnabled = NO;
+    leftAxis.drawLimitLinesBehindDataEnabled = YES;
+    
+    _chartView.rightAxis.enabled = NO;
+    [self setData:xarray yarray1:yarray1 yarray2:yarray2];
+    [_chartView animateWithXAxisDuration:2.5];
+    [_mainScrollView addSubview:_chartView];
+}
+-(void)setData:(NSArray*)xarray yarray1:(NSArray*)yarray1 yarray2:(NSArray*)yarray2{
+    
+    NSMutableArray *values1 = [[NSMutableArray alloc] init];
+    NSMutableArray *values2 = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < xarray.count; i++)
+    {
+        float x = [xarray[i] floatValue];
+        float y1 = [yarray1[i] floatValue];
+        float y2 = [yarray2[i] floatValue];
+        [values1 addObject:[[ChartDataEntry alloc] initWithX:x y:y1]];
+        [values2 addObject:[[ChartDataEntry alloc] initWithX:x y:y2]];
+    }
+    
+    //创建LineChartDataSet对象
+    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:values1 label:@"日结果"];
+    set1.drawIconsEnabled = NO;
+    set1.lineDashLengths = @[@5.f, @2.5f];
+    set1.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set1 setColor:UIColor.orangeColor];
+    [set1 setCircleColor:UIColor.orangeColor];
+    set1.lineWidth = 1.0;
+    set1.circleRadius = 3.0;
+    set1.drawCircleHoleEnabled = NO;
+    set1.valueFont = [UIFont systemFontOfSize:8.f];
+    set1.formLineDashLengths = @[@5.f, @2.5f];
+    set1.formLineWidth = 1.0;
+    set1.formSize = 15.0;
+    
+    
+    NSMutableArray *dataSets = [[NSMutableArray alloc] init];
+    [dataSets addObject:set1];
+    
+    
+    
+    //纵轴数据
+ 
+    //创建LineChartDataSet对象
+    LineChartDataSet *set2 = [[LineChartDataSet alloc] initWithValues:values2 label:@"日累加结果"];
+    set2.drawIconsEnabled = NO;
+    set2.lineDashLengths = @[@5.f, @2.5f];
+    set2.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set2 setColor:UIColor.greenColor];
+    [set2 setCircleColor:UIColor.greenColor];
+    set2.lineWidth = 1.0;
+    set2.circleRadius = 3.0;
+    set2.drawCircleHoleEnabled = NO;
+    set2.valueFont = [UIFont systemFontOfSize:8.f];
+    set2.formLineDashLengths = @[@5.f, @2.5f];
+    set2.formLineWidth = 1.0;
+    set2.formSize = 15.0;
+    [dataSets addObject:set2];
+    
+    
+    
+    LineChartData *data = [[LineChartData alloc] initWithDataSets:dataSets];
+    
+    _chartView.data = data;
+    //    }
 }
 
 @end

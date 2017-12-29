@@ -13,4 +13,5 @@
 #define TBBackgroundColor UIColorFromRGB(0xefeff4)
 #define TBMainColor UIColorFromRGB(0x139647)
 #define TBLineColor UIColorFromRGB(0xE8E8E8)
+#define TBLineGaryColor UIColorFromRGB(0xebebeb)
 #endif /* style_Color_h */

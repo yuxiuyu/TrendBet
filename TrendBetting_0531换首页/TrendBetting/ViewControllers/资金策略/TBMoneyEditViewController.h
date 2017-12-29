@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextF;
 @property (weak, nonatomic) IBOutlet UITextField *moneyTextF;
+@property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 @property(strong,nonatomic)NSDictionary*selectedDic;
 @property(strong,nonatomic)NSString * selectedIndex;
+- (IBAction)moneyDirectionBtnActin:(id)sender;
 @end

@@ -65,6 +65,12 @@
         if ([dic[@"isselected"] isEqualToString:@"YES"])
         {
             _moneySelectedArray=dic[@"moneyRule"];
+            _moneyDirection = @"正追";
+            if ([dic[@"direction"] isEqualToString:@"反追"]) {
+                _moneyDirection = @"反追";
+            }
+           
+            
         }
         
         
@@ -88,10 +94,19 @@
             [_ruleSelectedKeyArr addObject:keyArr[0]];
             [_ruleSelectedValueArr addObject:valueArr[0]];
             [_ruleSelectedCycleArr addObject:dic[@"isCycle"]];
-            
         }
     }
     
+}
+//获取选中的套利规则
+-(void)getSelectarbitrageRuleArray{
+    _selectArbitrageRuleName = @"";
+    for (int i=0; i<[_arbitrageRuleArray count]; i++) {
+        NSDictionary * dic = _arbitrageRuleArray[i];
+        if (dic[@"select"]&&[dic[@"select"] isEqualToString:@"YES"]) {
+            _selectArbitrageRuleName = dic[@"name"];
+        }
+    }
 }
 ///获取选中的总的组的数组
 -(void)getSelectedGroupArr
@@ -116,5 +131,21 @@
     }
     tenRuleModel*tenM=[NSKeyedUnarchiver unarchiveObjectWithData:data];
     _tenModel=tenM;
+}
+//获取数组中的最大最小值
+-(NSArray*)getMinAndMaxFromArr:(NSArray*)array{
+    CGFloat maxValue1 = [[array valueForKeyPath:@"@max.floatValue"] floatValue];
+    CGFloat minValue1 = [[array valueForKeyPath:@"@min.floatValue"] floatValue];
+    int showMaxV1;
+    int showMinV1;
+
+    if (fabs(maxValue1)>fabs(minValue1)) {
+        showMaxV1 = fabs(maxValue1) + 1;
+        showMinV1 = -showMaxV1;
+    }else{
+        showMaxV1 = fabs(minValue1) + 1;
+        showMinV1 = -showMaxV1;
+    }
+    return @[@(showMaxV1),@(showMinV1)];
 }
 @end

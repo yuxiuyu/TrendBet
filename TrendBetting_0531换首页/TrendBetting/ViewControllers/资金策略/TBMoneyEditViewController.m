@@ -12,6 +12,7 @@
 
 {
      BOOL ispostNotification;
+     BOOL ismoneyDirection;
 }
 @end
 
@@ -29,6 +30,7 @@
         {
             str=[NSString stringWithFormat:@"%@、%@",str,array[i]];
         }
+        [_directionBtn setTitle:_selectedDic[@"direction"] forState:UIControlStateNormal];
         _moneyTextF.text=str;
         self.title=@"修改资金策略";
         
@@ -61,7 +63,12 @@
         return;
     }
     NSArray*array = [_moneyTextF.text componentsSeparatedByString:@"、"];
-    NSMutableDictionary*dic=[[NSMutableDictionary alloc]initWithDictionary:@{@"number":[NSString stringWithFormat:@"%ld",[Utils sharedInstance].moneyRuleArray.count+1],@"name":_nameTextF.text,@"moneyRule":array,@"isselected":@"NO"}];
+    NSMutableDictionary*dic=[[NSMutableDictionary alloc]initWithDictionary:@{
+    @"number":[NSString stringWithFormat:@"%ld",[Utils sharedInstance].moneyRuleArray.count+1],
+    @"name":_nameTextF.text,
+    @"moneyRule":array,
+    @"direction":_directionBtn.titleLabel.text,
+    @"isselected":@"NO"}];
     NSMutableArray*tempArr=[[NSMutableArray alloc]initWithArray:[Utils sharedInstance].moneyRuleArray];
     if (_selectedDic)
     {
@@ -107,4 +114,8 @@
 }
 */
 
+- (IBAction)moneyDirectionBtnActin:(id)sender {
+    NSString *str = [_directionBtn.titleLabel.text isEqualToString:@"正追"]?@"反追":@"正追";
+    [_directionBtn setTitle:str forState:UIControlStateNormal];
+}
 @end
