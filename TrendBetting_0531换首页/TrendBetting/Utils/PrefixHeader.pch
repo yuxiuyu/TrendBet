@@ -20,14 +20,13 @@
 #import "Utils+fileReadAndWrite.h"
 #import "Utils+groupRule.h"
 #import "UIView+border.h"
-#import <UIView+Toast.h>
+#import "UIView+Toast.h"
 #import "JSONKit.h"
 #import "MJExtension.h"
 #import "TBFileRoomResult_roomArr.h"
 #import "TBFileRoomResult_timeArr.h"
 #import "TBFileRoomResult_dataArr.h"
 #import "Utils+downServerFile.h"
-#import <UIView+Toast.h>
 #import "tenRuleModel.h"
 #define SAVE_DATA_FILENAME @"myData"
 #define SAVE_RULE_FILENAME @"myRuleData"
@@ -52,6 +51,13 @@
 
 #define SAVE_wordGoCount @"wordGoCount"  //文字长连
 #define SAVE_wordGotwoCount @"wordGotwoCount"  //文字长跳
+#define SAVE_dateSqrCount @"dateSqrCount"  //月均线
+#define SAVE_dateSqrCount_1 @"dateSqrCount1"  //月均线1
+#define SAVE_dateSqrCount_2 @"dateSqrCount2"  //月均线2
+#define SAVE_dateDaySqrCount @"dateDaySqrCount"  //日均线
+#define SAVE_dateDaySqrCount_1 @"dateDaySqrCount1"  //日均线1
+#define SAVE_dateDaySqrCount_2 @"dateDaySqrCount2"  //日均线2
+#define SAVE_dateTimeSqrCount @"dateTimeSqrCount"  //局均线
 
 #define SAVE_isbigRoad @"isbigRoad"//是否是看所有0 只看大路1
 #define SAVE_isOnlyRBSelect @"isOnlyRBSelect"//0关闭 1把把庄  2把把闲
@@ -59,6 +65,8 @@
 #define SAVE_TenBlodRule @"tenBlodRule" //十个规则
 #define SAVE_TenListBlodRule @"tenListBlodRule" //十个规则
 #define SAVE_TenDeleteBlodRule @"tenDeleteBlodRule" //十个要排除的规则
+#define SAVE_arbitrageRule @"arbitrageRule" //套利规则
+
 
 //#define SAVE_gotwoRule @"gotwoRule"//设置中可关闭／开启长跳的规则
 //#define SAVE_goRule @"goRule"//设置中可关闭／开启长连的规则

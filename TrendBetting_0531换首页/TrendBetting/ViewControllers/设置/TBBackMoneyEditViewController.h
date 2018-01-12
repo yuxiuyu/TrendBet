@@ -9,8 +9,16 @@
 #import "TBBaseViewController.h"
 
 @interface TBBackMoneyEditViewController : TBBaseViewController
-@property (weak, nonatomic) IBOutlet UILabel *nameLab;
-@property (weak, nonatomic) IBOutlet UITextField *sumTextField;
+@property (weak, nonatomic) IBOutlet UILabel *nameLab1;
+@property (weak, nonatomic) IBOutlet UILabel *nameLab2;
+@property (weak, nonatomic) IBOutlet UILabel *nameLab3;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField1;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField11;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField12;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField2;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField21;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField22;
+@property (weak, nonatomic) IBOutlet UITextField *sumTextField3;
 @property(strong,nonatomic)NSString*tagStr;
 - (IBAction)saveBtnAction:(id)sender;
 

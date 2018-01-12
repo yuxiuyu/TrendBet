@@ -27,6 +27,8 @@
     [self initRule];
     //获取组数组
     [self initGroupRule];
+    //获取套利规则
+    [self initArbitrageRule];
     defaults=[NSUserDefaults standardUserDefaults];
     ////区域选择
     if (![defaults objectForKey:SAVE_AREASELECT])
@@ -72,6 +74,37 @@
     if (![defaults objectForKey:SAVE_wordGoCount])
     {
         [defaults setObject:@"3" forKey:SAVE_wordGoCount];
+    }
+    /////连月均线
+    if (![defaults objectForKey:SAVE_dateSqrCount])
+    {
+        [defaults setObject:@"7" forKey:SAVE_dateSqrCount];
+    }
+    if (![defaults objectForKey:SAVE_dateSqrCount_1])
+    {
+        [defaults setObject:@"" forKey:SAVE_dateSqrCount_1];
+    }
+    if (![defaults objectForKey:SAVE_dateSqrCount_2])
+    {
+        [defaults setObject:@"" forKey:SAVE_dateSqrCount_2];
+    }
+    /////连日均线
+    if (![defaults objectForKey:SAVE_dateDaySqrCount])
+    {
+        [defaults setObject:@"112" forKey:SAVE_dateDaySqrCount];
+    }
+    if (![defaults objectForKey:SAVE_dateDaySqrCount_1])
+    {
+        [defaults setObject:@"" forKey:SAVE_dateDaySqrCount_1];
+    }
+    if (![defaults objectForKey:SAVE_dateDaySqrCount_2])
+    {
+        [defaults setObject:@"" forKey:SAVE_dateDaySqrCount_2];
+    }
+    /////连句均线
+    if (![defaults objectForKey:SAVE_dateTimeSqrCount])
+    {
+        [defaults setObject:@"784" forKey:SAVE_dateTimeSqrCount]; 
     }
 
     ////只看大路
@@ -224,7 +257,24 @@
         [[Utils sharedInstance] saveData:nil saveArray:[Utils sharedInstance].groupArray filePathStr:SAVE_Group_TXT];
        
     }
-
+}
+-(void)initArbitrageRule
+{
+    [Utils sharedInstance].arbitrageRuleArray=[[NSMutableArray alloc]initWithArray:[[Utils sharedInstance] readMoneyData:SAVE_arbitrageRule]];
+    [[Utils sharedInstance] getSelectarbitrageRuleArray];
+//    if ([Utils sharedInstance].arbitrageRuleArray.count<=0)
+//    {
+//        NSDictionary*dic=@{ @"number":@"1",
+//                            @"name":@"长连数组",
+//                            @"rule":@[@{@"BBB":@"BBBB",@"isCycle":@"YES"}],//默认数据
+//                            @"selected":@"YES",//YES选中 NO  没选中
+//                            @"rbSelect":@"RB",
+//                            @"reverseSelect":@"YES"
+//                            };
+//        [[Utils sharedInstance].groupArray addObject:dic];
+//        [[Utils sharedInstance] saveData:nil saveArray:[Utils sharedInstance].groupArray filePathStr:SAVE_Group_TXT];
+//
+//    }
 }
 -(void)initKeyBoard{
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];

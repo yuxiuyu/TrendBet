@@ -280,6 +280,7 @@
     NSInteger guessNo=0;//猜错的总数
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
+    NSInteger goGuessNO=0;//连续猜错的次数
     float totalMoney=0;
     NSInteger Tcount=0;
     float reduceMoney=0.0;//抽水的钱
@@ -300,6 +301,7 @@
     
     NSMutableDictionary*changeDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary*changeTotalDic=[[NSMutableDictionary alloc]init];
+
     for (int i=0; i<listArray.count; i++)
     {
         NSString*str=listArray[i];
@@ -312,6 +314,9 @@
                 {
                     NSArray*countArr = [guessStr componentsSeparatedByString:@"_"];
                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    if ([[Utils sharedInstance].moneyDirection isEqualToString:@"反追"]) {
+                        thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
+                    }
                     nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     
                     backMoney=backMoney+nextMoney*([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_BackMoney] intValue]/1000.0);
@@ -319,6 +324,7 @@
                     if ([str isEqualToString:guessStr])
                     {
                         totalMoney=[guessStr isEqualToString:@"R"]?totalMoney+(1-Reduce_Money)*nextMoney:totalMoney+nextMoney ;
+                        goGuessNO=0;
                         guessYes++;
                         goGuessYes++;
                         
@@ -356,6 +362,7 @@
                     else
                     {
                         goGuessYes=0;
+                        goGuessNO++;
                         totalMoney=totalMoney-nextMoney;
                         guessNo++;
                         [changeDic setObject:[NSString stringWithFormat:@"-%0.3f",nextMoney] forKey:[NSString stringWithFormat:@"%d",i]];
@@ -387,14 +394,19 @@
                         
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    if ([[Utils sharedInstance].moneyDirection isEqualToString:@"反追"]) {
+                        thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
+                    }
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                     [changeTotalDic setObject:[NSString stringWithFormat:@"%0.3f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                 }
                 else
                 {
                     goGuessYes=0;//连续猜对的次数
-                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
-                    nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
+                    goGuessNO=0;//连续猜对的次数
+//                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+
+                    nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];
                     
                 }
                 

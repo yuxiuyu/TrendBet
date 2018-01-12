@@ -16,7 +16,6 @@
 
 @interface TBFristPageViewController ()
 {
-    
     chartImageView *view1;
     chartImageView *view2;
     chartImageView *view3;
