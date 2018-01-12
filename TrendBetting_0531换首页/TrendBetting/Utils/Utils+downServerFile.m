@@ -51,67 +51,79 @@
     }];
     //    return issuccess;
 }
+//-(NSArray*)getCurrentYearMonthDay{
+//    NSDate *now = [NSDate date];
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+//    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+//
+//    int year =(int) [dateComponent year];
+//    int month = (int) [dateComponent month];
+//    int day = (int) [dateComponent day];
+//    NSArray *monthArr = @[@"1",@"3",@"5",@"7",@"8",@"10",@"12"];
+//
+//    NSDate *nowDate = [NSDate date];
+//    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+//    NSDate *lastDate = [formatter dateFromString:str];
+//
+//
+//    NSString *monthStr = [NSString stringWithFormat:@"%d",month];
+//    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
+//        if ([monthArr containsObject:monthStr]) {
+//            if (day == 31) {
+//                if (month == 12) {
+//                    year = year + 1;
+//                    month = 1;
+//                    day = 1;
+//                }else{
+//                    day = 1;
+//                    month = month + 1;
+//                }
+//            }else{
+//                day = day + 1;
+//            }
+//        }else if(month == 2)
+//        {
+//            if (year % 4 == 0) {
+//                if (day == 29) {
+//                    day = 1;
+//                    month = month + 1;
+//                }else{
+//                    day = day + 1;
+//                }
+//            }else{
+//                if (day == 28) {
+//                    day = 1;
+//                    month = month + 1;
+//                }else{
+//                    day = day + 1;
+//                }
+//            }
+//        }else
+//        {
+//            if (day == 30) {
+//                day = 1;
+//                month = month + 1;
+//            }else{
+//                day = day + 1;
+//            }
+//        }
+//    }
+//    return @[[NSString stringWithFormat:@"%d",year],[NSString stringWithFormat:@"%d",month],[NSString stringWithFormat:@"%d",day]];
+//}
+
 -(NSArray*)getCurrentYearMonthDay{
-    NSDate *now = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
-    
-    int year =(int) [dateComponent year];
-    int month = (int) [dateComponent month];
-    int day = (int) [dateComponent day];
-    NSArray *monthArr = @[@"1",@"3",@"5",@"7",@"8",@"10",@"12"];
-    
-    NSDate *nowDate = [NSDate date];
-    NSString *str = [NSString stringWithFormat:@"%d-%02d-%02d 11:15:00 +0800",year,month,day];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
-    NSDate *lastDate = [formatter dateFromString:str];
-    
-    
-    NSString *monthStr = [NSString stringWithFormat:@"%d",month];
-    if ([nowDate timeIntervalSince1970]>[lastDate timeIntervalSince1970]) {
-        if ([monthArr containsObject:monthStr]) {
-            if (day == 31) {
-                if (month == 12) {
-                    year = year + 1;
-                    month = 1;
-                    day = 1;
-                }else{
-                    day = 1;
-                    month = month + 1;
-                }
-            }else{
-                day = day + 1;
-            }
-        }else if(month == 2)
-        {
-            if (year % 4 == 0) {
-                if (day == 29) {
-                    day = 1;
-                    month = month + 1;
-                }else{
-                    day = day + 1;
-                }
-            }else{
-                if (day == 28) {
-                    day = 1;
-                    month = month + 1;
-                }else{
-                    day = day + 1;
-                }
-            }
-        }else
-        {
-            if (day == 30) {
-                day = 1;
-                month = month + 1;
-            }else{
-                day = day + 1;
-            }
-        }
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:[NSDate date]];
+    int hour = (int)[dateComponent hour];
+    int minute = (int)[dateComponent minute];
+    if (hour>11||(hour==11&&minute>=15)) {
+        dateComponent = [calendar components:unitFlags fromDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]]];
     }
-    return @[[NSString stringWithFormat:@"%d",year],[NSString stringWithFormat:@"%d",month],[NSString stringWithFormat:@"%d",day]];
+    return @[[NSString stringWithFormat:@"%ld",[dateComponent year]],[NSString stringWithFormat:@"%ld",[dateComponent month]],[NSString stringWithFormat:@"%ld",[dateComponent day]]];
 }
 -(NSInteger)getAllDayFromDate:(NSDate*)date{
     NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]; // 指定日历的算法 NSGregorianCalendar - ios 8
@@ -119,5 +131,39 @@
                                    inUnit: NSCalendarUnitMonth //NSMonthCalendarUnit - ios 8
                                   forDate:date];
     return range.length;
+}
+//比较两个日期大小
+-(BOOL)compareDate:(NSDate*)beginDate endDate:(NSDate*)endDate{
+    NSComparisonResult result = [beginDate compare:endDate];
+    switch (result) {
+        case NSOrderedAscending:
+            return  YES;
+            break;
+        case NSOrderedSame:
+            return  YES;
+            break;
+        case NSOrderedDescending:
+            return  NO;
+            break;
+
+        default:
+            break;
+    }
+}
+//加上一个月的日期
+-(NSDate*)monthAddOneMonth:(NSDate*)currentDate{
+    NSDateFormatter * formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM"];
+    NSString*date = [formater stringFromDate:currentDate];
+    NSArray*arr = [date componentsSeparatedByString:@"-"];
+    int year = [arr[0] intValue];
+    int month = [arr[1] intValue];
+    if (month<12) {
+        month++;
+    } else {
+        year++;
+        month=1;
+    }
+    return [formater dateFromString:[NSString stringWithFormat:@"%d-%d",year,month]];
 }
 @end

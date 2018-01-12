@@ -8,6 +8,7 @@
 
 #import "TBBaseViewController.h"
 
+
 @interface TBNewRule_TimeViewController : TBBaseViewController
 @property (weak, nonatomic) IBOutlet UILabel *resultCountLab;
 @property (weak, nonatomic) IBOutlet UILabel *winCountLab;

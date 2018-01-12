@@ -62,9 +62,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
-    
-    
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
     if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
@@ -498,7 +495,8 @@
         for (int i=0; i<allGuessArray.count; i++) {
             [yarr addObject:@"R"];
         }
-        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:yarr];
+        resultArray=[[Utils sharedInstance]judgeGuessRightandWrong:listArray allGuessArray:yarr];
+
         _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
         
     }
@@ -507,9 +505,27 @@
         for (int i=0; i<allGuessArray.count; i++) {
             [yarr addObject:@"B"];
         }
-        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:yarr];
+        resultArray=[[Utils sharedInstance]judgeGuessRightandWrong:listArray allGuessArray:yarr];
         _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
         
+    }
+    else if ([Utils sharedInstance].selectArbitrageRuleName.length>0) {
+        NSMutableArray*yarr=[[NSMutableArray alloc]init];
+//        [yarr addObject:[[Utils sharedInstance].selectArbitrageRuleName substringWithRange:NSMakeRange(0, 1)]];
+        NSString * rulename = [Utils sharedInstance].selectArbitrageRuleName;
+        NSInteger tsum = 0;
+        for (int i=0; i<listArray.count; i++) {
+            NSString * str = @"";
+            if (![listArray[i] isEqualToString:@"T"]) {
+                NSInteger a = (i-tsum)%rulename.length;
+                str=[rulename substringWithRange:NSMakeRange(a, 1)];
+            } else {
+                tsum++;
+            }
+            [yarr addObject:[NSString stringWithFormat:@"%@_0",str]];
+        }
+        resultArray=[[Utils sharedInstance]xiasanluJudgeGuessRightandWrong:listArray allGuessArray:yarr];
+        _memoLab.text =[[Utils sharedInstance] changeChina:[rulename substringWithRange:NSMakeRange((listArray.count-tsum)%rulename.length, 1)] isWu:NO];
     }
     //yxy add 2017/07/17
     else

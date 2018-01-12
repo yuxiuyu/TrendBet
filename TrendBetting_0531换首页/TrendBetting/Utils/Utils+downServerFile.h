@@ -13,5 +13,10 @@
 -(void)downLoadServerFile:(NSString*)roomStr timeStr:(NSString*)timeStr isanimated:(BOOL)isanimated;
 -(NSArray*)getCurrentYearMonthDay;
 -(NSInteger)getAllDayFromDate:(NSDate*)date;
+//比较两个日期大小
+-(BOOL)compareDate:(NSDate*)beginDate endDate:(NSDate*)endDate;
+//加上一个月的日期
+-(NSDate*)monthAddOneMonth:(NSDate*)currentDate;
+
 @end
  
