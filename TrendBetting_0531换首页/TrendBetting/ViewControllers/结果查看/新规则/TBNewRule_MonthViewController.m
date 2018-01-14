@@ -25,13 +25,14 @@
     CGFloat sHeight;
     NSThread*thread;
     BOOL isrefresh;
-    NSMutableArray*totalTimeKeyArr;//所有日连此
-    NSMutableArray*totalTimeValueArr;//所有日连次结果相加
+
     LineChartView*_chartView;
+   
 
     
     
 }
+@property(nonatomic,strong)NSDictionary*monthDic;
 @property(nonatomic,strong)NSMutableDictionary*daysDic;
 @property(nonatomic,strong)MyCalendarItem *myCalendarView;
 
@@ -51,7 +52,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title=_selectedTitle;
+     NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[_allmonthDic allKeys] isArc:YES];
+    self.title=tepMonthKeyArray[[_selectP intValue]];
     
      UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
     UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连日结果" style:UIBarButtonItemStylePlain target:self action:@selector(goDaysresultBtnAction)];
@@ -68,11 +70,11 @@
     NSDateFormatter*formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     
-    totalTimeKeyArr=[[NSMutableArray alloc]init];
-    totalTimeValueArr=[[NSMutableArray alloc]init];
+
     
+    _monthDic = _allmonthDic[self.title];
     self.myCalendarView.fileDateDic=_monthDic;
-    self.myCalendarView.date=[formatter dateFromString:_selectedTitle];
+    self.myCalendarView.date=[formatter dateFromString:self.title];
     __weak typeof(self)weakself= self;
     self.myCalendarView.calendarBlock=^(NSInteger day, NSInteger month, NSInteger year)
     {
@@ -81,12 +83,12 @@
        
         if (weakself.monthDic[dayStr])
         {
-            [weakself performSegueWithIdentifier:@"showNewRule_DayVC" sender:@{@"selectedTitle":[NSString stringWithFormat:@"%@-%@",weakself.selectedTitle,dayStr],@"dayDic":weakself.monthDic[dayStr]}];
+            [weakself performSegueWithIdentifier:@"showNewRule_DayVC" sender:@{@"selectedTitle":[NSString stringWithFormat:@"%@-%@",weakself.title,dayStr],@"dayDic":weakself.monthDic[dayStr]}];
         }
         
     };
-    NSArray*tepArray=[self.myCalendarView.fileDateDic allKeys];
-
+    NSArray*tepArray=[_monthDic allKeys];
+//
     NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
     NSMutableArray*vArray=[[NSMutableArray alloc]init];
     NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
@@ -97,20 +99,6 @@
         [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
         float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
         [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
-        
-       //月里的日长连次
-        NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
-        [xkeyArray removeObject:@"daycount"];
-        NSArray*xtimeArr=[[Utils sharedInstance] orderArr:xkeyArray isArc:YES];
-        for (int k=0; k<xtimeArr.count; k++)
-        {
-            NSArray*tparray=dic[xtimeArr[k]];
-           
-            float a=[tparray[5] floatValue]+[[totalTimeValueArr lastObject] floatValue];
-            [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",xArray[i],k+1]];
-            [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
-        }//
-        
     }
     if (xArray.count>1)
     {
@@ -148,7 +136,7 @@
                                                                        }];
 }
 -(void)goDaysresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连日结果"}];
+    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":_allmonthDic,@"titleStr":@"连日结果",@"selectP":_selectP}];
     
 }
 

@@ -22,6 +22,8 @@
     LineChartView*_chartView;
     NSMutableArray*lineArr;
     NSArray*upperDataArray;
+    int currentP;
+    NSArray*totalMonthArr;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollview;
@@ -33,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=_titleStr;
-    
+    currentP = [_selectP intValue];
     
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"导出" style:UIBarButtonItemStylePlain target:self action:@selector(exportAction)];
     UIBarButtonItem*dataitem=[[UIBarButtonItem alloc]initWithTitle:@"统计结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultDataACtion)];
@@ -44,18 +46,37 @@
     
     
     
-    if([_titleStr isEqualToString:@"连日结果"]){
-        int dateSqrCount = [[defs objectForKey:SAVE_dateDaySqrCount] intValue];
-        [lineArr addObject: [self getKeyAndValue:dateSqrCount color:UIColor.greenColor]];
-        NSString * line1 = [defs objectForKey:SAVE_dateDaySqrCount_1];
-        NSString * line2 = [defs objectForKey:SAVE_dateDaySqrCount_2];
-        if (line1.length>0) {
-            [lineArr addObject: [self getKeyAndValue:[line1 intValue] color:UIColor.redColor]]; ;
-        }
-        if (line2.length>0) {
-            [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
-        }
+    if([_titleStr containsString:@"连日结果"]){
+       
+        totalMonthArr=[[Utils sharedInstance] orderArr:[_allmonthDic allKeys] isArc:YES];
+//        self.title = [NSString stringWithFormat:@"%@%@",tepMonthKeyArray[[_selectP intValue]],self.title];
+        [self getMonthKeyAndValue:currentP];
+//        int dateSqrCount = [[defs objectForKey:SAVE_dateDaySqrCount] intValue];
+//        [lineArr addObject: [self getKeyAndValue:dateSqrCount color:UIColor.greenColor]];
+//        NSString * line1 = [defs objectForKey:SAVE_dateDaySqrCount_1];
+//        NSString * line2 = [defs objectForKey:SAVE_dateDaySqrCount_2];
+//        if (line1.length>0) {
+//            [lineArr addObject: [self getKeyAndValue:[line1 intValue] color:UIColor.redColor]]; ;
+//        }
+//        if (line2.length>0) {
+//            [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
+//        }
+        UIButton*leftBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-20,40 , 50)];
+        [leftBtn setTitle:@"上个月" forState:UIControlStateNormal];
+        leftBtn.titleLabel.font=[UIFont systemFontOfSize:12];
+        [leftBtn addTarget:self action:@selector(leftBtn) forControlEvents:UIControlEventTouchUpInside];
+        [leftBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        
+        UIButton*rightBtn=[[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-100, SCREEN_HEIGHT/2-20,40 , 50)];
+        [rightBtn setTitle:@"下个月" forState:UIControlStateNormal];
+        rightBtn.titleLabel.font=[UIFont systemFontOfSize:12];
+        [rightBtn addTarget:self action:@selector(rightBtn) forControlEvents:UIControlEventTouchUpInside];
+        [rightBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        
+        [_mainScrollview addSubview:leftBtn];
+        [_mainScrollview addSubview:rightBtn];
 //        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr];
+        _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH-100, SCREEN_HEIGHT-30);
     } else {
         int dateSqrCount = [[defs objectForKey:SAVE_dateSqrCount] intValue];
         [lineArr addObject: [self getKeyAndValue:dateSqrCount  color:UIColor.greenColor]];
@@ -67,13 +88,82 @@
         if (line2.length>0) {
             [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
         }
-//        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr];
+        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr];
+         [self initChartView];
+        _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-30);
     }
-     upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr];
-    [self initChartView];
-    _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-30);
+    
+//    [self initChartView];
+//    _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-30);
     
     // Do any additional setup after loading the view.
+}
+-(void)leftBtn{
+    if (currentP>0) {
+    currentP--;
+    [self getMonthKeyAndValue:currentP];
+    }
+}
+-(void)rightBtn{
+    if (currentP<totalMonthArr.count) {
+    currentP--;
+    [self getMonthKeyAndValue:currentP];
+    }
+}
+/*
+ 获取月的结果
+ */
+-(void)getMonthKeyAndValue:(int)p{
+   
+    self.title = [NSString stringWithFormat:@"%@连日结果",totalMonthArr[p]];
+    NSDictionary*monthdic=_allmonthDic[totalMonthArr[p]];
+    NSMutableArray*totalTimeKeyArr;//所有日连此
+    NSMutableArray*totalTimeValueArr;//所有日连次结果相加
+    totalTimeKeyArr=[[NSMutableArray alloc]init];
+    totalTimeValueArr=[[NSMutableArray alloc]init];
+    NSArray*tepArray=[monthdic allKeys];
+    
+    NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
+    NSMutableArray*vArray=[[NSMutableArray alloc]init];
+    NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
+    for (int i=0; i<xArray.count; i++)
+    {
+        NSDictionary*dic=monthdic[xArray[i]];
+        NSArray*dataarray=dic[@"daycount"];
+        [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
+        float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
+        [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        
+        //月里的日长连次
+        NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
+        [xkeyArray removeObject:@"daycount"];
+        NSArray*xtimeArr=[[Utils sharedInstance] orderArr:xkeyArray isArc:YES];
+        for (int k=0; k<xtimeArr.count; k++)
+        {
+            NSArray*tparray=dic[xtimeArr[k]];
+            
+            float a=[tparray[5] floatValue]+[[totalTimeValueArr lastObject] floatValue];
+            [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",xArray[i],k+1]];
+            [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        }//
+    }
+    _totalDayKeyArr = totalTimeKeyArr;
+    _totalDayValueArr = totalTimeValueArr;
+    
+    ////
+    lineArr = [[NSMutableArray alloc]init];
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    int dateSqrCount = [[defs objectForKey:SAVE_dateDaySqrCount] intValue];
+    [lineArr addObject: [self getKeyAndValue:dateSqrCount color:UIColor.greenColor]];
+    NSString * line1 = [defs objectForKey:SAVE_dateDaySqrCount_1];
+    NSString * line2 = [defs objectForKey:SAVE_dateDaySqrCount_2];
+    if (line1.length>0) {
+        [lineArr addObject: [self getKeyAndValue:[line1 intValue] color:UIColor.redColor]]; ;
+    }
+    if (line2.length>0) {
+        [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
+    }
+    [self initChartView];
 }
 -(NSArray*)getKeyAndValue:(int)dateSqrCount color:(UIColor*)color{
     
@@ -260,7 +350,11 @@
 
 
 -(void)initChartView{
-    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT-30)];
+    int intx = 0;
+    if ([self.title containsString:@"连日"]) {
+        intx = 50;
+    }
+    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(intx, 0,SCREEN_WIDTH-intx*4, SCREEN_HEIGHT-30)];
     _chartView.backgroundColor=TBLineGaryColor;
     _chartView.delegate = self;
     _chartView.chartDescription.enabled = NO;

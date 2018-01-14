@@ -23,7 +23,9 @@
     NSMutableArray*answerArray;
     NSMutableArray*totalAnswerArray;
     NSThread*thread;
-     LineChartView*_chartView;
+    LineChartView*_chartView;
+    NSMutableArray*totalTimeKeyArr;//所有局连此
+    NSMutableArray*totalTimeValueArr;//所有局连次结果相加
     
 }
 @end
@@ -38,8 +40,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
+    UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"连局结果" style:UIBarButtonItemStylePlain target:self action:@selector(goTimesresultBtnAction)];
+    self.navigationItem.rightBarButtonItems=@[item];
     
-    
+    totalTimeKeyArr=[[NSMutableArray alloc]init];
+    totalTimeValueArr=[[NSMutableArray alloc]init];
     
     
   
@@ -58,6 +63,9 @@
     [super viewWillDisappear:animated];
     [thread cancel];
     thread=nil;
+}
+-(void)goTimesresultBtnAction{
+     [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"totalDayKeyArr":totalTimeKeyArr,@"totalDayValueArr":totalTimeValueArr,@"titleStr":@"连局结果"}];
 }
 -(void)getDataRead
 {

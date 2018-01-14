@@ -13,5 +13,8 @@
 @property(strong,nonatomic)NSArray*totalDayValueArr;
 //@property(strong,nonatomic)NSArray*dayValueArr;
 @property(strong,nonatomic)NSString*titleStr;
+@property(copy,nonatomic)NSDictionary * allmonthDic;
+@property(copy,nonatomic)NSString * selectP; //选中第几个月
+
 
 @end

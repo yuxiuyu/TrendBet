@@ -234,8 +234,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString*str=dataArray[indexPath.row];
-    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":str,@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"monthDic":houseMonthDic[str]}];
+//    NSString*str=dataArray[indexPath.row];
+//    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":str,@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"monthDic":houseMonthDic[str]}];
+     [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectP":@(indexPath.row),@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"allmonthDic":houseMonthDic}];
     
     
 }
