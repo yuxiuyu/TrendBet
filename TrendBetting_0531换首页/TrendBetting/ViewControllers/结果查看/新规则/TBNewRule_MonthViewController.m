@@ -32,7 +32,7 @@
     
     
 }
-@property(nonatomic,strong)NSDictionary*monthDic;
+//@property(nonatomic,strong)NSDictionary*monthDic;
 @property(nonatomic,strong)NSMutableDictionary*daysDic;
 @property(nonatomic,strong)MyCalendarItem *myCalendarView;
 
@@ -52,12 +52,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[_allmonthDic allKeys] isArc:YES];
-    self.title=tepMonthKeyArray[[_selectP intValue]];
+//     NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[_allmonthDic allKeys] isArc:YES];
+    self.title=_selectedTitle;
     
      UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
-    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连日结果" style:UIBarButtonItemStylePlain target:self action:@selector(goDaysresultBtnAction)];
-    self.navigationItem.rightBarButtonItems=@[goItem,item];
+//    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连日结果" style:UIBarButtonItemStylePlain target:self action:@selector(goDaysresultBtnAction)];
+    self.navigationItem.rightBarButtonItems=@[item];
     
     _resultCountLab.text=[NSString stringWithFormat:@"庄:%@  闲:%@  和:%@",_winCountArray[0],_winCountArray[1],_winCountArray[2]];
     NSString*reduceStr=[[Utils sharedInstance]removeFloatAllZero:_winCountArray[7]];
@@ -72,7 +72,7 @@
     
 
     
-    _monthDic = _allmonthDic[self.title];
+
     self.myCalendarView.fileDateDic=_monthDic;
     self.myCalendarView.date=[formatter dateFromString:self.title];
     __weak typeof(self)weakself= self;
@@ -135,10 +135,10 @@
     [self performSegueWithIdentifier:@"show_newMonthResultVC" sender:@{@"winArray":_winCountArray[9],@"failArray":_winCountArray[10]
                                                                        }];
 }
--(void)goDaysresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":_allmonthDic,@"titleStr":@"连日结果",@"selectP":_selectP}];
-    
-}
+//-(void)goDaysresultBtnAction{
+//    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":_allmonthDic,@"titleStr":@"连日结果",@"selectP":_selectP}];
+//    
+//}
 
 -(void)initChartView:(NSArray*)xarray yarray1:(NSArray*)yarray1 yarray2:(NSArray*)yarray2 {
     _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-NAVBAR_HEIGHT-20, SCREEN_WIDTH, 300)];

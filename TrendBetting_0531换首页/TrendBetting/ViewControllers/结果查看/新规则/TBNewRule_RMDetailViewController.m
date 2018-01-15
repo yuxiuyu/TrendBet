@@ -44,8 +44,10 @@
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"数据结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultBtnAction)];
     //    self.navigationItem.rightBarButtonItem=item;
     
-    UIBarButtonItem*goItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthsresultBtnAction)];
-    self.navigationItem.rightBarButtonItems=@[goItem,item];
+    UIBarButtonItem*goMonItem=[[UIBarButtonItem alloc]initWithTitle:@"连月结果" style:UIBarButtonItemStylePlain target:self action:@selector(goMonthsresultBtnAction)];
+
+    UIBarButtonItem*godayItem=[[UIBarButtonItem alloc]initWithTitle:@"连日结果" style:UIBarButtonItemStylePlain target:self action:@selector(goDaysresultBtnAction)];
+    self.navigationItem.rightBarButtonItems=@[godayItem,goMonItem,item];
     
     totalDayKeyArr=[[NSMutableArray alloc]init];
     totalDayValueArr=[[NSMutableArray alloc]init];
@@ -234,9 +236,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//    NSString*str=dataArray[indexPath.row];
-//    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":str,@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"monthDic":houseMonthDic[str]}];
-     [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectP":@(indexPath.row),@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"allmonthDic":houseMonthDic}];
+    NSString*str=dataArray[indexPath.row];
+    [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectedTitle":str,@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"monthDic":houseMonthDic[str]}];
+//     [self performSegueWithIdentifier:@"showNewRule_MonthVC" sender:@{@"selectP":@(indexPath.row),@"roomStr":_selectedTitle,@"winCountArray":dateDic[dataArray[indexPath.row]],@"allmonthDic":houseMonthDic}];
     
     
 }
@@ -284,6 +286,9 @@
 -(void)goMonthsresultBtnAction{
     [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle]}];
     
+}
+-(void)goDaysresultBtnAction{
+     [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":houseMonthDic,@"titleStr":@"连日结果",@"selectP":@"0"}];
 }
 -(void)initChartView{
     _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];

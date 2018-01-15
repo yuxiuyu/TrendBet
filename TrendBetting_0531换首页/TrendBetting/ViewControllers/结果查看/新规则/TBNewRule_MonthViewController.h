@@ -10,9 +10,9 @@
 
 @interface TBNewRule_MonthViewController : TBBaseViewController
 @property(copy,nonatomic)NSString * roomStr;
-@property(copy,nonatomic)NSString * selectP; //选中第几个月
+@property(copy,nonatomic)NSString * selectedTitle;
 @property(strong,nonatomic)NSArray * winCountArray;
-@property(copy,nonatomic)NSDictionary * allmonthDic;
+@property(copy,nonatomic)NSDictionary * monthDic;
 @property (weak, nonatomic) IBOutlet UILabel *resultCountLab;
 @property (weak, nonatomic) IBOutlet UILabel *winCountLab;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
