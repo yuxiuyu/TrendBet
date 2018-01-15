@@ -61,13 +61,13 @@
 //        if (line2.length>0) {
 //            [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
 //        }
-        UIButton*leftBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-20,40 , 50)];
+        UIButton*leftBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2.0-40,40 , 40)];
         [leftBtn setTitle:@"上个月" forState:UIControlStateNormal];
         leftBtn.titleLabel.font=[UIFont systemFontOfSize:12];
         [leftBtn addTarget:self action:@selector(leftBtn) forControlEvents:UIControlEventTouchUpInside];
         [leftBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        
-        UIButton*rightBtn=[[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-100, SCREEN_HEIGHT/2-20,40 , 50)];
+        float a = SCREEN_WIDTH;
+        UIButton*rightBtn=[[UIButton alloc]initWithFrame:CGRectMake(a-50, SCREEN_HEIGHT/2.0-40,40 , 40)];
         [rightBtn setTitle:@"下个月" forState:UIControlStateNormal];
         rightBtn.titleLabel.font=[UIFont systemFontOfSize:12];
         [rightBtn addTarget:self action:@selector(rightBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -102,12 +102,16 @@
     if (currentP>0) {
     currentP--;
     [self getMonthKeyAndValue:currentP];
+    } else {
+        [self.view makeToast:@"没有更多数据了" duration:3.0f position:CSToastPositionCenter];
     }
 }
 -(void)rightBtn{
-    if (currentP<totalMonthArr.count) {
-    currentP--;
+    if (currentP<totalMonthArr.count-1) {
+    currentP++;
     [self getMonthKeyAndValue:currentP];
+    } else {
+        [self.view makeToast:@"没有更多数据了" duration:3.0f position:CSToastPositionCenter];
     }
 }
 /*
@@ -163,6 +167,7 @@
     if (line2.length>0) {
         [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor]]; ;
     }
+    upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr];
     [self initChartView];
 }
 -(NSArray*)getKeyAndValue:(int)dateSqrCount color:(UIColor*)color{
@@ -351,10 +356,12 @@
 
 -(void)initChartView{
     int intx = 0;
+    int screenw=SCREEN_WIDTH;
     if ([self.title containsString:@"连日"]) {
         intx = 50;
+        screenw=screenw-intx*2;
     }
-    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(intx, 0,SCREEN_WIDTH-intx*4, SCREEN_HEIGHT-30)];
+    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(intx, 0,screenw, SCREEN_HEIGHT-30)];
     _chartView.backgroundColor=TBLineGaryColor;
     _chartView.delegate = self;
     _chartView.chartDescription.enabled = NO;
