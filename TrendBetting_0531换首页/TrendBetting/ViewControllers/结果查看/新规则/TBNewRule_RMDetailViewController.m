@@ -288,7 +288,7 @@
     
 }
 -(void)goDaysresultBtnAction{
-     [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":houseMonthDic,@"titleStr":@"连日结果",@"selectP":@"0"}];
+     [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"allmonthDic":houseMonthDic,@"titleStr":@"连日结果",@"selectP":@"0"}];
 }
 -(void)initChartView{
     _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];
