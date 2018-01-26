@@ -55,6 +55,11 @@
     [super viewDidLoad];
     
     self.title=[NSString stringWithFormat:@"%@号房间 %@月",self.selectedRoom,self.selectedMonth];
+
+    UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"下载全部" style:UIBarButtonItemStylePlain target:self action:@selector(downLoadAll)];
+    self.navigationItem.rightBarButtonItem = item;
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nofileNotificationAction:) name:@"noFileInfoNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errNotificationAction:) name:@"DownErrNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
@@ -93,7 +98,11 @@
 }
 
 
-
+-(void)downLoadAll{
+    for (int i=0; i<dayDataArr.count; i++) {
+        [self downBtnClick:i];
+    }
+}
 #pragma mark -- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
