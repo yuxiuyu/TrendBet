@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 @property(assign,nonatomic)NSString*selectArbitrageRuleName;//总的套利规则数组
 @property(strong,nonatomic)tenRuleModel*tenModel;
 @property(nonatomic, assign) BOOL isNetwork;
+@property(nonatomic, assign) BOOL isWifi;//是否是wifi
 
 ////去掉浮点数后面多余的0
 -(NSString*)removeFloatAllZero:(NSString*)string;

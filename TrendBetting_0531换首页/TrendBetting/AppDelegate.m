@@ -295,6 +295,7 @@
 - (void)monitorNetworking
 {
     [Utils sharedInstance].isNetwork = YES;
+    [Utils sharedInstance].isWifi = NO;
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
@@ -317,6 +318,7 @@
             case 2:
             {
                  [Utils sharedInstance].isNetwork = YES;
+                 [Utils sharedInstance].isWifi = YES;
                 NSLog(@"wifi网络");
                 //发通知，搞事情
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"2" userInfo:nil];

@@ -99,8 +99,39 @@
 
 
 -(void)downLoadAll{
-    for (int i=0; i<dayDataArr.count; i++) {
-        [self downBtnClick:i];
+    
+    
+    if ([Utils sharedInstance].isNetwork&&[Utils sharedInstance].isWifi) {
+        [self downAllFile];
+    } else if(![Utils sharedInstance].isNetwork) {
+         [self.view makeToast:@"请检查网络设置" duration:3.0f position:CSToastPositionCenter];
+    } else if([Utils sharedInstance].isNetwork&&![Utils sharedInstance].isWifi){
+        UIAlertController*alertVC=[UIAlertController alertControllerWithTitle:@"提示" message:@"你现在非wifi环境，确认要下载？" preferredStyle:UIAlertControllerStyleAlert];
+        //添加取消到UIAlertController中
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        [alertVC addAction:cancelAction];
+        
+        //添加确定到UIAlertController中
+        UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+             [self downAllFile];
+        }];
+        [alertVC addAction:OKAction];
+        
+        [self presentViewController:alertVC animated:YES completion:nil];
+    
+    }
+    
+    
+    
+   
+}
+-(void)downAllFile{
+    for (NSInteger i=0; i<dayDataArr.count; i++) {
+        NSString *fileName = dayDataArr[i];
+        if (![daysArr containsObject:fileName]) {
+            [self downBtnClick:allday - i];
+        }
+        
     }
 }
 #pragma mark -- UITableViewDataSource
@@ -184,13 +215,19 @@
     NSString *tipStr = [NSString stringWithFormat:@"下载成功"];
     NSString*monthFileNameStr=[NSString stringWithFormat:@"%@号/%@",self.selectedRoom,self.selectedMonth];
     daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
-    [self.view makeToast:tipStr duration:3.0f position:CSToastPositionCenter];
-    //    [SVProgressHUD showErrorWithStatus:tipStr];
-    NSIndexPath *index = [NSIndexPath indexPathForRow:selectIndex inSection:0];
-    dayCell *cell = [_mytableView cellForRowAtIndexPath:index];
-    cell.yicunzai.hidden = NO;
-    [_mytableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
-    //    [_mytableView reloadData];
+    [self.view makeToast:tipStr duration:1.0f position:CSToastPositionCenter];
+  
+    //通知主线程刷新
+    [_mytableView reloadData];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        //刷新数据
+//        NSIndexPath *index = [NSIndexPath indexPathForRow:selectIndex inSection:0];
+//        dayCell *cell = [_mytableView cellForRowAtIndexPath:index];
+//        cell.yicunzai.hidden = NO;
+//        [_mytableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
+//    });
+   
+  
 }
 
 
