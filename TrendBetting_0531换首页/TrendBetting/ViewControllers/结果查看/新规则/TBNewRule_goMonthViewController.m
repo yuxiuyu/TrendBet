@@ -251,9 +251,36 @@
                 [resultArr addObject:[NSString stringWithFormat:@"%0.2f",endData-beginData]];
             }
         }
+        //最大回撤金额  和 比
+        NSArray*tep = [self getMaxBackMoneyAndlv:lineArr];
+        [resultArr addObjectsFromArray:tep];
+        //
         [tresultArr addObject:resultArr];
     }
     return tresultArr;
+}
+-(NSArray*)getMaxBackMoneyAndlv:(NSArray*)lineArr{
+    float maxBackMoney = -1111; //最大回撤金额
+    float minMoney = 0;
+    BOOL isfind =NO;
+    for (int i=1; i<lineArr.count-2; i++) {
+        if ([lineArr[i-1] floatValue]<[lineArr[i] floatValue]&&[lineArr[i] floatValue]>[lineArr[i+1] floatValue])//中间的最大
+        {
+            if (maxBackMoney==-1111||maxBackMoney<[lineArr[i] floatValue])
+            {
+                maxBackMoney=[lineArr[i] floatValue];
+                isfind=YES;
+            }
+        }
+        if (isfind&&[lineArr[i-1] floatValue]>[lineArr[i] floatValue]&&[lineArr[i] floatValue]<[lineArr[i+1] floatValue]) {
+            isfind=NO;
+            minMoney =[lineArr[i] floatValue];
+        }
+    }
+    float a = maxBackMoney - minMoney;
+    return @[[NSString stringWithFormat:@"%0.2f",a],
+            [NSString stringWithFormat:@"%0.2f",maxBackMoney!=0?a/maxBackMoney:0] //
+            ];
 }
 //-(void)getKeyAndValue1{
 //    NSDateFormatter * formater = [[NSDateFormatter alloc] init];

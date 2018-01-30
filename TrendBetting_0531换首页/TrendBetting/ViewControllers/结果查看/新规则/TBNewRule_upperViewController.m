@@ -37,7 +37,7 @@
     int failcount = 0;
     float winMoney = 0.0;
     float failMomey = 0.0;
-    for (int i=0; i<tepArr.count; i++) {
+    for (int i=0; i<tepArr.count-2; i++) {
         totalMonney+=[tepArr[i] floatValue];
         if ([tepArr[i] floatValue]>=0) {
             wincount++;
@@ -51,7 +51,7 @@
         float failSqr = failcount!=0?failMomey/failcount:0;
     //    float wfSqr = 0.0;
     NSArray*answerArr=@[[NSString stringWithFormat:@"%0.2f",totalMonney], //总盈亏
-                        @(tepArr.count), //交易次数
+                        @(tepArr.count-2), //交易次数
                         @(wincount),  //盈利次数
                         @(failcount),  //亏损次数
                         [NSString stringWithFormat:@"%0.2f",winMoney], //总盈利次数
@@ -59,7 +59,9 @@
                         [NSString stringWithFormat:@"%0.2f",winSqr], //平均每次盈利
                         [NSString stringWithFormat:@"%0.2f",failSqr], //平均每次亏损
                         [NSString stringWithFormat:@"%0.2f",failcount!=0?wincount/failcount:0.0], //胜率
-                        [NSString stringWithFormat:@"%0.2f",failSqr!=0?winSqr/failSqr:0] //盈亏比
+                        [NSString stringWithFormat:@"%0.2f",failSqr!=0?winSqr/failSqr:0], //盈亏比
+                        tepArr[tepArr.count-2], //最大回测金额
+                        [tepArr lastObject] //最大回测金额比
                         ];
         [ansArr addObject:answerArr];
         
@@ -88,7 +90,7 @@
     NSArray*array=ansArr[indexPath.row];
     cell.textLabel.font=[UIFont systemFontOfSize:13.0f];
 
-    cell.textLabel.text=[NSString stringWithFormat:@"第%ld条均线     总盈亏:%@  交易次数:%@  盈利次数:%@  亏损次数:%@  总盈利金额:%@  总亏损金额:%@  平均每次盈利:%@  平均每次亏损:%@  胜率:%@  盈亏比:%@",indexPath.row+1,array[0],array[1],array[2],array[3],array[4],array[5],array[6],array[7],array[8],array[9]];
+    cell.textLabel.text=[NSString stringWithFormat:@"第%ld条均线     总盈亏:%@  交易次数:%@  盈利次数:%@  亏损次数:%@  总盈利金额:%@  总亏损金额:%@  平均每次盈利:%@  平均每次亏损:%@  胜率:%@  盈亏比:%@  最大回撤金额:%@  最大回撤百分比:%@",indexPath.row+1,array[0],array[1],array[2],array[3],array[4],array[5],array[6],array[7],array[8],array[9],array[10],array[11]];
     cell.textLabel.numberOfLines=0;
     return cell;
 }
@@ -136,7 +138,7 @@
       NSInteger maxInt = 0;
       for (int j=0; j<_dataArray.count; j++) {
           NSArray*tempArr=_dataArray[j];
-          if (tempArr.count>maxInt) {
+          if (tempArr.count-2>maxInt) {
               maxInt = tempArr.count;
           }
       }
@@ -155,7 +157,7 @@
 
     //纵轴数据
     NSMutableArray *yValues1 = [NSMutableArray array];
-    for (int i = 0; i <tempArr.count; i ++) {
+    for (int i = 0; i <tempArr.count-2; i ++) {
         ChartDataEntry *entry = [[ChartDataEntry alloc] initWithX:i y:[tempArr[i] floatValue]];
         [yValues1 addObject:entry];
     }
