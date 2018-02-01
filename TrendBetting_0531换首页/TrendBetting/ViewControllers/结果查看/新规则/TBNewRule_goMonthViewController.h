@@ -11,6 +11,7 @@
 @interface TBNewRule_goMonthViewController : TBBaseViewController
 @property(strong,nonatomic)NSArray*totalDayKeyArr;
 @property(strong,nonatomic)NSArray*totalDayValueArr;
+@property(strong,nonatomic)NSArray*totalDayBackMoneyArr;
 //@property(strong,nonatomic)NSArray*dayValueArr;
 @property(strong,nonatomic)NSString*titleStr;
 @property(copy,nonatomic)NSDictionary * allmonthDic;

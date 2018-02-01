@@ -21,6 +21,7 @@
     NSThread*thread;
     NSMutableArray*totalDayKeyArr;//所有月连日
     NSMutableArray*totalDayValueArr;//所有月连日结果相加
+    NSMutableArray*totalDayBackMoneyArr; //所有月连日洗吗结果相加
     //    NSMutableArray*dayValueArr;//所有月连日结果相加
     //    JHLineChart *lineChart;
     //    JHLineChart *totalLineChart;
@@ -51,7 +52,7 @@
     
     totalDayKeyArr=[[NSMutableArray alloc]init];
     totalDayValueArr=[[NSMutableArray alloc]init];
-    //    dayValueArr=[[NSMutableArray alloc]init];
+    totalDayBackMoneyArr=[[NSMutableArray alloc]init];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
@@ -128,6 +129,7 @@
             //        [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=daysDic[tepDayKeyArray[k]];
             NSArray*array=dic[@"daycount"];
+
             float a= [array[5] floatValue]+[[totalDayValueArr lastObject] floatValue];
             for (int i=0; i<monthSumWinCountArray.count; i++)
             {
@@ -159,6 +161,9 @@
             NSArray*monKey=[key componentsSeparatedByString:@"-"];
             [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%@.%@",monKey[0],monKey[1],tepDayKeyArray[k]]];
             [totalDayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+            //洗吗
+            NSString*backmoneyStr=[[Utils sharedInstance]removeFloatAllZero:houseSumWinCountArray[8]];
+            [totalDayBackMoneyArr addObject:backmoneyStr];
             //            [dayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",[array[5] floatValue]]]];
         }
         [dateDic setObject:monthSumWinCountArray forKey:key];
@@ -284,7 +289,7 @@
     [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
 }
 -(void)goMonthsresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle]}];
+    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"totalDayBackMoneyArr":totalDayBackMoneyArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle]}];
     
 }
 -(void)goDaysresultBtnAction{
