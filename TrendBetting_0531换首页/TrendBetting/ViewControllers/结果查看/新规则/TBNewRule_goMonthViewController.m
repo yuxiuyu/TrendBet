@@ -22,6 +22,7 @@
     LineChartView*_chartView;
     NSMutableArray*lineArr;
     NSArray*upperDataArray;
+    NSArray*backupperDataArray;
     int currentP;
     NSArray*allMonthNameArr;
 
@@ -82,7 +83,8 @@
         if (line2.length>0) {
             [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor p:0]]; ;
         }
-        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0];
+        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0][0];
+        backupperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0][1];
         [self initChartView];
         _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-30);
     }
@@ -117,31 +119,27 @@
         NSArray*tepArr = goAllMonthDic[keyStr];
         _totalDayKeyArr = tepArr[0];
         _totalDayValueArr = tepArr[1];
+        _totalDayBackMoneyArr = tepArr[2];
     } else {
         NSDictionary*monthdic=_allmonthDic[keyStr];
-        NSMutableArray*totalTimeKeyArr;//所有日连此
-        NSMutableArray*totalTimeValueArr;//所有日连次结果相加
-        totalTimeKeyArr=[[NSMutableArray alloc]init];
-        totalTimeValueArr=[[NSMutableArray alloc]init];
+        NSMutableArray*totalTimeKeyArr=[[NSMutableArray alloc]init];//所有日连此
+        NSMutableArray*totalTimeValueArr=[[NSMutableArray alloc]init];//所有日连次结果相加
+        NSMutableArray*backtotalTimeValueArr=[[NSMutableArray alloc]init];//所有返利日连次结果相加
+       
         if (p>0) {
             NSString * str = allMonthNameArr[p-1];
             NSArray*tepArr = goAllMonthDic[str];
             [totalTimeKeyArr addObject: [tepArr[0] lastObject]];
             [totalTimeValueArr addObject: [tepArr[1] lastObject]];
+            [backtotalTimeValueArr addObject: [tepArr[2] lastObject]];
         }
         NSArray*tepArray=[monthdic allKeys];
 
-        NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
-        NSMutableArray*vArray=[[NSMutableArray alloc]init];
-        NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
-        for (int i=0; i<xArray.count; i++)
+        NSArray*dayxArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
+        for (int i=0; i<dayxArray.count; i++)
         {
-            NSDictionary*dic=monthdic[xArray[i]];
-            NSArray*dataarray=dic[@"daycount"];
-            [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
-            float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
-            [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
-
+            NSDictionary*dic=monthdic[dayxArray[i]];
+ 
             //月里的日长连次
             NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
             [xkeyArray removeObject:@"daycount"];
@@ -149,15 +147,17 @@
             for (int k=0; k<xtimeArr.count; k++)
             {
                 NSArray*tparray=dic[xtimeArr[k]];
-
                 float a=[tparray[5] floatValue]+[[totalTimeValueArr lastObject] floatValue];
-                [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",xArray[i],k+1]];
+                float b=[tparray[8] floatValue]+[[backtotalTimeValueArr lastObject] floatValue];
+                [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",dayxArray[i],k+1]];
                 [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
-            }//
+                 [backtotalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",b]]];
+            }
         }
         _totalDayKeyArr = totalTimeKeyArr;
         _totalDayValueArr = totalTimeValueArr;
-        [goAllMonthDic setObject:@[_totalDayKeyArr,_totalDayValueArr] forKey:keyStr];
+        _totalDayBackMoneyArr = backtotalTimeValueArr;
+        [goAllMonthDic setObject:@[_totalDayKeyArr,_totalDayValueArr,_totalDayBackMoneyArr] forKey:keyStr];
     }
     
     ////
@@ -176,7 +176,8 @@
     if (line2.length>0) {
         [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor p:p]]; ;
     }
-    upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p]; //在曲线上的点
+    upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p][0]; //在曲线上的点
+    backupperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p][1];
     [self initChartView];
 }
 -(NSArray*)getKeyAndValue:(int)dateSqrCount color:(UIColor*)color p:(int)p{
@@ -229,6 +230,8 @@
  */
 -(NSArray*)getComputerResult:(NSArray*)lineArr tsqrArr:(NSArray*)tsqrArr p:(int)p{
     NSMutableArray*tresultArr=[[NSMutableArray alloc]init];
+    NSMutableArray*backtresultArr=[[NSMutableArray alloc]init];
+    
     for (int j=0; j<tsqrArr.count; j++) {
         
         NSArray*sqrArr=tsqrArr[j][1];
@@ -237,18 +240,27 @@
             sqrCount=sqrCount-addCount+1;
         }
         NSMutableArray*resultArr=[[NSMutableArray alloc]init];
+        NSMutableArray*backresultArr=[[NSMutableArray alloc]init];
         BOOL isgo = NO;
-        float beginData = 0.0;
-        float endData = 0.0;
+
+        int beginP;
         for (int i=1; i<sqrArr.count; i++) {
             if (isgo==NO&&[lineArr[i-1+sqrCount] floatValue]<[sqrArr[i-1] floatValue]&&[lineArr[i+sqrCount] floatValue]>[sqrArr[i] floatValue]&&[sqrArr[i-1] floatValue]<[sqrArr[i] floatValue]) {
                 isgo = YES;
-                beginData = [lineArr[i+sqrCount] floatValue];
+//                beginData = [lineArr[i+sqrCount] floatValue];
+                beginP = i;
+                
             }
             if (isgo&&[lineArr[i+sqrCount] floatValue]<[sqrArr[i] floatValue]) {
                 isgo=NO;
-                endData = [lineArr[i+sqrCount] floatValue];
+                float  beginData = [lineArr[beginP+sqrCount] floatValue];
+                float endData = [lineArr[i+sqrCount] floatValue];
+                
+                float  backbeginData = [_totalDayBackMoneyArr[beginP+sqrCount] floatValue];
+                float backendData = [_totalDayBackMoneyArr[i+sqrCount] floatValue];
+                
                 [resultArr addObject:[NSString stringWithFormat:@"%0.2f",endData-beginData]];
+                [backresultArr addObject:[NSString stringWithFormat:@"%0.2f",backendData-backbeginData]];
             }
         }
         //最大回撤金额  和 比
@@ -256,8 +268,9 @@
         [resultArr addObjectsFromArray:tep];
         //
         [tresultArr addObject:resultArr];
+        [backtresultArr addObject:backresultArr];
     }
-    return tresultArr;
+    return @[tresultArr,backtresultArr];
 }
 -(NSArray*)getMaxBackMoneyAndlv:(NSArray*)lineArr{
     float maxBackMoney = -1111; //最大回撤金额
@@ -544,7 +557,7 @@
 }
 
 -(void)resultDataACtion{
-    [self performSegueWithIdentifier:@"show_upperVC" sender:@{@"dataArray":upperDataArray}];
+    [self performSegueWithIdentifier:@"show_upperVC" sender:@{@"dataArray":upperDataArray,@"backdataArray":backupperDataArray}];
 }
 #pragma mark - Navigation
 

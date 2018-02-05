@@ -32,13 +32,16 @@
         
     
     NSArray*tepArr =_dataArray[j];
+    NSArray*backtepArr = _backdataArray[j];
     float totalMonney = 0.0; //总盈亏
     int wincount = 0;
     int failcount = 0;
     float winMoney = 0.0;
     float failMomey = 0.0;
+    float backMoney = 0.0;
     for (int i=0; i<tepArr.count-2; i++) {
         totalMonney+=[tepArr[i] floatValue];
+        backMoney +=[backtepArr[i] floatValue];
         if ([tepArr[i] floatValue]>=0) {
             wincount++;
             winMoney+=[tepArr[i] floatValue];
@@ -60,6 +63,7 @@
                         [NSString stringWithFormat:@"%0.2f",failSqr], //平均每次亏损
                         [NSString stringWithFormat:@"%0.2f",failcount!=0?wincount/failcount:0.0], //胜率
                         [NSString stringWithFormat:@"%0.2f",failSqr!=0?winSqr/failSqr:0], //盈亏比
+                        [NSString stringWithFormat:@"%0.2f",backMoney], //返利
                         tepArr[tepArr.count-2], //最大回测金额
                         [tepArr lastObject] //最大回测金额比
                         ];
@@ -90,7 +94,7 @@
     NSArray*array=ansArr[indexPath.row];
     cell.textLabel.font=[UIFont systemFontOfSize:13.0f];
 
-    cell.textLabel.text=[NSString stringWithFormat:@"第%ld条均线     总盈亏:%@  交易次数:%@  盈利次数:%@  亏损次数:%@  总盈利金额:%@  总亏损金额:%@  平均每次盈利:%@  平均每次亏损:%@  胜率:%@  盈亏比:%@  最大回撤金额:%@  最大回撤百分比:%@",indexPath.row+1,array[0],array[1],array[2],array[3],array[4],array[5],array[6],array[7],array[8],array[9],array[10],array[11]];
+    cell.textLabel.text=[NSString stringWithFormat:@"第%ld条均线     总盈亏:%@  交易次数:%@  盈利次数:%@  亏损次数:%@  总盈利金额:%@  总亏损金额:%@  平均每次盈利:%@  平均每次亏损:%@  胜率:%@  盈亏比:%@  返利:%@  最大回撤金额:%@  最大回撤百分比:%@",indexPath.row+1,array[0],array[1],array[2],array[3],array[4],array[5],array[6],array[7],array[8],array[9],array[10],array[11],array[12]];
     cell.textLabel.numberOfLines=0;
     return cell;
 }

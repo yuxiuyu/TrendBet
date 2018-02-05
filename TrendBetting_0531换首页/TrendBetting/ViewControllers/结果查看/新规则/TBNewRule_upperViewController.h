@@ -11,4 +11,5 @@
 @interface TBNewRule_upperViewController : TBBaseViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property(strong,nonatomic)NSArray * dataArray;
+@property(strong,nonatomic)NSArray * backdataArray;
 @end
