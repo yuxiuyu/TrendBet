@@ -14,20 +14,19 @@
 //#define yxy 5
 @interface TBNewRule_goMonthViewController ()<UIScrollViewDelegate,ChartViewDelegate>
 {
-    //    int keyWidth1;
-    //    int keyWidth2;
-    //    int dateSqrCount;
-    //    NSMutableArray * totalQKeyArr;
-    //    NSMutableArray * totalQValueArr;
-    LineChartView*_chartView;
+    LineChartView*_chartView1;
+    LineChartView*_chartView2;
+    LineChartView*_chartView3;
     NSMutableArray*lineArr;
-    NSArray*upperDataArray;
-    NSArray*backupperDataArray;
+    NSArray*upperDataArray;//符合规则在均线曲线上的点（结果）
+    NSArray*upperProgressArray;//符合规则在均线曲线上的点（过程）
+    NSArray*backupperDataArray; //返利的值
+
     int currentP;
     NSArray*allMonthNameArr;
 
     NSMutableDictionary*goAllMonthDic;
-    NSInteger addCount;
+//    NSInteger addCount; //从上个月带过来的数据
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollview;
@@ -42,7 +41,7 @@
 
     goAllMonthDic = [[NSMutableDictionary alloc]init];
     currentP = [_selectP intValue];
-    addCount = 0;
+
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"导出" style:UIBarButtonItemStylePlain target:self action:@selector(exportAction)];
     UIBarButtonItem*dataitem=[[UIBarButtonItem alloc]initWithTitle:@"统计结果" style:UIBarButtonItemStylePlain target:self action:@selector(resultDataACtion)];
     self.navigationItem.rightBarButtonItems=@[item,dataitem];
@@ -71,22 +70,24 @@
         
         [_mainScrollview addSubview:leftBtn];
         [_mainScrollview addSubview:rightBtn];
-        _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH-100, SCREEN_HEIGHT-30);
-    } else {
+
+    } else { //连月结果
         int dateSqrCount = [[defs objectForKey:SAVE_dateSqrCount] intValue];
         [lineArr addObject: [self getKeyAndValue:dateSqrCount  color:UIColor.greenColor p:0]];
         NSString * line1 = [defs objectForKey:SAVE_dateSqrCount_1];
         NSString * line2 = [defs objectForKey:SAVE_dateSqrCount_2];
         if (line1.length>0) {
-            [lineArr addObject: [self getKeyAndValue:[line1 intValue]  color:UIColor.redColor p:0]]; ;
+            [lineArr addObject: [self getKeyAndValue:[line1 intValue]  color:UIColor.greenColor p:0]]; ;
         }
         if (line2.length>0) {
-            [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor p:0]]; ;
+            [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.greenColor p:0]]; ;
         }
-        upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0][0];
-        backupperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0][1];
+        NSArray*resArr = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:0];
+        upperDataArray = resArr[0];
+        backupperDataArray = resArr[1];
+        upperProgressArray = resArr[2];
         [self initChartView];
-        _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-30);
+        _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*lineArr.count-30);
     }
     
 
@@ -108,7 +109,7 @@
     }
 }
 /*
- 获取月的结果
+ 获取一个月的连日结果
  */
 -(void)getMonthKeyAndValue:(int)p{
     NSString * keyStr = allMonthNameArr[p];
@@ -125,7 +126,7 @@
         NSMutableArray*totalTimeKeyArr=[[NSMutableArray alloc]init];//所有日连此
         NSMutableArray*totalTimeValueArr=[[NSMutableArray alloc]init];//所有日连次结果相加
         NSMutableArray*backtotalTimeValueArr=[[NSMutableArray alloc]init];//所有返利日连次结果相加
-       
+
         if (p>0) {
             NSString * str = allMonthNameArr[p-1];
             NSArray*tepArr = goAllMonthDic[str];
@@ -139,7 +140,7 @@
         for (int i=0; i<dayxArray.count; i++)
         {
             NSDictionary*dic=monthdic[dayxArray[i]];
- 
+
             //月里的日长连次
             NSMutableArray*xkeyArray=[[NSMutableArray alloc]initWithArray:[dic allKeys]];
             [xkeyArray removeObject:@"daycount"];
@@ -151,7 +152,7 @@
                 float b=[tparray[8] floatValue]+[[backtotalTimeValueArr lastObject] floatValue];
                 [totalTimeKeyArr addObject:[NSString stringWithFormat:@"%@.%d",dayxArray[i],k+1]];
                 [totalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
-                 [backtotalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",b]]];
+                [backtotalTimeValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",b]]];
             }
         }
         _totalDayKeyArr = totalTimeKeyArr;
@@ -169,24 +170,30 @@
     //2
     NSString * line1 = [defs objectForKey:SAVE_dateDaySqrCount_1];
     if (line1.length>0) {
-        [lineArr addObject: [self getKeyAndValue:[line1 intValue] color:UIColor.redColor p:p]]; ;
+        [lineArr addObject: [self getKeyAndValue:[line1 intValue] color:UIColor.greenColor p:p]]; ;
     }
     //3
     NSString * line2 = [defs objectForKey:SAVE_dateDaySqrCount_2];
     if (line2.length>0) {
-        [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.blueColor p:p]]; ;
+        [lineArr addObject: [self getKeyAndValue:[line2 intValue]  color:UIColor.greenColor p:p]]; ;
     }
-    upperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p][0]; //在曲线上的点
-    backupperDataArray = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p][1];
+    NSArray*resArr = [self getComputerResult:_totalDayValueArr tsqrArr:lineArr p:p];
+    upperDataArray = resArr[0]; //在曲线上的点
+    backupperDataArray = resArr[1];
+    upperProgressArray = resArr[2];
     [self initChartView];
+    _mainScrollview.contentSize=CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*lineArr.count-30);
 }
+/*
+ *获取几日（dateSqrCount）均值 p第几个月
+ */
 -(NSArray*)getKeyAndValue:(int)dateSqrCount color:(UIColor*)color p:(int)p{
 
     NSMutableArray * keyArr ;
     NSMutableArray * valueArr ;
     NSMutableArray * totalQKeyArr = [[NSMutableArray alloc]init];
     NSMutableArray * totalQValueArr =[[NSMutableArray alloc]init];
-    addCount = 0;
+   int addCount = 0;
     if (p>0) {
         NSString * str = allMonthNameArr[p-1];
         NSArray*tepArr = goAllMonthDic[str];
@@ -223,33 +230,46 @@
             [totalQValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",tvalue/dateSqrCount]]];
         }
     }
-    return @[totalQKeyArr,totalQValueArr,@(dateSqrCount),color];
+    return @[totalQKeyArr,totalQValueArr,@(dateSqrCount),color,@(addCount)];
 }
 /*
- *计算在均线曲线上的点
+ *计算在 均线曲线上的点 和 返利的钱
  */
 -(NSArray*)getComputerResult:(NSArray*)lineArr tsqrArr:(NSArray*)tsqrArr p:(int)p{
-    NSMutableArray*tresultArr=[[NSMutableArray alloc]init];
-    NSMutableArray*backtresultArr=[[NSMutableArray alloc]init];
+    NSMutableArray*tresultArr=[[NSMutableArray alloc]init];// 在均线曲线上的点
+    NSMutableArray*backtresultArr=[[NSMutableArray alloc]init]; //返利的钱
+    NSMutableArray*upResArr = [[NSMutableArray alloc]init]; //记录符合规则均线曲线上的点
+
     
     for (int j=0; j<tsqrArr.count; j++) {
         
         NSArray*sqrArr=tsqrArr[j][1];
-        int sqrCount = [tsqrArr[j][2] intValue]-1;
+        NSInteger sqrCount = [tsqrArr[j][2] intValue]-1;
+        int addCount = [tsqrArr[j][4] intValue];
         if (p>0) {
             sqrCount=sqrCount-addCount+1;
         }
+
         NSMutableArray*resultArr=[[NSMutableArray alloc]init];
         NSMutableArray*backresultArr=[[NSMutableArray alloc]init];
+        NSMutableArray*upresultArr=[[NSMutableArray alloc]init];
+        for (int y=0; y<lineArr.count; y++) {
+            [upresultArr addObject:@""];
+        }
         BOOL isgo = NO;
 
         int beginP;
         for (int i=1; i<sqrArr.count; i++) {
             if (isgo==NO&&[lineArr[i-1+sqrCount] floatValue]<[sqrArr[i-1] floatValue]&&[lineArr[i+sqrCount] floatValue]>[sqrArr[i] floatValue]&&[sqrArr[i-1] floatValue]<[sqrArr[i] floatValue]) {
                 isgo = YES;
-//                beginData = [lineArr[i+sqrCount] floatValue];
                 beginP = i;
-                
+
+            }
+            if (isgo)
+            {
+                [upresultArr replaceObjectAtIndex:i+sqrCount withObject:lineArr[i+sqrCount]];
+            } else {
+                [upresultArr replaceObjectAtIndex:i+sqrCount withObject:upresultArr[i+sqrCount-1]];
             }
             if (isgo&&[lineArr[i+sqrCount] floatValue]<[sqrArr[i] floatValue]) {
                 isgo=NO;
@@ -269,9 +289,13 @@
         //
         [tresultArr addObject:resultArr];
         [backtresultArr addObject:backresultArr];
+        [upResArr addObject:upresultArr];
     }
-    return @[tresultArr,backtresultArr];
+    return @[tresultArr,backtresultArr,upResArr];
 }
+/*
+ *获取最大回撤金额和回撤金额百分比
+ */
 -(NSArray*)getMaxBackMoneyAndlv:(NSArray*)lineArr{
     float maxBackMoney = -1111; //最大回撤金额
     float minMoney = 0;
@@ -292,90 +316,183 @@
     }
     float a = maxBackMoney - minMoney;
     return @[[NSString stringWithFormat:@"%0.2f",a],
-            [NSString stringWithFormat:@"%0.2f",maxBackMoney!=0?a/maxBackMoney:0] //
-            ];
+             [NSString stringWithFormat:@"%0.2f",maxBackMoney!=0?a/maxBackMoney:0] //
+             ];
 }
-//-(void)getKeyAndValue1{
-//    NSDateFormatter * formater = [[NSDateFormatter alloc] init];
-//    [formater setDateFormat:@"yyyy.MM"];
-//
-//    NSArray * beginArr =[_totalDayKeyArr[0] componentsSeparatedByString:@"."];
-//    NSArray * endArr =[[_totalDayKeyArr lastObject] componentsSeparatedByString:@"."];
-//    NSDate * beginDate =[formater dateFromString:[NSString stringWithFormat:@"%@.%d",beginArr[0],[beginArr[1] intValue]]];
-//    NSString* endMonStr = [NSString stringWithFormat:@"%@.%d",endArr[0],[endArr[1] intValue]];
-//    NSDate * endDate =[formater dateFromString:endMonStr];
-//    int gcount = 0;
-//    int indexp = 0;
-////    float tvalue = 0;
-//    NSMutableArray *TArr =[[NSMutableArray alloc]init];
-//    while ([self compareDate:beginDate endDate:endDate]) {
-//        NSInteger monthCount = [[Utils sharedInstance] getAllDayFromDate:beginDate];
-//        for (int i=gcount==0?[beginArr[2] intValue]-1:0; i<monthCount; i++) {
-//            float value = 0;
-//            NSString *keyStr = [NSString stringWithFormat:@"%@.%d",[formater stringFromDate:beginDate],i+1];
-//            if (indexp < _totalDayKeyArr.count&&[_totalDayKeyArr[indexp] isEqualToString:keyStr]) {
-//
-//                value = [_totalDayValueArr[indexp] floatValue];
-//                indexp++;
-//            }
-//            [TArr addObject:[NSString stringWithFormat:@"%0.3f",value]];
-//            tvalue+=value;
-//            if (gcount==0&&i<dateSqrCount+[beginArr[2] intValue]-1) {
-//                if (i==dateSqrCount-1+[beginArr[2] intValue]-1) {
-//                    [totalQKeyArr addObject:keyStr];
-//                    [totalQValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",tvalue/dateSqrCount]]];
-//                }
-//            } else {
-//                tvalue -= [TArr[0] floatValue];
-//                [TArr removeObjectAtIndex:0];
-//                [totalQKeyArr addObject:keyStr];
-//                [totalQValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",tvalue/dateSqrCount]]];
-//            }
-//            if (indexp == _totalDayKeyArr.count && [[formater stringFromDate:beginDate] isEqualToString:endMonStr]) {
-//                return;
-//            }
-//        }
-//        gcount++;
-//        beginDate = [self monthAddOneMonth:beginDate];
-//
-//    }
-//    NSLog(@"yxy");
-//
-//
-//
-//}
-//-(NSDate*)monthAddOneMonth:(NSDate*)currentDate{
-//    NSDateFormatter * formater = [[NSDateFormatter alloc] init];
-//    [formater setDateFormat:@"yyyy.MM"];
-//    NSString*date = [formater stringFromDate:currentDate];
-//    NSArray*arr = [date componentsSeparatedByString:@"."];
-//    int year = [arr[0] intValue];
-//    int month = [arr[1] intValue];
-//    if (month<12) {
-//        month++;
-//    } else {
-//        year++;
-//    }
-//    return [formater dateFromString:[NSString stringWithFormat:@"%d.%d",year,month]];
-//}
-//-(BOOL)compareDate:(NSDate*)beginDate endDate:(NSDate*)endDate{
-//    NSComparisonResult result = [beginDate compare:endDate];
-//    switch (result) {
-//        case NSOrderedAscending:
-//            return  YES;
-//            break;
-//        case NSOrderedSame:
-//            return  YES;
-//            break;
-//        case NSOrderedDescending:
-//            return  NO;
-//            break;
-//
-//        default:
-//            break;
-//    }
-//}
 
+
+
+
+
+-(void)initChartView{
+    int intx = 0;
+    int screenw=SCREEN_WIDTH;
+    if ([self.title containsString:@"连日"]) {
+        intx = 50;
+        screenw=screenw-intx*2;
+    }
+    for (int k=0; k<lineArr.count; k++) {
+        LineChartView*chartView = [[LineChartView alloc]initWithFrame:CGRectMake(intx, SCREEN_HEIGHT*k,screenw, SCREEN_HEIGHT-30)];
+        chartView.backgroundColor=TBLineGaryColor;
+        chartView.delegate = self;
+        chartView.chartDescription.enabled = NO;
+        chartView.dragEnabled = YES;
+        [chartView setScaleEnabled:YES];
+        chartView.pinchZoomEnabled = YES;
+        chartView.xAxis.labelPosition = XAxisLabelPositionBottomInside;// X轴的位置
+
+        //
+        //
+        chartView.xAxis.gridLineDashLengths = @[@5.0, @10.0];
+
+        chartView.drawGridBackgroundEnabled = NO;
+
+        ChartYAxis *leftAxis = chartView.leftAxis;
+        [leftAxis removeAllLimitLines];
+        leftAxis.gridLineDashLengths = @[@5.f, @5.f];
+        leftAxis.drawZeroLineEnabled = NO;
+        leftAxis.drawLimitLinesBehindDataEnabled = YES;
+
+        chartView.rightAxis.enabled = NO;
+        [self setDta:chartView k:k];
+        [chartView animateWithXAxisDuration:2.5];
+        [_mainScrollview addSubview:chartView];
+    }
+}
+
+-(void)setDta:(LineChartView*)chartView k:(int)k{
+    
+    //横轴数据
+    NSMutableArray *xValues1 = [NSMutableArray array];
+    for (int i = 0; i < _totalDayKeyArr.count; i ++) {
+        [xValues1 addObject:_totalDayKeyArr[i]];
+    }
+    //设置横轴数据给chartview
+    chartView.xAxis.valueFormatter = [[ChartIndexAxisValueFormatter alloc] initWithValues:xValues1];
+    //纵轴数据
+    NSMutableArray *yValues1 = [NSMutableArray array];
+    for (int i = 0; i <_totalDayValueArr.count; i ++) {
+        ChartDataEntry *entry = [[ChartDataEntry alloc] initWithX:i y:[_totalDayValueArr[i] floatValue]];
+        [yValues1 addObject:entry];
+    }
+    
+    NSArray*titArr = [_titleStr componentsSeparatedByString:@"-"];
+    //创建LineChartDataSet对象
+    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:yValues1 label:titArr.count>1?titArr[1]:_titleStr];
+    set1.drawIconsEnabled = NO;
+    //    set1.lineDashLengths = @[@5.f, @2.5f];
+    set1.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set1 setColor:UIColor.orangeColor];
+    [set1 setCircleColor:UIColor.orangeColor];
+    set1.lineWidth = 1.0;
+    set1.circleRadius = 3.0;
+    set1.drawCircleHoleEnabled = NO;
+    //    _chartView.scaleYEnabled = NO;//取消Y轴缩放
+    set1.valueFont = [UIFont systemFontOfSize:8.f];
+    set1.formLineDashLengths = @[@5.f, @2.5f];
+    set1.formLineWidth = 1.0;
+    set1.formSize = 15.0;
+    NSMutableArray *dataSets = [[NSMutableArray alloc] init];
+    [dataSets addObject:set1];
+    [self addOtherSet:dataSets k:k];
+
+    
+    
+    
+    
+    LineChartData *data = [[LineChartData alloc] initWithDataSets:dataSets];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    //自定义数据显示格式
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [formatter setPositiveFormat:@"#0.00"];
+    
+    [data setValueFormatter:[[ChartDefaultValueFormatter alloc]initWithFormatter:formatter]];
+    
+    chartView.data = data;
+
+}
+-(NSArray*)addOtherSet:(NSMutableArray*)dataSets k:(int)k{
+    NSArray*titArr = [_titleStr componentsSeparatedByString:@"-"];
+    //yxy 2018 0102 add
+    //横轴数据
+    NSArray*tempArr =lineArr[k];
+    int dateSqrCount =[tempArr[2] intValue]-1;
+    int addCount = [tempArr[4] intValue];
+    if(currentP>0){
+        dateSqrCount = dateSqrCount - addCount+1;
+    }
+    //纵轴数据
+    NSMutableArray *yValues1 = [NSMutableArray array];
+    for (int i = 0; i <[tempArr[1] count]; i ++) {
+        ChartDataEntry *entry = [[ChartDataEntry alloc] initWithX:i+dateSqrCount y:[tempArr[1][i] floatValue]];
+        [yValues1 addObject:entry];
+    }
+    //创建LineChartDataSet对象
+    LineChartDataSet *set = [[LineChartDataSet alloc] initWithValues:yValues1 label:[NSString stringWithFormat:@"均线%@%d",titArr.count>1? titArr[1]:_titleStr,k+1]];
+    set.drawIconsEnabled = NO;
+    //    set2.lineDashLengths = @[@5.f, @2.5f];
+    set.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set setColor:tempArr[3]];
+    [set setCircleColor:tempArr[3]];
+    set.lineWidth = 1.0;
+    set.circleRadius = 3.0;
+    set.drawCircleHoleEnabled = NO;
+    set.valueFont = [UIFont systemFontOfSize:8.f];
+    set.formLineDashLengths = @[@5.f, @2.5f];
+    set.formLineWidth = 1.0;
+    set.formSize = 15.0;
+    [dataSets addObject:set];
+
+
+
+
+    //纵轴数据
+    NSMutableArray *yValues2 = [NSMutableArray array];
+    NSArray*progressArr = upperProgressArray[k];
+    for (int i = 0; i <progressArr.count; i++) {
+        if ([progressArr[i] length]>0) {
+            ChartDataEntry * entry = [[ChartDataEntry alloc] initWithX:i y:[progressArr[i] floatValue]];
+            [yValues2 addObject:entry];
+        }
+
+    }
+    //创建LineChartDataSet对象
+    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:yValues2 label:[NSString stringWithFormat:@"统计结果过程%d",k+1]];
+    set1.drawIconsEnabled = NO;
+    //    set2.lineDashLengths = @[@5.f, @2.5f];
+    set1.highlightLineDashLengths = @[@5.f, @2.5f];
+    [set1 setColor:[UIColor redColor]];
+    [set1 setCircleColor:[UIColor redColor]];
+    set1.lineWidth = 1.0;
+    set1.circleRadius = 3.0;
+    set1.drawCircleHoleEnabled = NO;
+    set1.valueFont = [UIFont systemFontOfSize:8.f];
+    set1.formLineDashLengths = @[@5.f, @2.5f];
+    set1.formLineWidth = 1.0;
+    set1.formSize = 15.0;
+    [dataSets addObject:set1];
+
+    return dataSets;
+}
+
+-(void)resultDataACtion{
+    [self performSegueWithIdentifier:@"show_upperVC" sender:@{@"dataArray":upperDataArray,@"backdataArray":backupperDataArray}];
+}
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    
+    UIViewController*vc=[segue destinationViewController];
+    [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 - (void)exportAction {
     // 创建存放XLS文件数据的数组
     NSMutableArray  *xlsDataMuArr = [[NSMutableArray alloc] init];
@@ -413,7 +530,7 @@
     NSData *fileData = [muStr dataUsingEncoding:NSUTF16StringEncoding];
     NSString *path = NSHomeDirectory();
     NSArray*nameArr=[_titleStr componentsSeparatedByString:@"-"];
-    
+
     NSString*createPath = [NSString stringWithFormat:@"%@/Documents/%@",path,SAVE_EXPORT_FILENAME];
     if (![[NSFileManager defaultManager] fileExistsAtPath:createPath])
     {
@@ -421,158 +538,15 @@
     }
     NSString *filePath = [createPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.xls",nameArr[0]]];
     NSLog(@"文件路径：\n%@",filePath);
-    
-    
-    
+
+
+
     BOOL issuccess = [fileManager createFileAtPath:filePath contents:fileData attributes:nil];
     if(issuccess){
         [self.view makeToast:@"导出成功" duration:3.0f position:CSToastPositionCenter];
     } else {
         [self.view makeToast:@"导出失败" duration:3.0f position:CSToastPositionCenter];
     }
-}
-
-
--(void)initChartView{
-    int intx = 0;
-    int screenw=SCREEN_WIDTH;
-    if ([self.title containsString:@"连日"]) {
-        intx = 50;
-        screenw=screenw-intx*2;
-    }
-    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(intx, 0,screenw, SCREEN_HEIGHT-30)];
-    _chartView.backgroundColor=TBLineGaryColor;
-    _chartView.delegate = self;
-    _chartView.chartDescription.enabled = NO;
-    _chartView.dragEnabled = YES;
-    [_chartView setScaleEnabled:YES];
-    _chartView.pinchZoomEnabled = YES;
-    _chartView.xAxis.labelPosition = XAxisLabelPositionBottomInside;// X轴的位置
-    
-    //
-    //
-    _chartView.xAxis.gridLineDashLengths = @[@5.0, @10.0];
-    
-    _chartView.drawGridBackgroundEnabled = NO;
-    
-    ChartYAxis *leftAxis = _chartView.leftAxis;
-    [leftAxis removeAllLimitLines];
-    leftAxis.gridLineDashLengths = @[@5.f, @5.f];
-    leftAxis.drawZeroLineEnabled = NO;
-    leftAxis.drawLimitLinesBehindDataEnabled = YES;
-    
-    _chartView.rightAxis.enabled = NO;
-    [self setDta];
-    [_chartView animateWithXAxisDuration:2.5];
-    [_mainScrollview addSubview:_chartView];
-}
--(void)setDta{
-    
-    //横轴数据
-    NSMutableArray *xValues1 = [NSMutableArray array];
-    for (int i = 0; i < _totalDayKeyArr.count; i ++) {
-        [xValues1 addObject:_totalDayKeyArr[i]];
-    }
-    //设置横轴数据给chartview
-    _chartView.xAxis.valueFormatter = [[ChartIndexAxisValueFormatter alloc] initWithValues:xValues1];
-    //纵轴数据
-    NSMutableArray *yValues1 = [NSMutableArray array];
-    for (int i = 0; i <_totalDayValueArr.count; i ++) {
-        ChartDataEntry *entry = [[ChartDataEntry alloc] initWithX:i y:[_totalDayValueArr[i] floatValue]];
-        [yValues1 addObject:entry];
-    }
-    
-    NSArray*titArr = [_titleStr componentsSeparatedByString:@"-"];
-    //创建LineChartDataSet对象
-    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:yValues1 label:titArr.count>1?titArr[1]:_titleStr];
-    set1.drawIconsEnabled = NO;
-    //    set1.lineDashLengths = @[@5.f, @2.5f];
-    set1.highlightLineDashLengths = @[@5.f, @2.5f];
-    [set1 setColor:UIColor.orangeColor];
-    [set1 setCircleColor:UIColor.orangeColor];
-    set1.lineWidth = 1.0;
-    set1.circleRadius = 3.0;
-    set1.drawCircleHoleEnabled = NO;
-    //    _chartView.scaleYEnabled = NO;//取消Y轴缩放
-    set1.valueFont = [UIFont systemFontOfSize:8.f];
-    set1.formLineDashLengths = @[@5.f, @2.5f];
-    set1.formLineWidth = 1.0;
-    set1.formSize = 15.0;
-    NSMutableArray *dataSets = [[NSMutableArray alloc] init];
-    [dataSets addObject:set1];
-    [self addOtherSet:dataSets];
-    //    [dataSets addObjectsFromArray:tepArr];
-    
-    
-    
-    
-    LineChartData *data = [[LineChartData alloc] initWithDataSets:dataSets];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    //自定义数据显示格式
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [formatter setPositiveFormat:@"#0.00"];
-    
-    [data setValueFormatter:[[ChartDefaultValueFormatter alloc]initWithFormatter:formatter]];
-    
-    _chartView.data = data;
-    //    }
-}
--(NSArray*)addOtherSet:(NSMutableArray*)dataSets{
-    NSArray*titArr = [_titleStr componentsSeparatedByString:@"-"];
-    //yxy 2018 0102 add
-    //横轴数据
-    for (int k=0; k<lineArr.count; k++) {
-        NSArray*tempArr =lineArr[k];
-        int dateSqrCount =[tempArr[2] intValue]-1;
-        if(currentP>0){
-            dateSqrCount = dateSqrCount - addCount+1;
-        }
-        NSMutableArray *xValues2 = [NSMutableArray array];
-        for (int i = 0; i < [tempArr[0] count]; i ++) {
-            [xValues2 addObject:tempArr[0][i]];
-        }
-        //纵轴数据
-        NSMutableArray *yValues2 = [NSMutableArray array];
-        for (int i = 0; i <[tempArr[1] count]; i ++) {
-            ChartDataEntry *entry = [[ChartDataEntry alloc] initWithX:i+dateSqrCount y:[tempArr[1][i] floatValue]];
-            [yValues2 addObject:entry];
-        }
-        //创建LineChartDataSet对象
-        LineChartDataSet *set = [[LineChartDataSet alloc] initWithValues:yValues2 label:[NSString stringWithFormat:@"均线%@%d",titArr.count>1? titArr[1]:_titleStr,k+1]];
-        set.drawIconsEnabled = NO;
-        //    set2.lineDashLengths = @[@5.f, @2.5f];
-        set.highlightLineDashLengths = @[@5.f, @2.5f];
-        [set setColor:tempArr[3]];
-        [set setCircleColor:tempArr[3]];
-        set.lineWidth = 1.0;
-        set.circleRadius = 3.0;
-        set.drawCircleHoleEnabled = NO;
-        set.valueFont = [UIFont systemFontOfSize:8.f];
-        set.formLineDashLengths = @[@5.f, @2.5f];
-        set.formLineWidth = 1.0;
-        set.formSize = 15.0;
-        [dataSets addObject:set];
-    }
-    return dataSets;
-}
-
--(void)resultDataACtion{
-    [self performSegueWithIdentifier:@"show_upperVC" sender:@{@"dataArray":upperDataArray,@"backdataArray":backupperDataArray}];
-}
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    UIViewController*vc=[segue destinationViewController];
-    [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-    
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*

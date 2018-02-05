@@ -67,7 +67,7 @@
                         tepArr[tepArr.count-2], //最大回测金额
                         [tepArr lastObject] //最大回测金额比
                         ];
-        [ansArr addObject:answerArr];
+    [ansArr addObject:answerArr];
         
     }
 }
