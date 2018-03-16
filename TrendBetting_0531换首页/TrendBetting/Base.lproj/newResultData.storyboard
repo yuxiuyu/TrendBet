@@ -111,11 +111,27 @@
                         <outlet property="collectionview" destination="INh-lo-nhv" id="Rlq-6v-UQh"/>
                         <segue destination="bzm-CD-jlK" kind="show" identifier="showNewRuleRoomVC" id="4na-lN-law"/>
                         <segue destination="Y0j-SD-Way" kind="show" identifier="showNewRuleDayVC" id="LOI-Hb-KX7"/>
+                        <segue destination="4HQ-7j-MSH" kind="show" identifier="showKlineRuleRoomVC" id="wo3-gz-6cv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sY-DV-W8B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="698" y="1871"/>
+        </scene>
+        <!--KlineRM Detail View Controller-->
+        <scene sceneID="V2e-OV-YX3">
+            <objects>
+                <viewController id="4HQ-7j-MSH" customClass="TBKline_RMDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GXX-bG-vrg">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="RJb-tZ-2Cb"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VEM-bQ-cDV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="658" y="2852"/>
         </scene>
         <!--New Rule go Month View Controller-->
         <scene sceneID="cV3-Jc-FaP">
@@ -396,7 +412,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nm9-nf-Rrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2069" y="2823"/>
+            <point key="canvasLocation" x="1724" y="2865"/>
         </scene>
         <!--New Rule Time View Controller-->
         <scene sceneID="aj7-uN-u4r">

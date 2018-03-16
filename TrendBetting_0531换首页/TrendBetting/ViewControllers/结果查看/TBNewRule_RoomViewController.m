@@ -11,8 +11,8 @@
 @interface TBNewRule_RoomViewController ()
 {
     NSMutableArray*allHouseArr;
-//    NSMutableDictionary*houseMoneyDic;
-//    NSThread*thread;
+    //    NSMutableDictionary*houseMoneyDic;
+    //    NSThread*thread;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionview;
 
@@ -37,18 +37,18 @@
     
     self.navigationController.navigationBarHidden=NO;
     [self getData];
-   
-//    houseMoneyDic=[[NSMutableDictionary alloc]init];
+
+    //    houseMoneyDic=[[NSMutableDictionary alloc]init];
     
-//    if ([_isCurrentDay intValue]==1)
-//    {
-//        thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
-//        [thread start];
-//    }
+    //    if ([_isCurrentDay intValue]==1)
+    //    {
+    //        thread=[[NSThread alloc] initWithTarget:self selector:@selector(getDataRead) object:nil];
+    //        [thread start];
+    //    }
     
     
     
-   
+
 }
 -(void)getData{
     allHouseArr=[[NSMutableArray alloc]init];
@@ -90,7 +90,7 @@
 //            continue;
 //        }
 //    }
-    
+
 //    for (int i=0;i<allHouseArr.count;i++)
 //    {
 //        NSString*houseStr = allHouseArr[i];
@@ -139,20 +139,22 @@
     newroomCollectionViewCell*cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"newroomCollectionIdentifier" forIndexPath:indexPath];
     NSString*str=allHouseArr[indexPath.item];
     cell.roomLab.text=[NSString stringWithFormat:@"%@房间",str];
-//    cell.resultCountLab.text=[[Utils sharedInstance] removeFloatAllZero:houseMoneyDic[str]];
+    //    cell.resultCountLab.text=[[Utils sharedInstance] removeFloatAllZero:houseMoneyDic[str]];
     return cell;
     
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  
+
     [[Utils sharedInstance] initSetTenModel];
     if ([_isCurrentDay intValue]==0) {
-         [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
+        [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
     } else if ([_isCurrentDay intValue]==1) {
-         [self performSegueWithIdentifier:@"showNewRuleDayVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item],@"isCurrentDay":_isCurrentDay}];
+        [self performSegueWithIdentifier:@"showNewRuleDayVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item],@"isCurrentDay":_isCurrentDay}];
+    } else if ([_isCurrentDay intValue]==2) {
+        [self performSegueWithIdentifier:@"showKlineRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];
     }
-   
+
 }
 
 
@@ -168,11 +170,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-//    if ([segue.identifier isEqualToString:@"showNewRuleRoomVC"])
-//    {
-        UIViewController*vc=[segue destinationViewController];
-        [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
-//    }
+    //    if ([segue.identifier isEqualToString:@"showNewRuleRoomVC"])
+    //    {
+    UIViewController*vc=[segue destinationViewController];
+    [vc setValuesForKeysWithDictionary:(NSDictionary*)sender];
+    //    }
 }
 -(void)tenRuleBtnAction{
     TBFixGroupListViewController*vc=[[UIStoryboard storyboardWithName:@"setting" bundle:nil] instantiateViewControllerWithIdentifier:@"fixGroupListViewController"];

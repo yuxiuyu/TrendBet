@@ -20,11 +20,12 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Charts (3.0.2):
-    - Charts/Core (= 3.0.2)
-  - Charts/Core (3.0.2)
-  - IQKeyboardManager (4.0.9)
+  - Charts (3.0.5):
+    - Charts/Core (= 3.0.5)
+  - Charts/Core (3.0.5)
+  - IQKeyboardManager (4.0.13)
   - JSONKit-NoWarning (1.2)
+  - Masonry (1.0.2)
   - MJExtension (3.0.13)
   - SVProgressHUD (2.0.4)
   - Toast (3.1.0)
@@ -34,19 +35,21 @@ DEPENDENCIES:
   - Charts
   - IQKeyboardManager (~> 4.0.1)
   - JSONKit-NoWarning (~> 1.2)
+  - Masonry (~> 1.0.2)
   - MJExtension (~> 3.0.10)
   - SVProgressHUD (~> 2.0.3)
   - Toast (~> 3.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
-  Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
-  IQKeyboardManager: 322c7405df3eb5f7e50dede32ea937bf3d4364e0
+  Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
+  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   SVProgressHUD: bfde85ed6c573ea802b9cb37894ed9b629034f1b
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
 
-PODFILE CHECKSUM: 110c9570cc03134ee0959b1be9c0aa83b39f57f9
+PODFILE CHECKSUM: d7c641de0424c82c04d2ebdd19c9bd0a64849922
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.4.0

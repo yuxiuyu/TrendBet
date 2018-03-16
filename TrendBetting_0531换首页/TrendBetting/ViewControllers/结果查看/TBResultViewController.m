@@ -45,7 +45,7 @@
     
     self.navigationController.navigationBarHidden=NO;
     _tableview.tableFooterView=[[UIView alloc]init];
-    dataArray=@[@"读取新规则结果",@"读取今天的结果"];
+    dataArray=@[@"读取新规则结果",@"读取今天的结果",@"K线图结果"];
 //    dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果",@"读取新规则结果"];
 //     dataArray=@[@"读取的数据结果",@"我保存的数据结果",@"读取设置组结果"];
     // Do any additional setup after loading the view.

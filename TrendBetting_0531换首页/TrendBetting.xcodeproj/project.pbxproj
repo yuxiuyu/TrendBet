@@ -34,6 +34,43 @@
 		5B609A171EF91E1B00D9305B /* TBNewRule_TimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B609A161EF91E1B00D9305B /* TBNewRule_TimeViewController.m */; };
 		5B6640251E5ADF15007524F3 /* Utils+rule.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6640241E5ADF15007524F3 /* Utils+rule.m */; };
 		5B6F37271F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F37261F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m */; };
+		5B7A7733205B9BB80042B91D /* TBKline_RMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7732205B9BB80042B91D /* TBKline_RMDetailViewController.m */; };
+		5B7A7778205BA1390042B91D /* MALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7737205BA1390042B91D /* MALayer.m */; };
+		5B7A7779205BA1390042B91D /* ZXCandleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7739205BA1390042B91D /* ZXCandleCell.m */; };
+		5B7A777A205BA1390042B91D /* ZXJumpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A773B205BA1390042B91D /* ZXJumpView.m */; };
+		5B7A777B205BA1390042B91D /* ZXTimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A773D205BA1390042B91D /* ZXTimeLineView.m */; };
+		5B7A777C205BA1390042B91D /* ZXAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7740205BA1390042B91D /* ZXAccessoryView.m */; };
+		5B7A777D205BA1390042B91D /* ZXCandleDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7742205BA1390042B91D /* ZXCandleDetailView.m */; };
+		5B7A777E205BA1390042B91D /* ZXMessageBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7745205BA1390042B91D /* ZXMessageBoxView.m */; };
+		5B7A777F205BA1390042B91D /* ZXPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7747205BA1390042B91D /* ZXPriceView.m */; };
+		5B7A7780205BA1390042B91D /* ZXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7749205BA1390042B91D /* ZXRefresh.m */; };
+		5B7A7781205BA1390042B91D /* ZXTopCandleInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A774B205BA1390042B91D /* ZXTopCandleInfoView.m */; };
+		5B7A7782205BA1390042B91D /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A774D205BA1390042B91D /* arrow@2x.png */; };
+		5B7A7783205BA1390042B91D /* bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A774E205BA1390042B91D /* bigger.png */; };
+		5B7A7784205BA1390042B91D /* bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A774F205BA1390042B91D /* bigger@2x.png */; };
+		5B7A7785205BA1390042B91D /* bigger@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7750205BA1390042B91D /* bigger@3x.png */; };
+		5B7A7786205BA1390042B91D /* decrease-h.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7751205BA1390042B91D /* decrease-h.png */; };
+		5B7A7787205BA1390042B91D /* decrease-h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7752205BA1390042B91D /* decrease-h@2x.png */; };
+		5B7A7788205BA1390042B91D /* decrease-h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7753205BA1390042B91D /* decrease-h@3x.png */; };
+		5B7A7789205BA1390042B91D /* increase-h.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7754205BA1390042B91D /* increase-h.png */; };
+		5B7A778A205BA1390042B91D /* increase-h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7755205BA1390042B91D /* increase-h@2x.png */; };
+		5B7A778B205BA1390042B91D /* increase-h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7756205BA1390042B91D /* increase-h@3x.png */; };
+		5B7A778C205BA1390042B91D /* smaller.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7757205BA1390042B91D /* smaller.png */; };
+		5B7A778D205BA1390042B91D /* smaller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7758205BA1390042B91D /* smaller@2x.png */; };
+		5B7A778E205BA1390042B91D /* smaller@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A7759205BA1390042B91D /* smaller@3x.png */; };
+		5B7A778F205BA1390042B91D /* KlineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A775C205BA1390042B91D /* KlineModel.m */; };
+		5B7A7790205BA1390042B91D /* ZXQuotaColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A775F205BA1390042B91D /* ZXQuotaColumnLayer.m */; };
+		5B7A7791205BA1390042B91D /* ZXQuotaLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7761205BA1390042B91D /* ZXQuotaLineLayer.m */; };
+		5B7A7792205BA1390042B91D /* ZXQuotaSynthsisLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7763205BA1390042B91D /* ZXQuotaSynthsisLayer.m */; };
+		5B7A7793205BA1390042B91D /* ZXCandleDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7766205BA1390042B91D /* ZXCandleDataReformer.m */; };
+		5B7A7794205BA1390042B91D /* ZXDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7768205BA1390042B91D /* ZXDataReformer.m */; };
+		5B7A7795205BA1390042B91D /* ZXQuotaDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A776A205BA1390042B91D /* ZXQuotaDataReformer.m */; };
+		5B7A7796205BA1390042B91D /* ZXSocketDataReformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A776C205BA1390042B91D /* ZXSocketDataReformer.m */; };
+		5B7A7797205BA1390042B91D /* ZXTimeLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A776F205BA1390042B91D /* ZXTimeLineLayer.m */; };
+		5B7A7798205BA1390042B91D /* ZXCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7772205BA1390042B91D /* ZXCalculator.m */; };
+		5B7A7799205BA1390042B91D /* ZXAssemblyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7775205BA1390042B91D /* ZXAssemblyView.m */; };
+		5B7A779A205BA1390042B91D /* ZXMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7777205BA1390042B91D /* ZXMainView.m */; };
+		5B7A779C205BA1FF0042B91D /* kData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A779B205BA1FF0042B91D /* kData.plist */; };
 		5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */; };
 		5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */; };
 		5BA931281F91E60100216C7B /* TBWebService+Login&Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA931251F91E60100216C7B /* TBWebService+Login&Register.m */; };
@@ -168,6 +205,67 @@
 		5B6640241E5ADF15007524F3 /* Utils+rule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+rule.m"; sourceTree = "<group>"; };
 		5B6F37251F4EA11500E606D7 /* TBNewRule_MonthResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewRule_MonthResultViewController.h; sourceTree = "<group>"; };
 		5B6F37261F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBNewRule_MonthResultViewController.m; sourceTree = "<group>"; };
+		5B7A7731205B9BB80042B91D /* TBKline_RMDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBKline_RMDetailViewController.h; sourceTree = "<group>"; };
+		5B7A7732205B9BB80042B91D /* TBKline_RMDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBKline_RMDetailViewController.m; sourceTree = "<group>"; };
+		5B7A7736205BA1390042B91D /* MALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALayer.h; sourceTree = "<group>"; };
+		5B7A7737205BA1390042B91D /* MALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALayer.m; sourceTree = "<group>"; };
+		5B7A7738205BA1390042B91D /* ZXCandleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleCell.h; sourceTree = "<group>"; };
+		5B7A7739205BA1390042B91D /* ZXCandleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleCell.m; sourceTree = "<group>"; };
+		5B7A773A205BA1390042B91D /* ZXJumpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXJumpView.h; sourceTree = "<group>"; };
+		5B7A773B205BA1390042B91D /* ZXJumpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXJumpView.m; sourceTree = "<group>"; };
+		5B7A773C205BA1390042B91D /* ZXTimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTimeLineView.h; sourceTree = "<group>"; };
+		5B7A773D205BA1390042B91D /* ZXTimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTimeLineView.m; sourceTree = "<group>"; };
+		5B7A773F205BA1390042B91D /* ZXAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAccessoryView.h; sourceTree = "<group>"; };
+		5B7A7740205BA1390042B91D /* ZXAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAccessoryView.m; sourceTree = "<group>"; };
+		5B7A7741205BA1390042B91D /* ZXCandleDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleDetailView.h; sourceTree = "<group>"; };
+		5B7A7742205BA1390042B91D /* ZXCandleDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleDetailView.m; sourceTree = "<group>"; };
+		5B7A7743205BA1390042B91D /* ZXHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXHeader.h; sourceTree = "<group>"; };
+		5B7A7744205BA1390042B91D /* ZXMessageBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMessageBoxView.h; sourceTree = "<group>"; };
+		5B7A7745205BA1390042B91D /* ZXMessageBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMessageBoxView.m; sourceTree = "<group>"; };
+		5B7A7746205BA1390042B91D /* ZXPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXPriceView.h; sourceTree = "<group>"; };
+		5B7A7747205BA1390042B91D /* ZXPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXPriceView.m; sourceTree = "<group>"; };
+		5B7A7748205BA1390042B91D /* ZXRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXRefresh.h; sourceTree = "<group>"; };
+		5B7A7749205BA1390042B91D /* ZXRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXRefresh.m; sourceTree = "<group>"; };
+		5B7A774A205BA1390042B91D /* ZXTopCandleInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTopCandleInfoView.h; sourceTree = "<group>"; };
+		5B7A774B205BA1390042B91D /* ZXTopCandleInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTopCandleInfoView.m; sourceTree = "<group>"; };
+		5B7A774D205BA1390042B91D /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		5B7A774E205BA1390042B91D /* bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigger.png; sourceTree = "<group>"; };
+		5B7A774F205BA1390042B91D /* bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigger@2x.png"; sourceTree = "<group>"; };
+		5B7A7750205BA1390042B91D /* bigger@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigger@3x.png"; sourceTree = "<group>"; };
+		5B7A7751205BA1390042B91D /* decrease-h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-h.png"; sourceTree = "<group>"; };
+		5B7A7752205BA1390042B91D /* decrease-h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-h@2x.png"; sourceTree = "<group>"; };
+		5B7A7753205BA1390042B91D /* decrease-h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "decrease-h@3x.png"; sourceTree = "<group>"; };
+		5B7A7754205BA1390042B91D /* increase-h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-h.png"; sourceTree = "<group>"; };
+		5B7A7755205BA1390042B91D /* increase-h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-h@2x.png"; sourceTree = "<group>"; };
+		5B7A7756205BA1390042B91D /* increase-h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "increase-h@3x.png"; sourceTree = "<group>"; };
+		5B7A7757205BA1390042B91D /* smaller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smaller.png; sourceTree = "<group>"; };
+		5B7A7758205BA1390042B91D /* smaller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smaller@2x.png"; sourceTree = "<group>"; };
+		5B7A7759205BA1390042B91D /* smaller@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smaller@3x.png"; sourceTree = "<group>"; };
+		5B7A775B205BA1390042B91D /* KlineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineModel.h; sourceTree = "<group>"; };
+		5B7A775C205BA1390042B91D /* KlineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineModel.m; sourceTree = "<group>"; };
+		5B7A775E205BA1390042B91D /* ZXQuotaColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaColumnLayer.h; sourceTree = "<group>"; };
+		5B7A775F205BA1390042B91D /* ZXQuotaColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaColumnLayer.m; sourceTree = "<group>"; };
+		5B7A7760205BA1390042B91D /* ZXQuotaLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaLineLayer.h; sourceTree = "<group>"; };
+		5B7A7761205BA1390042B91D /* ZXQuotaLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaLineLayer.m; sourceTree = "<group>"; };
+		5B7A7762205BA1390042B91D /* ZXQuotaSynthsisLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaSynthsisLayer.h; sourceTree = "<group>"; };
+		5B7A7763205BA1390042B91D /* ZXQuotaSynthsisLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaSynthsisLayer.m; sourceTree = "<group>"; };
+		5B7A7765205BA1390042B91D /* ZXCandleDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCandleDataReformer.h; sourceTree = "<group>"; };
+		5B7A7766205BA1390042B91D /* ZXCandleDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCandleDataReformer.m; sourceTree = "<group>"; };
+		5B7A7767205BA1390042B91D /* ZXDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDataReformer.h; sourceTree = "<group>"; };
+		5B7A7768205BA1390042B91D /* ZXDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDataReformer.m; sourceTree = "<group>"; };
+		5B7A7769205BA1390042B91D /* ZXQuotaDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQuotaDataReformer.h; sourceTree = "<group>"; };
+		5B7A776A205BA1390042B91D /* ZXQuotaDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQuotaDataReformer.m; sourceTree = "<group>"; };
+		5B7A776B205BA1390042B91D /* ZXSocketDataReformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXSocketDataReformer.h; sourceTree = "<group>"; };
+		5B7A776C205BA1390042B91D /* ZXSocketDataReformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXSocketDataReformer.m; sourceTree = "<group>"; };
+		5B7A776E205BA1390042B91D /* ZXTimeLineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXTimeLineLayer.h; sourceTree = "<group>"; };
+		5B7A776F205BA1390042B91D /* ZXTimeLineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXTimeLineLayer.m; sourceTree = "<group>"; };
+		5B7A7771205BA1390042B91D /* ZXCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCalculator.h; sourceTree = "<group>"; };
+		5B7A7772205BA1390042B91D /* ZXCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCalculator.m; sourceTree = "<group>"; };
+		5B7A7774205BA1390042B91D /* ZXAssemblyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAssemblyView.h; sourceTree = "<group>"; };
+		5B7A7775205BA1390042B91D /* ZXAssemblyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssemblyView.m; sourceTree = "<group>"; };
+		5B7A7776205BA1390042B91D /* ZXMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMainView.h; sourceTree = "<group>"; };
+		5B7A7777205BA1390042B91D /* ZXMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMainView.m; sourceTree = "<group>"; };
+		5B7A779B205BA1FF0042B91D /* kData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = kData.plist; sourceTree = "<group>"; };
 		5B9AB00B1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBOnlyRBSelectViewController.h; sourceTree = "<group>"; };
 		5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBOnlyRBSelectViewController.m; sourceTree = "<group>"; };
 		5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewRule_goMonthViewController.h; sourceTree = "<group>"; };
@@ -390,8 +488,6 @@
 		5B609A051EF90A9200D9305B /* 新规则 */ = {
 			isa = PBXGroup;
 			children = (
-				5B609A0C1EF90B7700D9305B /* TBNewRule_RoomViewController.h */,
-				5B609A0D1EF90B7700D9305B /* TBNewRule_RoomViewController.m */,
 				5B609A0F1EF91B9800D9305B /* TBNewRule_RMDetailViewController.h */,
 				5B609A101EF91B9800D9305B /* TBNewRule_RMDetailViewController.m */,
 				5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */,
@@ -410,6 +506,153 @@
 			path = "新规则";
 			sourceTree = "<group>";
 		};
+		5B7A7730205B97F40042B91D /* K线图 */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7731205B9BB80042B91D /* TBKline_RMDetailViewController.h */,
+				5B7A7732205B9BB80042B91D /* TBKline_RMDetailViewController.m */,
+			);
+			name = "K线图";
+			path = "K线图/K线图";
+			sourceTree = "<group>";
+		};
+		5B7A7734205BA1390042B91D /* ZXKline */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7735205BA1390042B91D /* Candle */,
+				5B7A773E205BA1390042B91D /* Common */,
+				5B7A774C205BA1390042B91D /* imageAsset */,
+				5B7A775A205BA1390042B91D /* Model */,
+				5B7A775D205BA1390042B91D /* Quota */,
+				5B7A7764205BA1390042B91D /* Reformer */,
+				5B7A776D205BA1390042B91D /* TimeLine */,
+				5B7A7770205BA1390042B91D /* Tool */,
+				5B7A7773205BA1390042B91D /* View */,
+			);
+			path = ZXKline;
+			sourceTree = "<group>";
+		};
+		5B7A7735205BA1390042B91D /* Candle */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7736205BA1390042B91D /* MALayer.h */,
+				5B7A7737205BA1390042B91D /* MALayer.m */,
+				5B7A7738205BA1390042B91D /* ZXCandleCell.h */,
+				5B7A7739205BA1390042B91D /* ZXCandleCell.m */,
+				5B7A773A205BA1390042B91D /* ZXJumpView.h */,
+				5B7A773B205BA1390042B91D /* ZXJumpView.m */,
+				5B7A773C205BA1390042B91D /* ZXTimeLineView.h */,
+				5B7A773D205BA1390042B91D /* ZXTimeLineView.m */,
+			);
+			path = Candle;
+			sourceTree = "<group>";
+		};
+		5B7A773E205BA1390042B91D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A773F205BA1390042B91D /* ZXAccessoryView.h */,
+				5B7A7740205BA1390042B91D /* ZXAccessoryView.m */,
+				5B7A7741205BA1390042B91D /* ZXCandleDetailView.h */,
+				5B7A7742205BA1390042B91D /* ZXCandleDetailView.m */,
+				5B7A7743205BA1390042B91D /* ZXHeader.h */,
+				5B7A7744205BA1390042B91D /* ZXMessageBoxView.h */,
+				5B7A7745205BA1390042B91D /* ZXMessageBoxView.m */,
+				5B7A7746205BA1390042B91D /* ZXPriceView.h */,
+				5B7A7747205BA1390042B91D /* ZXPriceView.m */,
+				5B7A7748205BA1390042B91D /* ZXRefresh.h */,
+				5B7A7749205BA1390042B91D /* ZXRefresh.m */,
+				5B7A774A205BA1390042B91D /* ZXTopCandleInfoView.h */,
+				5B7A774B205BA1390042B91D /* ZXTopCandleInfoView.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		5B7A774C205BA1390042B91D /* imageAsset */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A774D205BA1390042B91D /* arrow@2x.png */,
+				5B7A774E205BA1390042B91D /* bigger.png */,
+				5B7A774F205BA1390042B91D /* bigger@2x.png */,
+				5B7A7750205BA1390042B91D /* bigger@3x.png */,
+				5B7A7751205BA1390042B91D /* decrease-h.png */,
+				5B7A7752205BA1390042B91D /* decrease-h@2x.png */,
+				5B7A7753205BA1390042B91D /* decrease-h@3x.png */,
+				5B7A7754205BA1390042B91D /* increase-h.png */,
+				5B7A7755205BA1390042B91D /* increase-h@2x.png */,
+				5B7A7756205BA1390042B91D /* increase-h@3x.png */,
+				5B7A7757205BA1390042B91D /* smaller.png */,
+				5B7A7758205BA1390042B91D /* smaller@2x.png */,
+				5B7A7759205BA1390042B91D /* smaller@3x.png */,
+			);
+			path = imageAsset;
+			sourceTree = "<group>";
+		};
+		5B7A775A205BA1390042B91D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A775B205BA1390042B91D /* KlineModel.h */,
+				5B7A775C205BA1390042B91D /* KlineModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5B7A775D205BA1390042B91D /* Quota */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A775E205BA1390042B91D /* ZXQuotaColumnLayer.h */,
+				5B7A775F205BA1390042B91D /* ZXQuotaColumnLayer.m */,
+				5B7A7760205BA1390042B91D /* ZXQuotaLineLayer.h */,
+				5B7A7761205BA1390042B91D /* ZXQuotaLineLayer.m */,
+				5B7A7762205BA1390042B91D /* ZXQuotaSynthsisLayer.h */,
+				5B7A7763205BA1390042B91D /* ZXQuotaSynthsisLayer.m */,
+			);
+			path = Quota;
+			sourceTree = "<group>";
+		};
+		5B7A7764205BA1390042B91D /* Reformer */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7765205BA1390042B91D /* ZXCandleDataReformer.h */,
+				5B7A7766205BA1390042B91D /* ZXCandleDataReformer.m */,
+				5B7A7767205BA1390042B91D /* ZXDataReformer.h */,
+				5B7A7768205BA1390042B91D /* ZXDataReformer.m */,
+				5B7A7769205BA1390042B91D /* ZXQuotaDataReformer.h */,
+				5B7A776A205BA1390042B91D /* ZXQuotaDataReformer.m */,
+				5B7A776B205BA1390042B91D /* ZXSocketDataReformer.h */,
+				5B7A776C205BA1390042B91D /* ZXSocketDataReformer.m */,
+			);
+			path = Reformer;
+			sourceTree = "<group>";
+		};
+		5B7A776D205BA1390042B91D /* TimeLine */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A776E205BA1390042B91D /* ZXTimeLineLayer.h */,
+				5B7A776F205BA1390042B91D /* ZXTimeLineLayer.m */,
+			);
+			path = TimeLine;
+			sourceTree = "<group>";
+		};
+		5B7A7770205BA1390042B91D /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7771205BA1390042B91D /* ZXCalculator.h */,
+				5B7A7772205BA1390042B91D /* ZXCalculator.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		5B7A7773205BA1390042B91D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B7A7774205BA1390042B91D /* ZXAssemblyView.h */,
+				5B7A7775205BA1390042B91D /* ZXAssemblyView.m */,
+				5B7A7776205BA1390042B91D /* ZXMainView.h */,
+				5B7A7777205BA1390042B91D /* ZXMainView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		5BA931231F91E60100216C7B /* WebService */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,9 +667,12 @@
 		5BC10EAF1E681C9A0008CADE /* 结果查看 */ = {
 			isa = PBXGroup;
 			children = (
+				5B7A7730205B97F40042B91D /* K线图 */,
 				5B609A051EF90A9200D9305B /* 新规则 */,
 				5BC10EB21E681D220008CADE /* TBResultViewController.h */,
 				5BC10EB31E681D220008CADE /* TBResultViewController.m */,
+				5B609A0C1EF90B7700D9305B /* TBNewRule_RoomViewController.h */,
+				5B609A0D1EF90B7700D9305B /* TBNewRule_RoomViewController.m */,
 				5BC656721EF8FCAC00F040CE /* 老数据 */,
 				5B2E6BDF1EA84426005CCA08 /* 组查看 */,
 			);
@@ -530,6 +776,7 @@
 		5BDA05D21E136AEA0060CCE5 /* TrendBetting */ = {
 			isa = PBXGroup;
 			children = (
+				5B7A779B205BA1FF0042B91D /* kData.plist */,
 				5BDA06081E136B480060CCE5 /* ViewControllers */,
 				5BDA06061E136B160060CCE5 /* View */,
 				5BDA06071E136B330060CCE5 /* Model */,
@@ -619,6 +866,7 @@
 		5BDA060F1E136BE00060CCE5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B7A7734205BA1390042B91D /* ZXKline */,
 				03C0916E1FE950AB00BD8AD3 /* WSLineChartView.h */,
 				03C0916F1FE950AB00BD8AD3 /* WSLineChartView.m */,
 				03C091701FE950AB00BD8AD3 /* XAxisView.h */,
@@ -806,17 +1054,31 @@
 			files = (
 				5BDA05E31E136AEA0060CCE5 /* LaunchScreen.storyboard in Resources */,
 				5BDE17AB1E66C31300155037 /* rule.storyboard in Resources */,
+				5B7A778D205BA1390042B91D /* smaller@2x.png in Resources */,
 				5BDA05E01E136AEA0060CCE5 /* Assets.xcassets in Resources */,
+				5B7A7785205BA1390042B91D /* bigger@3x.png in Resources */,
+				5B7A7786205BA1390042B91D /* decrease-h.png in Resources */,
 				5BC656621EF8EB9600F040CE /* groupResultData.storyboard in Resources */,
+				5B7A778C205BA1390042B91D /* smaller.png in Resources */,
 				5BC6877D1E5E92AA001C2ACC /* TBSelectTableViewCell.xib in Resources */,
 				5BDA05DE1E136AEA0060CCE5 /* Main.storyboard in Resources */,
+				5B7A7788205BA1390042B91D /* decrease-h@3x.png in Resources */,
 				B632B6B11F97B4330022FA09 /* downFile.storyboard in Resources */,
+				5B7A7787205BA1390042B91D /* decrease-h@2x.png in Resources */,
+				5B7A779C205BA1FF0042B91D /* kData.plist in Resources */,
 				5BC10EC61E68202A0008CADE /* resultData.storyboard in Resources */,
 				B65FB9F91FE80E6E00F69AF2 /* arbitrage.storyboard in Resources */,
 				5B5326FE1E5D90220056EE11 /* money.storyboard in Resources */,
+				5B7A778E205BA1390042B91D /* smaller@3x.png in Resources */,
+				5B7A7784205BA1390042B91D /* bigger@2x.png in Resources */,
+				5B7A7782205BA1390042B91D /* arrow@2x.png in Resources */,
 				5BC656601EF8E9AE00F040CE /* newResultData.storyboard in Resources */,
 				5BD8B76C1EA6FBDF0088E8C4 /* setting.storyboard in Resources */,
+				5B7A778B205BA1390042B91D /* increase-h@3x.png in Resources */,
+				5B7A7783205BA1390042B91D /* bigger.png in Resources */,
+				5B7A778A205BA1390042B91D /* increase-h@2x.png in Resources */,
 				5B5813A71F6BD22800424EB4 /* TBSwitchTableViewCell.xib in Resources */,
+				5B7A7789205BA1390042B91D /* increase-h.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,9 +1120,26 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TrendBetting/Pods-TrendBetting-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
+				"${BUILT_PRODUCTS_DIR}/JSONKit-NoWarning/JSONKit_NoWarning.framework",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONKit_NoWarning.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -873,13 +1152,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TrendBetting-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -893,6 +1175,8 @@
 				5BD19BB01E5D22FE00D62D62 /* JHLineChart.m in Sources */,
 				B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */,
 				5BE72CD31E51B2890001AFFC /* TBFileRoomResult_roomArr.m in Sources */,
+				5B7A7790205BA1390042B91D /* ZXQuotaColumnLayer.m in Sources */,
+				5B7A7798205BA1390042B91D /* ZXCalculator.m in Sources */,
 				5BD8B77A1EA700010088E8C4 /* TBRBSelectViewController.m in Sources */,
 				5BF664231EAEF255000A179F /* TBGroup_TimeResultViewController.m in Sources */,
 				5BE507BA1E54390A00855A9D /* MyCalendarItem.m in Sources */,
@@ -903,15 +1187,22 @@
 				03C091741FE950AB00BD8AD3 /* WSLineChartView.m in Sources */,
 				5B5813A61F6BD22800424EB4 /* TBSwitchTableViewCell.m in Sources */,
 				B643C6B51EE822A50019E6B0 /* Utils+xiasanluRule.m in Sources */,
+				5B7A7792205BA1390042B91D /* ZXQuotaSynthsisLayer.m in Sources */,
 				5BA931281F91E60100216C7B /* TBWebService+Login&Register.m in Sources */,
 				5B609A0E1EF90B7700D9305B /* TBNewRule_RoomViewController.m in Sources */,
+				5B7A7795205BA1390042B91D /* ZXQuotaDataReformer.m in Sources */,
 				5B5813AA1F6BD75C00424EB4 /* tenRuleModel.m in Sources */,
 				5BDA060E1E136BD00060CCE5 /* TBFristPageViewController.m in Sources */,
 				B6A18AE81F6EB80F00D27E7F /* TBDeleteFixViewController.m in Sources */,
+				5B7A7781205BA1390042B91D /* ZXTopCandleInfoView.m in Sources */,
 				5B609A141EF91DFC00D9305B /* TBNewRule_DayViewController.m in Sources */,
+				5B7A779A205BA1390042B91D /* ZXMainView.m in Sources */,
+				5B7A777F205BA1390042B91D /* ZXPriceView.m in Sources */,
 				B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */,
 				5B609A171EF91E1B00D9305B /* TBNewRule_TimeViewController.m in Sources */,
+				5B7A7793205BA1390042B91D /* ZXCandleDataReformer.m in Sources */,
 				5BC656801EF8FCAC00F040CE /* TBRoomDetail_TimeViewController.m in Sources */,
+				5B7A7791205BA1390042B91D /* ZXQuotaLineLayer.m in Sources */,
 				5BD8B77F1EA700460088E8C4 /* TBGroupListViewController.m in Sources */,
 				5BC4CEA01E7A5DB900BDC607 /* Utils+reencryption.m in Sources */,
 				5BD8B7791EA700010088E8C4 /* TBBackMoneyEditViewController.m in Sources */,
@@ -922,12 +1213,16 @@
 				5BD8B77B1EA700010088E8C4 /* TBReverseSelectViewController.m in Sources */,
 				B60A64EC1F979F4800B63E87 /* Utils+downServerFile.m in Sources */,
 				5BD8B7821EA72A2F0088E8C4 /* TBGroupAddViewController.m in Sources */,
+				5B7A7796205BA1390042B91D /* ZXSocketDataReformer.m in Sources */,
 				5BF499311E52A1DA008AA7AA /* Utils.m in Sources */,
 				5B609A0A1EF90A9200D9305B /* TBNewRule_MonthViewController.m in Sources */,
 				5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */,
 				B632B6AF1F97B3640022FA09 /* TBDown_RoomViewController.m in Sources */,
 				5BDA05DB1E136AEA0060CCE5 /* ViewController.m in Sources */,
+				5B7A777D205BA1390042B91D /* ZXCandleDetailView.m in Sources */,
 				5B609A111EF91B9800D9305B /* TBNewRule_RMDetailViewController.m in Sources */,
+				5B7A7797205BA1390042B91D /* ZXTimeLineLayer.m in Sources */,
+				5B7A777E205BA1390042B91D /* ZXMessageBoxView.m in Sources */,
 				5B6F37271F4EA11500E606D7 /* TBNewRule_MonthResultViewController.m in Sources */,
 				5BEEEDE11E55919C0086A929 /* Utils+fileReadAndWrite.m in Sources */,
 				5BE72CD61E51B2D90001AFFC /* TBFileRoomResult_timeArr.m in Sources */,
@@ -938,14 +1233,22 @@
 				5B2E6BEE1EA85250005CCA08 /* TBGroup_DayViewController.m in Sources */,
 				B65FB9F71FE80BF200F69AF2 /* arbitrageListViewController.m in Sources */,
 				5BC656811EF8FCAC00F040CE /* TBRoomDetailViewController.m in Sources */,
+				5B7A777B205BA1390042B91D /* ZXTimeLineView.m in Sources */,
 				5BDA060B1E136B770060CCE5 /* TBBaseViewController.m in Sources */,
+				5B7A777C205BA1390042B91D /* ZXAccessoryView.m in Sources */,
+				5B7A7799205BA1390042B91D /* ZXAssemblyView.m in Sources */,
 				5BC687781E5E8103001C2ACC /* TBMoneyEditViewController.m in Sources */,
 				5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */,
 				03C091751FE950AB00BD8AD3 /* XAxisView.m in Sources */,
+				5B7A777A205BA1390042B91D /* ZXJumpView.m in Sources */,
+				5B7A7778205BA1390042B91D /* MALayer.m in Sources */,
 				03EF82551F9EDB4D008FE17C /* TBDayDataViewController.m in Sources */,
+				5B7A7733205B9BB80042B91D /* TBKline_RMDetailViewController.m in Sources */,
+				5B7A778F205BA1390042B91D /* KlineModel.m in Sources */,
 				5BDA05D81E136AEA0060CCE5 /* AppDelegate.m in Sources */,
 				5B2E6BEB1EA8523E005CCA08 /* TBGroup_MonthViewController.m in Sources */,
 				03C091761FE950AB00BD8AD3 /* YAxisView.m in Sources */,
+				5B7A7794205BA1390042B91D /* ZXDataReformer.m in Sources */,
 				B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */,
 				B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */,
 				5BE72CD01E51B2130001AFFC /* TBFileRoomResult_entry.m in Sources */,
@@ -957,11 +1260,13 @@
 				5BE72CD91E51B3280001AFFC /* TBFileRoomResult_dataArr.m in Sources */,
 				5B19B1E61E1CD500001537B0 /* chartImageView.m in Sources */,
 				03EF82561F9EDB4D008FE17C /* TBMonthViewController.m in Sources */,
+				5B7A7779205BA1390042B91D /* ZXCandleCell.m in Sources */,
 				5BF499341E52A2D1008AA7AA /* Utils+encryption.m in Sources */,
 				5B2E6BE81EA84EEB005CCA08 /* TBGroup_RoomDetailViewController.m in Sources */,
 				5BA931291F91E60100216C7B /* TBWebService.m in Sources */,
 				5BC6567E1EF8FCAC00F040CE /* TBRoomDetail_DayViewController.m in Sources */,
 				5BD8B77C1EA700010088E8C4 /* TBSettingViewController.m in Sources */,
+				5B7A7780205BA1390042B91D /* ZXRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
