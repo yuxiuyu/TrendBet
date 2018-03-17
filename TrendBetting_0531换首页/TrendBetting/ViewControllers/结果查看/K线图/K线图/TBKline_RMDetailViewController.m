@@ -45,6 +45,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     //
     monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
+    monthsArr = [[Utils sharedInstance] orderArr:monthsArr isArc:YES];
     indexp = monthsArr.count-1;
     allDayArr=[[NSMutableArray alloc]init];
     [allDayArr addObjectsFromArray:[self getLocalData]];
@@ -121,8 +122,9 @@
         [self showProgress:YES];
 
         NSMutableArray*tepallDayArr =[[NSMutableArray alloc]init];
+        int totalP = 0;
     
-    for (int i=indexp-2;i<=indexp;i++)
+    for (int i=indexp-5;i<=indexp;i++)
         {
             if (i>=0) {
                 NSString*monthstr = monthsArr[i];
@@ -134,12 +136,20 @@
                 {
                     NSArray*array=[dayStr componentsSeparatedByString:@"."];
                     NSDictionary*tepDic=[[Utils sharedInstance] getKlineData:monthFileNameStr dayStr:array[0] isNeedTotal:YES];
-                    [tepallDayArr addObject:tepDic[@"daycount"]];
+                    NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:tepDic[@"daycount"]];
+                   
+                    [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[2] intValue]]];
+                    [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
+                    [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
+                    totalP += [fiveArr[1] intValue];
+                    [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
+        
+                    [tepallDayArr addObject: [fiveArr componentsJoinedByString:@","]];
                 }
             }
            
         }
-       indexp-=3;
+       indexp-=6;
        [self hidenProgress];
        return tepallDayArr;
     
@@ -231,9 +241,7 @@
     NSArray *tempArr =@[];
     if (indexp>=0) {
         tempArr= [self getLocalData];
-        
     }
-    
     tempArr =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:tempArr currentRequestType:@"M1"];
     succ(RequestMoreResultTypeSuccess,tempArr);
 }

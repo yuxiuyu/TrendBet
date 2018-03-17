@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=[NSString stringWithFormat:@"%@_局线K线图",_selectedTitle];
-  
+    
     //背景色
     self.view.backgroundColor = [UIColor lightGrayColor];
     
@@ -44,10 +44,11 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     //
     monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的所有月份数据
+    monthsArr = [[Utils sharedInstance] orderArr:monthsArr isArc:YES];
     indexp = monthsArr.count-1;
     allDayArr =[[NSMutableArray alloc]init];
-   [allDayArr addObjectsFromArray:[self getLocalData:monthsArr[indexp]]];
-     [self performSelectorOnMainThread:@selector(dealData) withObject:nil waitUntilDone:YES];
+    [allDayArr addObjectsFromArray:[self getLocalData:monthsArr[indexp]]];
+    [self performSelectorOnMainThread:@selector(dealData) withObject:nil waitUntilDone:YES];
     
 }
 
@@ -118,27 +119,38 @@
 -(NSArray*)getLocalData:(NSString*)monthstr{
     
     [self showProgress:YES];
-  NSMutableArray* tempallDayArr =[[NSMutableArray alloc]init];
-//    NSArray*monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
-//    for (NSString*monthstr in monthsArr)
-//    {
-        NSString*monthFileNameStr=[NSString stringWithFormat:@"%@/%@",_selectedTitle,monthstr];
-        NSArray*daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
-        daysArr=[[Utils sharedInstance] orderArr:daysArr isArc:YES];
-        for (NSString*dayStr in daysArr)
-        {
-            NSArray*array=[dayStr componentsSeparatedByString:@"."];
-            NSDictionary*tepDic=[[Utils sharedInstance] getKlineData:monthFileNameStr dayStr:array[0] isNeedTotal:NO];
-            [tempallDayArr addObjectsFromArray:tepDic[@"totalDayArr"]];
+     int totalP = 0;
+    NSMutableArray* tempallDayArr =[[NSMutableArray alloc]init];
+  
+    NSString*monthFileNameStr=[NSString stringWithFormat:@"%@/%@",_selectedTitle,monthstr];
+    NSArray*daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
+    daysArr=[[Utils sharedInstance] orderArr:daysArr isArc:YES];
+    for (NSString*dayStr in daysArr)
+    {
+        NSArray*array=[dayStr componentsSeparatedByString:@"."];
+        NSDictionary*tepDic=[[Utils sharedInstance] getKlineData:monthFileNameStr dayStr:array[0] isNeedTotal:NO];
+        NSArray*nowTepArr=tepDic[@"totalDayArr"];
+        for (int i=0; i<nowTepArr.count; i++) {
+            NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:nowTepArr[i]];
+            
+            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[2] intValue]]];
+            [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
+            [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
+            totalP += [fiveArr[1] intValue];
+            [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
+            
+            [tempallDayArr addObject: [fiveArr componentsJoinedByString:@","]];
         }
+//        [tempallDayArr addObjectsFromArray:tepDic[@"totalDayArr"]];
+        
+    }
     indexp--;
-     [self hidenProgress];
+    [self hidenProgress];
     return tempallDayArr;
-//    }
-//    [self performSelectorOnMainThread:@selector(dealData) withObject:nil waitUntilDone:YES];
+   
 }
 -(void)dealData{
-//    [self hidenProgress];
+    //    [self hidenProgress];
     [self configureData:allDayArr];
 }
 #pragma mark - ZXSocketDataReformerDelegate
@@ -213,9 +225,9 @@
     NSArray *tempArr =@[];
     if (indexp>=0) {
         tempArr= [self getLocalData:monthsArr[indexp]];
-       
+        
     }
-
+    
     tempArr =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:tempArr currentRequestType:@"M1"];
     succ(RequestMoreResultTypeSuccess,tempArr);
 }

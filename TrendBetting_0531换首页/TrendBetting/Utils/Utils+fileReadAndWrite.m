@@ -389,7 +389,7 @@
             NSDate*date = [dayformatter dateFromString:daydateStr];
             NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
             NSString*resStr = [NSString stringWithFormat:@"%@,%@",@(timeSp),[array componentsJoinedByString:@","]];
-            [totalDayArr addObject:resStr];
+            [totalDayArr addObject:[resStr componentsSeparatedByString:@","]];
         }
     }
     if (isNeedTotal) { //是否需要汇总
@@ -398,9 +398,9 @@
         NSDate*date = [formatter dateFromString:dateStr];
         NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
         NSArray*totalArr = @[@(timeSp),@(total),@(beginPrice),@(maxPrice),@(minPrice)];
-        [timeDic setObject:[totalArr componentsJoinedByString:@","] forKey:@"daycount"];
+        [timeDic setObject:totalArr forKey:@"daycount"];
     }
-     [timeDic setObject:totalDayArr forKey:@"totalDayArr"];
+    [timeDic setObject:totalDayArr forKey:@"totalDayArr"];
     return timeDic;
     
 }
