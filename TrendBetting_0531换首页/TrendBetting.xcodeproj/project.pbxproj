@@ -70,7 +70,6 @@
 		5B7A7798205BA1390042B91D /* ZXCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7772205BA1390042B91D /* ZXCalculator.m */; };
 		5B7A7799205BA1390042B91D /* ZXAssemblyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7775205BA1390042B91D /* ZXAssemblyView.m */; };
 		5B7A779A205BA1390042B91D /* ZXMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7A7777205BA1390042B91D /* ZXMainView.m */; };
-		5B7A779C205BA1FF0042B91D /* kData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B7A779B205BA1FF0042B91D /* kData.plist */; };
 		5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */; };
 		5BA90F681F5FE53A00F057DE /* TBNewRule_goMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */; };
 		5BA931281F91E60100216C7B /* TBWebService+Login&Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA931251F91E60100216C7B /* TBWebService+Login&Register.m */; };
@@ -133,6 +132,8 @@
 		B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE11F6E13DC00D27E7F /* TBFixGroupAddViewController.m */; };
 		B6A18AE51F6E13DC00D27E7F /* TBFixGroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */; };
 		B6A18AE81F6EB80F00D27E7F /* TBDeleteFixViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A18AE71F6EB80F00D27E7F /* TBDeleteFixViewController.m */; };
+		B6F0F99F205CD0F900D76411 /* Utils+klineRule.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F0F99E205CD0F900D76411 /* Utils+klineRule.m */; };
+		B6F0F9A2205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F0F9A1205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,7 +266,6 @@
 		5B7A7775205BA1390042B91D /* ZXAssemblyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAssemblyView.m; sourceTree = "<group>"; };
 		5B7A7776205BA1390042B91D /* ZXMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMainView.h; sourceTree = "<group>"; };
 		5B7A7777205BA1390042B91D /* ZXMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMainView.m; sourceTree = "<group>"; };
-		5B7A779B205BA1FF0042B91D /* kData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = kData.plist; sourceTree = "<group>"; };
 		5B9AB00B1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBOnlyRBSelectViewController.h; sourceTree = "<group>"; };
 		5B9AB00C1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBOnlyRBSelectViewController.m; sourceTree = "<group>"; };
 		5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewRule_goMonthViewController.h; sourceTree = "<group>"; };
@@ -385,6 +385,10 @@
 		B6A18AE31F6E13DC00D27E7F /* TBFixGroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBFixGroupListViewController.m; sourceTree = "<group>"; };
 		B6A18AE61F6EB80F00D27E7F /* TBDeleteFixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDeleteFixViewController.h; sourceTree = "<group>"; };
 		B6A18AE71F6EB80F00D27E7F /* TBDeleteFixViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDeleteFixViewController.m; sourceTree = "<group>"; };
+		B6F0F99D205CD0F900D76411 /* Utils+klineRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Utils+klineRule.h"; sourceTree = "<group>"; };
+		B6F0F99E205CD0F900D76411 /* Utils+klineRule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Utils+klineRule.m"; sourceTree = "<group>"; };
+		B6F0F9A0205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBTimeKline_RMDetailViewController.h; sourceTree = "<group>"; };
+		B6F0F9A1205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBTimeKline_RMDetailViewController.m; sourceTree = "<group>"; };
 		F8D25C67901FC8B832FC1491 /* Pods_TrendBetting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrendBetting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -511,6 +515,8 @@
 			children = (
 				5B7A7731205B9BB80042B91D /* TBKline_RMDetailViewController.h */,
 				5B7A7732205B9BB80042B91D /* TBKline_RMDetailViewController.m */,
+				B6F0F9A0205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.h */,
+				B6F0F9A1205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m */,
 			);
 			name = "K线图";
 			path = "K线图/K线图";
@@ -776,7 +782,6 @@
 		5BDA05D21E136AEA0060CCE5 /* TrendBetting */ = {
 			isa = PBXGroup;
 			children = (
-				5B7A779B205BA1FF0042B91D /* kData.plist */,
 				5BDA06081E136B480060CCE5 /* ViewControllers */,
 				5BDA06061E136B160060CCE5 /* View */,
 				5BDA06071E136B330060CCE5 /* Model */,
@@ -897,6 +902,8 @@
 				B649DF421ED073F300E248C8 /* Utils+newRules.m */,
 				B643C6B31EE822A50019E6B0 /* Utils+xiasanluRule.h */,
 				B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */,
+				B6F0F99D205CD0F900D76411 /* Utils+klineRule.h */,
+				B6F0F99E205CD0F900D76411 /* Utils+klineRule.m */,
 				5BF499321E52A2D1008AA7AA /* Utils+encryption.h */,
 				5BF499331E52A2D1008AA7AA /* Utils+encryption.m */,
 				5BC4CE9E1E7A5DB900BDC607 /* Utils+reencryption.h */,
@@ -1065,7 +1072,6 @@
 				5B7A7788205BA1390042B91D /* decrease-h@3x.png in Resources */,
 				B632B6B11F97B4330022FA09 /* downFile.storyboard in Resources */,
 				5B7A7787205BA1390042B91D /* decrease-h@2x.png in Resources */,
-				5B7A779C205BA1FF0042B91D /* kData.plist in Resources */,
 				5BC10EC61E68202A0008CADE /* resultData.storyboard in Resources */,
 				B65FB9F91FE80E6E00F69AF2 /* arbitrage.storyboard in Resources */,
 				5B5326FE1E5D90220056EE11 /* money.storyboard in Resources */,
@@ -1175,6 +1181,7 @@
 				5BD19BB01E5D22FE00D62D62 /* JHLineChart.m in Sources */,
 				B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */,
 				5BE72CD31E51B2890001AFFC /* TBFileRoomResult_roomArr.m in Sources */,
+				B6F0F99F205CD0F900D76411 /* Utils+klineRule.m in Sources */,
 				5B7A7790205BA1390042B91D /* ZXQuotaColumnLayer.m in Sources */,
 				5B7A7798205BA1390042B91D /* ZXCalculator.m in Sources */,
 				5BD8B77A1EA700010088E8C4 /* TBRBSelectViewController.m in Sources */,
@@ -1245,6 +1252,7 @@
 				03EF82551F9EDB4D008FE17C /* TBDayDataViewController.m in Sources */,
 				5B7A7733205B9BB80042B91D /* TBKline_RMDetailViewController.m in Sources */,
 				5B7A778F205BA1390042B91D /* KlineModel.m in Sources */,
+				B6F0F9A2205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m in Sources */,
 				5BDA05D81E136AEA0060CCE5 /* AppDelegate.m in Sources */,
 				5B2E6BEB1EA8523E005CCA08 /* TBGroup_MonthViewController.m in Sources */,
 				03C091761FE950AB00BD8AD3 /* YAxisView.m in Sources */,

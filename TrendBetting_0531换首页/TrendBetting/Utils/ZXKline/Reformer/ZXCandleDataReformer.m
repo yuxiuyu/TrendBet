@@ -62,7 +62,7 @@ static id _instance;
         //分钟
     }else if ([self.currentRequestType containsString:@"M"]||[self.currentRequestType containsString:@"H"])
     {
-        format = @"MMdd HH:mm";
+        format = @"MMdd HH";
     }
     NSDateFormatter*formatter = [[NSDateFormatter alloc]init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];

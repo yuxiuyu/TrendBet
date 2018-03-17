@@ -30,5 +30,8 @@
 
 /////////按照房间、月份和日期获取文件
 -(NSArray*)readDataWithRoom:(NSString *)roomId andMonth:(NSString *)month andDay:(NSString *)day;
+////K线获取数据
+// K线里获取数据
+-(NSDictionary*)getKlineData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isNeedTotal:(BOOL)isNeedTotal;
 
 @end

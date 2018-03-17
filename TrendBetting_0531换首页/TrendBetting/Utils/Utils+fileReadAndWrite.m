@@ -9,6 +9,7 @@
 #import "Utils+fileReadAndWrite.h"
 #import "TBFileRoomResult_entry.h"
 #import "Utils+xiasanluRule.h"
+#import "Utils+klineRule.h"
 @implementation Utils (fileReadAndWrite)
 /////保存我的数据
 -(BOOL)saveData:(NSDictionary*)dic  saveArray:(NSArray*)saveArray filePathStr:(NSString*)filePathStr
@@ -58,9 +59,9 @@
     }
     BOOL isScuess=[fileManager createFileAtPath:filePath contents:fileData attributes:nil];
     return isScuess;
-//    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",dayStr];
-//    filePath=[createPath stringByAppendingPathComponent:createPath];
-
+    //    NSString*nameStr=[NSString stringWithFormat:@"%@.txt",dayStr];
+    //    filePath=[createPath stringByAppendingPathComponent:createPath];
+    
 }
 /////保存我的ten数据
 -(BOOL)saveTenData:(NSArray*)arr name:(NSString*)name
@@ -120,12 +121,12 @@
     }
     
     
-//    NSDictionary*dic;
+    //    NSDictionary*dic;
     if ([[NSFileManager defaultManager] fileExistsAtPath:documentDictionary])
     {
-//        NSString*dataStr=[[NSString alloc]initWithContentsOfFile:documentDictionary encoding:NSUTF8StringEncoding error:nil];
-//        NSString *responseString = [dataStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-//        dic=[responseString objectFromJSONString];
+        //        NSString*dataStr=[[NSString alloc]initWithContentsOfFile:documentDictionary encoding:NSUTF8StringEncoding error:nil];
+        //        NSString *responseString = [dataStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+        //        dic=[responseString objectFromJSONString];
         NSData*data=[NSData dataWithContentsOfFile:documentDictionary];
         if (data)
         {
@@ -134,7 +135,7 @@
                                                               error:nil];
             return  [NSArray arrayWithArray:jsonObject];
         }
-
+        
     }
     return @[];
     
@@ -328,7 +329,7 @@
                 {
                     NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:daySumWinCountArray[j]];
                     for (int k=0; k<wArr.count; k++) {
-                       
+                        
                         NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[j+3][k] intValue]];
                         [wArr replaceObjectAtIndex:k withObject:s];
                     }
@@ -348,4 +349,60 @@
     return timeDic;
     
 }
+// K线里获取数据
+-(NSDictionary*)getKlineData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isNeedTotal:(BOOL)isNeedTotal
+{
+    NSArray*temarr = [monthStr componentsSeparatedByString:@"/"];
+    NSString*dateStr = [NSString stringWithFormat:@"%@-%@",temarr[1],dayNameStr];
+    TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:[NSString stringWithFormat:@"%@/%@",monthStr,dayNameStr]]];
+    int beginPrice = 0;
+    int maxPrice = 0;
+    int minPrice = 0;
+    int total = 0;
+    NSMutableArray*totalDayArr=[[NSMutableArray alloc]init];
+    NSMutableDictionary*timeDic=[[NSMutableDictionary alloc]init];
+    if (roomEntry.roomArr.count>0)
+    {
+        
+        TBFileRoomResult_roomArr*room=roomEntry.roomArr[0];
+        TBFileRoomResult_timeArr*time=room.timeArr[0];
+        
+        NSDateFormatter*dayformatter =[[NSDateFormatter alloc]init];
+        [dayformatter setDateFormat:@"yyyy-MM-dd HH"];
+        for (int i=0; i<time.dataArr.count; i++)
+        {
+            TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
+            NSArray*array=[[Utils sharedInstance] getKlineArray:tempDataArr.result]; //1、收盘价 2、开盘价 3、最高价 4、最低价
+            total+=[array[0] intValue];
+            if (i==0) {
+                beginPrice = total;
+                maxPrice = total;
+                minPrice = total;
+            }
+            if (maxPrice<total) {
+                maxPrice = total;
+            }
+            if (minPrice>total) {
+                minPrice = total;
+            }
+            NSString*daydateStr = [NSString stringWithFormat:@"%@ %d",dateStr,i+1];
+            NSDate*date = [dayformatter dateFromString:daydateStr];
+            NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
+            NSString*resStr = [NSString stringWithFormat:@"%@,%@",@(timeSp),[array componentsJoinedByString:@","]];
+            [totalDayArr addObject:resStr];
+        }
+    }
+    if (isNeedTotal) { //是否需要汇总
+        NSDateFormatter*formatter =[[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate*date = [formatter dateFromString:dateStr];
+        NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
+        NSArray*totalArr = @[@(timeSp),@(total),@(beginPrice),@(maxPrice),@(minPrice)];
+        [timeDic setObject:[totalArr componentsJoinedByString:@","] forKey:@"daycount"];
+    }
+     [timeDic setObject:totalDayArr forKey:@"totalDayArr"];
+    return timeDic;
+    
+}
+
 @end

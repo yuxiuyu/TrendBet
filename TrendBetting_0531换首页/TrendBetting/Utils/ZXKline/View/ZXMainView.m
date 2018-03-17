@@ -164,6 +164,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 @property (nonatomic,assign) BOOL isShouldToLoadMoreData;
 
 @property (nonatomic,strong) UIView *maskView;
+
+// 加载的历史数据个数
+@property (nonatomic,assign) NSInteger hisDataCount;
 @end
 
 @implementation ZXMainView
@@ -173,7 +176,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 {
     self = [super init];
     if (self) {
-
+        
         [self addSubviews];
         [self addConstrains];
         self.backgroundColor = BackgroundColor;
@@ -194,18 +197,18 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         //长按手势
         UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressMethod:)];
         [self.tableView addGestureRecognizer:longPressGesture];
- 
+        
         
         //监测旋转
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         
         
-//        if (@available(iOS 11.0, *)) {
-//            self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//        } else {
-//            // Fallback on earlier versions
-//            
-//        }
+        //        if (@available(iOS 11.0, *)) {
+        //            self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        //        } else {
+        //            // Fallback on earlier versions
+        //
+        //        }
     }
     return self;
 }
@@ -238,7 +241,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 #pragma mark - Private Methods
 - (void)addSubviews
 {
-
+    
     [self addSubview:self.tableView];
     [self addSubview:self.maskView];
 }
@@ -294,7 +297,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)initConstrainsWithWidth:(CGFloat)width height:(CGFloat)height
 {
-
+    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo((width-height)/2);
         make.top.mas_equalTo(-(width-height)/2);
@@ -318,8 +321,8 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //static修饰的变量只会被赋值一次；相当于声明一个全局变量
     static CGFloat oldScale = 1.0f;
     CGFloat difValue = sender.scale - oldScale;
-//    NSLog(@"difValue=====%f",difValue);
-//    NSLog(@"oldScale=====%f",oldScale);
+    //    NSLog(@"difValue=====%f",difValue);
+    //    NSLog(@"oldScale=====%f",oldScale);
     
     if ((self.candleWidth==scale_MaxValue&&difValue>0)||(self.candleWidth==scale_MinValue&&difValue<0)) {
         return;
@@ -340,7 +343,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         }
         //将candle宽度保存到本地
         [[NSUserDefaults standardUserDefaults] setObject:@(self.candleWidth) forKey:kCandleWidth];
-    
+        
         CGPoint centerPoint = CGPointMake(0, 0);
         if (sender.numberOfTouches == 2) {
             
@@ -370,7 +373,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     
     //其实这里我也不想重复调用一次，但是不调用的时候会出现如此bug：滑动到最右边，缩小的时候，均线显示出现问题
     [self drawTopKline];
-
+    
 }
 - (NSArray *)getNeedDrawMAArrWithNum:(NSUInteger)num
 {
@@ -412,7 +415,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         }
     }
     //+==========================================
-
+    
     if (![self.quotaName isEqualToString:quotaName]) {
         if (self.quotaDataArr.count>0) {
             
@@ -434,7 +437,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         
     }];
     if ([tempArr containsObject:subName]) {
-
+        
         NSInteger idx = [tempArr indexOfObject:subName];
         [self.quotaDataArr replaceObjectAtIndex:idx withObject:quotaDataDic];
         //颜色
@@ -447,7 +450,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     
     switch (quotaType) {
         case QuotaTypeLine:
-   
+            
             [self drawQuotaLinewithDataArr:newDataArr maxValue:maxValue minValue:minValue quotaName:quotaName subName:(NSString *)subName lineColor:lineColor];
             break;
         case QuotaTypeColumn:
@@ -480,7 +483,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     if (self.quotaMaxAssert!=self.quotaMinAssert) {
         
         self.quotaHeightPerPoint = self.quotaChartHeight/(self.quotaMaxAssert - self.quotaMinAssert);
-
+        
     }else{
         self.quotaHeightPerPoint = 0;
     }
@@ -512,14 +515,14 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 
 //柱状
-             
+
 - (void)drawQuotaColumnwithDataArr:(NSArray *)dataArr maxValue:(double)maxValue minValue:(double)minValue quotaName:(NSString *)quotaName subName:(NSString *)subName columnColorArr:(NSArray *)columnColorArr columnWidthType:(ColumnWidthType)columnWidthType{
     
     if (![self.quotaName isEqualToString:quotaName]) {
         if (self.quotaLayerArr.count>0) {
             for (NSDictionary *dic in self.quotaLayerArr) {
                 CAShapeLayer *layer = [dic allValues].firstObject;
-                    [layer removeFromSuperlayer];
+                [layer removeFromSuperlayer];
             }
             [self.quotaLayerArr removeAllObjects];
         }
@@ -576,7 +579,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     if (maxValue!=minValue) {
         
         self.quotaHeightPerPoint = self.quotaChartHeight/(self.quotaMaxAssert - self.quotaMinAssert);
-
+        
     }else{
         self.quotaHeightPerPoint = 0;
     }
@@ -628,7 +631,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count)*self.candleWidth-self.subViewWidth-0.5)];
     });
     
-} 
+}
 #pragma mark - 绘制最后一个candle
 - (void)drawLastKlineWithNewKlineModel:(KlineModel *)klineModel isNew:(BOOL)isNew
 {
@@ -637,7 +640,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     if (self.isScrollToBottom) {
         
         [self handleNewestCellWhenScrollToBottomWithNewKlineModel:klineModel];
-       
+        
     }else{
         //没有在底部的话就仅仅添加数据不插入cell
         [self handleNewestCellWhenNotScrollToBottomWithNewKlineModel:klineModel];
@@ -687,77 +690,77 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 //{
 //    //==0的时候需要插入一个新的cell；否则只需要刷新最后一个cell
 //    if (self.isNew) {
-//        
+//
 //        KlineModel *newsDataModel =  [self calulatePositionWithKlineModel:klineModel];
 //        [self.kLineModelArr addObject:newsDataModel];
-//        
+//
 //        double oldMax = self.maxAssert;
 //        double oldMin = self.minAssert;
-//        
-//        
+//
+//
 //        [self calculateNeedDrawKlineArr];
 //        [self calculateMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
-//        
+//
 //        //不等的话就重绘
 //        if (oldMax<self.maxAssert||oldMin>self.minAssert) {
-//            
-//            
+//
+//
 //            dispatch_async(dispatch_get_main_queue(), ^{
-//                
+//
 //                [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
 //            });
-//            
+//
 //            [self drawTopKline];
-//            
+//
 //        }else{
 //            //否则就插入
 //            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.kLineModelArr.count-1 inSection:0];
 //            dispatch_async(dispatch_get_main_queue(), ^{
-//                
+//
 //                //先增加  再偏移
 //                [self.tableView beginUpdates];
 //                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 //                [self.tableView endUpdates];
 //                [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count-self.needDrawKlineCount)*self.candleWidth+(self.needDrawKlineCount*self.candleWidth-self.subViewWidth))];
 //            });
-//            
+//
 //            [self delegateToReturnKlieArr];
 //        }
-//        
+//
 //    }else{
-//        
-//        
+//
+//
 //        KlineModel *newsDataModel =  [self calulatePositionWithKlineModel:klineModel];
 //        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.kLineModelArr.count-1 inSection:0];
-//        
+//
 //        [self.kLineModelArr replaceObjectAtIndex:self.kLineModelArr.count-1 withObject:newsDataModel];
-//        
-//        
+//
+//
 //        CGFloat oldMax = self.maxAssert;
 //        CGFloat oldMin = self.minAssert;
-//        
-//        
+//
+//
 //        [self calculateNeedDrawKlineArr];
 //        [self calculateMaxAndMinValueWithNeedDrawArr:self.needDrawKlineArr];
 //        //如果计算出来的最新的极值不在上一次计算的极值直接的话就重绘，否则就刷新最后一个即可
 //        if (oldMax<self.maxAssert||oldMin>self.minAssert) {
-//            
+//
 //            [self drawTopKline];
-//            
+//
 //        }else{
-//            
+//
 //            dispatch_async(dispatch_get_main_queue(), ^{
-//                
+//
 //                [self.tableView beginUpdates];
 //                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 //                [self.tableView endUpdates];
 //                [self delegateToReturnKlieArr];
 //            });
-//            
+//
 //        }
-//        
+//
 //    }
-//    
+//
 //}
 #pragma mark - 网络中断后填补中断数据
 - (void)addBreakOffObjectsWithDataArr:(NSArray *)breakOffDataArr
@@ -795,7 +798,9 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }else{
         cell.isDrawDottedLine = NO;
     }
+    
     cell.model = self.kLineModelArr[indexPath.row];
+    
     //这句话很关键：在cell中调用drawrect之后，cell中会出现一条线，设置透明色可以解决
     cell.backgroundColor = [UIColor clearColor];
     cell.tableViewHeight = self.subViewHeight;
@@ -832,7 +837,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             
             return;
         }
-    
+        
         [self getCandyDataWithPanPosition:location];
         
     }
@@ -866,11 +871,14 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         self.tableView.userInteractionEnabled = NO;
         NSLog(@"刷新");
         [self.tableView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];
-//        [self.tableView setContentOffset:CGPointMake(0, 0)];
+        //        [self.tableView setContentOffset:CGPointMake(0, 0)];
         [self updateRefreshViewLeftSapcing:-44];
         self.refreshView.refreshState = ZXRefreshStateRefreshing;
         [self needToRequestMoreHistoryDataWithScrollView:scrollView];
         self.isShouldToLoadMoreData = NO;
+        
+        // 加数据动作
+        
         
     }else
     {
@@ -923,7 +931,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self.tableView setContentOffset:CGPointMake(0, (self.kLineModelArr.count*self.candleWidth-self.subViewWidth))];
         return;
     }else{
-       
+        
         //不在两侧的时候绘制
         [self drawTopKline];
     }
@@ -956,13 +964,25 @@ static NSString *const kCandleWidth = @"kCandleWidth";
                         
                         if (result.count>0) {
                             //成功有数据
+                            self.hisDataCount = result.count;
                             [self resetTableviewPosition];
                             [self updateRefreshViewLeftSapcing:0];
                             NSInteger oldCount = self.kLineModelArr.count;
+                            NSArray *tempArr =[[NSArray alloc]initWithArray:self.kLineModelArr];
                             [self.kLineModelArr removeAllObjects];
                             [self.kLineModelArr addObjectsFromArray:result];
+                            [self.kLineModelArr addObjectsFromArray:tempArr];
                             NSInteger newCount = self.kLineModelArr.count;
-                            [self.tableView setContentOffset:CGPointMake(0, (newCount-oldCount)*self.candleWidth)];
+                            
+                            
+                            //                            CGSize oldSize = _tableView.contentSize;
+                            //                            CGPoint oldOffset = _tableView.contentOffset;
+                            //                            CGSize newSize = _tableView.contentSize;
+                            //                            CGPoint newPoint = CGPointMake(0, oldOffset.y + newSize.height - oldSize.height);
+                            //                            _tableView.contentOffset = newPoint;
+                            
+                            //                            [self.tableView setContentOffset:CGPointMake(0, oldCount*self.candleWidth)];
+                            [self.tableView setContentOffset:CGPointMake(0, -(newCount-oldCount)*self.candleWidth)];
                         }else{
                             //成功不再有数据
                             [self noMoreDataAction];
@@ -1011,7 +1031,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         
         [self drawTopKline];
     }
-
+    
 }
 - (void)reDrawMAWithMA1Day:(NSInteger)MA1Day MA2:(NSInteger)MA2Day MA3:(NSInteger)MA3Day
 {
@@ -1093,7 +1113,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }
     
     [self convertToKlinePositionModelWithNeedDrawArr:self.needDrawKlineArr];
-
+    
     NSArray *newMA5Arr = [self getNewMADataArrWithOldMADataArr:MA5DataArr];
     NSArray *newMA10Arr = [self getNewMADataArrWithOldMADataArr:MA10DataArr];
     NSArray *newMA20Arr = [self getNewMADataArrWithOldMADataArr:MA20DataArr];
@@ -1114,7 +1134,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     
     [self delegateToReloadPriceView];
     [self delegateToReturnKlieArr];
-
+    
 }
 - (NSArray *)getNewMADataArrWithOldMADataArr:(NSArray *)oldMADataArr
 {
@@ -1149,7 +1169,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         [self.MADataArr addObject:MADataDic];
     }
 }
-#pragma mark - 切换分时图  
+#pragma mark - 切换分时图
 - (void)switchTopChartContentWithTopChartContentType:(TopChartContentType)topChartContentType
 {
     switch (topChartContentType) {
@@ -1299,7 +1319,13 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //经验证，地址是一个，都是指向同一个对象
     //[self calculatePositionWithOrignalArr:self.kLineModelArr];
     [self calculatePositionWithOrignalArr:self.needDrawKlineArr];
+    
+    CGSize oldSize = _tableView.contentSize;
+    CGPoint oldOffset = _tableView.contentOffset;
     [self.tableView reloadData];
+    CGSize newSize = _tableView.contentSize;
+    CGPoint newPoint = CGPointMake(0, oldOffset.y + newSize.height - oldSize.height);
+    _tableView.contentOffset = newPoint;
 }
 - (void)calculateTimeLineMaxAndMinValueWithNeedDrawArr:(NSArray *)needDrawArr
 {
@@ -1349,7 +1375,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }];
     
     
-
+    
 }
 - (void)calculatePositionWithOrignalArr:(NSMutableArray *)originalArr
 {
@@ -1381,11 +1407,11 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 //若有必要可以暴露接口出去
 - (void)tableViewTapAction:(UIGestureRecognizer *)sender
 {
-
+    
     if (sender.numberOfTouches == 1) {
         
         CGPoint touchPoint = [sender locationOfTouch:0 inView:self.tableView];
-//        NSLog(@"%f%f",touchPoint.x,touchPoint.y);
+        //        NSLog(@"%f%f",touchPoint.x,touchPoint.y);
         CGFloat touchPointX = touchPoint.x;
         //点击事件在指标上
         if ((touchPointX>=0)&&(touchPointX<=self.quotaChartHeight))
@@ -1410,7 +1436,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (void)hideCrossCurve
 {
-
+    
     if ([self.delegate respondsToSelector:@selector(shouldHideCrossCurve)]) {
         
         [self.delegate shouldHideCrossCurve];
@@ -1438,7 +1464,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     //获取当前位置所在的第几个cell
     NSInteger currentPositionIndex = ABS(positionX - (self.candleWidth-startOffsetY))/self.candleWidth+1;
     
-//    NSLog(@"currentPositionIndex====%ld",(long)currentPositionIndex);
+    //    NSLog(@"currentPositionIndex====%ld",(long)currentPositionIndex);
     NSInteger currentPositionIndexInDataArr = 0;
     if (positionX<=(self.candleWidth - startOffsetY)) {
         
@@ -1452,7 +1478,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     }
     // NSLog(@"当前位置的model.timeStr%@",model.timeStr);
     // NSLog(@"currentIndex===%ld",(long)currentPositionIndex);
-   
+    
     //    数据已经验证没问题
     KlineModel *moddel = self.kLineModelArr[currentPositionIndexInDataArr];
     if ([self.delegate respondsToSelector:@selector(longpressPointCandleModel:longPressPoint:)]) {
@@ -1466,7 +1492,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         if (newPointX>self.subViewWidth) {
             
             return;
-//            newPointX = self.subViewWidth;
+            //            newPointX = self.subViewWidth;
         }
         if ((startOffsetY<self.candleWidth/2.0)&&(positionX<(self.candleWidth-startOffsetY))) {
             
@@ -1509,7 +1535,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         
         [self getLongPressDetailFromQuotaWithIndexInCurrentDrawKlineModelArr:(currentPositionIndexInDataArr-self.needDrawStartIndex)];
     }
-
+    
 }
 - (void)getLongPressDetailFromQuotaWithIndexInCurrentDrawKlineModelArr:(NSInteger)index
 {
@@ -1571,7 +1597,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         NSArray *keys = [quotaDic allKeys];
         NSArray *values = [quotaDic allValues].firstObject;
         if (index<values.count) {
-
+            
             if ([values[index] isKindOfClass:[NSNumber class]]) {
                 
                 NSNumber *value = values[index];
@@ -1620,7 +1646,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 {
     double currentPositionPrice = 0;
     NSString *currentPositionPriceStr = nil;
-
+    
     if (positionY<=self.candleChartHeight+TimeViewHeight) {
         currentPositionPrice = (self.minAssert + ((self.candleChartHeight-positionY)/self.heightPerPoint));
         currentPositionPriceStr = [NSString stringWithFormat:@"%.*f",self.precision,currentPositionPrice];
@@ -1629,10 +1655,10 @@ static NSString *const kCandleWidth = @"kCandleWidth";
             
             [self.delegate shouldToReloadCurrentPositionPriceJumpViewWithPositonY:positionY price:currentPositionPriceStr];
         }
-   
+        
     }else if (positionY>=self.candleChartHeight&&positionY<=self.subViewHeight)
     {
-      
+        
         currentPositionPrice = (self.quotaMinAssert + ((self.subViewHeight-positionY)/self.quotaHeightPerPoint));
         currentPositionPriceStr = [NSString stringWithFormat:@"%.*f",self.precision,currentPositionPrice];
         
@@ -1642,7 +1668,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
         }
     }
 }
-#pragma mark - 附件  
+#pragma mark - 附件
 - (void)increaseCandleWidthWithisLongPress:(BOOL)isLongPress
 {
     CGFloat   oldCandleWidth = self.candleWidth;
@@ -1853,7 +1879,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 
 - (CGFloat)candleChartHeight
 {
-
+    
     if (self.isCandleFullScreen) {
         
         return ([UIScreen mainScreen].bounds.size.height-TimeViewHeight-TopMargin);
@@ -1868,7 +1894,7 @@ static NSString *const kCandleWidth = @"kCandleWidth";
 }
 - (CGFloat)middleBlankSpace
 {
-
+    
     return MiddleBlankSpace;
 }
 - (BOOL)isDrawMALayer
@@ -1903,3 +1929,4 @@ static NSString *const kCandleWidth = @"kCandleWidth";
     return _maskView;
 }
 @end
+

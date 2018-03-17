@@ -30,8 +30,10 @@
     [self hidenProgress];
     self.title=@"房间";
     self.edgesForExtendedLayout=UIRectEdgeNone;
+     if ([_isCurrentDay intValue]!=2) {
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"规则选择" style:UIBarButtonItemStylePlain target:self action:@selector(tenRuleBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
+     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sucNotificationAction:) name:@"InfoNotification" object:nil];
     
     
