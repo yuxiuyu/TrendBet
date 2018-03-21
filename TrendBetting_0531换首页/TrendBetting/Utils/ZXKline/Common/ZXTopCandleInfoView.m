@@ -34,7 +34,7 @@
     
     self.labelArray = [NSMutableArray array];
     UIView *previousView = self;
-    CGFloat width = ([UIScreen mainScreen].bounds.size.width-ZXLeftMargin-ZXRightMargin)/4.0;
+    CGFloat width = ([UIScreen mainScreen].bounds.size.width-ZXLeftMargin-ZXRightMargin)/8.0;
     for (int i = 0; i<4; i++) {
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:12];
