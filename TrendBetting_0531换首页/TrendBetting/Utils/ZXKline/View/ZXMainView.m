@@ -968,21 +968,19 @@ static NSString *const kCandleWidth = @"kCandleWidth";
                             [self resetTableviewPosition];
                             [self updateRefreshViewLeftSapcing:0];
                             NSInteger oldCount = self.kLineModelArr.count;
-                            NSArray *tempArr =[[NSArray alloc]initWithArray:self.kLineModelArr];
+//                            NSArray *tempArr =[[NSArray alloc]initWithArray:self.kLineModelArr];
                             [self.kLineModelArr removeAllObjects];
                             //result 是要新家的  tempArr是旧的
                             [self.kLineModelArr addObjectsFromArray:result];
-                            KlineModel*wxmodel=[result lastObject];
-                            for (int i=0; i<tempArr.count; i++) {
-                                KlineModel*yxymodel=tempArr[i];
-                                yxymodel.closePrice+=wxmodel.closePrice;
-                                yxymodel.openPrice+=wxmodel.closePrice;
-                                yxymodel.highestPrice+=wxmodel.closePrice;
-                                yxymodel.lowestPrice+=wxmodel.closePrice;
-                                
-                                
-                                [self.kLineModelArr addObject:yxymodel];
-                            }
+//                            KlineModel*wxmodel=[result lastObject];
+//                            for (int i=0; i<tempArr.count; i++) {
+//                                KlineModel*yxymodel=tempArr[i];
+//                                yxymodel.closePrice+=wxmodel.closePrice;
+//                                yxymodel.openPrice+=wxmodel.closePrice;
+//                                yxymodel.highestPrice+=wxmodel.closePrice;
+//                                yxymodel.lowestPrice+=wxmodel.closePrice;
+//                                [self.kLineModelArr addObject:yxymodel];
+//                            }
 //                            [self.kLineModelArr addObjectsFromArray:tempArr];
                             NSInteger newCount = self.kLineModelArr.count;
                             

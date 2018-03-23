@@ -384,7 +384,7 @@
             else if([nameStr containsString:@"小"])
             {
                 NSArray*lastSecArray=fristPartArray[allcount-2];
-//                NSLog(@"%ld  %@",[nameStr rangeOfString:@"路"].location,[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1]);
+
                 nameStr=[NSString stringWithFormat:@"%@%d",[nameStr substringToIndex:[nameStr rangeOfString:@"路"].location+1],[[nameStr substringFromIndex:[nameStr rangeOfString:@"路"].location+1] intValue]+1];
                 guessStr=resultArray[1];
                 if (lastArray.count==lastSecArray.count)

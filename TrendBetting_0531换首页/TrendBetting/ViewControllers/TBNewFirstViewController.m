@@ -63,7 +63,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -95,7 +95,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-     [self hidenProgress];
+    [self hidenProgress];
     self.navigationController.navigationBarHidden=YES;
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TenBlodRule]];
     [Utils sharedInstance].tenModel=tenM;
@@ -414,9 +414,9 @@
             [guessFivePartArray addObject:[[Utils sharedInstance] seacherSpecRule:tepfivePartArray resultArray:[guessFivePartArray lastObject]  secondPartArray:tempSecondPartArray myTag:3]];
             
         }
-       
+        
     }
-     [self changeArea:0];
+    [self changeArea:0];
     [self setMoneyValue:NO];
     
 }
@@ -496,7 +496,7 @@
             [yarr addObject:@"R"];
         }
         resultArray=[[Utils sharedInstance]judgeGuessRightandWrong:listArray allGuessArray:yarr];
-
+        
         _memoLab.text =[[Utils sharedInstance] changeChina:[yarr lastObject] isWu:NO];
         
     }
@@ -511,7 +511,7 @@
     }
     else if ([Utils sharedInstance].selectArbitrageRuleName.length>0) {
         NSMutableArray*yarr=[[NSMutableArray alloc]init];
-//        [yarr addObject:[[Utils sharedInstance].selectArbitrageRuleName substringWithRange:NSMakeRange(0, 1)]];
+        //        [yarr addObject:[[Utils sharedInstance].selectArbitrageRuleName substringWithRange:NSMakeRange(0, 1)]];
         NSString * rulename = [Utils sharedInstance].selectArbitrageRuleName;
         NSInteger tsum = 0;
         for (int i=0; i<listArray.count; i++) {
@@ -563,7 +563,7 @@
             str1=@"暂停";
             money=@"";
         }
-
+        
     }
     _areaTrendLab2.text=[NSString stringWithFormat:@"大路:%@          大眼仔路:%@%@",str1,nameStr2,str2];
     _areaTrendLab3.text=[NSString stringWithFormat:@"文字:%@%@          小路:%@%@",nameStr0,str0,nameStr3,str3];
@@ -571,7 +571,6 @@
     
     
     _totalWinLab.text=[NSString stringWithFormat:@"总收益:%@",resultArray[2]];
-    //    NSLog(@"++++++%@",[resultArray lastObject]);
     _winOrLoseLab.text=[NSString stringWithFormat:@"输:%@    赢:%@",resultArray[0],resultArray[1]];
     if (_memoLab.text.length>0)
     {
@@ -835,9 +834,9 @@
 {
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_TenBlodRule]];
     [Utils sharedInstance].tenModel=tenM;
-
+    
     NSDictionary*dic=userInfo.userInfo;
-   
+    
     if ([dic[@"title"] isEqualToString:SAVE_isOnlyRBSelect])// SAVE_isOnlyRBSelect、SAVE_isbigRoad
     {
         [self setMoneyValue:NO];

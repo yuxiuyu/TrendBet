@@ -33,5 +33,7 @@
 ////K线获取数据
 // K线里获取数据
 -(NSDictionary*)getKlineData:(NSString*)monthStr dayStr:(NSString*)dayNameStr isNeedTotal:(BOOL)isNeedTotal;
+// 需要的B 的个数
+-(int)getStopKlineData:(NSString*)dayNameStr needValue:(int)needValue indexp:(int)indexp;
 
 @end

@@ -359,6 +359,8 @@
     int maxPrice = 0;
     int minPrice = 0;
     int total = 0;
+    int b_count = 0;
+    int R_count = 0;
     NSMutableArray*totalDayArr=[[NSMutableArray alloc]init];
     NSMutableDictionary*timeDic=[[NSMutableDictionary alloc]init];
     if (roomEntry.roomArr.count>0)
@@ -373,19 +375,23 @@
         {
             TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
             NSArray*array=[[Utils sharedInstance] getKlineArray:tempDataArr.result]; //1、收盘价 2、开盘价 3、最高价 4、最低价
-            total+=[array[0] intValue];
-            if (i==0) {
-                beginPrice = total;
-                maxPrice = total;
-                minPrice = total;
+            if (isNeedTotal) { //是否需要汇总
+                total+=[array[0] intValue];
+                b_count+=[array[4] intValue];
+                R_count+=[array[5] intValue];
+                if (i==0) {
+                    beginPrice = total;
+                    maxPrice = total;
+                    minPrice = total;
+                }
+                if (maxPrice<total) {
+                    maxPrice = total;
+                }
+                if (minPrice>total) {
+                    minPrice = total;
+                }
             }
-            if (maxPrice<total) {
-                maxPrice = total;
-            }
-            if (minPrice>total) {
-                minPrice = total;
-            }
-            NSString*daydateStr = [NSString stringWithFormat:@"%@ %d",dateStr,i+1];
+            NSString*daydateStr = [NSString stringWithFormat:@"%@ %d",dateStr,i];
             NSDate*date = [dayformatter dateFromString:daydateStr];
             NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
             NSString*resStr = [NSString stringWithFormat:@"%@,%@",@(timeSp),[array componentsJoinedByString:@","]];
@@ -397,12 +403,33 @@
         [formatter setDateFormat:@"yyyy-MM-dd"];
         NSDate*date = [formatter dateFromString:dateStr];
         NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
-        NSArray*totalArr = @[@(timeSp),@(total),@(beginPrice),@(maxPrice),@(minPrice)];
+        NSArray*totalArr = @[@(timeSp),@(total),@(beginPrice),@(maxPrice),@(minPrice),@(b_count),@(R_count)];
         [timeDic setObject:totalArr forKey:@"daycount"];
     }
     [timeDic setObject:totalDayArr forKey:@"totalDayArr"];
     return timeDic;
-    
 }
 
+// 需要的B 的个数
+-(int)getStopKlineData:(NSString*)dayNameStr needValue:(int)needValue indexp:(int)indexp
+{
+    TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:dayNameStr]];
+    int b_count = 0;
+    if (roomEntry.roomArr.count>0)
+    {
+        TBFileRoomResult_roomArr*room=roomEntry.roomArr[0];
+        TBFileRoomResult_timeArr*time=room.timeArr[0];
+        for (int i=indexp>0?indexp:0; i<time.dataArr.count; i++)
+        {
+            TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
+            NSArray*array=[[Utils sharedInstance] getStopBKlineArray:tempDataArr.result needValue:needValue];  //no 没有结束 yes 结束 b_count 闲的个数
+            b_count+=[array[1] intValue];
+            if ([array[0] isEqualToString:@"YES"]) {
+                 return b_count;
+            }
+        }
+    }
+    return b_count;
+    
+}
 @end

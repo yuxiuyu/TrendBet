@@ -10,4 +10,5 @@
 
 @interface Utils (klineRule)
 -(NSArray*)getKlineArray:(NSArray*)listArray;
+-(NSArray*)getStopBKlineArray:(NSArray*)listArray needValue:(int)needValue;
 @end

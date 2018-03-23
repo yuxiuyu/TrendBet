@@ -29,7 +29,7 @@
     NSNotification *noFilenotification =[NSNotification notificationWithName:@"noFileInfoNotification" object:nil userInfo:notiDic];
     //    __weak typeof(self) weakself =self;
     [[TBWebService sharedInstance] getServerData:dic isanimated:isanimated success:^(NSDictionary *responseObject) {
-        NSLog(@"res is %@",responseObject);
+//        NSLog(@"res is %@",responseObject);
         if ([[responseObject objectForKey:@"code"] integerValue] == 200) {
             // 下载完成
             
@@ -42,11 +42,11 @@
         }
         
     } failure:^(NSString *error) {
-        NSLog(@"error is %@",error);
-        if ([error isEqualToString:@"The request timed out."]) {
+//        NSLog(@"error is %@",error);
+//        if ([error isEqualToString:@"The request timed out."]) {
         
             [[NSNotificationCenter defaultCenter] postNotification:errnotification];
-        }
+//        }
         
     }];
     //    return issuccess;

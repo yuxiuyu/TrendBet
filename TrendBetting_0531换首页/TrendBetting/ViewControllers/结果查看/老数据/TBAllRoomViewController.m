@@ -102,7 +102,6 @@
     }
     [Utils sharedInstance].housesDic=[[NSDictionary alloc] initWithDictionary:housesDic];
     [self performSelectorOnMainThread:@selector(runMainThread) withObject:nil waitUntilDone:YES];
-//    NSLog(@"%@",housesDic);
 }
 -(void)runMainThread
 {

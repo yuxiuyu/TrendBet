@@ -150,13 +150,11 @@
             CGPoint p2 = [recognizer locationOfTouch:1 inView:self.xAxisView];
             CGFloat centerX = (p1.x+p2.x)/2;
             leftMagin = centerX - self.scrollView.contentOffset.x;
-            //            NSLog(@"centerX = %f",centerX);
-            //            NSLog(@"self.scrollView.contentOffset.x = %f",self.scrollView.contentOffset.x);
-            //            NSLog(@"leftMagin = %f",leftMagin);
+       
             
             
             currentIndex = centerX / self.pointGap;
-            //            NSLog(@"currentIndex = %f",currentIndex);
+           
             
             
             
@@ -172,7 +170,7 @@
             self.xAxisView.frame = CGRectMake(0, 0, self.xTitleArray.count * self.pointGap + lastSpace, self.frame.size.height);
             
             self.scrollView.contentOffset = CGPointMake(currentIndex*self.pointGap-leftMagin, 0);
-            //            NSLog(@"contentOffset = %f",self.scrollView.contentOffset.x);
+           
             
         }
         

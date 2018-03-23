@@ -39,7 +39,6 @@
     self.navigationController.navigationBarHidden=NO;
     allHouseArr=@[@"1",@"2",@"3",@"4"];
     
-    NSLog(@"%@",SYSTEM_DIR_OLD);
     
     
 }

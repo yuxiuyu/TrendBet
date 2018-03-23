@@ -130,11 +130,12 @@
                     </view>
                     <connections>
                         <segue destination="Thz-GG-4WW" kind="show" identifier="showTimeKlineRuleRoomVC" id="BON-Vm-ZwG"/>
+                        <segue destination="f1p-14-yd6" kind="show" identifier="TBKline_rmResVC" id="Ek5-9b-isI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VEM-bQ-cDV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="658" y="2852"/>
+            <point key="canvasLocation" x="733" y="3458"/>
         </scene>
         <!--Time KlineRM Detail View Controller-->
         <scene sceneID="9JR-lm-pLf">
@@ -146,10 +147,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="eMO-wy-Rma"/>
                     </view>
+                    <connections>
+                        <segue destination="f1p-14-yd6" kind="show" identifier="TBKline_detailResVC" id="7FG-Rj-keB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfI-S2-YvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="675" y="3703"/>
+            <point key="canvasLocation" x="733" y="4262"/>
         </scene>
         <!--New Rule go Month View Controller-->
         <scene sceneID="cV3-Jc-FaP">
@@ -430,7 +434,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nm9-nf-Rrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1724" y="2865"/>
+            <point key="canvasLocation" x="1467" y="2721"/>
+        </scene>
+        <!--Kline Result View Controller-->
+        <scene sceneID="0Vr-0H-jKG">
+            <objects>
+                <viewController id="f1p-14-yd6" customClass="TBKline_ResultViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="daw-ZO-4Mi">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zsg-y6-Wge">
+                                <rect key="frame" x="0.0" y="45" width="667" height="330"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="f1p-14-yd6" id="yzw-A4-GRR"/>
+                                    <outlet property="delegate" destination="f1p-14-yd6" id="DxG-Gr-ki3"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUD-Sj-bHp">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="IiM-zp-72W"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DUD-Sj-bHp" firstAttribute="leading" secondItem="rMC-Bt-l3T" secondAttribute="leading" id="066-yM-NSH"/>
+                            <constraint firstItem="Zsg-y6-Wge" firstAttribute="leading" secondItem="rMC-Bt-l3T" secondAttribute="leading" id="AEq-2I-hmA"/>
+                            <constraint firstAttribute="bottom" secondItem="Zsg-y6-Wge" secondAttribute="bottom" id="Hfy-F5-cEk"/>
+                            <constraint firstItem="DUD-Sj-bHp" firstAttribute="top" secondItem="rMC-Bt-l3T" secondAttribute="top" id="KDK-n9-U6T"/>
+                            <constraint firstItem="rMC-Bt-l3T" firstAttribute="trailing" secondItem="DUD-Sj-bHp" secondAttribute="trailing" id="OYS-0N-ggH"/>
+                            <constraint firstItem="Zsg-y6-Wge" firstAttribute="top" secondItem="DUD-Sj-bHp" secondAttribute="bottom" id="QZ8-J7-lLd"/>
+                            <constraint firstItem="Zsg-y6-Wge" firstAttribute="trailing" secondItem="rMC-Bt-l3T" secondAttribute="trailing" id="gOl-8Z-j8y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rMC-Bt-l3T"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableview" destination="Zsg-y6-Wge" id="227-44-EWd"/>
+                        <outlet property="totalLab" destination="DUD-Sj-bHp" id="EXI-4C-NUi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gZe-pH-Gmo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1466.7166416791606" y="3828"/>
         </scene>
         <!--New Rule Time View Controller-->
         <scene sceneID="aj7-uN-u4r">
@@ -787,6 +838,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Qda-VG-RwT"/>
+        <segue reference="7FG-Rj-keB"/>
         <segue reference="LOI-Hb-KX7"/>
         <segue reference="0fC-NR-nYU"/>
     </inferredMetricsTieBreakers>

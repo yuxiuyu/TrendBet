@@ -122,6 +122,7 @@
 		B60A64EC1F979F4800B63E87 /* Utils+downServerFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B60A64EB1F979F4800B63E87 /* Utils+downServerFile.m */; };
 		B632B6AF1F97B3640022FA09 /* TBDown_RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B632B6AE1F97B3640022FA09 /* TBDown_RoomViewController.m */; };
 		B632B6B11F97B4330022FA09 /* downFile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B632B6B01F97B4330022FA09 /* downFile.storyboard */; };
+		B63BC89F2064BA4B0018F41D /* TBKline_ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B63BC89E2064BA4B0018F41D /* TBKline_ResultViewController.m */; };
 		B643C6B51EE822A50019E6B0 /* Utils+xiasanluRule.m in Sources */ = {isa = PBXBuildFile; fileRef = B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */; };
 		B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */; };
 		B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF421ED073F300E248C8 /* Utils+newRules.m */; };
@@ -366,6 +367,8 @@
 		B632B6AD1F97B3640022FA09 /* TBDown_RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDown_RoomViewController.h; sourceTree = "<group>"; };
 		B632B6AE1F97B3640022FA09 /* TBDown_RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDown_RoomViewController.m; sourceTree = "<group>"; };
 		B632B6B01F97B4330022FA09 /* downFile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = downFile.storyboard; sourceTree = "<group>"; };
+		B63BC89D2064BA4B0018F41D /* TBKline_ResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBKline_ResultViewController.h; sourceTree = "<group>"; };
+		B63BC89E2064BA4B0018F41D /* TBKline_ResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBKline_ResultViewController.m; sourceTree = "<group>"; };
 		B643C6B31EE822A50019E6B0 /* Utils+xiasanluRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Utils+xiasanluRule.h"; sourceTree = "<group>"; };
 		B643C6B41EE822A50019E6B0 /* Utils+xiasanluRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+xiasanluRule.m"; sourceTree = "<group>"; };
 		B649DF3B1ED06DCF00E248C8 /* TBNewFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBNewFirstViewController.h; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 				5B7A7732205B9BB80042B91D /* TBKline_RMDetailViewController.m */,
 				B6F0F9A0205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.h */,
 				B6F0F9A1205CEBEC00D76411 /* TBTimeKline_RMDetailViewController.m */,
+				B63BC89D2064BA4B0018F41D /* TBKline_ResultViewController.h */,
+				B63BC89E2064BA4B0018F41D /* TBKline_ResultViewController.m */,
 			);
 			name = "K线图";
 			path = "K线图/K线图";
@@ -1246,6 +1251,7 @@
 				5B7A7799205BA1390042B91D /* ZXAssemblyView.m in Sources */,
 				5BC687781E5E8103001C2ACC /* TBMoneyEditViewController.m in Sources */,
 				5B9AB00D1F1CAADA00FBCEA8 /* TBOnlyRBSelectViewController.m in Sources */,
+				B63BC89F2064BA4B0018F41D /* TBKline_ResultViewController.m in Sources */,
 				03C091751FE950AB00BD8AD3 /* XAxisView.m in Sources */,
 				5B7A777A205BA1390042B91D /* ZXJumpView.m in Sources */,
 				5B7A7778205BA1390042B91D /* MALayer.m in Sources */,

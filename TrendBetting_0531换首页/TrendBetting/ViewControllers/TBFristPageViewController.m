@@ -205,7 +205,6 @@
         [self guessSanRoad:@"R"];
         [self guessSanRoad:@"B"];
         [self setSanRoadImageView];
-//         NSLog(@"yyyyyyyyyyyyyyyy++++++++%@",sanRoadGuessArray);
 
     }
 }
@@ -843,7 +842,6 @@
         resultArray=[[Utils sharedInstance] judgeGuessRightandWrong:listArray allGuessArray:lengthAllGuessArray];
     }
     _totalWinLab.text=[NSString stringWithFormat:@"总收益:%@",resultArray[2]];
-    NSLog(@"++++++%@",[resultArray lastObject]);
     _winOrLoseLab.text=[NSString stringWithFormat:@"输:%@    赢:%@",resultArray[0],resultArray[1]];
     if (_memoLab.text.length>0)
     {
