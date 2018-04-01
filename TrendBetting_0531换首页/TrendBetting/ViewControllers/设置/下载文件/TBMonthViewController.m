@@ -36,7 +36,18 @@
     self.title=[NSString stringWithFormat:@"%@号房间",self.selectedRoom];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     allMonthArr = [[NSMutableArray alloc]init];
-    [allMonthArr addObjectsFromArray:[self getAllMonthFrom:@"2017-04" endDate:[NSDate date]]];
+//    [allMonthArr addObjectsFromArray:[self getAllMonthFrom:@"2017-04" endDate:[NSDate date]]];
+        
+    NSDate*currentDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:currentDate];
+    int hour = (int)[dateComponent hour];
+    int minute = (int)[dateComponent minute];
+    if (hour>11||(hour==11&&minute>=15)) {
+       currentDate = [NSDate dateWithTimeInterval:24*60*60 sinceDate:currentDate];//后一天
+    }
+    [allMonthArr addObjectsFromArray:[self getAllMonthFrom:@"2017-04" endDate:currentDate]];
 
 }
 -(NSArray*)getAllMonthFrom:(NSString*)fromDate endDate:(NSDate*)endDate{

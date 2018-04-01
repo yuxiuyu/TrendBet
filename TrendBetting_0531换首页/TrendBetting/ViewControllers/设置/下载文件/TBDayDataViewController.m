@@ -68,9 +68,11 @@
     daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
 
     dayDataArr = [[NSMutableArray alloc]init];
+   
 
     NSDateFormatter*formatter =[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
+     allday =[[Utils sharedInstance]getAllDayFromDate:[formatter dateFromString:_selectedMonth]];
     if ([_selectedMonth isEqualToString:[formatter stringFromDate:[NSDate date]]])
     {
         NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -78,13 +80,12 @@
         NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:[NSDate date]];
         int hour = (int)[dateComponent hour];
         int minute = (int)[dateComponent minute];
-        if (hour>11||(hour==11&&minute>=15)) {
+        int day = (int)[dateComponent day];
+        if ((day<allday)&&(hour>11||(hour==11&&minute>=15))) {
             dateComponent = [calendar components:unitFlags fromDate:[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]]];
+             allday = (int)[dateComponent day];
         }
-         allday = (int)[dateComponent day];
-    } else {
-        allday =[[Utils sharedInstance]getAllDayFromDate:[formatter dateFromString:_selectedMonth]];
-
+        
     }
     for (NSInteger i =allday; i>0; i--) {
         NSString *dayDataStr = [NSString stringWithFormat:@"%ld.txt",i];
