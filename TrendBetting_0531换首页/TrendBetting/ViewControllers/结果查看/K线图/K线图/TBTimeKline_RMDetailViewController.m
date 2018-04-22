@@ -182,7 +182,7 @@
         for (int i=0; i<nowTepArr.count; i++) {
             NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:nowTepArr[i]];
             
-            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[2] intValue]]];
+            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
             [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
             [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
             totalP += [fiveArr[1] intValue];
@@ -292,7 +292,7 @@
     for (int i=0; i<allDayArr.count-1; i++) {
         NSMutableArray*current=[NSMutableArray arrayWithArray:[allDayArr[i] componentsSeparatedByString:@","]];
         [current replaceObjectAtIndex:1 withObject:@([current[1] intValue]+[last[1] intValue])];
-        [current replaceObjectAtIndex:2 withObject:@([current[2] intValue]+[last[2] intValue])];
+        [current replaceObjectAtIndex:2 withObject:@([last[1] intValue])];
         [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[3] intValue])];
         [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[4] intValue])];
         [allResArr addObject:[current componentsJoinedByString:@","]];

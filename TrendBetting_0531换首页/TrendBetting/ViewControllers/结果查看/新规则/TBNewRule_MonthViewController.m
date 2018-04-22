@@ -5,13 +5,13 @@
 //  Created by jiazhen-mac-01 on 17/6/20.
 //  Copyright © 2017年 yxy. All rights reserved.
 //
-
+#import "Masonry.h"
 #import "TBNewRule_MonthViewController.h"
 #import "MyCalendarItem.h"
 //#import "JHChart.h"
 //#import "JHLineChart.h"
-#import "Charts-Swift.h"
-@interface TBNewRule_MonthViewController ()<ChartViewDelegate>
+#import "ZXAssemblyView.h"
+@interface TBNewRule_MonthViewController ()<AssemblyViewDelegate,ZXSocketDataReformerDelegate>
 {
     NSMutableArray*daysNameArr;//有数据的天名
     NSMutableArray*totalYArr;
@@ -21,17 +21,26 @@
 //    NSMutableArray*nameArr;
 //    NSMutableArray*showNameArr;
 //    NSArray*colorArray;
+    NSMutableArray*kArr;
     NSString*ruleStr;
     CGFloat sHeight;
     NSThread*thread;
-    BOOL isrefresh;
+  
 
-    LineChartView*_chartView;
+ 
    
 
     
     
 }
+/**
+ *k线实例对象
+ */
+@property (nonatomic,strong) ZXAssemblyView *assenblyView;
+/**
+ *所有数据模型
+ */
+@property (nonatomic,strong) NSMutableArray *kDataArr;
 //@property(nonatomic,strong)NSDictionary*monthDic;
 @property(nonatomic,strong)NSMutableDictionary*daysDic;
 @property(nonatomic,strong)MyCalendarItem *myCalendarView;
@@ -64,14 +73,17 @@
     reduceStr=[reduceStr stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
     NSString*backmoneyStr=[[Utils sharedInstance]removeFloatAllZero:_winCountArray[8]];
     _winCountLab.text=[NSString stringWithFormat:@"赢:%@  输:%@  盈利:%@  抽水:%@  洗码:%@",_winCountArray[4],_winCountArray[3],[[Utils sharedInstance] removeFloatAllZero:_winCountArray[5]],reduceStr,backmoneyStr];
-    _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20);
+    _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+TotalHeight);
     [_mainScrollView addSubview:self.myCalendarView];
     
     NSDateFormatter*formatter=[[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     
 
-    
+    kArr = [[NSMutableArray alloc]init];
+    //需要加载在最上层，为了旋转的时候直接覆盖其他控件
+    [_mainScrollView addSubview:self.assenblyView];
+    [self addConstrains];
 
     self.myCalendarView.fileDateDic=_monthDic;
     self.myCalendarView.date=[formatter dateFromString:self.title];
@@ -90,22 +102,27 @@
     NSArray*tepArray=[_monthDic allKeys];
 //
     NSArray*xArray=[[Utils sharedInstance] orderArr:tepArray isArc:YES];
-    NSMutableArray*vArray=[[NSMutableArray alloc]init];
-    NSMutableArray*totalvArray=[[NSMutableArray alloc]init];
+    int totalP = 0;
     for (int i=0; i<xArray.count; i++)
     {
         NSDictionary*dic=self.myCalendarView.fileDateDic[xArray[i]];
-        NSArray*dataarray=dic[@"daycount"];
-        [vArray addObject:[[Utils sharedInstance]removeFloatAllZero:dataarray[5]]];
-        float a= [dataarray[5] floatValue]+[[totalvArray lastObject] floatValue];
-        [totalvArray addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
+        NSArray*daycountarray=dic[@"daycount"];
+
+        NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:daycountarray[11]];
+        //                @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+//        [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
+//        [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
+//        [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
+//        totalP += [fiveArr[1] intValue];
+//        [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
+        
+        [kArr addObject: [fiveArr componentsJoinedByString:@","]];
     }
+     [self performSelectorOnMainThread:@selector(configureData) withObject:nil waitUntilDone:YES];
     if (xArray.count>1)
     {
-//        [self showFirstAndFouthQuardrant:xArray vArray:vArray count:0];
-//        [self showFirstAndFouthQuardrant:xArray vArray:totalvArray count:1];
-        [self initChartView:xArray yarray1:vArray yarray2:totalvArray];
-        _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+300);
+//        [self initChartView:xArray yarray1:vArray yarray2:totalvArray];
+        _mainScrollView.contentSize=CGSizeMake(SCREEN_WIDTH-30, SCREEN_HEIGHT-NAVBAR_HEIGHT-20+TotalHeight);
     }
     
     // Do any additional setup after loading the view.
@@ -135,104 +152,93 @@
     [self performSegueWithIdentifier:@"show_newMonthResultVC" sender:@{@"winArray":_winCountArray[9],@"failArray":_winCountArray[10]
                                                                        }];
 }
-//-(void)goDaysresultBtnAction{
-//    [self performSegueWithIdentifier:@"show_goMonthTimeResultVC" sender:@{@"allmonthDic":_allmonthDic,@"titleStr":@"连日结果",@"selectP":_selectP}];
-//    
-//}
 
--(void)initChartView:(NSArray*)xarray yarray1:(NSArray*)yarray1 yarray2:(NSArray*)yarray2 {
-    _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-NAVBAR_HEIGHT-20, SCREEN_WIDTH, 300)];
-    _chartView.backgroundColor=TBLineGaryColor;
-    _chartView.delegate = self;
-    _chartView.chartDescription.enabled = NO;
-    _chartView.dragEnabled = YES;
-    [_chartView setScaleEnabled:YES];
-    _chartView.pinchZoomEnabled = YES;
-    _chartView.xAxis.granularityEnabled = YES;//设置重复的值不显示
-    _chartView.xAxis.labelPosition = XAxisLabelPositionBottomInside;// X轴的位置
+
+- (void)configureData
+{
     
-    //
-    //
-    _chartView.xAxis.gridLineDashLengths = @[@5.0, @10.0];
+    //将请求到的数据数组传递过去，并且精度也是需要你自己传;
+    /*
+     数组中数据格式:@[@"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+     @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+     @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+     @"...",
+     @"..."];
+     */
+    /*如果的数据格式和此demo中不同，那么你需要点进去看看，并且修改响应的取值为你的数据格式;
+     修改数据格式→  ↓↓↓↓↓↓↓点它↓↓↓↓↓↓↓↓↓  ←
+     */
+    //===数据处理
+    NSArray *transformedDataArray =  [[ZXDataReformer sharedInstance] transformDataWithOriginalDataArray:kArr currentRequestType:@"M1"];
+    [self.kDataArr addObjectsFromArray:transformedDataArray];
     
-    _chartView.drawGridBackgroundEnabled = NO;
     
-    ChartYAxis *leftAxis = _chartView.leftAxis;
-    [leftAxis removeAllLimitLines];
-    leftAxis.gridLineDashLengths = @[@5.f, @5.f];
-    leftAxis.drawZeroLineEnabled = NO;
-    leftAxis.drawLimitLinesBehindDataEnabled = YES;
     
-    _chartView.rightAxis.enabled = NO;
-    [self setData:xarray yarray1:yarray1 yarray2:yarray2];
-    [_chartView animateWithXAxisDuration:2.5];
-    [_mainScrollView addSubview:_chartView];
+    
+    //====绘制k线图
+    [self.assenblyView drawHistoryCandleWithDataArr:self.kDataArr precision:0 stackName:@"股票名" needDrawQuota:@""];
+    
+    //如若有socket实时绘制的需求，需要实现下面的方法
+    //socket
+    //定时器不再沿用
+    [ZXSocketDataReformer sharedInstance].delegate = self;
+    
 }
--(void)setData:(NSArray*)xarray yarray1:(NSArray*)yarray1 yarray2:(NSArray*)yarray2{
-    
-    NSMutableArray *values1 = [[NSMutableArray alloc] init];
-    NSMutableArray *values2 = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < xarray.count; i++)
-    {
-        float x = [xarray[i] floatValue];
-        float y1 = [yarray1[i] floatValue];
-        float y2 = [yarray2[i] floatValue];
-        [values1 addObject:[[ChartDataEntry alloc] initWithX:x y:y1]];
-        [values2 addObject:[[ChartDataEntry alloc] initWithX:x y:y2]];
+
+#pragma mark - ZXSocketDataReformerDelegate
+- (void)bulidSuccessWithNewKlineModel:(KlineModel *)newKlineModel
+{
+    //维护控制器数据源
+    if (newKlineModel.isNew) {
+        
+        [self.kDataArr addObject:newKlineModel];
+        [[ZXQuotaDataReformer sharedInstance] handleQuotaDataWithDataArr:self.kDataArr model:newKlineModel index:self.kDataArr.count-1];
+        [self.kDataArr replaceObjectAtIndex:self.kDataArr.count-1 withObject:newKlineModel];
+        
+    }else{
+        [self.kDataArr replaceObjectAtIndex:self.kDataArr.count-1 withObject:newKlineModel];
+        
+        [[ZXQuotaDataReformer alloc] handleQuotaDataWithDataArr:self.kDataArr model:newKlineModel index:self.kDataArr.count-1];
+        
+        [self.kDataArr replaceObjectAtIndex:self.kDataArr.count-1 withObject:newKlineModel];
     }
+    //绘制最后一个蜡烛
+    [self.assenblyView drawLastKlineWithNewKlineModel:newKlineModel];
+}
+
+#pragma mark - Private Methods
+- (void)addConstrains
+{
     
-    //创建LineChartDataSet对象
-    LineChartDataSet *set1 = [[LineChartDataSet alloc] initWithValues:values1 label:@"日结果"];
-    set1.drawIconsEnabled = NO;
-//    set1.lineDashLengths = @[@5.f, @2.5f];
-    set1.highlightLineDashLengths = @[@5.f, @2.5f];
-    [set1 setColor:UIColor.orangeColor];
-    [set1 setCircleColor:UIColor.orangeColor];
-    set1.lineWidth = 1.0;
-    set1.circleRadius = 3.0;
-    set1.drawCircleHoleEnabled = NO;
-    set1.valueFont = [UIFont systemFontOfSize:8.f];
-    set1.formLineDashLengths = @[@5.f, @2.5f];
-    set1.formLineWidth = 1.0;
-    set1.formSize = 15.0;
-    
-    
-    NSMutableArray *dataSets = [[NSMutableArray alloc] init];
-    [dataSets addObject:set1];
-    
-    
-    
-    //纵轴数据
- 
-    //创建LineChartDataSet对象
-    LineChartDataSet *set2 = [[LineChartDataSet alloc] initWithValues:values2 label:@"日累加结果"];
-    set2.drawIconsEnabled = NO;
-//    set2.lineDashLengths = @[@5.f, @2.5f];
-    set2.highlightLineDashLengths = @[@5.f, @2.5f];
-    [set2 setColor:UIColor.greenColor];
-    [set2 setCircleColor:UIColor.greenColor];
-    set2.lineWidth = 1.0;
-    set2.circleRadius = 3.0;
-    set2.drawCircleHoleEnabled = NO;
-    set2.valueFont = [UIFont systemFontOfSize:8.f];
-    set2.formLineDashLengths = @[@5.f, @2.5f];
-    set2.formLineWidth = 1.0;
-    set2.formSize = 15.0;
-    [dataSets addObject:set2];
-    
-    
-    
-    LineChartData *data = [[LineChartData alloc] initWithDataSets:dataSets];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    //自定义数据显示格式
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [formatter setPositiveFormat:@"#0.0"];
-    
-    [data setValueFormatter:[[ChartDefaultValueFormatter alloc]initWithFormatter:formatter]];
-    
-    _chartView.data = data;
-    //    }
+    //初始为横屏
+    //    self.navigationController.navigationBar.hidden = YES;
+    [self.assenblyView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.mas_equalTo(SCREEN_HEIGHT-NAVBAR_HEIGHT-20);
+        make.left.mas_equalTo(self.mainScrollView);
+        make.width.mas_equalTo(TotalWidth);
+        make.height.mas_equalTo(TotalHeight);
+        
+    }];
+}
+#pragma mark - Getters & Setters
+- (ZXAssemblyView *)assenblyView
+{
+    if (!_assenblyView) {
+        //仅仅只有k线的初始化方法
+        //        _assenblyView = [[ZXAssemblyView alloc] initWithDrawJustKline:YES];
+        //带指标的初始化
+        _assenblyView = [[ZXAssemblyView alloc] init];
+        _assenblyView.delegate = self;
+    }
+    return _assenblyView;
+}
+- (NSMutableArray *)kDataArr
+{
+    if (!_kDataArr) {
+        _kDataArr = [NSMutableArray array];
+    }
+    return _kDataArr;
 }
 
 @end

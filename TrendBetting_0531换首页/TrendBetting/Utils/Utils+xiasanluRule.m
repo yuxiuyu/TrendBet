@@ -190,7 +190,8 @@
                      resultArray[3],//每一局赢或输钱的变动
                      resultArray[4],//每一局总的钱的变动
                      resultArray[9],//赢的
-                     resultArray[10]//
+                     resultArray[10],//
+                     resultArray[11]//
                      ];
     
     return array;
@@ -768,6 +769,10 @@
     float reduceMoney=0.0;//抽水的钱
     float backMoney=0.0;//返利的钱
     float nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];//下一次下注的钱
+    // yyx add 2018-4-21
+    float beginPrice = 0.0;
+    float maxPrice = 0;
+    float minPrice = 0;
     // yxy add 2017-08-23
     NSInteger winonecount = 0;
     NSInteger wintwocount = 0;
@@ -876,7 +881,18 @@
                         thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
                     }
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
-                    
+                     // yay add 2018-04-21
+                    if (beginPrice==0.0) {
+                        beginPrice = totalMoney;
+                        maxPrice = totalMoney;
+                        minPrice = totalMoney;
+                    }
+                    if (maxPrice<totalMoney) {
+                        maxPrice = totalMoney;
+                    }
+                    if (minPrice>totalMoney) {
+                        minPrice = totalMoney;
+                    }
                     [changeTotalDic setObject:[NSString stringWithFormat:@"%0.3f",totalMoney] forKey:[NSString stringWithFormat:@"%d",i]];
                 }
                 else
@@ -905,6 +921,11 @@
                         [NSString stringWithFormat:@"%ld",failthreecount],
                         [NSString stringWithFormat:@"%ld",failforthcount],
                         [NSString stringWithFormat:@"%ld",failfivecount]];
+    NSArray*kArr = @[[NSString stringWithFormat:@"%0.3f",totalMoney],//收盘价
+                     [NSString stringWithFormat:@"%0.3f",beginPrice],//开盘价
+                     [NSString stringWithFormat:@"%0.3f",maxPrice],//最高价
+                     [NSString stringWithFormat:@"%0.3f",minPrice]//最低价
+                     ];
     return @[[NSString stringWithFormat:@"%ld",guessNo],
              [NSString stringWithFormat:@"%ld",guessYes],
              [NSString stringWithFormat:@"%0.3f",totalMoney],
@@ -915,7 +936,8 @@
              [NSString stringWithFormat:@"%0.3f",backMoney],
              [NSString stringWithFormat:@"%ld",goGuessYes],
              winArr,
-             failArr
+             failArr,
+            kArr
              ];
     
 }

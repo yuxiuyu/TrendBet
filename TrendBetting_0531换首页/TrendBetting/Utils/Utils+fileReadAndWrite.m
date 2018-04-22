@@ -295,22 +295,50 @@
 
 -(NSDictionary*)getNewRuleDayData:(NSString*)monthStr dayStr:(NSString*)dayNameStr
 {
+    NSArray*temarr = [monthStr componentsSeparatedByString:@"/"];
+    NSString*dateStr = [NSString stringWithFormat:@"%@-%@",temarr[1],dayNameStr];
     TBFileRoomResult_entry*roomEntry=[TBFileRoomResult_entry mj_objectWithKeyValues:[[Utils sharedInstance] readData:[NSString stringWithFormat:@"%@/%@",monthStr,dayNameStr]]];
+    float beginPrice = 0.0;
+    float maxPrice = 0.0;
+    float minPrice = 0.0;
+    float total = 0.0;
     NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
-    NSMutableArray*daySumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
+    NSMutableArray*daySumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr,]];
     NSMutableDictionary*timeDic=[[NSMutableDictionary alloc]init];
     if (roomEntry.roomArr.count>0)
     {
         
         TBFileRoomResult_roomArr*room=roomEntry.roomArr[0];
         TBFileRoomResult_timeArr*time=room.timeArr[0];
+        NSDateFormatter*dayformatter =[[NSDateFormatter alloc]init];
+        [dayformatter setDateFormat:@"yyyy-MM-dd HH"];
         
         for (int i=0; i<time.dataArr.count; i++)
         {
             TBFileRoomResult_dataArr*tempDataArr=time.dataArr[i];
-            NSArray*array=[[Utils sharedInstance] getNewFristArray:tempDataArr.result];
+            NSMutableArray*array=[NSMutableArray arrayWithArray:[[Utils sharedInstance] getNewFristArray:tempDataArr.result]];
+            //
+            NSString*daydateStr = [NSString stringWithFormat:@"%@ %d",dateStr,i];
+            NSDate*date = [dayformatter dateFromString:daydateStr];
+            NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
+            NSString*resStr = [NSString stringWithFormat:@"%@,%@",@(timeSp),[array[14] componentsJoinedByString:@","]];
+            [array replaceObjectAtIndex:14 withObject:[resStr componentsSeparatedByString:@","]];
             [timeDic setObject:array forKey:[NSString stringWithFormat:@"%d",i+1]];
+            
+            total+=[array[14][1] floatValue];
+            if (i==0) {
+                beginPrice = total;
+                maxPrice = total;
+                minPrice = total;
+            }
+            if (maxPrice<total) {
+                maxPrice = total;
+            }
+            if (minPrice>total) {
+                minPrice = total;
+            }
+            
             for (int j=0; j<daySumWinCountArray.count; j++)
             {
                 if (j<=8) {
@@ -328,22 +356,31 @@
                 else
                 {
                     NSMutableArray*wArr=[[NSMutableArray alloc]initWithArray:daySumWinCountArray[j]];
-                    for (int k=0; k<wArr.count; k++) {
-                        
-                        NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[j+3][k] intValue]];
-                        [wArr replaceObjectAtIndex:k withObject:s];
-                    }
-                    [daySumWinCountArray replaceObjectAtIndex:j withObject:wArr];
+                   
+                        for (int k=0; k<wArr.count; k++) {
+                            
+                            NSString*s=[NSString stringWithFormat:@"%d",[wArr[k] intValue]+[array[j+3][k] intValue]];
+                            [wArr replaceObjectAtIndex:k withObject:s];
+                        }
+                        [daySumWinCountArray replaceObjectAtIndex:j withObject:wArr];
+                
+                    
+                    
                 }
-                
-                
-                
             }
+           
             
         }
         
         
     }
+    NSDateFormatter*formatter =[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate*date = [formatter dateFromString:dateStr];
+    NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
+    NSArray*totalArr = @[@(timeSp),@(total),@(beginPrice),@(maxPrice),@(minPrice)];
+    [daySumWinCountArray addObject:totalArr];
+    
     [timeDic setObject:daySumWinCountArray forKey:@"daycount"];
     
     return timeDic;
@@ -423,7 +460,7 @@
             NSArray*array=[[Utils sharedInstance] getStopBKlineArray:tempDataArr.result needValue:needValue];  //no 没有结束 yes 结束 b_count 闲的个数
             b_count+=[array[1] intValue];
             if ([array[0] isEqualToString:@"YES"]) {
-                 return b_count;
+                return b_count;
             }
         }
     }

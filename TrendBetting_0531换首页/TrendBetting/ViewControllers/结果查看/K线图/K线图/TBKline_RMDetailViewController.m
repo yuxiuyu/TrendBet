@@ -184,8 +184,8 @@
                 NSArray*array=[dayStr componentsSeparatedByString:@"."];
                 NSDictionary*tepDic=[[Utils sharedInstance] getKlineData:monthFileNameStr dayStr:array[0] isNeedTotal:YES];
                 NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:tepDic[@"daycount"]];
-                
-                [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[2] intValue]]];
+//                @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+                [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
                 [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
                 [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
                 totalP += [fiveArr[1] intValue];
@@ -293,9 +293,10 @@
     NSMutableArray *allResArr=[NSMutableArray arrayWithArray:temArr];
     NSArray*last = [[temArr lastObject] componentsSeparatedByString:@","];
     for (int i=0; i<allDayArr.count-1; i++) {
+//        @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
         NSMutableArray*current=[NSMutableArray arrayWithArray:[allDayArr[i] componentsSeparatedByString:@","]];
         [current replaceObjectAtIndex:1 withObject:@([current[1] intValue]+[last[1] intValue])];
-        [current replaceObjectAtIndex:2 withObject:@([current[2] intValue]+[last[2] intValue])];
+        [current replaceObjectAtIndex:2 withObject:@([last[1] intValue])];
         [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[3] intValue])];
         [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[4] intValue])];
         [allResArr addObject:[current componentsJoinedByString:@","]];
