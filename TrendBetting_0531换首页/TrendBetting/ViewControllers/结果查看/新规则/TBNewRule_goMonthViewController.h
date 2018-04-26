@@ -9,6 +9,7 @@
 #import "TBBaseViewController.h"
 
 @interface TBNewRule_goMonthViewController : TBBaseViewController
+@property(strong,nonatomic)NSArray*klineArr;
 @property(strong,nonatomic)NSArray*totalDayKeyArr;
 @property(strong,nonatomic)NSArray*totalDayValueArr;
 @property(strong,nonatomic)NSArray*totalDayBackMoneyArr;

@@ -14,9 +14,9 @@
 //#define yxy 5
 @interface TBNewRule_goMonthViewController ()<UIScrollViewDelegate,ChartViewDelegate>
 {
-    LineChartView*_chartView1;
-    LineChartView*_chartView2;
-    LineChartView*_chartView3;
+//    LineChartView*_chartView1;
+//    LineChartView*_chartView2;
+//    LineChartView*_chartView3;
     NSMutableArray*lineArr;
     NSArray*upperDataArray;//符合规则在均线曲线上的点（结果）
     NSArray*upperProgressArray;//符合规则在均线曲线上的点（过程）

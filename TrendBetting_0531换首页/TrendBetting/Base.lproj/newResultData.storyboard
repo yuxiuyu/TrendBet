@@ -116,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sY-DV-W8B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="698" y="1871"/>
+            <point key="canvasLocation" x="460" y="1926"/>
         </scene>
         <!--KlineRM Detail View Controller-->
         <scene sceneID="V2e-OV-YX3">
@@ -154,6 +154,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfI-S2-YvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="733" y="4262"/>
+        </scene>
+        <!--New Rule go News Month View Controller-->
+        <scene sceneID="Uhr-IK-qp9">
+            <objects>
+                <viewController id="Atd-q3-INf" customClass="TBNewRule_goNewsMonthViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EZN-9e-bT9">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="BPN-Hy-GcO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oxK-fM-01h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="487" y="561"/>
         </scene>
         <!--New Rule go Month View Controller-->
         <scene sceneID="cV3-Jc-FaP">
@@ -249,11 +264,12 @@
                         <segue destination="Wlz-6S-tlT" kind="show" identifier="showNewRule_MonthVC" id="pQp-x3-dTe"/>
                         <segue destination="CC9-X0-RMC" kind="show" identifier="show_newHouseResultVC" id="Qda-VG-RwT"/>
                         <segue destination="aoG-BL-LiG" kind="show" identifier="show_goMonthHouseResultVC" id="0fC-NR-nYU"/>
+                        <segue destination="Atd-q3-INf" kind="show" identifier="show_goNewMonthHouseResultVC" id="lo1-b8-wHl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QK0-fT-w6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1356" y="1870"/>
+            <point key="canvasLocation" x="1168" y="1857"/>
         </scene>
         <!--New Rule Month View Controller-->
         <scene sceneID="gq1-nM-CXH">

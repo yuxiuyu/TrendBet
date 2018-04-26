@@ -29,6 +29,8 @@
     NSMutableArray*oneAnswerArray;
     NSMutableArray*totalOneAnswerArray;
     LineChartView*_chartView;
+    NSMutableArray*kLineArr;
+    NSMutableArray*totalKLineArr;
     
     
 }
@@ -53,6 +55,9 @@
     totalDayKeyArr=[[NSMutableArray alloc]init];
     totalDayValueArr=[[NSMutableArray alloc]init];
     totalDayBackMoneyArr=[[NSMutableArray alloc]init];
+    
+    kLineArr = [[NSMutableArray alloc]init];
+    totalKLineArr = [[NSMutableArray alloc]init];
     _tableview.tableFooterView=[[UIView alloc]init];
     
     
@@ -109,6 +114,7 @@
 }
 
 -(void)dealData{
+     int totalP = 0;
     NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
@@ -124,7 +130,6 @@
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
         NSArray*tepDayKeyArray=[[Utils sharedInstance] orderArr:[daysDic allKeys] isArc:YES];
         for (int k=0; k<tepDayKeyArray.count; k++) {
-            
             
             //        [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSDictionary*dic=daysDic[tepDayKeyArray[k]];
@@ -148,7 +153,6 @@
                     NSMutableArray*wArr1=[[NSMutableArray alloc]initWithArray:monthSumWinCountArray[i]];
                     NSMutableArray*wArr2=[[NSMutableArray alloc]initWithArray:houseSumWinCountArray[i]];
                     for (int k=0; k<wArr1.count; k++) {
-                        
                         NSString*s1=[NSString stringWithFormat:@"%d",[wArr1[k] intValue]+[array[i][k] intValue]];
                         [wArr1 replaceObjectAtIndex:k withObject:s1];
                         NSString*s2=[NSString stringWithFormat:@"%d",[wArr2[k] intValue]+[array[i][k] intValue]];
@@ -158,6 +162,16 @@
                     [houseSumWinCountArray replaceObjectAtIndex:i withObject:wArr2];
                 }
             }
+            // k线
+            NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:array[11]];
+            //                @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
+            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
+            [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
+            [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
+            totalP += [fiveArr[1] intValue];
+            [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
+            [kLineArr addObject: [fiveArr componentsJoinedByString:@","]];
+            //
             NSArray*monKey=[key componentsSeparatedByString:@"-"];
             [totalDayKeyArr addObject:[NSString stringWithFormat:@"%@.%@.%@",monKey[0],monKey[1],tepDayKeyArray[k]]];
             [totalDayValueArr addObject:[[Utils sharedInstance]removeFloatAllZero:[NSString stringWithFormat:@"%0.3f",a]]];
@@ -189,17 +203,11 @@
     }
     [_tableview reloadData];
     _tableview.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 340)];
-    //    _tableview.tableFooterView.backgroundColor=[UIColor redColor];
-    //    [self showFirstAndFouthQuardrant:dataArray vArray:oneAnswerArray];
-    //    [_tableview.tableFooterView addSubview:lineChart];
-    //
-    //    [self showFirstAndFouthQuardrant1:dataArray vArray:totalOneAnswerArray];
-    //    [_tableview.tableFooterView addSubview:totalLineChart];
+    
     
     [self initChartView];
     
-    
-//    [self initChartView];
+
     _resultCountLab.text=[NSString stringWithFormat:@"庄:%@  闲:%@  和:%@",houseSumWinCountArray[0],houseSumWinCountArray[1],houseSumWinCountArray[2]];
     NSString*reduceStr=[[Utils sharedInstance]removeFloatAllZero:houseSumWinCountArray[7]];
     reduceStr=[reduceStr stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
@@ -289,11 +297,13 @@
     [self performSegueWithIdentifier:@"show_newHouseResultVC" sender:@{@"winArray":houseSumWinCountArray[9],@"failArray":houseSumWinCountArray[10]}];
 }
 -(void)goMonthsresultBtnAction{
-    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"totalDayBackMoneyArr":totalDayBackMoneyArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle]}];
+//    [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"totalDayKeyArr":totalDayKeyArr,@"totalDayValueArr":totalDayValueArr,@"totalDayBackMoneyArr":totalDayBackMoneyArr,@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle],@"klineArr":kLineArr}];
+     [self performSegueWithIdentifier:@"show_goNewMonthHouseResultVC" sender:@{@"titleStr":[NSString stringWithFormat:@"%@-连月结果",_selectedTitle],@"klineArr":kLineArr}];
     
 }
 -(void)goDaysresultBtnAction{
-     [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"allmonthDic":houseMonthDic,@"titleStr":@"连日结果",@"selectP":@"0"}];
+//     [self performSegueWithIdentifier:@"show_goMonthHouseResultVC" sender:@{@"allmonthDic":houseMonthDic,@"titleStr":@"连日结果",@"selectP":@"0"}];
+    [self performSegueWithIdentifier:@"show_goNewMonthHouseResultVC" sender:@{@"houseMonthDic":houseMonthDic,@"titleStr":@"连日结果"}];
 }
 -(void)initChartView{
     _chartView = [[LineChartView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300)];

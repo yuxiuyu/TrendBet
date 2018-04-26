@@ -21,7 +21,7 @@
 //    NSMutableArray*nameArr;
 //    NSMutableArray*showNameArr;
 //    NSArray*colorArray;
-    NSMutableArray*kArr;
+    NSMutableArray*kArr; //k线
     NSString*ruleStr;
     CGFloat sHeight;
     NSThread*thread;

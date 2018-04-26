@@ -127,6 +127,7 @@
 		B649DF3D1ED06DCF00E248C8 /* TBNewFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF3C1ED06DCF00E248C8 /* TBNewFirstViewController.m */; };
 		B649DF431ED073F300E248C8 /* Utils+newRules.m in Sources */ = {isa = PBXBuildFile; fileRef = B649DF421ED073F300E248C8 /* Utils+newRules.m */; };
 		B654DD9B1F16691D006D8C65 /* TBBigRoadSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */; };
+		B65B7BD72092253E00816063 /* TBNewRule_goNewsMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B65B7BD62092253E00816063 /* TBNewRule_goNewsMonthViewController.m */; };
 		B65FB9F71FE80BF200F69AF2 /* arbitrageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B65FB9F61FE80BF200F69AF2 /* arbitrageListViewController.m */; };
 		B65FB9F91FE80E6E00F69AF2 /* arbitrage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B65FB9F81FE80E6E00F69AF2 /* arbitrage.storyboard */; };
 		B65FB9FC1FE810F900F69AF2 /* addArbitrageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B65FB9FB1FE810F900F69AF2 /* addArbitrageViewController.m */; };
@@ -377,6 +378,8 @@
 		B649DF421ED073F300E248C8 /* Utils+newRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Utils+newRules.m"; sourceTree = "<group>"; };
 		B654DD991F16691D006D8C65 /* TBBigRoadSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBigRoadSelectViewController.m; sourceTree = "<group>"; };
 		B654DD9A1F16691D006D8C65 /* TBBigRoadSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBigRoadSelectViewController.h; sourceTree = "<group>"; };
+		B65B7BD52092253E00816063 /* TBNewRule_goNewsMonthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBNewRule_goNewsMonthViewController.h; sourceTree = "<group>"; };
+		B65B7BD62092253E00816063 /* TBNewRule_goNewsMonthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBNewRule_goNewsMonthViewController.m; sourceTree = "<group>"; };
 		B65FB9F51FE80BF200F69AF2 /* arbitrageListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arbitrageListViewController.h; sourceTree = "<group>"; };
 		B65FB9F61FE80BF200F69AF2 /* arbitrageListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = arbitrageListViewController.m; sourceTree = "<group>"; };
 		B65FB9F81FE80E6E00F69AF2 /* arbitrage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = arbitrage.storyboard; sourceTree = "<group>"; };
@@ -499,6 +502,8 @@
 				5B609A101EF91B9800D9305B /* TBNewRule_RMDetailViewController.m */,
 				5BA90F661F5FE53A00F057DE /* TBNewRule_goMonthViewController.h */,
 				5BA90F671F5FE53A00F057DE /* TBNewRule_goMonthViewController.m */,
+				B65B7BD52092253E00816063 /* TBNewRule_goNewsMonthViewController.h */,
+				B65B7BD62092253E00816063 /* TBNewRule_goNewsMonthViewController.m */,
 				0305549220021FAC0061993A /* TBNewRule_upperViewController.h */,
 				0305549320021FAC0061993A /* TBNewRule_upperViewController.m */,
 				5B609A061EF90A9200D9305B /* TBNewRule_MonthViewController.h */,
@@ -1185,6 +1190,7 @@
 				5BC6877C1E5E92AA001C2ACC /* TBSelectTableViewCell.m in Sources */,
 				5BD19BB01E5D22FE00D62D62 /* JHLineChart.m in Sources */,
 				B6A18AE41F6E13DC00D27E7F /* TBFixGroupAddViewController.m in Sources */,
+				B65B7BD72092253E00816063 /* TBNewRule_goNewsMonthViewController.m in Sources */,
 				5BE72CD31E51B2890001AFFC /* TBFileRoomResult_roomArr.m in Sources */,
 				B6F0F99F205CD0F900D76411 /* Utils+klineRule.m in Sources */,
 				5B7A7790205BA1390042B91D /* ZXQuotaColumnLayer.m in Sources */,
