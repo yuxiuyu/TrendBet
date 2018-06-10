@@ -61,6 +61,7 @@
 
 #define SAVE_isbigRoad @"isbigRoad"//是否是看所有0 只看大路1
 #define SAVE_isOnlyRBSelect @"isOnlyRBSelect"//0关闭 1把把庄  2把把闲
+#define SAVE_mainSelect @"mainSelect"//主路选择  0大路 1
 
 #define SAVE_TenBlodRule @"tenBlodRule" //十个规则
 #define SAVE_TenListBlodRule @"tenListBlodRule" //十个规则

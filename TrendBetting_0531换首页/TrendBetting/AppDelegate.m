@@ -117,6 +117,11 @@
     {
         [defaults setObject:@"0" forKey:SAVE_isOnlyRBSelect];
     }
+    ////主路选择
+    if (![defaults objectForKey:SAVE_mainSelect])
+    {
+        [defaults setObject:@"0" forKey:SAVE_mainSelect];
+    }
     
     
     /////////////

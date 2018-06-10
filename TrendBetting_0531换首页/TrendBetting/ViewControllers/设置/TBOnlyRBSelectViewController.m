@@ -21,25 +21,40 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.title=@"把把庄闲选择";
+    
     self.navigationController.navigationBarHidden=NO;
     UIBarButtonItem*item=[[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnAction)];
     self.navigationItem.rightBarButtonItem=item;
+    if ( [_isMainVC intValue]==0) {
+        self.title=@"把把庄闲选择";
+        dataArray=@[@"关闭",@"把把庄",@"把把闲"];
+        resultStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect];
+    } else {
+        self.title=@"主路选择";
+        dataArray=@[@"大路",@"大眼仔路",@"小路",@"小强路"];
+        resultStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_mainSelect];
+    }
     
-    dataArray=@[@"关闭",@"把把庄",@"把把闲"];
     _tableview.tableFooterView=[[UIView alloc]init];
-    resultStr=[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect];
+    
     
     // Do any additional setup after loading the view.
 }
 -(void)saveBtnAction
 {
     
-    
-    if (![resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect]])
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:resultStr forKey:SAVE_isOnlyRBSelect];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_isOnlyRBSelect}];
+    if ( [_isMainVC intValue]==0) {
+        if (![resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect]])
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:resultStr forKey:SAVE_isOnlyRBSelect];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_isOnlyRBSelect}];
+        }
+    }else {
+        if (![resultStr isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_mainSelect]])
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:resultStr forKey:SAVE_mainSelect];
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeArea" object:self userInfo:@{@"title":SAVE_mainSelect}];
+        }
     }
     
     

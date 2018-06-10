@@ -9,5 +9,6 @@
 #import "TBBaseViewController.h"
 
 @interface TBOnlyRBSelectViewController : TBBaseViewController
+@property(strong,nonatomic)NSString*isMainVC;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @end

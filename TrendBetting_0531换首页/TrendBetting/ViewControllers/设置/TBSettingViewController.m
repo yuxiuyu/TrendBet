@@ -8,7 +8,7 @@
 
 #import "TBSettingViewController.h"
 #import "TBSwitchTableViewCell.h"
-#define  cellInt 13
+#define  cellInt 14
 @interface TBSettingViewController ()<switchOnOrOffProtocol>
 {
     NSArray*dataArray;
@@ -41,6 +41,7 @@
                 @"文字长跳个数设置",
                 @"均线天数设置",
                 @"把把庄闲选择",
+                @"主路选择",
                 @"下载文件",
                 @"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
@@ -196,9 +197,14 @@
 //                str=@"show_setting_bigRoadVC";
 //                break;
             case 12:
+                dic = @{@"isMainVC":@"1"};
                 str=@"show_setting_onlyRBSelectVC";
                 break;
             case 13:
+                dic = @{@"isMainVC":@"1"};
+                str=@"show_setting_onlyRBSelectVC";
+                break;
+            case 14:
                 str=@"show_setting_downVC";
                 break;
                 

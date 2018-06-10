@@ -21,7 +21,7 @@
 @property(copy,nonatomic)NSString*ruleOne;
 @property(copy,nonatomic)NSString*sameRule;
 @property(copy,nonatomic)NSString*wordRule;
-@property(copy,nonatomic)NSString*tRule;
+@property(copy,nonatomic)NSString*tRule;//和暂停
 @property(copy,nonatomic)NSString*reverseRule;
 -(void)initWithYes;
 -(void)initWithDic:(NSDictionary*)dic;
