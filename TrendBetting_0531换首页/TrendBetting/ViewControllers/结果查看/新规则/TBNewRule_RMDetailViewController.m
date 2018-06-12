@@ -114,7 +114,7 @@
 }
 
 -(void)dealData{
-     int totalP = 0;
+     float totalP = 0;
     NSMutableArray*winArr= [[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
@@ -165,11 +165,11 @@
             // k线
             NSMutableArray*fiveArr=[[NSMutableArray alloc] initWithArray:array[11]];
             //                @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
-            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
-            [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
-            [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
-            totalP += [fiveArr[1] intValue];
-            [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
+            [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%0.2f",totalP]];
+            [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%0.2f",totalP+[fiveArr[3] floatValue]]];
+            [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%0.2f",totalP+[fiveArr[4] floatValue]]];
+            totalP += [fiveArr[1] floatValue];
+            [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%0.2f",totalP]];
             [kLineArr addObject: [fiveArr componentsJoinedByString:@","]];
             //
             NSArray*monKey=[key componentsSeparatedByString:@"-"];

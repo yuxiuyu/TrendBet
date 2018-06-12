@@ -375,14 +375,14 @@
     if (resultArray&&[resultArray[0] length]>0)
     {
         NSString*lastGuessStr=resultArray[1];
-        if ([lastGuessStr isEqualToString:[lastArray lastObject]]||
-            (
-             ([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
-                ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"]
-              )
-             &&![lastGuessStr isEqualToString:[lastArray lastObject]]
-             &&((lastArray.count>1&&[fristPartArray[allcount-2] count]==1)||(lastArray.count==1&&[fristPartArray[allcount-2] count]>1))
-             )
+        if ([lastGuessStr isEqualToString:[lastArray lastObject]]
+            
+            
+            ||(([[[resultArray firstObject] substringToIndex:2] isEqualToString:@"规则"]
+                ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带规"])
+               &&![lastGuessStr isEqualToString:[lastArray lastObject]]
+               &&lastArray.count>1
+               &&[fristPartArray[allcount-2] count]==1)
             
             ||(([[[resultArray firstObject] substringToIndex:3] isEqualToString:@"一带不"]
                 ||[[[resultArray firstObject] substringToIndex:3] isEqualToString:@"不规则"])
@@ -434,25 +434,21 @@
                     ///yxy add
                     NSArray*lastSecArray=fristPartArray[allcount-2];
                     NSArray*lastThirdArray=fristPartArray[allcount-3];
-                    NSArray*lastForthArray =fristPartArray[allcount-4];
                     
                     
-                    if (lastArray.count==lastThirdArray.count&&lastSecArray.count==lastForthArray.count)
+                    if (lastArray.count==lastThirdArray.count)
                     {
                         nameStr=[NSString stringWithFormat:@"%@%ld",[nameStr substringToIndex:4],a];
                         guessStr=[lastSecArray lastObject];
                         backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
                         return @[nameStr,guessStr,backguessStr];
                     }
-                    else if (lastArray.count>lastThirdArray.count||(lastArray.count==1&&lastSecArray.count<lastForthArray.count))
+                    else if (lastArray.count>[fristPartArray[allcount-3] count])
                     {
                         if ((([self.tenModel.oneNORule isEqualToString:@"YES"]||[self.tenModel.trueOneNORule isEqualToString:@"YES"])&&[nameStr containsString:@"一带规则"])||([self.tenModel.noRuleOne isEqualToString:@"YES"]&&[nameStr containsString:@"规则带一"]))
                         {
                             nameStr=[nameStr stringByReplacingOccurrencesOfString:@"规则" withString:@"不规则"];
                             guessStr=[lastArray lastObject];
-                            if ((lastArray.count==1&&lastSecArray.count<lastForthArray.count)) {
-                                guessStr = [lastSecArray lastObject];
-                            }
                             backguessStr=[[Utils sharedInstance] backRuleSeacher:secondPartArray ruleStr:guessStr myTag:myTag];
                             return @[nameStr,guessStr,backguessStr];
                             
