@@ -241,10 +241,7 @@
                            };
         [[Utils sharedInstance].ruleArray addObject:dic];
         [[Utils sharedInstance] saveData:nil saveArray:[Utils sharedInstance].ruleArray filePathStr:SAVE_RULE_TXT];
-
     }
-
-
 }
 -(void)initGroupRule
 {
@@ -260,7 +257,6 @@
                          };
         [[Utils sharedInstance].groupArray addObject:dic];
         [[Utils sharedInstance] saveData:nil saveArray:[Utils sharedInstance].groupArray filePathStr:SAVE_Group_TXT];
-       
     }
 }
 -(void)initArbitrageRule

@@ -188,7 +188,7 @@
                 [fiveArr replaceObjectAtIndex:2 withObject:[NSString stringWithFormat:@"%d",totalP]];
                 [fiveArr replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[3] intValue]]];
                 [fiveArr replaceObjectAtIndex:4 withObject:[NSString stringWithFormat:@"%d",totalP+[fiveArr[4] intValue]]];
-                totalP += [fiveArr[1] intValue];
+                totalP += [fiveArr[1] intValue]-12;
                 [fiveArr replaceObjectAtIndex:1 withObject:[NSString stringWithFormat:@"%d",totalP]];
                 
                 [tepallDayArr addObject: [fiveArr componentsJoinedByString:@","]];

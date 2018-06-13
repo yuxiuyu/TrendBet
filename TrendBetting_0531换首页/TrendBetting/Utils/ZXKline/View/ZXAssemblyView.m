@@ -222,7 +222,6 @@ static NSString *const kDrop = @"kDrop";
 }
 - (void)initLandscapeConstrains
 {
-    
     [self initConstrainsWithWidth:self.klineMainViewWidth height:self.klineMainViewHeight];
 }
 - (void)initPortraitContrains

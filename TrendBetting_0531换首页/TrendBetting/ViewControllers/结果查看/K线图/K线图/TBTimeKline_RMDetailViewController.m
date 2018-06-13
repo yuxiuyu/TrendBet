@@ -132,11 +132,6 @@
 }
 - (void)configureData
 {
-    
-    
-    
-    
-    
     //将请求到的数据数组传递过去，并且精度也是需要你自己传;
     /*
      数组中数据格式:@[@"时间戳,收盘价,开盘价,最高价,最低价,成交量",
@@ -287,12 +282,17 @@
     succ(RequestMoreResultTypeSuccess,tempArr);
 }
 -(NSArray*)continueArr:(NSArray*)temArr {
+    ////1、收盘价 2、开盘价 3、最高价 4、最低价
     NSMutableArray *allResArr=[NSMutableArray arrayWithArray:temArr];
     NSArray*last = [[temArr lastObject] componentsSeparatedByString:@","];
+    int total_one = [last[1] intValue];
     for (int i=0; i<allDayArr.count-1; i++) {
         NSMutableArray*current=[NSMutableArray arrayWithArray:[allDayArr[i] componentsSeparatedByString:@","]];
         [current replaceObjectAtIndex:1 withObject:@([current[1] intValue]+[last[1] intValue])];
-        [current replaceObjectAtIndex:2 withObject:@([last[1] intValue])];
+        [current replaceObjectAtIndex:2 withObject:@(total_one)];
+        total_one = [current[1] intValue]; //第二天的开盘价为第一天的收盘价
+       
+//        [current replaceObjectAtIndex:2 withObject:@([current[2] intValue]+[last[2] intValue])];
         [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[3] intValue])];
         [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[4] intValue])];
         [allResArr addObject:[current componentsJoinedByString:@","]];
