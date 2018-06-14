@@ -291,10 +291,10 @@
             }
         }
     }
-    //    if (myTag>0&&guessStr.length>0)
-    //    {
-    //        guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
-    //    }
+        if (myTag>0&&guessStr.length>0)
+        {
+            guessStr=[self backRuleSeacher:fristPartArray ruleStr:guessStr myTag:myTag];
+        }
     
     return guessStr;
     

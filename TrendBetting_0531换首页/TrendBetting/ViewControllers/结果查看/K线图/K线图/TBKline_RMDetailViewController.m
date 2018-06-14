@@ -292,13 +292,15 @@
 -(NSArray*)continueArr:(NSArray*)temArr {
     NSMutableArray *allResArr=[NSMutableArray arrayWithArray:temArr];
     NSArray*last = [[temArr lastObject] componentsSeparatedByString:@","];
+    int total_one = [last[1] intValue];
     for (int i=0; i<allDayArr.count-1; i++) {
 //        @"时间戳,收盘价,开盘价,最高价,最低价,成交量",
         NSMutableArray*current=[NSMutableArray arrayWithArray:[allDayArr[i] componentsSeparatedByString:@","]];
         [current replaceObjectAtIndex:1 withObject:@([current[1] intValue]+[last[1] intValue])];
-        [current replaceObjectAtIndex:2 withObject:@([last[1] intValue])];
-        [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[3] intValue])];
-        [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[4] intValue])];
+        [current replaceObjectAtIndex:2 withObject:@(total_one)];
+        total_one = [current[1] intValue]; //第二天的开盘价为第一天的收盘价
+        [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[1] intValue])];
+        [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[1] intValue])];
         [allResArr addObject:[current componentsJoinedByString:@","]];
     }
     [allDayArr removeAllObjects];

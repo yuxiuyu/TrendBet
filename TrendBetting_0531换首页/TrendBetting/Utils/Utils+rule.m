@@ -573,6 +573,9 @@
     {
         return @"";
     }
+    if (myTag==0) {
+        return ruleStr;
+    }
     NSInteger mycount=fristPartArray.count-1;
     NSArray*tempArr1=fristPartArray[mycount];
     NSArray*tempArr2=fristPartArray[mycount-myTag];

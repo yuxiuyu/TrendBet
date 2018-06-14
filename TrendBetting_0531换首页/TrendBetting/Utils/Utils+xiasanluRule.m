@@ -16,7 +16,6 @@
     int TSumCount=0;
     int RSumCount=0;
     int BSumCount=0;
-    NSUserDefaults * userDefault = [NSUserDefaults standardUserDefaults];
     NSMutableArray*newListArray=[[NSMutableArray alloc]init];
     
     NSMutableArray*secondPartArray=[[NSMutableArray alloc]init];
@@ -87,13 +86,40 @@
             fivePartArray=[self  setNewData:secondPartArray startCount:3 dataArray:fivePartArray];
             
             ////////////猜的数据
+            int mainType = [[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_mainSelect] intValue];
+            NSArray*mainPartArray;
+            switch (mainType) {
+                case 1:
+                    mainPartArray = thirdPartArray;
+                    [guessThirdPartArray addObject:[self seacherSpecRule:secondPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:0]];
+                    break;
+                case 2:
+                    mainPartArray = forthPartArray;
+                    [guessForthPartArray addObject:[self seacherSpecRule:secondPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:0]];
+                    break;
+                case 3:
+                    mainPartArray = fivePartArray;
+                    [guessFivePartArray addObject:[self seacherSpecRule:secondPartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:0]];
+                    break;
+                default:
+                    mainPartArray = secondPartArray;
+                    break;
+            }
+            //
             
-            [arrGuessSecondPartArray addObject:[self seacherNewsRule:secondPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
-            [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
+            [arrGuessSecondPartArray addObject:[self seacherNewsRule:mainPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
+            if (mainType!=1) {
+              [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
+            }
+             if (mainType!=2) {
             [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:2]];
-            [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:3]];
+             }
+             if (mainType!=3) {
+               [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:3]];
+             }
             
-            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:secondPartArray fristPartArray:secondPartArray myTag:0]];
+            
+            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:mainPartArray fristPartArray:secondPartArray myTag:0]];
         }
         
         [newListArray addObject:resultStr];
@@ -104,11 +130,11 @@
         //
         NSString*str=@"";
         //yxy add 2017/07/17 新加把把下庄闲
-        if ([[userDefault objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==1) {
             str=@"R";
             [allGuessArray addObject:str];
         }
-        else if ([[userDefault objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
+        else if ([[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_isOnlyRBSelect] intValue]==2) {
             str=@"B";
             [allGuessArray addObject:str];
         }
@@ -121,42 +147,25 @@
         //yxy add 2017/07/17
         else
         {
-            
             NSString*secGuessLastStr=[guessSecondPartArray lastObject];
             if([[newListArray lastObject] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[self.tenModel.tRule isEqualToString:@"YES"]){
                 [guessSecondPartArray replaceObjectAtIndex:guessSecondPartArray.count-1 withObject:@"stop"];
             }
-            //            else{
-            
-            int mainType = [[userDefault objectForKey:SAVE_mainSelect] intValue];
-            NSString*mainGuessStr;
-            switch (mainType) {
-                case 1:
-                    mainGuessStr = [[guessThirdPartArray lastObject] lastObject];
-                    break;
-                case 2:
-                    mainGuessStr = [[guessForthPartArray lastObject] lastObject];
-                    break;
-                case 4:
-                    mainGuessStr = [[guessFivePartArray lastObject] lastObject];
-                    break;
-                default:
-                    mainGuessStr = secGuessLastStr;
-                    break;
-            }
-            if (mainGuessStr.length>0&&![mainGuessStr isEqualToString:@"stop"])
-            {
-                NSString*guessStr2=[[guessThirdPartArray lastObject] lastObject];
-                NSString*guessStr3=[[guessForthPartArray lastObject] lastObject];
-                NSString*guessStr4=[[guessFivePartArray lastObject] lastObject];
-                
-                NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
-                if ([self.tenModel.wordRule isEqualToString:@"NO"]) {
-                    [guessArr removeObjectAtIndex:0];
+            else{
+                secGuessLastStr=[guessSecondPartArray lastObject];
+                if (secGuessLastStr.length>0)
+                {
+                    NSString*guessStr2=[[guessThirdPartArray lastObject] lastObject];
+                    NSString*guessStr3=[[guessForthPartArray lastObject] lastObject];
+                    NSString*guessStr4=[[guessFivePartArray lastObject] lastObject];
+                    
+                    NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[[[guessFristPartArray lastObject] lastObject],secGuessLastStr,guessStr2,guessStr3,guessStr4]];
+                    if ([self.tenModel.wordRule isEqualToString:@"NO"]) {
+                        [guessArr removeObjectAtIndex:0];
+                    }
+                    str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
                 }
-                str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
             }
-            //            }
             [allGuessArray addObject:str];
         }
         

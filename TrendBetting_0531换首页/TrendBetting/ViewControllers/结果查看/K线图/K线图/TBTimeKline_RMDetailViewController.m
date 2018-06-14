@@ -293,8 +293,8 @@
         total_one = [current[1] intValue]; //第二天的开盘价为第一天的收盘价
        
 //        [current replaceObjectAtIndex:2 withObject:@([current[2] intValue]+[last[2] intValue])];
-        [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[3] intValue])];
-        [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[4] intValue])];
+        [current replaceObjectAtIndex:3 withObject:@([current[3] intValue]+[last[1] intValue])];
+        [current replaceObjectAtIndex:4 withObject:@([current[4] intValue]+[last[1] intValue])];
         [allResArr addObject:[current componentsJoinedByString:@","]];
     }
     [allDayArr removeAllObjects];
