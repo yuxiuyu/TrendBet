@@ -63,7 +63,7 @@
     [super viewDidLoad];
     
     NSString*string=[[Utils sharedInstance] base64String:@"TB"];
-    if ([[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
+    if (![[[Utils sharedInstance] sha1:string] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_PASSWORD]])
     {
         isfristCreate=NO;
         [self initView];
@@ -80,6 +80,7 @@
 }
 -(void)showKeyView
 {
+    SCREEN_WIDTH
     _bgMemoView.frame=self.view.frame;
     NSDictionary*appInfoDic=[[NSBundle mainBundle] infoDictionary];
     _versionLab.text=[NSString stringWithFormat:@"当前版本:ver.%@",appInfoDic[@"CFBundleVersion"]];
@@ -439,26 +440,11 @@
         if([listArray[i] isEqualToString:@"T"]&&secGuessLastStr.length>0&&[tenM.tRule isEqualToString:@"YES"]){
             [guessSecondPartArray replaceObjectAtIndex:i-sumCount withObject:@"stop"];
         }
-//        else
-//        {
-//            secGuessLastStr=guessSecondPartArray.count>0?guessSecondPartArray[i-sumCount]:@"";
-        int mainType = [[[NSUserDefaults standardUserDefaults] objectForKey:SAVE_mainSelect] intValue];
-        NSString*mainGuessStr;
-        switch (mainType) {
-            case 1:
-                mainGuessStr = [guessThirdPartArray[i-sumCount] lastObject];
-                break;
-            case 2:
-                mainGuessStr = [guessForthPartArray[i-sumCount] lastObject];
-                break;
-            case 4:
-                mainGuessStr = [guessFivePartArray[i-sumCount] lastObject];
-                break;
-            default:
-                mainGuessStr = secGuessLastStr;
-                break;
-        }
-            if (mainGuessStr.length>0&&![mainGuessStr isEqualToString:@"stop"])
+        else
+        {
+            secGuessLastStr=guessSecondPartArray.count>0?guessSecondPartArray[i-sumCount]:@"";
+
+            if (secGuessLastStr.length>0)
             {
                 NSString*firstStr=[guessFirstPartArray[i] lastObject];
                 if ([tenM.wordRule isEqualToString:@"NO"]){
@@ -467,7 +453,8 @@
                 NSMutableArray*guessArr=[[NSMutableArray alloc]initWithArray:@[firstStr,secGuessLastStr,[guessThirdPartArray[i-sumCount] lastObject],[guessForthPartArray[i-sumCount] lastObject],[guessFivePartArray[i-sumCount] lastObject]]];
                 str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
             }
-//        }
+        }
+
         [allGuessArray addObject:str];
     }
     if (indexp==0)
@@ -475,6 +462,8 @@
         [self setMoneyValue:NO];
     }
 }
+
+
 -(void)setMoneyValue:(BOOL)isadd
 {
     if (isadd)

@@ -119,7 +119,7 @@
              }
             
             
-            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:mainPartArray fristPartArray:secondPartArray myTag:0]];
+            [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:mainPartArray fristPartArray:secondPartArray myTag:mainType]];
         }
         
         [newListArray addObject:resultStr];
@@ -164,8 +164,10 @@
                         [guessArr removeObjectAtIndex:0];
                     }
                     str=[[Utils sharedInstance] setGuessValue:guessArr isLength:NO];
+                    NSLog(@"%@------",str);
                 }
             }
+            NSLog(@"%@++++",str);
             [allGuessArray addObject:str];
         }
         

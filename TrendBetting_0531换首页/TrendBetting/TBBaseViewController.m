@@ -16,18 +16,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                                                 style:UIBarButtonItemStylePlain
-                                                                                target:self
-                                                                                action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:nil];
     // Do any additional setup after loading the view.
 }
 - (void) showProgress:(BOOL) show
 {
     if (show)
     {
-//        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-         [SVProgressHUD showWithStatus:@"数据读取中"];
+        //        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD showWithStatus:@"数据读取中"];
     }
 }
 
@@ -42,13 +42,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
