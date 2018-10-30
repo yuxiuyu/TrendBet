@@ -80,7 +80,6 @@
 }
 -(void)showKeyView
 {
-    SCREEN_WIDTH
     _bgMemoView.frame=self.view.frame;
     NSDictionary*appInfoDic=[[NSBundle mainBundle] infoDictionary];
     _versionLab.text=[NSString stringWithFormat:@"当前版本:ver.%@",appInfoDic[@"CFBundleVersion"]];

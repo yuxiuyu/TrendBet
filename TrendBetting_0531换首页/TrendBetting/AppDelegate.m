@@ -215,7 +215,8 @@
         NSDictionary*dic=@{@"number":@"1",
                            @"name":@"平倍数列",
                            @"moneyRule":@[@"1",@"1",@"1",@"1",@"1",@"1",@"1",@"1",@"1",@"1"],//默认数组
-                           @"isselected":@"YES"
+                           @"isselected":@"YES",
+                           @"direction": @"正追"
                            };
         [[Utils sharedInstance].moneyRuleArray addObject:dic];
         [[Utils sharedInstance] saveData:nil saveArray:[Utils sharedInstance].moneyRuleArray filePathStr:SAVE_MONEY_TXT];

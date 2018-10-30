@@ -927,9 +927,9 @@
                 else
                 {
                     goGuessYes=0;//连续猜对的次数
-                    goGuessNO=0;//连续猜对的次数
-                    //                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
-                    nextMoney=[[Utils sharedInstance].moneySelectedArray[0] floatValue];
+//                    goGuessNO=0;//连续猜对的次数
+                    NSInteger thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
+                    nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                 }
                 
             }
