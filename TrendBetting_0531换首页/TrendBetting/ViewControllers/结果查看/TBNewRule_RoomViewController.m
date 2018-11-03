@@ -147,7 +147,7 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    [Utils sharedInstance].goflashBackCount = 0;
     [[Utils sharedInstance] initSetTenModel];
     if ([_isCurrentDay intValue]==0) {
         [self performSegueWithIdentifier:@"showNewRuleRoomVC" sender:@{@"selectedTitle":allHouseArr[indexPath.item]}];

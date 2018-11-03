@@ -281,6 +281,9 @@
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
     NSInteger goGuessNO=0;//连续猜错的次数
+    if([Utils sharedInstance].isGoFlashBack){
+        goGuessNO=[Utils sharedInstance].goflashBackCount;
+    }
     float totalMoney=0;
     NSInteger Tcount=0;
     float reduceMoney=0.0;//抽水的钱
@@ -416,6 +419,9 @@
         {
             Tcount++;
         }
+    }
+    if([Utils sharedInstance].isGoFlashBack){
+        [Utils sharedInstance].goflashBackCount = goGuessNO;
     }
     NSArray * winArr=@[ [NSString stringWithFormat:@"%ld",winonecount],
                         [NSString stringWithFormat:@"%ld",wintwocount],

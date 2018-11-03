@@ -88,11 +88,13 @@
 {
     [self showProgress:YES];
     houseMonthDic=[[NSMutableDictionary alloc]init];
-    NSArray*monthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
+    NSArray*noOrderMonthsArr=[[Utils sharedInstance] getAllFileName:_selectedTitle];////房间里的数据
+    NSArray*monthsArr=[[Utils sharedInstance] orderArr:noOrderMonthsArr isArc:YES];
     for (NSString*monthstr in monthsArr)
     {
         NSString*monthFileNameStr=[NSString stringWithFormat:@"%@/%@",_selectedTitle,monthstr];
-        NSArray*daysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
+        NSArray*noOrderDaysArr=[[Utils sharedInstance] getAllFileName:monthFileNameStr];/////月份里的数据
+        NSArray*daysArr=[[Utils sharedInstance] orderArr:noOrderDaysArr isArc:YES];
         NSMutableDictionary*daysDic=[[NSMutableDictionary alloc]init];
         for (NSString*dayStr in daysArr)
         {
@@ -119,7 +121,7 @@
     NSMutableArray*failArr=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0"]];
     houseSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
     ///////
-    NSArray*tepMonthKeyArray=[[Utils sharedInstance] orderArr:[houseMonthDic allKeys] isArc:YES];
+    NSArray*tepMonthKeyArray=[houseMonthDic allKeys];
     for (int p=0; p<tepMonthKeyArray.count; p++) {
         
         //    [houseMonthDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -128,7 +130,7 @@
         [dataArray addObject:key];
         
         NSMutableArray*monthSumWinCountArray=[[NSMutableArray alloc]initWithArray:@[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"0",winArr,failArr]];
-        NSArray*tepDayKeyArray=[[Utils sharedInstance] orderArr:[daysDic allKeys] isArc:YES];
+        NSArray*tepDayKeyArray=[daysDic allKeys];//[[Utils sharedInstance] orderArr:[daysDic allKeys] isArc:YES];
         for (int k=0; k<tepDayKeyArray.count; k++) {
             
             //        [daysDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {

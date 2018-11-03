@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger,TBTrendCode)
 @property(strong,nonatomic)tenRuleModel*tenModel;
 @property(nonatomic, assign) BOOL isNetwork;
 @property(nonatomic, assign) BOOL isWifi;//是否是wifi
+@property(assign,nonatomic)BOOL isGoFlashBack; // 是否连续反追 NO不连续 YES连续
+@property(assign,nonatomic)NSInteger goflashBackCount; // 反追次数
 
 ////去掉浮点数后面多余的0
 -(NSString*)removeFloatAllZero:(NSString*)string;

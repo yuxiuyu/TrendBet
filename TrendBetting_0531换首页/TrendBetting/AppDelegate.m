@@ -29,6 +29,8 @@
     [self initGroupRule];
     //获取套利规则
     [self initArbitrageRule];
+    //是否连续反追
+    [Utils sharedInstance].isGoFlashBack = NO;
     defaults=[NSUserDefaults standardUserDefaults];
     ////区域选择
     if (![defaults objectForKey:SAVE_AREASELECT])

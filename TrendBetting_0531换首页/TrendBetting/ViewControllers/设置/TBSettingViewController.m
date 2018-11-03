@@ -43,6 +43,7 @@
                 @"把把庄闲选择",
                 @"主路选择",
                 @"下载文件",
+                @"资金规则-反向-连接",
                 @"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenBlodRule]];
@@ -87,43 +88,46 @@
 //                cell.mySwitch.on=[[defaults objectForKey:SAVE_oneList] isEqualToString:@"YES"];
 //                break;
             case cellInt:
-                cell.mySwitch.on=[tenM.gotwoLu isEqualToString:@"YES"];
+                cell.mySwitch.on=[Utils sharedInstance].isGoFlashBack;
                 break;
             case cellInt+1:
-                cell.mySwitch.on=[tenM.goLu isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.gotwoLu isEqualToString:@"YES"];
                 break;
             case cellInt+2:
-                cell.mySwitch.on=[tenM.goXiaoLu isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.goLu isEqualToString:@"YES"];
                 break;
             case cellInt+3:
-                cell.mySwitch.on=[tenM.oneRule isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.goXiaoLu isEqualToString:@"YES"];
                 break;
             case cellInt+4:
-                cell.mySwitch.on=[tenM.trueOneRule isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.oneRule isEqualToString:@"YES"];
                 break;
             case cellInt+5:
-                cell.mySwitch.on=[tenM.oneNORule isEqualToString:@"YES"];
+                cell.mySwitch.on=[tenM.trueOneRule isEqualToString:@"YES"];
                 break;
             case cellInt+6:
+                cell.mySwitch.on=[tenM.oneNORule isEqualToString:@"YES"];
+                break;
+            case cellInt+7:
                 cell.mySwitch.on=[tenM.trueOneNORule isEqualToString:@"YES"];
                 break;
            
-            case cellInt+7:
+            case cellInt+8:
                 cell.mySwitch.on=[tenM.ruleOne isEqualToString:@"YES"];
                 break;
-            case cellInt+8:
+            case cellInt+9:
                 cell.mySwitch.on=[tenM.noRuleOne isEqualToString:@"YES"];
                 break;
-            case cellInt+9:
+            case cellInt+10:
                 cell.mySwitch.on=[tenM.sameRule isEqualToString:@"YES"];
                 break;
-            case cellInt+10:
+            case cellInt+11:
                 cell.mySwitch.on=[tenM.wordRule isEqualToString:@"YES"];
                 break;
-            case cellInt+11:
+            case cellInt+12:
                 cell.mySwitch.on=[tenM.tRule isEqualToString:@"YES"];
                 break;
-            case cellInt+12:
+            case cellInt+13:
                 cell.mySwitch.on=[tenM.reverseRule isEqualToString:@"YES"];
                 break;
                 
@@ -232,27 +236,33 @@
 //            [defaults setObject:[[defaults objectForKey:SAVE_oneList] isEqualToString:@"YES"]?@"NO":@"YES" forKey:SAVE_oneList];
 //            ispostNotification=YES;
 //        }
-            break;
+//            break;
         case cellInt:
+        {
+            [Utils sharedInstance].isGoFlashBack=![Utils sharedInstance].isGoFlashBack;
+//            ispostNotification=YES;
+        }
+            break;
+        case cellInt+1:
         {
             tenM.gotwoLu=[tenM.gotwoLu isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case cellInt+1:
+        case cellInt+2:
         {
             tenM.goLu=[tenM.goLu isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case cellInt+2:
+        case cellInt+3:
         {
             tenM.goXiaoLu=[tenM.goXiaoLu isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
             
-        case cellInt+3:
+        case cellInt+4:
         {
             if ([tenM.trueOneRule isEqualToString:@"YES"]&&[tenM.oneRule isEqualToString:@"NO"]) {
                 tenM.trueOneRule = @"NO";
@@ -261,7 +271,7 @@
               ispostNotification=YES;
         }
             break;
-        case cellInt+4:
+        case cellInt+5:
         {
             if ([tenM.trueOneRule isEqualToString:@"NO"]&&[tenM.oneRule isEqualToString:@"YES"]) {
                 tenM.oneRule=@"NO";
@@ -270,7 +280,7 @@
             ispostNotification=YES;
         }
             break;
-        case cellInt+5:
+        case cellInt+6:
         {
             if ([tenM.trueOneNORule isEqualToString:@"YES"]&&[tenM.oneNORule isEqualToString:@"NO"]) {
                 tenM.trueOneNORule = @"NO";
@@ -279,7 +289,7 @@
             ispostNotification=YES;
         }
             break;
-        case cellInt+6:
+        case cellInt+7:
         {
             if ([tenM.trueOneNORule isEqualToString:@"NO"]&&[tenM.oneNORule isEqualToString:@"YES"]) {
                 tenM.oneNORule=@"NO";
@@ -289,37 +299,37 @@
         }
             break;
 
-        case cellInt+7:
+        case cellInt+8:
         {
             tenM.ruleOne=[tenM.ruleOne isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case cellInt+8:
+        case cellInt+9:
         {
             tenM.noRuleOne=[tenM.noRuleOne isEqualToString:@"YES"]?@"NO":@"YES";
             ispostNotification=YES;
         }
             break;
-        case cellInt+9:
+        case cellInt+10:
         {
              tenM.sameRule=[tenM.sameRule isEqualToString:@"YES"]?@"NO":@"YES";
               ispostNotification=YES;
         }
             break;
-        case cellInt+10:
+        case cellInt+11:
         {
              tenM.wordRule=[tenM.wordRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;
         }
             break;
-        case cellInt+11:
+        case cellInt+12:
         {
              tenM.tRule=[tenM.tRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;
         }
             break;
-        case cellInt+12:
+        case cellInt+13:
         {
             tenM.reverseRule=[tenM.reverseRule isEqualToString:@"YES"]?@"NO":@"YES";
             iswordpostNotification=YES;

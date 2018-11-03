@@ -465,6 +465,7 @@
 
 -(void)setMoneyValue:(BOOL)isadd
 {
+    [Utils sharedInstance].goflashBackCount = 0; // 初始化反追 连接 为0
     if (isadd)
     {
         [self changeArea:listArray.count-1];
