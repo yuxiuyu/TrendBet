@@ -109,14 +109,14 @@
             
             [arrGuessSecondPartArray addObject:[self seacherNewsRule:mainPartArray arrGuessPartArray:arrGuessSecondPartArray.count>0?[arrGuessSecondPartArray lastObject]:nil]];
             if (mainType!=1) {
-              [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
+                [guessThirdPartArray addObject:[self seacherSpecRule:thirdPartArray resultArray:[guessThirdPartArray lastObject] secondPartArray:secondPartArray myTag:1]];
             }
-             if (mainType!=2) {
-            [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:2]];
-             }
-             if (mainType!=3) {
-               [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:3]];
-             }
+            if (mainType!=2) {
+                [guessForthPartArray addObject:[self seacherSpecRule:forthPartArray resultArray:[guessForthPartArray lastObject] secondPartArray:secondPartArray myTag:2]];
+            }
+            if (mainType!=3) {
+                [guessFivePartArray addObject:[self seacherSpecRule:fivePartArray resultArray:[guessFivePartArray lastObject] secondPartArray:secondPartArray myTag:3]];
+            }
             
             
             [guessSecondPartArray addObject: [[Utils sharedInstance] getGuessValue:[arrGuessSecondPartArray lastObject] partArray:mainPartArray fristPartArray:secondPartArray myTag:mainType]];
@@ -793,8 +793,13 @@
     NSInteger guessYes=0;//猜对的总数
     NSInteger goGuessYes=0;//连续猜对的次数
     NSInteger goGuessNO=0;//连续猜错的次数
+    NSString * moneyDirection = [Utils sharedInstance].moneyDirection; //资金规则方向
     if([Utils sharedInstance].isGoFlashBack){
-        goGuessNO=[Utils sharedInstance].goflashBackCount;
+        if ([moneyDirection isEqualToString:@"反追"]) {
+            goGuessNO=[Utils sharedInstance].goflashBackCount;
+        } else {
+            goGuessYes=[Utils sharedInstance].goflashBackCount;
+        }
     }
     float totalMoney=0;
     NSInteger Tcount=0;
@@ -838,7 +843,7 @@
                     NSArray*countArr = [guessStr componentsSeparatedByString:@"_"];
                     
                     NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
-                    if ([[Utils sharedInstance].moneyDirection isEqualToString:@"反追"]) {
+                    if ([moneyDirection isEqualToString:@"反追"]) {
                         thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
                     }
                     nextMoney = [[Utils sharedInstance].moneySelectedArray[thd] floatValue];
@@ -909,7 +914,7 @@
                         }
                     }
                     thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
-                    if ([[Utils sharedInstance].moneyDirection isEqualToString:@"反追"]) {
+                    if ([moneyDirection isEqualToString:@"反追"]) {
                         thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
                     }
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
@@ -929,9 +934,12 @@
                 }
                 else
                 {
-                    goGuessYes=0;//连续猜对的次数
-//                    goGuessNO=0;//连续猜对的次数
-                    NSInteger thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
+                    //  goGuessYes=0;//连续猜对的次数
+                    //  goGuessNO=0;//连续猜对的次数
+                    NSInteger thd=goGuessYes%[Utils sharedInstance].moneySelectedArray.count;
+                    if([moneyDirection isEqualToString:@"反追"]){
+                        thd=goGuessNO%[Utils sharedInstance].moneySelectedArray.count;
+                    }
                     nextMoney=[[Utils sharedInstance].moneySelectedArray[thd] floatValue];
                 }
                 
@@ -944,7 +952,11 @@
         }
     }
     if([Utils sharedInstance].isGoFlashBack){
-        [Utils sharedInstance].goflashBackCount = goGuessNO;
+        if ([moneyDirection isEqualToString:@"反追"]) {
+            [Utils sharedInstance].goflashBackCount = goGuessNO;
+        } else {
+            [Utils sharedInstance].goflashBackCount = goGuessYes;
+        }
     }
     NSArray * winArr=@[ [NSString stringWithFormat:@"%ld",winonecount],
                         [NSString stringWithFormat:@"%ld",wintwocount],
