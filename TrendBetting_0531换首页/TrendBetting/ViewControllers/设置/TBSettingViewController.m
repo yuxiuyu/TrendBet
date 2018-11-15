@@ -43,7 +43,7 @@
                 @"把把庄闲选择",
                 @"主路选择",
                 @"下载文件",
-                @"资金规则-是否-连接",
+                @"资金规则-是否-连续",
                 @"长跳",@"长连",@"小二路",@"一带规则",@"正确的一带规则",@"一带不规则",@"正确的一带不规则",@"规则带一",@"不规则带一",@"平头规则",@"文字区域的规则",@"和暂停",@"反向"];
     _tableview.tableFooterView=[[UIView alloc]init];
     tenM=[NSKeyedUnarchiver unarchiveObjectWithData:[defaults objectForKey:SAVE_TenBlodRule]];
